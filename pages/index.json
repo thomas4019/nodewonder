@@ -1,0 +1,8 @@
+{ "c" : { "title" : [ { "n" : "hello_world" } ],
+      "top" : [ { "i" : { "path" : "menu.html" },
+            "n" : "htmlfile"
+          } ]
+    },
+  "i" : { "path" : "themes/html5up-tessellate/template.html" },
+  "n" : "template"
+}

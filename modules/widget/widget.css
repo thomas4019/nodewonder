@@ -1,0 +1,9 @@
+.widget-container {
+	position: relative;
+}
+
+.widget-widget_settings .configure {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}

@@ -1,0 +1,7 @@
+{
+"start" : { "n" : "template",
+				"i" : { "path" : "themes/html5up-tessellate/template.html" },
+				"c" : { "title" : ["1"], "top" : ["2"] } },
+"1" : { "n" : "hello_world" },
+"2" : { "n" : "htmlfile", "i" : { "path" : "menu.html" } },
+}

@@ -1,0 +1,6 @@
+{
+  "n" : "template", "i" : {"path" : "admin.html"}, "c" : {
+    "body" : [{"n" : "setting", "i" : {"file" : "info"}}],
+    "top" : [{"n" : "htmlfile", "i" : {"path" : "menu.html"}}]
+  }
+}

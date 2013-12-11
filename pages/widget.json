@@ -1,0 +1,9 @@
+{
+  "n" : "template", "i" : {"path" : "admin.html"}, "c" : {
+    "body" : [{"n" : "two_col", "c" : {
+    	"left" : [{"n" : "widget_settings", "i" : {"name" : "field_boolean"}}, {"n" : "widget_settings", "i" : {"name" : "template"}}],
+    	"right" : [{"n" : "widget_settings", "i" : {"name" : "field_boolean"}}, {"n" : "widget_settings", "i" : {"name" : "template"}}]}
+    	}],
+    "head" : [{"n" : "hello_world"}]
+  }
+}
