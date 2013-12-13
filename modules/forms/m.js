@@ -1,9 +1,14 @@
 var forms = require('forms'),
     fields = forms.fields,
-    validators = forms.validators,
-    widgets = forms.widgets,
+    fvalidators = forms.validators,
+    fwidgets = forms.widgets,
     fs = require('fs'),
     _ = require('underscore');
+
+module.exports = {
+  widgets : {}
+};
+widgets = module.exports.widgets;
 
 var bootstrap_settings = {
   errorAfterField: true,
@@ -22,7 +27,7 @@ var bootstrap_field = function (name, object) {
   return '<div class="field row control-group ' + (error !== '' ? 'has-error' : '')  + '">' + label + widget + '</div>';
 }
 
-var field_boolean = function (input) {
+widgets.field_boolean = function (input, id) {
 	var name = input.name;
 	var label = input.label;
 	var value = input.value || false;
@@ -30,35 +35,33 @@ var field_boolean = function (input) {
   this.toHTML = function() {
     var form = {};
 
-    form['text'] = fields.boolean(_.extend(bootstrap_settings,{value : value, label : label}));
+    form[id] = fields.boolean(_.extend(bootstrap_settings,{value : value, label : label}));
 
     var form_html = forms.create(form).toHTML(bootstrap_f);
     
     return form_html;
   }
 }
-field_boolean.prototype.name = 'field_boolean';
 
-var field_text = function (input) {
+widgets.field_text = function (input, id) {
 	var name = input.name;
 	var label = input.label;
 	var value = input.value || '';
+  console.log('******');
+  console.log(input);
 
-  this.toHTML = function() {
-
-
+  this.toHTML = function(zones, value) {
     var form = {};
 
-    form['text'] = fields.string(_.extend(bootstrap_settings,{value : value, label : label}));
-
+    form[id] = fields.string(_.extend(bootstrap_settings,{value : (value || input.value), label : label}));
     var form_html = forms.create(form).toHTML(bootstrap_f);
-    
     return form_html;
+
+    //return '<input type="text" name="' + name + '" value="' + (value || input.value) + '" />';
   }
 }
-field_text.prototype.name = 'field_text';
 
-var field_text_select = function (input) {
+widgets.field_text_select = function (input) {
 	var name = input.name;
 	var label = input.label;
 	var value = input.value || '';
@@ -66,17 +69,23 @@ var field_text_select = function (input) {
 
   this.toHTML = function() {
     var form = {};
-
-    form['text'] = fields.string(_.extend(bootstrap_settings,{value : value, choices : choices, label : label, widget:widgets.select()}));
+    form['text'] = fields.string(_.extend(bootstrap_settings,{value : value, choices : choices, label : label, widget:fwidgets.select()}));
 
     var form_html = forms.create(form).toHTML(bootstrap_f);
 
     return form_html;
   }
 }
-field_text_select.prototype.name = 'field_text_select';
 
-var field_date = function (input) {
+widgets.submit = function (input) {
+  var label = input.label;
+
+  this.toHTML = function() {
+    return '<input type="submit" class="btn btn-primary" value="' + label + '" />'
+  }
+}
+
+widgets.field_date = function (input) {
 	var name = input.name;
 	var label = input.label;
 	var value = input.value || '';
@@ -96,14 +105,7 @@ var field_date = function (input) {
     return form_html;
 	}
 
-	this.onReady = function(container_id) {
+	this.script = function(container_id) {
 		return '$("#' + container_id + ' input").datepicker();';
 	}
-}
-field_date.prototype.name = 'field_date';
-
-
-
-module.exports = {
-	widgets : [field_boolean, field_text, field_text_select, field_date],
 }

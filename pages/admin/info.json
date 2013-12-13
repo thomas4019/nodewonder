@@ -1,0 +1,13 @@
+{
+  "start:template" : {"path" : "admin.html", "zones" : {
+    "body" : ["storage"]
+  }},
+  "storage:json" : {"file" : "info.json", "zones" : {
+    "form" : ["title", "subtitle", "email", "online", "save"]
+  }},
+  "title:field_text" : {"label" : "Site Title"},
+  "subtitle:field_text" : {"label" : "Subtitle"},
+  "email:field_text" : {"label" : "Site Email"},
+  "online:field_boolean" : {"label" : "Site Online"},
+  "save:submit" : {"label" : "save"}
+}

@@ -5,6 +5,11 @@ var forms = require('forms'),
     fs = require('fs'),
     _ = require('underscore');
 
+module.exports = {
+    widgets : {}
+};
+widgets = module.exports.widgets;
+
 var bootstrap_field = function (name, object) {
     var label = object.labelHTML(name);
     var error = object.error ? '<p class="form-error-tooltip">' + object.error + '</p>' : '';
@@ -12,7 +17,7 @@ var bootstrap_field = function (name, object) {
     return '<div class="field row control-group ' + (error !== '' ? 'has-error' : '')  + '">' + label + widget + '</div>';
 }
 
-var setting = function(input) {
+widgets.setting = function(input) {
 	var data;
     var name = input.file;
     var file = 'settings/' + name + '.json'
@@ -101,16 +106,9 @@ var setting = function(input) {
     return html;
   }
 }
-setting.prototype.name = 'setting';
 
-
-var hello_world = function() {	
+widgets.hello_world = function() {	
 	this.toHTML = function () {
 		return 'Hello World';
 	}
-}
-hello_world.prototype.name = 'hello_world';
-
-module.exports = {
-	widgets : [hello_world, setting],
 }

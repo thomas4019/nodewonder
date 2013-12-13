@@ -1,11 +1,18 @@
 var fs = require('fs'),
 		Handlebars = require("handlebars");
 
-var template = function(input) {
+module.exports = {
+	widgets : {}
+};
+widgets = module.exports.widgets;
+
+widgets.template = function(input) {
 	var that = this;
 	this.path = input.path;
 
-	this.zones = {name : 'body'};
+	this.zones = function() {
+		{name : 'body'};
+	}
 
 	this.isPage = function() {
 		return true;
@@ -23,13 +30,11 @@ var template = function(input) {
 	}
 
 	this.toHTML = function(zones) {
-		console.log(this.template(zones));
 		return this.template(zones);
 	}
-};
-template.prototype.name = 'template';
+}
 
-var htmlFile = function(input) {
+widgets.htmlfile = function(input) {
 	var that = this;
 	this.path = input.path;
 
@@ -46,9 +51,4 @@ var htmlFile = function(input) {
 	this.toHTML = function() {
 		return this.template;
 	}
-};
-htmlFile.prototype.name = 'htmlfile';
-
-module.exports = {
-	widgets : [template, htmlFile],
 }
