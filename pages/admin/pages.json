@@ -1,6 +1,10 @@
 {
-  "start:template" : {"path" : "admin.html", "zones" : {"body" : ["storage"]}},
-  "storage:pagejson" : {"file" : "test", "dir" : "pages" ,"zones" : {"form" : ["editor", "save"]}},
-  "editor:page_editor" : {"page" : "test"},
-  "save:submit" : {"label" : "save"}
+	  "start:template" : {"path" : "admin.html", "zones" : {
+	    "body" : ["listing"],
+	    "top" : ["menu"]
+	  }},
+    "menu:htmlfile": {
+        "path": "menu.html"
+    },
+  	"listing:page_listing" : {"value" : "Site Title"}
 }

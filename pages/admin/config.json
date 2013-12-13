@@ -1,6 +1,5 @@
 {
-  "n" : "template", "i" : {"path" : "admin.html"}, "c" : {
-    "body" : [{"n" : "setting", "i" : {"file" : "info"}}],
-    "top" : [{"n" : "htmlfile", "i" : {"path" : "menu.html"}}]
-  }
+  "start:template" : {"path" : "admin.html", "zones" : { "body" : ["1"],  "top" : ["2"]}},
+  "1:setting" : {"file" : "info"},
+  "2:htmlfile" : {"path" : "menu.html"}
 }

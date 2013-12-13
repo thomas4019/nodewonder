@@ -47,8 +47,7 @@ widgets.field_text = function (input, id) {
 	var name = input.name;
 	var label = input.label;
 	var value = input.value || '';
-  console.log('******');
-  console.log(input);
+  //console.log(input);
 
   this.toHTML = function(zones, value) {
     var form = {};
@@ -108,4 +107,22 @@ widgets.field_date = function (input) {
 	this.script = function(container_id) {
 		return '$("#' + container_id + ' input").datepicker();';
 	}
+}
+
+
+widgets.itext = function (input, id) {
+  this.input = function() {
+    return  {
+      "start:echo" : {"zones" : {"body" : ["value"] }},
+      "value:field_text" : {"label" : "Text", "value" : input.value}
+    };
+  }
+
+  this.isPage = function () {
+    return true;
+  }
+
+  this.toHTML = function(zones, value) {
+    return input.value;
+  }
 }

@@ -4,8 +4,6 @@ module.exports = {
 widgets = module.exports.widgets;
 
 widgets.youtube_video = function (input) {
-	this.id = input.id;
-
 	this.input = function() {
 		return  {
 			"start:echo" : {"zones" : {"body" : ["id"] }},
@@ -14,6 +12,6 @@ widgets.youtube_video = function (input) {
 	}
 
 	this.toHTML = function() {
-		return '<iframe width="560" height="315" src="//www.youtube.com/embed/' + this.id + '" frameborder="0" allowfullscreen></iframe>';
+		return '<iframe width="560" height="315" src="//www.youtube.com/embed/' + input.id + '" frameborder="0" allowfullscreen></iframe>';
 	}
 }

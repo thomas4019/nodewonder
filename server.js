@@ -13,7 +13,8 @@ var fs = require('fs'),
     querystring = require('querystring'),
     _ = require('underscore'),
     async = require('async'),
-    file = require('file');
+    dive = require('dive'),
+    path = require('path');
 
 var cms = {};
 cms.m = {};
@@ -30,15 +31,12 @@ function loadPaths() {
 }
 
 function loadPages() {
-  file.walk('pages', function(test, dirPath, dirs, files) {
-    _.each(files, function(file, index) {      
-      var last_dot = file.lastIndexOf('.');
-      var ext = file.substring(last_dot + 1, file.length);
-      if (file.charAt(0) !== '.' && file.indexOf("/.") === -1 && ext == 'json') {
-        var path = file.substring(6, last_dot);
-        router.on('get', path, view);
-      }
-    });
+  dive('pages', {}, function(err, file) {
+    var pa = path.relative('pages',file).slice(0, -5);
+    var ext = path.extname(file);
+    if (ext == '.json') {
+      router.on('get', pa, view);
+    }
   });
 }
 
@@ -111,6 +109,7 @@ function processPost(request, response, callback) {
 }
 
 var save = function() {
+  console.log('POST');
   console.log(this.res.post);
 
   var that = this;

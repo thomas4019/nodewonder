@@ -1,6 +1,9 @@
 var _ = require('underscore'),
 		fs = require('fs'),
-    async = require('async');
+    async = require('async'),
+    file = require('file'),
+    dive = require('dive'),
+    path = require('path');
 
 var cms;
 module.exports = {
@@ -11,6 +14,43 @@ module.exports = {
   }
 };
 widgets = module.exports.widgets;
+
+module.exports.functions.splitAndFill = function(state, values) {
+  return module.exports.functions.fillValues(state, module.exports.functions.splitValues(values));
+}
+
+module.exports.functions.splitValues = function(values) {
+  var widgetValues = {};
+
+  _.each(values, function(value, key) {
+    var parts = key.split("-");
+    if (parts.length == 2) {
+      var widget_id = parts[0];
+      var value_id = parts[1];
+
+      if (!widgetValues['widget_id']) {
+        widgetValues[widget_id] = {};
+      }
+
+      widgetValues[widget_id][value_id] = value;
+    }
+  });
+
+  return widgetValues;
+}
+
+module.exports.functions.fillValues = function(state, values) {
+  _.each(state, function(w, key) {
+    var parts = key.split(":");
+    var _id = parts[0];
+    var _type = parts[1];
+    if (values[_id]) {
+      state[key] = _.extend(w, values[_id]);
+    }
+  });
+
+  return state;
+}
 
 module.exports.functions.viewPage = function(path, vars, callback) {
   if (path == '/') {
@@ -28,6 +68,8 @@ module.exports.functions.viewPage = function(path, vars, callback) {
 module.exports.functions.renderState = function(state, vars, callback) {
   var widgets_buffer = {};
 
+  state = module.exports.functions.splitAndFill(state, vars);
+
   _.each(state, function(w, key) {
     var parts = key.split(":");
     var id = parts[0];
@@ -42,7 +84,7 @@ module.exports.functions.renderState = function(state, vars, callback) {
     widgets_buffer[id] = widget;
   });
 
-  console.log('loading widgets');
+  //console.log('loading widgets');
   _.each(state, function(w, key) {
     var parts = key.split(":");
     var id = parts[0];
@@ -126,7 +168,6 @@ module.exports.functions.renderState = function(state, vars, callback) {
     else
       callback();
   }, function(err) {
-  	console.log('rendering');
     var html = toHTML(widgets_buffer['start']);
     callback(html, head);
   });
@@ -196,4 +237,34 @@ widgets.page_editor = function(input) {
 	this.toHTML = function() {
 		return html;
 	}
+}
+
+widgets.page_listing = function(input) {
+  var paths = [];
+
+  this.load = function(callback) {
+    dive('pages', {}, function(err, file) {
+      var pa = path.relative('pages',file).slice(0, -5);
+      var ext = path.extname(file);
+      if (ext == '.json') {
+        paths.push(pa);
+      }
+    }, callback);
+  }
+
+  this.script = function() {
+    return '';
+  }
+
+  this.toHTML = function() {
+    var html = '<h1>Pages</h1><ul class="list-group">';
+    _.each(paths, function(path, index) {
+      var edit_path = 'admin/pages/edit?storage-file=' + path + '&editor-page=' + path;
+      html += '<li class="list-group-item" >' +
+      '<a href="/' + edit_path + '"><span class="glyphicon glyphicon-edit"></span></a> ' +
+      '<a href="/' + path + '">' + path + '</a></li>';
+    });
+    html += '</ul>';
+    return html;
+  }
 }

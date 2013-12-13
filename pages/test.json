@@ -1,8 +1,25 @@
 {
-"start:template" : { "path" : "admin.html" ,
-				"zones" : { "body" : ["1c","1", "1b"], "top" : ["2"] }},
-"1:youtube_video" : {"id" : "jg4sZZaf3Gg"},
-"1b:youtube_video" : {"id" : "1A3i0GATnRI"},
-"1c:field_text" : {},
-"2:htmlfile" : { "path" : "menu.html" }
+    "start:template": {
+        "path": "admin.html",
+        "zones": {
+            "body": [
+                "1c",
+                "1",
+                "1b"
+            ],
+            "top": [
+                "2"
+            ]
+        }
+    },
+    "1:youtube_video": {
+        "id": "S-KaR5NUrws"
+    },
+    "1b:youtube_video": {
+        "id": "7j5Be5a86uA"
+    },
+    "1c:field_text": {},
+    "2:htmlfile": {
+        "path": "menu.html"
+    }
 }

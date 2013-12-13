@@ -95,7 +95,7 @@ widgets.widget_settings = function(input, id) {
       }
     });
 
-    console.log(winput2);
+    //console.log(winput2);
     if (winput) {
       cms.m.pages.functions.renderState(winput2, {}, function(_html, head) {
         form_html = _html;
@@ -121,7 +121,7 @@ widgets.widget_settings = function(input, id) {
     var zones_html = '';
 
     _.each(zones, function(zone_html, zone_name) {
-      zones_html += '<div class="sortable">' + zone_html + '</div>';
+      zones_html += '<h3>' + zone_name + '</h3><div class="sortable">' + zone_html + '</div>';
     });
 
     return '<div class="well draggable">' +

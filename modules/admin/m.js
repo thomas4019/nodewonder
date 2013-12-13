@@ -1,7 +1,7 @@
 var forms = require('forms'),
     fields = forms.fields,
     validators = forms.validators,
-    widgets = forms.widgets,
+    fwidgets = forms.widgets,
     fs = require('fs'),
     _ = require('underscore');
 
@@ -68,7 +68,6 @@ widgets.setting = function(input) {
             var type = data[k]['t'];
             var readable_name = data[k]['n'];
             var v = data[k]['v'];
-            console.log(type);
             switch (type) {
             	case 'string':
                 form[k] = fields.string(_.extend(settings,{value : v, label : readable_name}));
@@ -83,13 +82,13 @@ widgets.setting = function(input) {
                 form[k] = fields.email(_.extend(settings,{value : v, label : readable_name}));
                 break
             	case 'longtext':
-                form[k] = fields.string(_.extend(settings,{value : v, label : readable_name, widget:widgets.textarea()}));
+                form[k] = fields.string(_.extend(settings,{value : v, label : readable_name, widget:fwidgets.textarea()}));
                 break;
             }
         }
     }
 
-    form['form'] = fields.string({value : name, widget:widgets.hidden({value : name})});
+    form['form'] = fields.string({value : name, widget:fwidgets.hidden({value : name})});
 
     var reg_form = forms.create(form);
 
