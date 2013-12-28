@@ -37,14 +37,17 @@ var widget_selector = function() {
 	}
 }
 
-widgets.two_col = function(col1, col2) {
-	this.col1 = col1 || 6;
-	this.col2 = col2 || 6;
+widgets.two_col = function(input) {
+	this.col1 = input.col1 || 6;
+	this.col2 = input.col2 || 6;
 
-	this.input = [
-			{type : 'number', name : 'col1'},
-			{type : 'number', name : 'col2'},
-	];
+	this.input = function() {
+    return  {
+      "start:echo" : {"zones" : {"body" : ["col1", "col2"] }},
+      "col1:field_text" : {"label" : "Col 1 Width", "value" : this.col1},
+      "col2:field_text" : {"label" : "Col 2 Width", "value" : this.col2}
+    };
+	}
 
 	this.toHTML = function(zones) {
 		return '<div class="row"><div class="col-sm-' + this.col1 + '">' + zones['left'] + 
@@ -118,11 +121,13 @@ widgets.widget_settings = function(input, id) {
 
     var configure_gear = '<div class="configure"><span class="glyphicon glyphicon-cog"></span></div>';
     
-    var zones_html = '';
+    var zones_html = '<div class="zones">';
 
     _.each(zones, function(zone_html, zone_name) {
-      zones_html += '<h3>' + zone_name + '</h3><div class="sortable">' + zone_html + '</div>';
+      zones_html += '<div class="sortable zone"><h3 class="droppable zone-drop">' + zone_name + '</h3>' + zone_html + '</div>';
     });
+
+    zones_html += '</div>';
 
     return '<div class="well draggable">' +
     '<h4>' + widget + '</h4>'

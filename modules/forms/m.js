@@ -126,3 +126,21 @@ widgets.itext = function (input, id) {
     return input.value;
   }
 }
+
+widgets.test = function (input, id) {
+
+  this.head = function() {
+    return '<link href="/modules/forms/dynatree/skin-vista/ui.dynatree.css" rel="stylesheet" type="text/css">' + 
+    '<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>' +
+    '<script src="/modules/forms/dynatree/jquery.dynatree.js" type="text/javascript"></script>' +
+    '<script src="/modules/forms/data.js" type="text/javascript"></script>';
+  }
+
+  this.script = function() {
+    return 'console.log(data); $("#tree").dynatree({children : data, dnd : dnd2});';
+  }
+
+  this.toHTML = function(zones, value) {
+    return '<div id="tree"></div>';
+  }
+}

@@ -42,7 +42,9 @@ widgets.json = function(input) {
 		  if (err) {
 		    return console.log(err);
 		  }
-			values = JSON.parse(data);
+			var jdata = JSON.parse(data);
+			var state = jdata[0];
+    	var rules = jdata[1];
 			callback();
 		});
 	}

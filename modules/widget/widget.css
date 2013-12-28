@@ -1,9 +1,38 @@
 .widget-container {
 	position: relative;
+	padding: 3px;
 }
 
 .widget-widget_settings .configure {
 	position: absolute;
 	top: 10px;
 	right: 10px;
+}
+
+.zones {
+	display: table;
+}
+
+.zone {
+	display: table-cell;
+	min-width: 150px;
+}
+
+.zone-drop {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	margin-top: -30px;
+	margin-bottom: -30px;
+}
+
+.zone-drop-hover {
+	background: gray;
+}
+
+.zone-drop-active {
+	background: green;
+}
+
+.zone-dropped {
+	border: 1px solid red;
 }

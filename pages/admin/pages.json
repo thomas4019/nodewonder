@@ -1,10 +1,11 @@
 {
 	  "start:template" : {"path" : "admin.html", "zones" : {
-	    "body" : ["listing"],
+	    "body" : ["listing", "create"],
 	    "top" : ["menu"]
 	  }},
     "menu:htmlfile": {
         "path": "menu.html"
     },
-  	"listing:page_listing" : {"value" : "Site Title"}
+  	"listing:page_listing" : {"value" : "Site Title"},
+  	"create:submit" : {"label" : "Create a new page"}
 }

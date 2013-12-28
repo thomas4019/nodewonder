@@ -18,7 +18,11 @@ var fs = require('fs'),
 
 var cms = {};
 cms.m = {};
+cms.functions = {};
 cms.widgets = {};
+cms.events = {};
+cms.conditions = {};
+cms.actions = {};
 
 registerAllModules();
 
@@ -77,10 +81,24 @@ function registerModule(module) {
     m.register(cms);
   }
 
+  _.each(m.functions, function(f, name) {
+    f.prototype.name = name;
+    cms.functions[name] = f;
+  });
+
   _.each(m.widgets, function(widget, name) {
     widget.prototype.name = name;
     cms.widgets[name] = widget;
-  });    
+  });
+
+  _.each(m.events, function(event, name) {
+    event.prototype.name = name;
+    cms.events[name] = event;
+  });
+  _.each(m.actions, function(action, name) {
+    action.prototype.name = name;
+    cms.actions[name] = action;
+  });
 }
 
 function processPost(request, response, callback) {

@@ -1,19 +1,29 @@
-[{
+{
     "start:template": {
         "path": "admin.html",
         "zones": {
             "body": [
-                "1c",
-                "1",
-                "1b"
+                "two"
             ],
             "top": [
                 "2"
             ]
         }
     },
+    "two:two_col": {
+        "zones": {
+            "left": [
+                "1",
+                "1c"
+            ],
+            "right": [
+                "1b"
+            ]
+        },
+        "col2": "6"
+    },
     "1:youtube_video": {
-        "id": "0NtNmGGzKbg"
+        "id": "S-KaR5NUrws"
     },
     "1b:youtube_video": {
         "id": "7j5Be5a86uA"
@@ -22,11 +32,4 @@
     "2:htmlfile": {
         "path": "menu.html"
     }
-},
-[
-    {
-        "event": {"clicked" : {"sel" : "#admin-menu-wrapper"}},
-        "actions": [{"message" : {"message" : "Hello World"}}]
-    }
-]
-]
+}

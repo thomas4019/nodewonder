@@ -15,6 +15,50 @@ module.exports = {
 };
 widgets = module.exports.widgets;
 
+module.exports.functions.organizeState = function(state) {
+  var widgets_buffer = {};
+
+  _.each(state, function(w, key) {
+    var parts = key.split(":");
+    var id = parts[0];
+    var name = parts[1];
+    if (cms.widgets[name]) {
+      var widget = new cms.widgets[name](w, id);
+      widget.id = id;
+    } else {
+      console.log('Missing widget:' + name);
+    }
+    widget.children = {};
+    widgets_buffer[id] = widget;
+  });
+
+  _.each(state, function(w, key) {
+    var parts = key.split(":");
+    var id = parts[0];
+    var name = parts[1];
+    var widget = widgets_buffer[id];
+
+    if (w.zones) {
+      _.each(w.zones, function(widgetList, zone) {
+        if (!widget.children[zone]) {
+          widget.children[zone] = [];
+        }
+        _.each(widgetList, function(sub_id, i) {
+          var sub = widgets_buffer[sub_id];
+          if (typeof sub !== 'undefined') {
+            widget.children[zone].push(sub);
+            sub.parent = widget;
+          } else {
+            console.log('Invalid widget reference:' + sub_id);
+          }
+        });
+      });
+    }
+  });
+
+  return widgets_buffer;
+}
+
 module.exports.functions.splitAndFill = function(state, values) {
   return module.exports.functions.fillValues(state, module.exports.functions.splitValues(values));
 }
@@ -61,53 +105,20 @@ module.exports.functions.viewPage = function(path, vars, callback) {
       return console.log(err);
     }
     var jdata = JSON.parse(data);
-    module.exports.functions.renderState(jdata, vars, callback);
+    var state = jdata[0];
+    var rules = jdata[1];
+    cms.functions.processRules(rules, function(script, reqs) {
+      script = '<script>$(function() {' + script + '});</script>'
+      console.log(reqs);
+      module.exports.functions.renderState(state, vars, callback, script + reqs);
+    });
   });
 }
 
-module.exports.functions.renderState = function(state, vars, callback) {
-  var widgets_buffer = {};
-
+module.exports.functions.renderState = function(state, vars, callback, head_additional) {
   state = module.exports.functions.splitAndFill(state, vars);
 
-  _.each(state, function(w, key) {
-    var parts = key.split(":");
-    var id = parts[0];
-    var name = parts[1];
-    if (cms.widgets[name]) {
-      var widget = new cms.widgets[name](w, id);
-      widget.id = id;
-    } else {
-      console.log('Missing widget:' + name);
-    }
-    widget.children = {};
-    widgets_buffer[id] = widget;
-  });
-
-  //console.log('loading widgets');
-  _.each(state, function(w, key) {
-    var parts = key.split(":");
-    var id = parts[0];
-    var name = parts[1];
-    var widget = widgets_buffer[id];
-
-    if (w.zones) {
-      _.each(w.zones, function(widgetList, zone) {
-        if (!widget.children[zone]) {
-          widget.children[zone] = [];
-        }
-        _.each(widgetList, function(sub_id, i) {
-          var sub = widgets_buffer[sub_id];
-          if (typeof sub !== 'undefined') {
-            widget.children[zone].push(sub);
-            sub.parent = widget;
-          } else {
-            console.log('Invalid widget reference:' + sub_id);
-          }
-        });
-      });
-    }
-  });
+  var widgets_buffer = module.exports.functions.organizeState(state);
 
   var head = '';
   var onready = '';
@@ -143,6 +154,9 @@ module.exports.functions.renderState = function(state, vars, callback) {
     var widget_html = '';
 
     if (widget.isPage) {
+      if (head_additional) {
+        head += head_additional;
+      }
     	zones['head'] = head;
     }
 
@@ -203,7 +217,9 @@ widgets.page_editor = function(input) {
 	    if (err) {
 	      return console.log(err);
 	    }
-	    state = JSON.parse(data);
+	    var jdata = JSON.parse(data);
+      var state = jdata[0];
+      var rules = jdata[1];
 
 	    var state2 = {};
 
@@ -215,8 +231,6 @@ widgets.page_editor = function(input) {
 	    	state2[_id + ':' + 'widget_settings'] = w;
 		  });
 
-	    console.log(state2);
-
 			module.exports.functions.renderState(state2, {}, function(_html, _head) {
 				html = _html;
 				head = _head
@@ -226,7 +240,13 @@ widgets.page_editor = function(input) {
 	}
 
 	this.script = function() {
-		return '/*$(".sortable").sortable();*/ $(".draggable").draggable( {connectToSortable: ".sortable", revert: "invalid"} );';
+		return '$(".zone-drop").sortable({connectWith: ".zone-drop"}); $(".draggable").draggable({connectToSortable: ".zone-drop"});  $( ".droppable" ).droppable({' + 
+      'greed: true,' +
+      'activeClass: "zone-drop-hover",' +
+      'hoverClass: "zone-drop-active",' +
+      'tolerance: "pointer",' + 
+      'drop: function( event, ui ) { $( this ).addClass("zone-dropped"); }' +
+      '}); ';
 	}
 
 	this.head = function() {
@@ -237,6 +257,86 @@ widgets.page_editor = function(input) {
 	this.toHTML = function() {
 		return html;
 	}
+}
+
+widgets.page_heirarchy = function (input, id) {
+  var children = [];
+
+  page = input.page || 'test2';
+
+  this.head = function() {
+    return '<link href="/modules/forms/dynatree/skin-vista/ui.dynatree.css" rel="stylesheet" type="text/css">' + 
+    '<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>' +
+    '<script src="/modules/forms/dynatree/jquery.dynatree.js" type="text/javascript"></script>' +
+    '<script src="/modules/forms/data.js" type="text/javascript"></script>';
+  }
+
+  this.load = function(callback) {
+    fs.readFile('pages/' + page + '.json', 'utf8', function(err, data) {
+      if (err) {
+        return console.log(err);
+      }
+      state = JSON.parse(data);
+
+      var widgets_buffer = module.exports.functions.organizeState(state);
+
+      var toTreeArray = function(w) {
+        var element = {title: w.id + ':' + w.name, children : [], expand: true};
+        _.each(w.children, function(zone_children, zone) {
+          var zone_element = {title: zone, isFolder: true, children : [], expand: true};
+          _.each(zone_children, function(child) {
+            zone_element.children.push(toTreeArray(child));
+          });
+          element.children.push(zone_element);
+        });
+
+        return element;
+      }
+
+      children.push(toTreeArray(widgets_buffer['start']));
+
+      callback();
+    });
+  }
+
+
+  this.script = function() {
+    return 'console.log(data); $("#tree").dynatree({children : ' + JSON.stringify(children) + ', dnd : dnd2});';
+  }
+
+  this.toHTML = function(zones, value) {
+    return '<div id="tree">123</div>';
+  }
+}
+
+widgets.widget_listing = function (input, id) {
+  var children = [];
+
+  this.head = function() {
+    return '<link href="/modules/forms/dynatree/skin-vista/ui.dynatree.css" rel="stylesheet" type="text/css">' + 
+    '<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>' +
+    '<script src="/modules/forms/dynatree/jquery.dynatree.js" type="text/javascript"></script>' +
+    '<script src="/modules/forms/data.js" type="text/javascript"></script>';
+  }
+
+  this.load = function(callback) {
+
+    _.each(cms.widgets, function(widget) {
+      w = new widget({});
+      children.push({title : w.name, copy: 'listing'});
+    });
+
+    callback();
+  }
+
+
+  this.script = function() {
+    return 'console.log(data); $("#tree2  ").dynatree({children : ' + JSON.stringify(children) + ', dnd : dnd2});';
+  }
+
+  this.toHTML = function(zones, value) {
+    return '<div id="tree2">123</div>';
+  }
 }
 
 widgets.page_listing = function(input) {

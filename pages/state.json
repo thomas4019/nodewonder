@@ -1,0 +1,13 @@
+{
+    "start:template": {
+        "path": "admin.html",
+        "zones": {
+            "body": [
+                "ph",
+                "wl"
+            ]
+        }
+    },
+    "ph:page_heirarchy": {},
+    "wl:widget_listing": {}
+}
