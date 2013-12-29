@@ -3,7 +3,8 @@ var forms = require('forms'),
     validators = forms.validators,
     fwidgets = forms.widgets,
     fs = require('fs'),
-    _ = require('underscore');
+    _ = require('underscore'),
+    deepExtend = require('deep-extend');
 
 var cms;
 module.exports = {
@@ -24,28 +25,34 @@ functions.ruleToJS = function(rule) {
 	var event = new cms.events[eventName](eventInput);
 	var script = '';
 	var head = '';
+	var deps = [];
 	_.each(rule.actions, function(action, index) {
 		var name = Object.keys(action)[0];
 		var input = action[name];
 		var actionObject = new cms.actions[name](input);
 		script += actionObject.toJS();
 		head += actionObject.head ? actionObject.head() : '';
+		if (actionObject.deps) {
+			deepExtend(deps, actionObject.deps());
+		}
 	});
 
 	head += event.head ? event.head() : '';
 
-	return [event.toJS(script), head];
+	return [event.toJS(script), deps];
 }
 
 functions.processRules = function(rules, callback) {
 	var script = '';
 	var head = '';
+	var deps = {};
 	_.each(rules, function(rule, index) {
 		results = functions.ruleToJS(rule);
 		script += results[0];
-		head += results[1];
+		//head += results[1];
+		deepExtend(deps, results[1]);
 	});
-	callback(script, head);
+	callback(script, deps);
 }
 
 
@@ -84,8 +91,7 @@ actions.message = function(input) {
 		return 'toastr.info("' + message + '");';
 	}
 
-	this.head = function() {
-		return '<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.min.js"></script>' +
-		'<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.min.css" />';
+	this.deps = function() {
+		return {'toastr': {}};
 	}
 }

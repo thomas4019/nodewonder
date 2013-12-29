@@ -49,9 +49,9 @@ widgets.setting = function(input) {
 	  fs.writeFile(file, JSON.stringify(out));
 	}
 
-	this.head = function() {
-		return '<script src="http://malsup.github.com/jquery.form.js"></script>';
-	}
+	this.deps = function() {
+        return {'jquery-form' : {}};
+    }
 
   this.toHTML = function() {
     var form = {};
@@ -99,7 +99,7 @@ widgets.setting = function(input) {
     var htmlTab = '<div class="tab-pane" id="html"><div class="form-group">' + form_html + '<button type="submit" class="btn btn-primary">Submit</button></div></div>';
     var jsonTab = '<div class="tab-pane" id="json"><textarea class="form-control boxsizingBorder json">' + JSON.stringify(data) + '</textarea></div>';
 
-    html = tabs + '<form role="form" action="/save" method="post" class="well"><div id="my-tab-content" class="tab-content">' + htmlTab + jsonTab + '</div></div></form>';
+    html = tabs + '<form role="form" action="/post" method="post" class="well"><div id="my-tab-content" class="tab-content">' + htmlTab + jsonTab + '</div></div></form>';
     html += '<script type="text/javascript">jQuery(document).ready(function ($) {$(\'.nav-tabs\').tab();$(\'.nav-tabs a:first\').tab(\'show\');});var options = {success: function() {  }, error : function() {alert("Error");} }; $(\'form\').ajaxForm(options); </script>';
 
     return html;

@@ -24,8 +24,8 @@ widgets.json = function(input) {
 	var widget = input.widget || 'json'
 	var values;
 
-	this.head = function() {
-		return '<script src="http://malsup.github.com/jquery.form.js"></script>';
+	this.deps = function() {
+		return {'jquery-form' : {}};
 	}
 
 	this.toHTML = function(zones) {
@@ -40,11 +40,10 @@ widgets.json = function(input) {
 	this.load = function(callback) {
 		fs.readFile(dir + '/' + file + '.json', 'utf8', function(err, data) {
 		  if (err) {
+		  	console.trace("Here I am!")
 		    return console.log(err);
 		  }
-			var jdata = JSON.parse(data);
-			var state = jdata[0];
-    	var rules = jdata[1];
+			values = JSON.parse(data);
 			callback();
 		});
 	}
@@ -56,7 +55,7 @@ widgets.json = function(input) {
 	this.save = function(values) {
 		console.log(values);
 		delete values['file'];
-		fs.writeFile(dir + '/' + file, JSON.stringify(values, null, 4));
+		fs.writeFile(dir + '/' + file + '.json', JSON.stringify(values, null, 4));
 	}
 }
 
@@ -69,6 +68,7 @@ widgets.pagejson = function(input) {
 
 		fs.readFile(input.dir + '/' + input.file + '.json', 'utf8', function(err, data) {
 			if (err) {
+				console.trace("Here I am!")
 				console.log(err);
 			}
 			var jdata = JSON.parse(data);

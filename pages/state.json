@@ -1,4 +1,4 @@
-{
+[{
     "start:template": {
         "path": "admin.html",
         "zones": {
@@ -10,4 +10,6 @@
     },
     "ph:page_heirarchy": {},
     "wl:widget_listing": {}
-}
+},
+[]
+]

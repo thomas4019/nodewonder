@@ -60,7 +60,7 @@ widgets.widget_settings = function(input, id) {
   var form_html;
 
 	this.head = function() {
-		return '<link href="/modules/widget/widget.css" rel="stylesheet">';
+		return '<link href="/modules/widget/widget.css" rel="stylesheet" />';
 	}
 
   this.load = function(callback) {

@@ -1,4 +1,4 @@
-{
+[{
 	  "start:template" : {"path" : "admin.html", "zones" : {
 	    "body" : ["listing", "create"],
 	    "top" : ["menu"]
@@ -8,4 +8,6 @@
     },
   	"listing:page_listing" : {"value" : "Site Title"},
   	"create:submit" : {"label" : "Create a new page"}
-}
+},
+[]
+]

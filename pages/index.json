@@ -1,4 +1,4 @@
-{
+[{
     "start:template": {
         "path": "themes/html5up-tessellate/template.html",
         "zones": {
@@ -16,4 +16,6 @@
     "2:htmlfile": {
         "path": "menu.html"
     }
-}
+},
+[]
+]

@@ -14,7 +14,8 @@ var fs = require('fs'),
     _ = require('underscore'),
     async = require('async'),
     dive = require('dive'),
-    path = require('path');
+    path = require('path'),
+    bower = require('bower');
 
 var cms = {};
 cms.m = {};
@@ -51,6 +52,7 @@ var app = connect()
   .use(connect.static('themes/html5up-tessellate/'))
   .use('/files', connect.static('files'))
   .use('/modules', connect.static('modules'))
+  .use('/bower_components', connect.static('bower_components'))
   .use(function (req, res) {
     if (req.method == 'POST') {
       processPost(req, res, function() {
@@ -74,6 +76,22 @@ function registerAllModules() {
   });
 }
 
+function installDependencies(thing) {
+  if (thing.deps) {
+    _.each(Object.keys(thing.deps()), function(dep, index) {
+      fs.exists('bower_components/' + dep, function (exists) {
+        if (!exists) {
+          bower.commands
+          .install([dep], { save: true }, { /* custom config */ })
+          .on('end', function (installed) {
+              console.log('bower: installed ' + dep);
+          });
+        }
+      });
+    });
+  }
+}
+
 function registerModule(module) {
   var m = require('./modules/' + module + '/m');
   cms.m[module] = m;
@@ -89,15 +107,19 @@ function registerModule(module) {
   _.each(m.widgets, function(widget, name) {
     widget.prototype.name = name;
     cms.widgets[name] = widget;
+    installDependencies(new widget({}));
   });
 
   _.each(m.events, function(event, name) {
     event.prototype.name = name;
     cms.events[name] = event;
+    installDependencies(new event({}));
   });
+
   _.each(m.actions, function(action, name) {
     action.prototype.name = name;
     cms.actions[name] = action;
+    installDependencies(new action({}));
   });
 }
 

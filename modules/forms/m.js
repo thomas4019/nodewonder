@@ -90,9 +90,12 @@ widgets.field_date = function (input) {
 	var value = input.value || '';
 
 	this.head = function() {
-		return '<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>' +
-		'<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css" rel="stylesheet">';
+		return '<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/" rel="stylesheet">';
 	}
+
+  this.deps = function() {
+    return {'jquery-ui': ['themes/smoothness/jquery-ui.min.css'] }
+  }
 
 	this.toHTML = function() {
 		var form = {};
@@ -128,12 +131,12 @@ widgets.itext = function (input, id) {
 }
 
 widgets.test = function (input, id) {
+  this.deps = function() {
+    return {'dynatree' : {}, 'jquery-ui': {} }
+  }
 
   this.head = function() {
-    return '<link href="/modules/forms/dynatree/skin-vista/ui.dynatree.css" rel="stylesheet" type="text/css">' + 
-    '<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>' +
-    '<script src="/modules/forms/dynatree/jquery.dynatree.js" type="text/javascript"></script>' +
-    '<script src="/modules/forms/data.js" type="text/javascript"></script>';
+    return '<script src="/modules/forms/data.js" type="text/javascript"></script>';
   }
 
   this.script = function() {

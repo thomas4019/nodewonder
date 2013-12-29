@@ -14,8 +14,9 @@ module.exports = {
   }
 };
 widgets = module.exports.widgets;
+functions = module.exports.functions;
 
-module.exports.functions.organizeState = function(state) {
+functions.organizeState = function(state) {
   var widgets_buffer = {};
 
   _.each(state, function(w, key) {
@@ -59,11 +60,11 @@ module.exports.functions.organizeState = function(state) {
   return widgets_buffer;
 }
 
-module.exports.functions.splitAndFill = function(state, values) {
-  return module.exports.functions.fillValues(state, module.exports.functions.splitValues(values));
+functions.splitAndFill = function(state, values) {
+  return cms.functions.fillValues(state, cms.functions.splitValues(values));
 }
 
-module.exports.functions.splitValues = function(values) {
+functions.splitValues = function(values) {
   var widgetValues = {};
 
   _.each(values, function(value, key) {
@@ -83,7 +84,7 @@ module.exports.functions.splitValues = function(values) {
   return widgetValues;
 }
 
-module.exports.functions.fillValues = function(state, values) {
+functions.fillValues = function(state, values) {
   _.each(state, function(w, key) {
     var parts = key.split(":");
     var _id = parts[0];
@@ -96,29 +97,29 @@ module.exports.functions.fillValues = function(state, values) {
   return state;
 }
 
-module.exports.functions.viewPage = function(path, vars, callback) {
+functions.viewPage = function(path, vars, callback) {
   if (path == '/') {
     path = 'index'
   }
   fs.readFile('pages/' + path + '.json', 'utf8', function(err, data) {
     if (err) {
+      console.trace("Here I am!")
       return console.log(err);
     }
     var jdata = JSON.parse(data);
     var state = jdata[0];
     var rules = jdata[1];
-    cms.functions.processRules(rules, function(script, reqs) {
+    cms.functions.processRules(rules, function(script, deps) {
       script = '<script>$(function() {' + script + '});</script>'
-      console.log(reqs);
-      module.exports.functions.renderState(state, vars, callback, script + reqs);
+      cms.functions.renderState(state, vars, callback, script, deps);
     });
   });
 }
 
-module.exports.functions.renderState = function(state, vars, callback, head_additional) {
-  state = module.exports.functions.splitAndFill(state, vars);
+functions.renderState = function(state, vars, callback, head_additional, deps) {
+  state = cms.functions.splitAndFill(state, vars);
 
-  var widgets_buffer = module.exports.functions.organizeState(state);
+  var widgets_buffer = cms.functions.organizeState(state);
 
   var head = '';
   var onready = '';
@@ -175,14 +176,28 @@ module.exports.functions.renderState = function(state, vars, callback, head_addi
     }
   }
 
-  async.each(Object.keys(widgets_buffer), function(id, callback) {
-    var widget = widgets_buffer[id];
-    if (widget.load)
-      widget.load(callback);
-    else
-      callback();
-  }, function(err) {
+  async.series([
+      function(callback1){
+        async.each(Object.keys(widgets_buffer), function(id, callback) {
+          var widget = widgets_buffer[id];
+          if (widget.load)
+            widget.load(callback);
+          else
+            callback();
+        }, callback1);
+      },
+      function(callback1){
+        cms.functions.processDeps(deps, function(html) {
+          head_additional += html
+          callback1();
+        });
+      }
+  ],
+  function(err, results){
     var html = toHTML(widgets_buffer['start']);
+
+    //We send back the head as well in case this rendering is internal and needs to know the code to add to the head as well.
+    //Todo - probably better to pass back dependencies instead?
     callback(html, head);
   });
 }
@@ -207,56 +222,66 @@ var set_type = function(state, id, type) {
 }
 
 widgets.page_editor = function(input) {
-	var page = input.page;
-	var html;
-	var state;
-	var head = '';
+  var page = input.page;
+  var html;
+  var state;
+  var head = '';
 
-	this.load = function(callback) {
-	  fs.readFile('pages/' + page + '.json', 'utf8', function(err, data) {
-	    if (err) {
-	      return console.log(err);
-	    }
-	    var jdata = JSON.parse(data);
+  this.load = function(callback) {
+    fs.readFile('pages/' + page + '.json', 'utf8', function(err, data) {
+      if (err) {
+        console.trace("Here I am!")
+        return console.log(err);
+      }
+      var jdata = JSON.parse(data);
       var state = jdata[0];
       var rules = jdata[1];
 
-	    var state2 = {};
+      var state2 = {};
 
-		  _.each(state, function(w, key) {
-		    var parts = key.split(":");
-		    var _id = parts[0];
-		    var _type = parts[1];
-	    	w.widget = _type;
-	    	state2[_id + ':' + 'widget_settings'] = w;
-		  });
+      _.each(state, function(w, key) {
+        var parts = key.split(":");
+        var _id = parts[0];
+        var _type = parts[1];
+      	w.widget = _type;
+      	state2[_id + ':' + 'widget_settings'] = w;
+      });
 
-			module.exports.functions.renderState(state2, {}, function(_html, _head) {
-				html = _html;
-				head = _head
-				callback();
-			});
-	  });
-	}
+      cms.functions.renderState(state2, {}, function(_html, _head) {
+      	html = _html;
+      	head = _head
+      	callback();
+      });
+    });
+  }
 
-	this.script = function() {
-		return '$(".zone-drop").sortable({connectWith: ".zone-drop"}); $(".draggable").draggable({connectToSortable: ".zone-drop"});  $( ".droppable" ).droppable({' + 
+  this.script = function() {
+    return '$(".zone-drop").sortable({connectWith: ".zone-drop"}); $(".draggable").draggable({connectToSortable: ".zone-drop"});  $( ".droppable" ).droppable({' + 
       'greed: true,' +
       'activeClass: "zone-drop-hover",' +
       'hoverClass: "zone-drop-active",' +
       'tolerance: "pointer",' + 
       'drop: function( event, ui ) { $( this ).addClass("zone-dropped"); }' +
       '}); ';
-	}
+  }
 
-	this.head = function() {
-		return head + '<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">' +
-  		'<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>';
-	}
+  this.deps = function() {
+    return {'jquery-ui': {}};
+  }
 
-	this.toHTML = function() {
-		return html;
-	}
+  /**
+   * This passes the head from rendering
+   */
+  this.head = function() {
+    return head;
+  }
+
+  /**
+   * This passes the html from rendering
+   */
+  this.toHTML = function() {
+    return html;
+  }
 }
 
 widgets.page_heirarchy = function (input, id) {
@@ -265,20 +290,22 @@ widgets.page_heirarchy = function (input, id) {
   page = input.page || 'test2';
 
   this.head = function() {
-    return '<link href="/modules/forms/dynatree/skin-vista/ui.dynatree.css" rel="stylesheet" type="text/css">' + 
-    '<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>' +
-    '<script src="/modules/forms/dynatree/jquery.dynatree.js" type="text/javascript"></script>' +
-    '<script src="/modules/forms/data.js" type="text/javascript"></script>';
+    return '<script src="/modules/forms/data.js" type="text/javascript"></script>';
+  }
+
+  this.deps = function() {
+    return {'dynatree' : [], 'jquery-ui' : []};
   }
 
   this.load = function(callback) {
     fs.readFile('pages/' + page + '.json', 'utf8', function(err, data) {
       if (err) {
+        console.trace("Here I am!")
         return console.log(err);
       }
       state = JSON.parse(data);
 
-      var widgets_buffer = module.exports.functions.organizeState(state);
+      var widgets_buffer = cms.functions.organizeState(state);
 
       var toTreeArray = function(w) {
         var element = {title: w.id + ':' + w.name, children : [], expand: true};
@@ -313,10 +340,11 @@ widgets.widget_listing = function (input, id) {
   var children = [];
 
   this.head = function() {
-    return '<link href="/modules/forms/dynatree/skin-vista/ui.dynatree.css" rel="stylesheet" type="text/css">' + 
-    '<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>' +
-    '<script src="/modules/forms/dynatree/jquery.dynatree.js" type="text/javascript"></script>' +
-    '<script src="/modules/forms/data.js" type="text/javascript"></script>';
+    return '<script src="/modules/forms/data.js" type="text/javascript"></script>';
+  }
+
+  this.deps = function() {
+    return {'dynatree' : [], 'jquery-ui' : []};
   }
 
   this.load = function(callback) {

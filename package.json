@@ -12,7 +12,9 @@
     "handlebars": "~1.1.2",
     "mongojs": "~0.9.8",
     "nodemon": "~0.7.10",
-    "underscore": "~1.5.2"
+    "underscore": "~1.5.2",
+    "bower": "~1.2.8",
+    "deep-extend": "~0.2.6"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3"

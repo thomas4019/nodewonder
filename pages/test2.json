@@ -1,4 +1,4 @@
-{
+[{
     "start:template": {
         "path": "admin.html",
         "zones": {
@@ -32,4 +32,6 @@
     "2:htmlfile": {
         "path": "menu.html"
     }
-}
+},
+[]
+]
