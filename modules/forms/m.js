@@ -116,7 +116,6 @@ widgets.field_date = function (input) {
 widgets.itext = function (input, id) {
   this.input = function() {
     return  {
-      "start:echo" : {"zones" : {"body" : ["value"] }},
       "value:field_text" : {"label" : "Text", "value" : input.value}
     };
   }

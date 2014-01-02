@@ -58,80 +58,61 @@ widgets.two_col = function(input) {
 widgets.widget_settings = function(input, id) {
 	var widget = input.widget;
   var form_html;
+  var winput2 = {};
 
 	this.head = function() {
 		return '<link href="/modules/widget/widget.css" rel="stylesheet" />';
 	}
 
-  this.load = function(callback) {
+  this.children = function(callback) {
     if (cms.widgets[widget]) {
       var w = new cms.widgets[widget](input, id);
     } else {
       console.log('Missing widget:' + widget);
     }
     
-    var winput = null;
     if (w.input) {
-     winput = w.input();
-    }
+      _.each(w.input(), function(w, key) {
+        var parts = key.split(":");
+        var _id = parts[0];
+        var _type = parts[1];
 
-    var winput2 = {};
+        //prepend parent's id plus dash to ids
+        if (_id != 'start') {
+          winput2[id + '-' + _id + ':' + _type] = w;
+        } else {
+          winput2[key] = w;
+        }
 
-    _.each(winput, function(w, key) {
-      var parts = key.split(":");
-      var _id = parts[0];
-      var _type = parts[1];
-
-      //prepend parent's id plus dash to ids
-      if (_id != 'start') {
-        winput2[id + '-' + _id + ':' + _type] = w;
-      } else {
-        winput2[key] = w;
-      }
-
-      if (w.zones) {
-        _.each(w.zones, function(widgetList, zone) {
-          w.zones[zone] = _.map(widgetList, function(sub_id, i) {
-            return id + '-' + sub_id;
+        if (w.zones) {
+          _.each(w.zones, function(widgetList, zone) {
+            w.zones[zone] = _.map(widgetList, function(sub_id, i) {
+              return id + '-' + sub_id;
+            });
           });
-        });
-      }
-    });
-
-    //console.log(winput2);
-    if (winput) {
-      cms.m.pages.functions.renderState(winput2, {}, function(_html, head) {
-        form_html = _html;
-        callback();
+        }
       });
-    } else {
-      form_html = '';
-      callback();
     }
+
+    callback( {'self_form' : winput2} );
   }
 
   this.toHTML = function(zones) {
-    var form = {};
-
-    /*form['text'] = fields.string(_.extend(bootstrap_settings,{value : '', label : ''}));
-    form['quantity'] = fields.string(_.extend(bootstrap_settings,{value : '', label : ''}));
-    form['hierarchy'] = fields.boolean(_.extend(bootstrap_settings,{value : '', label : ''}));
-
-    var form_html = forms.create(form).toHTML(bootstrap_f);*/
-
     var configure_gear = '<div class="configure"><span class="glyphicon glyphicon-cog"></span></div>';
     
     var zones_html = '<div class="zones">';
-
     _.each(zones, function(zone_html, zone_name) {
-      zones_html += '<div class="sortable zone"><h3 class="droppable zone-drop">' + zone_name + '</h3>' + zone_html + '</div>';
+      if (zone_name != 'self_form') {
+        zones_html += '<div class="sortable zone"><h3 class="droppable zone-drop">' + zone_name + '</h3>' + zone_html + '</div>';
+      }
     });
-
     zones_html += '</div>';
 
     return '<div class="well draggable">' +
     '<h4>' + widget + '</h4>'
-     + configure_gear + form_html + zones_html + 
+     + configure_gear
+     + zones['self_form']
+     + zones_html + 
      '</div>';
   }
 }

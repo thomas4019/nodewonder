@@ -16,10 +16,11 @@ module.exports = {
 widgets = module.exports.widgets;
 functions = module.exports.functions;
 
-functions.organizeState = function(state) {
+functions.organizeState = function(state, callback) {
   var widgets_buffer = {};
+  var count = 1;
 
-  _.each(state, function(w, key) {
+  var initializeWidget = function(w, key) {
     var parts = key.split(":");
     var id = parts[0];
     var name = parts[1];
@@ -29,35 +30,88 @@ functions.organizeState = function(state) {
     } else {
       console.log('Missing widget:' + name);
     }
-    widget.children = {};
-    widgets_buffer[id] = widget;
-  });
+    widget.all_children = {};
 
-  _.each(state, function(w, key) {
-    var parts = key.split(":");
-    var id = parts[0];
-    var name = parts[1];
-    var widget = widgets_buffer[id];
+    if (widget.children) {
+      count++;
+      widget.children(function(children) {
+        _.each(children, function(widgetStateList, zone) {
+          var heirarchical = false;
+          _.each(widgetStateList, function(widgetInput, key) {
+            var partsC = key.split(":");
+            var idC = partsC[0];
+            var nameC = partsC[1];
+            if (idC == 'start') {
+              idC = id + 'inner-' + idC;
+              key = idC + ':' + nameC;
+            }
+            if (!heirarchical) {
+              w.zones = w.zones || {};
+              w.zones[zone] = w.zones[zone] || [];
+              w.zones[zone].push(idC);
+            }
+            if (partsC[0] == 'start') {
+              heirarchical = true;
+            }
+            state[key] = widgetInput;
 
-    if (w.zones) {
-      _.each(w.zones, function(widgetList, zone) {
-        if (!widget.children[zone]) {
-          widget.children[zone] = [];
-        }
-        _.each(widgetList, function(sub_id, i) {
-          var sub = widgets_buffer[sub_id];
-          if (typeof sub !== 'undefined') {
-            widget.children[zone].push(sub);
-            sub.parent = widget;
-          } else {
-            console.log('Invalid widget reference:' + sub_id);
-          }
+            initializeWidget(widgetInput, key);
+          });
         });
+        count--;
+        part2();
       });
     }
+
+    widgets_buffer[id] = widget;
+    return widget;
+  }
+
+  //initialize each widget
+  _.each(state, function(w, key) {
+    initializeWidget(w, key)
   });
 
-  return widgets_buffer;
+  count--;
+  part2();
+
+  function part2() {
+    if (count != 0)
+      return;
+
+    //console.log(state);
+
+    //connect the children to the parents
+    _.each(state, function(w, key) {
+      var parts = key.split(":");
+      var id = parts[0];
+      var name = parts[1];
+      var widget = widgets_buffer[id];
+
+      if (w.zones) {
+        addChildrenToWidget(w.zones, widget);
+      }
+    });
+
+    callback(widgets_buffer);
+  }
+
+  function addChildrenToWidget(zones, widget) {
+    _.each(zones, function(widgetList, zone) {
+      if (!widget.all_children[zone]) {
+        widget.all_children[zone] = [];
+      }
+      _.each(widgetList, function(sub_id, i) {
+        var sub = widgets_buffer[sub_id];
+        if (typeof sub !== 'undefined') {
+          widget.all_children[zone].push(sub);
+          sub.parent = widget;
+        } else {
+          console.log('Invalid widget reference:' + sub_id);
+        }
+      });
+    });
+  }
 }
 
 functions.splitAndFill = function(state, values) {
@@ -119,13 +173,15 @@ functions.viewPage = function(path, vars, callback) {
 functions.renderState = function(state, vars, callback, head_additional, deps) {
   state = cms.functions.splitAndFill(state, vars);
 
-  var widgets_buffer = cms.functions.organizeState(state);
-
   var head = '';
   var onready = '';
   var values = {};
 
-  var toHTML = function(widget) {
+  cms.functions.organizeState(state, function(widgets_buffer) {
+    loadAndPrepare(widgets_buffer);
+  });
+
+  function toHTML(widget) {
     var zones = {};
 
     if (widget.head) {
@@ -138,7 +194,13 @@ functions.renderState = function(state, vars, callback, head_additional, deps) {
       _.extend(values, widget.values());
     }
 
-    _.each(widget.children, function(widgetList, zone) {
+    if (widget.zones) {
+      _.each(widget.zones(), function(zone) {
+        zones[zone] = '';
+      });
+    }
+
+    _.each(widget.all_children, function(widgetList, zone) {
       var zone_html = '';
 
       _.each(widgetList, function(w, i) {
@@ -176,30 +238,32 @@ functions.renderState = function(state, vars, callback, head_additional, deps) {
     }
   }
 
-  async.series([
-      function(callback1){
-        async.each(Object.keys(widgets_buffer), function(id, callback) {
-          var widget = widgets_buffer[id];
-          if (widget.load)
-            widget.load(callback);
-          else
-            callback();
-        }, callback1);
-      },
-      function(callback1){
-        cms.functions.processDeps(deps, function(html) {
-          head_additional += html
-          callback1();
-        });
-      }
-  ],
-  function(err, results){
-    var html = toHTML(widgets_buffer['start']);
+  function loadAndPrepare(widgets_buffer) {
+    async.series([
+        function(callback1){
+          async.each(Object.keys(widgets_buffer), function(id, callback) {
+            var widget = widgets_buffer[id];
+            if (widget.load)
+              widget.load(callback);
+            else
+              callback();
+          }, callback1);
+        },
+        function(callback1){
+          cms.functions.processDeps(deps, function(html) {
+            head_additional += html
+            callback1();
+          });
+        }
+    ],
+    function(err, results){
+      var html = toHTML(widgets_buffer['start']);
 
-    //We send back the head as well in case this rendering is internal and needs to know the code to add to the head as well.
-    //Todo - probably better to pass back dependencies instead?
-    callback(html, head);
-  });
+      //We send back the head as well in case this rendering is internal and needs to know the code to add to the head as well.
+      //Todo - probably better to pass back dependencies instead?
+      callback(html, head);
+    });
+  }
 }
 
 widgets.echo = function(input) {
@@ -223,11 +287,9 @@ var set_type = function(state, id, type) {
 
 widgets.page_editor = function(input) {
   var page = input.page;
-  var html;
-  var state;
-  var head = '';
+  var state2 = {};
 
-  this.load = function(callback) {
+  this.children = function(callback) {
     fs.readFile('pages/' + page + '.json', 'utf8', function(err, data) {
       if (err) {
         console.trace("Here I am!")
@@ -237,21 +299,15 @@ widgets.page_editor = function(input) {
       var state = jdata[0];
       var rules = jdata[1];
 
-      var state2 = {};
-
       _.each(state, function(w, key) {
         var parts = key.split(":");
         var _id = parts[0];
         var _type = parts[1];
-      	w.widget = _type;
-      	state2[_id + ':' + 'widget_settings'] = w;
+        w.widget = _type;
+        state2[_id + ':' + 'widget_settings'] = w;
       });
 
-      cms.functions.renderState(state2, {}, function(_html, _head) {
-      	html = _html;
-      	head = _head
-      	callback();
-      });
+      callback({'body' : state2});
     });
   }
 
@@ -269,18 +325,8 @@ widgets.page_editor = function(input) {
     return {'jquery-ui': {}};
   }
 
-  /**
-   * This passes the head from rendering
-   */
-  this.head = function() {
-    return head;
-  }
-
-  /**
-   * This passes the html from rendering
-   */
-  this.toHTML = function() {
-    return html;
+  this.toHTML = function(zones) {
+    return (zones['body'] || '');
   }
 }
 
@@ -305,7 +351,10 @@ widgets.page_heirarchy = function (input, id) {
       }
       state = JSON.parse(data);
 
-      var widgets_buffer = cms.functions.organizeState(state);
+      cms.functions.organizeState(state, function(widgets_buffer) {
+        children.push(toTreeArray(widgets_buffer['start']));
+        callback();
+      });
 
       var toTreeArray = function(w) {
         var element = {title: w.id + ':' + w.name, children : [], expand: true};
@@ -319,10 +368,6 @@ widgets.page_heirarchy = function (input, id) {
 
         return element;
       }
-
-      children.push(toTreeArray(widgets_buffer['start']));
-
-      callback();
     });
   }
 

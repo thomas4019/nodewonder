@@ -26,7 +26,7 @@
 [
     {
         "event": {"clicked" : {"sel" : "#admin-menu-wrapper"}},
-        "actions": [{"message" : {"message" : "Hello World"}}]
+        "actions": [{"message" : {"message" : "Hello World"}}, {"message" : {"message" : "Hello World"}}]
     }
 ]
 ]

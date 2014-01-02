@@ -1,7 +1,8 @@
 [{
   "start:template" : {"path" : "admin.html", "zones" : {"body" : ["storage"]}},
-  "storage:pagejson" : {"file" : "test", "dir" : "pages" ,"zones" : {"form" : ["editor", "save"]}},
+  "storage:pagejson" : {"file" : "test", "dir" : "pages" ,"zones" : {"form" : ["editor", "editor2", "save"]}},
   "editor:page_editor" : {"page" : "test"},
+  "editor2:rule_page_editor" : {"page" : "test"},
   "save:submit" : {"label" : "save"}
 },
 []
