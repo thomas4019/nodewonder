@@ -178,7 +178,14 @@ functions.renderState = function(state, vars, callback, head_additional, deps) {
   var values = {};
 
   cms.functions.organizeState(state, function(widgets_buffer) {
-    loadAndPrepare(widgets_buffer);
+    if ('json' in vars) {
+      var json = JSON.stringify(state, null, 4);
+      json = json.replace(/\n/g,'</br>');
+      json = json.replace(/\s+/gm, function(spaces) { return spaces.replace(/./g, '&nbsp;'); } );
+      callback(json);
+    } else {
+      loadAndPrepare(widgets_buffer);
+    }
   });
 
   function toHTML(widget) {
