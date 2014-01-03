@@ -111,7 +111,7 @@ widgets.widget_settings = function(input, id) {
     return '<div class="well draggable">' +
     '<h4>' + widget + '</h4>'
      + configure_gear
-     + zones['self_form']
+     + (zones['self_form'] || '')
      + zones_html + 
      '</div>';
   }

@@ -108,6 +108,9 @@ function registerModule(module) {
     widget.prototype.name = name;
     cms.widgets[name] = widget;
     installDependencies(new widget({}));
+    if (widget.init) {
+      widget.init();
+    }
   });
 
   _.each(m.events, function(event, name) {

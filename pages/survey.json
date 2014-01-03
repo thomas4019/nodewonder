@@ -1,0 +1,14 @@
+[{
+  "start:template" : {"path" : "admin.html", "zones" : {
+    "body" : ["storage"]
+  }},
+  "storage:ijson" : {"zones" : {
+    "form" : ["first_name", "last_name", "test", "save"]
+  }},
+  "first_name:field_text" : {"label" : "First Name"},
+  "last_name:field_text" : {"label" : "Last Name"},
+  "test:field_boolean" : {"label" : "Test"},
+  "save:submit" : {"label" : "Submit Results"}
+},
+[]
+]

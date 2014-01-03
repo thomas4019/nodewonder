@@ -1,21 +1,22 @@
-[{
-    "start:template": {
-        "path": "themes/html5up-tessellate/template.html",
-        "zones": {
-            "title": [
-                "1"
-            ],
-            "top": [
-                "2"
-            ]
+[
+    {
+        "start:template": {
+            "path": "themes/html5up-tessellate/template.html",
+            "zones": {
+                "title": [
+                    "1"
+                ],
+                "top": [
+                    "2"
+                ]
+            }
+        },
+        "1:itext": {
+            "value": "My dear friends!!!"
+        },
+        "2:htmlfile": {
+            "path": "menu.html"
         }
     },
-    "1:itext": {
-        "value": "My friends!!!"
-    },
-    "2:htmlfile": {
-        "path": "menu.html"
-    }
-},
-[]
+    []
 ]

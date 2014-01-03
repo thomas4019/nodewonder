@@ -59,6 +59,66 @@ widgets.json = function(input) {
 	}
 }
 
+widgets.ijson = function(input) {
+	var dir = input.dir || 'storage/survey';
+	var widget = input.widget || 'ijson'
+	var values;
+
+	this.deps = function() {
+		return {'jquery-form' : {}};
+	}
+
+	this.toHTML = function(zones) {
+		return '<form class="well" action="/post" method="post">'
+		 + '<input type="hidden" name="widget" value="' + widget + '">'
+		 + '<input type="hidden" name="id" value="' + input.id + '">'
+		 + '<input type="hidden" name="dir" value="' + dir + '">'
+		 + zones['form'] + 
+		'</form>';
+	}
+
+	this.load = function(callback) {
+		if (typeof input.id !== 'undefined' && input.id != 'undefined') {
+			fs.readFile(dir + '/' + (input.id) + '.json', 'utf8', function(err, data) {
+			  if (err) {
+			  	console.trace("Here I am!")
+			    return console.log(err);
+			  }
+				values = JSON.parse(data);
+				console.log(values);
+				callback();
+			});
+		} else {
+			callback();
+		}
+		
+	}
+
+	this.values = function() {
+		return values;
+	}
+
+	this.save = function(values) {
+		console.log('-------');
+		delete values['file'];
+		delete values['dir'];
+		var id = (typeof values.id !== 'undefined' && values.id != 'undefined') ? values.id : (widgets.ijson.counter++);
+		delete values['id'];
+		fs.writeFile(dir + '/' + id  + '.json', JSON.stringify(values, null, 4));
+	}
+}
+widgets.ijson.init = function() {
+	console.log('HELLO');
+	widgets.ijson.counter = 0;
+  var files = fs.readdirSync('storage/survey');
+  _.each(files, function(file) {
+    var current = parseInt(file.split('.')[0]);
+    if (current > widgets.ijson.counter) {
+    	widgets.ijson.counter = current + 1
+    }
+  });
+}
+
 widgets.pagejson = function(input) {
 	input.widget = 'pagejson';
 	var f = new widgets.json(input);
@@ -71,9 +131,11 @@ widgets.pagejson = function(input) {
 				console.trace("Here I am!")
 				console.log(err);
 			}
-			var jdata = JSON.parse(data);
-			jdata = cms.m.pages.functions.fillValues(jdata, widgetValues);
-		  fs.writeFile(input.dir + '/' + input.file + '.json', JSON.stringify(jdata, null, 4));
+	    var jdata = JSON.parse(data);
+	    var state = jdata[0];
+	    var rules = jdata[1];
+			state = cms.m.pages.functions.fillValues(state, widgetValues);
+		  fs.writeFile(input.dir + '/' + input.file + '.json', JSON.stringify([state, rules], null, 4));
 		});
 	}
 
