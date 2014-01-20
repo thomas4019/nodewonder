@@ -27,6 +27,10 @@ cms.actions = {};
 
 registerAllModules();
 
+/*cms.functions.allPagesToStatic();
+cms.functions.staticThemeCopy();
+cms.functions.staticModulesCopy();*/
+
 var router = new director.http.Router();
 
 function loadPaths() {
