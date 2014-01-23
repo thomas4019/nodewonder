@@ -15,17 +15,18 @@ var fs = require('fs'),
     async = require('async'),
     dive = require('dive'),
     path = require('path'),
-    bower = require('bower');
+    repl = require("repl"),
+    bower = require('bower'),
+    bowerJson = require('bower-json');
 
-var cms = {};
+cms = {};
 cms.m = {};
 cms.functions = {};
 cms.widgets = {};
 cms.events = {};
 cms.conditions = {};
 cms.actions = {};
-
-registerAllModules();
+cms.deps = {};
 
 /*cms.functions.allPagesToStatic();
 cms.functions.staticThemeCopy();
@@ -49,6 +50,8 @@ function loadPages() {
   });
 }
 
+registerAllModules();
+
 loadPages();
 setTimeout(loadPaths, 100);
 
@@ -67,7 +70,8 @@ var app = connect()
     }
   });
 
-http.createServer(app).listen(3000);
+http.createServer(app).listen(5000);
+repl.start({prompt: ':', useGlobal:true});
 
 console.log('Server running at http://127.0.0.1/');
 
@@ -83,17 +87,47 @@ function registerAllModules() {
 function installDependencies(thing) {
   if (thing.deps) {
     _.each(Object.keys(thing.deps()), function(dep, index) {
-      fs.exists('bower_components/' + dep, function (exists) {
-        if (!exists) {
-          bower.commands
-          .install([dep], { save: true }, { /* custom config */ })
-          .on('end', function (installed) {
-              console.log('bower: installed ' + dep);
-          });
-        }
-      });
+      if (dep != 'order') {
+        fs.exists('bower_components/' + dep, function (exists) {
+          if (!exists) {
+            bower.commands
+            .install([dep], { save: true }, { /* custom config */ })
+            .on('end', function (installed) {
+                console.log('bower: installed ' + dep);
+            });
+          } else {
+            registerDep(dep);
+          }
+        });
+      }
     });
   }
+}
+
+function registerDep(dep) {
+  if (cms.deps[dep])
+    return;
+
+  cms.deps[dep] = [];
+
+  var folder = 'bower_components/' + dep + '/';
+  bowerJson.read(folder + 'bower.json', function (err, json) {
+    var html = '';
+
+    if (err) {
+      //no bower.json file
+      //console.error(err.message);
+    } else {
+      cms.deps[dep] = json.main;
+      if(typeof json.main == 'string') {
+        cms.deps[dep] = [json.main];
+      } else if (Array.isArray(json.main)) {
+        cms.deps[dep] = json.main;
+      } else {
+        console.log('unexpected bower.json main: ' + dep);
+      }
+    }
+  });
 }
 
 function registerModule(module) {
@@ -185,7 +219,7 @@ var view = function() {
     that.res.end(html);
   }
 
-  cms.m.pages.functions.viewPage(url_parts.pathname, query, viewReady);  
+  cms.functions.viewPage(url_parts.pathname, query, viewReady);  
 }
 
 var router_error = function(err) {

@@ -49,7 +49,7 @@ widgets.setting = function(input) {
 
 	this.deps = function() {
 		return {
-			'jquery-form' : {}
+			'jquery-form' : []
 		};
 	}
 

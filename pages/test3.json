@@ -1,0 +1,19 @@
+[{
+    "start:template": {
+        "path": "admin.html",
+        "zones": {
+            "body": [
+                "1"
+            ],
+            "top": [
+                "2"
+            ]
+        }
+    },
+    "1:login": {},
+    "2:htmlfile": {
+        "path": "menu.html"
+    }
+},
+[]
+]

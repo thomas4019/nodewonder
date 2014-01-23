@@ -25,7 +25,7 @@ widgets.json = function(input) {
 	var values;
 
 	this.deps = function() {
-		return {'jquery-form' : {}};
+		return {'jquery-form' : []};
 	}
 
 	this.toHTML = function(zones) {
@@ -65,7 +65,7 @@ widgets.ijson = function(input) {
 	var values;
 
 	this.deps = function() {
-		return {'jquery-form' : {}};
+		return {'jquery-form' : []};
 	}
 
 	this.toHTML = function(zones) {
@@ -108,7 +108,6 @@ widgets.ijson = function(input) {
 	}
 }
 widgets.ijson.init = function() {
-	console.log('HELLO');
 	widgets.ijson.counter = 0;
   var files = fs.readdirSync('storage/survey');
   _.each(files, function(file) {

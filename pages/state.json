@@ -4,11 +4,13 @@
         "zones": {
             "body": [
                 "ph",
+                "save",
                 "wl"
             ]
         }
     },
-    "ph:page_heirarchy": {},
+    "save:submit": {"label": "Save"},
+    "ph:page_heirarchy": {"page": "test2"},
     "wl:widget_listing": {}
 },
 []

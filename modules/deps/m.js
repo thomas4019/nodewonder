@@ -19,34 +19,27 @@ functions.processDeps = function(deps, callback) {
     callback();
     return;
   }
-  async.each(Object.keys(deps), function(dep, callback2) {
-    var depDetail = deps[dep];
-    cms.functions.processDep(dep, function(html) {
-      head += html;
-      callback2();
-    });
-  }, function(err) {
-    callback(head);
+  var order = deps['order'];
+  delete deps['order'];
+  order = _.union(order, Object.keys(deps));
+  _.each(order, function(dep, index) {
+    var depFiles = _.union(cms.deps[dep], deps[dep]);
+    head += cms.functions.processDep(dep, depFiles);
   });
+
+  callback(head);
 }
 
-functions.processDep = function(dep, callback) {
+functions.processDep = function(dep, depFiles) {
 	var folder = 'bower_components/' + dep + '/';
 
-	bowerJson.read(folder + 'bower.json', function (err, json) {
-    if (err) {
-        console.error(err.message);
-        return;
+  var html = '';
+  _.each(depFiles, function(file, index) {
+    if (file) {
+      html += cms.functions.fileToHTML('/' + folder, file);
     }
-
-    var html = '';
-    _.each(json.main, function(file, index) {
-    	html += cms.functions.fileToHTML('/' + folder, file);
-    });
-
-    callback(html);
-    console.log('JSON: ', json);
-});
+  });
+  return html;
 }
 
 functions.fileToHTML = function(folder, file) {

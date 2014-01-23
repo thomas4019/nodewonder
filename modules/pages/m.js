@@ -3,7 +3,9 @@ var _ = require('underscore'),
     async = require('async'),
     file = require('file'),
     dive = require('dive'),
-    path = require('path');
+    path = require('path'),
+    deepExtend = require('deep-extend'),
+    dextend = require('dextend');
 
 var cms;
 module.exports = {
@@ -21,6 +23,10 @@ functions.organizeState = function(state, callback) {
   var count = 1;
 
   var initializeWidget = function(w, key) {
+    if (!key) {
+      console.log('invalid key: ' + JSON.stringify(w, 0, 2));
+    }
+
     var parts = key.split(":");
     var id = parts[0];
     var name = parts[1];
@@ -173,6 +179,7 @@ functions.viewPage = function(path, vars, callback) {
 functions.renderState = function(state, vars, callback, head_additional, deps) {
   state = cms.functions.splitAndFill(state, vars);
 
+  var deps_head = '';
   var head = '';
   var onready = '';
   var values = {};
@@ -224,6 +231,9 @@ functions.renderState = function(state, vars, callback, head_additional, deps) {
     var widget_html = '';
 
     if (widget.isPage) {
+      if (deps_head) {
+        head = deps_head + head;
+      }
       if (head_additional) {
         head += head_additional;
       }
@@ -250,6 +260,9 @@ functions.renderState = function(state, vars, callback, head_additional, deps) {
         function(callback1){
           async.each(Object.keys(widgets_buffer), function(id, callback) {
             var widget = widgets_buffer[id];
+            if (widget.deps) {
+              dextend(deps, widget.deps());
+            }
             if (widget.load)
               widget.load(callback);
             else
@@ -258,7 +271,7 @@ functions.renderState = function(state, vars, callback, head_additional, deps) {
         },
         function(callback1){
           cms.functions.processDeps(deps, function(html) {
-            head_additional += html
+            deps_head = html;
             callback1();
           });
         }
@@ -343,11 +356,11 @@ widgets.page_heirarchy = function (input, id) {
   page = input.page || 'test2';
 
   this.head = function() {
-    return '<script src="/modules/forms/data.js" type="text/javascript"></script>';
+    return '<script type="text/javascript">var state = ' + JSON.stringify(state) + '</script><script src="/modules/forms/data.js" type="text/javascript"></script>';
   }
 
   this.deps = function() {
-    return {'dynatree' : [], 'jquery-ui' : []};
+    return {'jquery-ui' : [],'dynatree' : ['dist/jquery.dynatree.min.js', 'dist/skin-vista/ui.dynatree.css'], 'order' : ['jquery-ui', 'dynatree']};
   }
 
   this.load = function(callback) {
@@ -356,16 +369,12 @@ widgets.page_heirarchy = function (input, id) {
         console.trace("Here I am!")
         return console.log(err);
       }
-      state = JSON.parse(data);
-
-      cms.functions.organizeState(state, function(widgets_buffer) {
-        children.push(toTreeArray(widgets_buffer['start']));
-        callback();
-      });
+      jdata = JSON.parse(data);
+      state = jdata[0];
 
       var toTreeArray = function(w) {
         var element = {title: w.id + ':' + w.name, children : [], expand: true};
-        _.each(w.children, function(zone_children, zone) {
+        _.each(w.all_children, function(zone_children, zone) {
           var zone_element = {title: zone, isFolder: true, children : [], expand: true};
           _.each(zone_children, function(child) {
             zone_element.children.push(toTreeArray(child));
@@ -375,12 +384,18 @@ widgets.page_heirarchy = function (input, id) {
 
         return element;
       }
+
+      cms.functions.organizeState(state, function(widgets_buffer) {
+        children.push(toTreeArray(widgets_buffer['start']));
+        console.log(widgets_buffer);
+        callback();
+      });
     });
   }
 
 
   this.script = function() {
-    return 'console.log(data); $("#tree").dynatree({children : ' + JSON.stringify(children) + ', dnd : dnd2});';
+    return '$("#tree").dynatree({children : ' + JSON.stringify(children) + ', dnd : dnd2});';
   }
 
   this.toHTML = function(zones, value) {
@@ -396,7 +411,7 @@ widgets.widget_listing = function (input, id) {
   }
 
   this.deps = function() {
-    return {'dynatree' : [], 'jquery-ui' : []};
+    return {'jquery-ui' : [],'dynatree' : ['dist/jquery.dynatree.min.js', 'dist/skin-vista/ui.dynatree.css'], 'order' : ['jquery-ui', 'dynatree']};
   }
 
   this.load = function(callback) {

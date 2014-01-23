@@ -4,7 +4,8 @@ var forms = require('forms'),
     fwidgets = forms.widgets,
     fs = require('fs'),
     _ = require('underscore'),
-    deepExtend = require('deep-extend');
+    deepExtend = require('deep-extend'),
+    dextend = require('dextend');
 
 var cms;
 module.exports = {
@@ -35,7 +36,7 @@ functions.ruleToJS = function(rule) {
 		script += actionObject.toJS();
 		head += actionObject.head ? actionObject.head() : '';
 		if (actionObject.deps) {
-			deepExtend(deps, actionObject.deps());
+			dextend(deps, actionObject.deps());
 		}
 	});
 
@@ -52,7 +53,7 @@ functions.processRules = function(rules, callback) {
 		results = functions.ruleToJS(rule);
 		script += results[0];
 		//head += results[1];
-		deepExtend(deps, results[1]);
+		dextend(deps, results[1]);
 	});
 	callback(script, deps);
 }
@@ -112,7 +113,7 @@ actions.message = function(input) {
 	}
 
 	this.deps = function() {
-		return {'toastr': {}};
+		return {'toastr': []};
 	}
 }
 
@@ -140,7 +141,7 @@ widgets.rule_page_editor = function(input) {
   }
 
   this.deps = function() {
-    return {'jquery-ui': {}};
+    return {'jquery-ui': []};
   }
 
   this.toHTML = function(zones) {
