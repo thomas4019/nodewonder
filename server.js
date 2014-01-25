@@ -70,7 +70,7 @@ var app = connect()
     }
   });
 
-http.createServer(app).listen(5000);
+http.createServer(app).listen(3000);
 repl.start({prompt: ':', useGlobal:true});
 
 console.log('Server running at http://127.0.0.1/');

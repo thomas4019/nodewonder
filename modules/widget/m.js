@@ -116,3 +116,39 @@ widgets.widget_settings = function(input, id) {
      '</div>';
   }
 }
+
+widgets.widget_selector = function (input, id) {
+  var children = [];
+  var html;
+
+  this.head = function() {
+    return '';
+  }
+
+  this.deps = function() {
+    return {'select2': []};
+  }
+
+  this.load = function(callback) {
+    html = '<select class="widget-selector" style="display: none; width: 300px;">'
+
+    _.each(cms.widgets, function(widget) {
+      w = new widget({});
+      //children.push({title : w.name, copy: 'listing'});
+      html += '<option value="' + w.name + '">' + w.name + '</option>'
+    });
+
+    html += '</select>';
+
+    callback();
+  }
+
+
+  this.script = function() {
+    return '$(".widget-selector").select2();';
+  }
+
+  this.toHTML = function(zones, value) {
+    return html;
+  }
+}

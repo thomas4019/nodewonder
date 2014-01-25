@@ -403,6 +403,38 @@ widgets.page_heirarchy = function (input, id) {
   }
 }
 
+widgets.state_editor = function (input, id) {
+  var children = [];
+
+  page = input.page || 'test2';
+  var state;
+
+  this.load = function(callback) {
+    fs.readFile('pages/' + page + '.json', 'utf8', function(err, data) {
+      if (err) {
+        console.trace("Here I am!")
+        return console.log(err);
+      }
+      jdata = JSON.parse(data);
+      state = jdata[0];
+
+      callback();
+    });
+  }
+
+  this.head = function() {
+    return '<script src="/modules/pages/state-utils.js" type="text/javascript"></script><script type="text/javascript">var state = ' + JSON.stringify(state) + ';</script>';
+  }
+
+  this.deps = function() {
+    return {'angular': [], 'underscore': ['underscore.js']};
+  }
+
+  this.toHTML = function(zones, value) {
+    return '<div ng-app><input type="text" ng-model="test" /><ul ng-controller="stateController"><li ng-init="id = \'start\';" ng-include="\'/modules/pages/state-editor.js\'"></li></div>';
+  }
+}
+
 widgets.widget_listing = function (input, id) {
   var children = [];
 

@@ -10,8 +10,8 @@
         }
     },
     "save:submit": {"label": "Save"},
-    "ph:page_heirarchy": {"page": "test2"},
-    "wl:widget_listing": {}
+    "ph:state_editor": {"page": "test2"},
+    "wl:widget_selector": {}
 },
 []
 ]
