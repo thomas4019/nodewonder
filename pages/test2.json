@@ -1,37 +1,51 @@
-[{
-    "start:template": {
-        "path": "admin.html",
-        "zones": {
-            "body": [
-                "two"
-            ],
-            "top": [
-                "2"
-            ]
+[
+    {
+        "start:template": {
+            "path": "admin.html",
+            "zones": {
+                "body": [
+                    "two",
+                    "RSwriXVr",
+                    "fsc5eYxM"
+                ],
+                "top": [
+                    "2"
+                ]
+            },
+            "w": "template"
+        },
+        "Dew9f0an:youtube_video": {
+            "w": "youtube_video",
+            "zones": {},
+            "id": "OZk8nlcpe3w"
+        },
+        "fsc5eYxM:two_col": {
+            "w": "two_col",
+            "zones": {
+                "left": [
+                    "UBC8erLx",
+                    "Q7MbPPDC",
+                    "2YubgJus",
+                    "PbZmXcR0"
+                ],
+                "right": [
+                    "RujEueDX",
+                    "WX0keBWb"
+                ]
+            }
+        },
+        "Q7MbPPDC:hello_world": {
+            "w": "hello_world",
+            "zones": {}
+        },
+        "2YubgJus:ckeditor": {
+            "w": "ckeditor",
+            "zones": {}
+        },
+        "PbZmXcR0:submit": {
+            "w": "submit",
+            "zones": {}
         }
     },
-    "two:two_col": {
-        "zones": {
-            "left": [
-                "1",
-                "1c"
-            ],
-            "right": [
-                "1b"
-            ]
-        },
-        "col2": "6"
-    },
-    "1:youtube_video": {
-        "id": "S-KaR5NUrws"
-    },
-    "1b:youtube_video": {
-        "id": "7j5Be5a86uA"
-    },
-    "1c:field_text": {},
-    "2:htmlfile": {
-        "path": "menu.html"
-    }
-},
-[]
+    []
 ]

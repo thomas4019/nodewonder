@@ -53,6 +53,10 @@ widgets.two_col = function(input) {
 		return '<div class="row"><div class="col-sm-' + this.col1 + '">' + zones['left'] + 
 			'</div><div class="col-sm-' + this.col2 + '">' + zones['right'] + '</div></div>';
 	}
+
+  this.zones = function() {
+    return ['left', 'right'];
+  }
 }
 
 widgets.widget_settings = function(input, id) {
@@ -131,11 +135,12 @@ widgets.widget_selector = function (input, id) {
 
   this.load = function(callback) {
     html = '<select class="widget-selector" style="display: none; width: 300px;">'
+    html += '<option value="">- Select Widget -</option>'
 
     _.each(cms.widgets, function(widget) {
       w = new widget({});
       //children.push({title : w.name, copy: 'listing'});
-      html += '<option value="' + w.name + '">' + w.name + '</option>'
+      html += '<option value="' + w.name + '" data-zones=\''+ (w.zones ? JSON.stringify(w.zones()) : []) +'\'>' + w.name + '</option>'
     });
 
     html += '</select>';

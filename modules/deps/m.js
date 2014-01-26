@@ -43,7 +43,11 @@ functions.processDep = function(dep, depFiles) {
 }
 
 functions.fileToHTML = function(folder, file) {
-	var ext = file.split('.').pop();
+  if (!file || typeof file !== 'string') {
+    console.log('invalid dependency:' + folder + ' ' + JSON.stringify(file));
+    return;
+  }
+ 	var ext = file.split('.').pop();
 	var full = folder + file;
 	if (ext == 'js') {
 		return '\n<script type="text/javascript" src="' + full + '"></script>';

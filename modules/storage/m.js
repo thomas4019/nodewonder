@@ -140,3 +140,41 @@ widgets.pagejson = function(input) {
 
 	return f;
 }
+
+widgets.statejson = function(input) {
+	input.widget = 'statejson';
+	var f = new widgets.json(input);
+	var current_state;
+
+	f.load = function(callback) {
+		fs.readFile(input.dir + '/' + input.file + '.json', 'utf8', function(err, data) {
+		  if (err) {
+		  	console.trace("Here I am!")
+		    return console.log(err);
+		  }
+	    var jdata = JSON.parse(data);
+	    current_state = jdata[0];
+			callback();
+		});
+	}
+
+	f.values = function() {
+		return {'state': current_state};
+	}
+
+	f.save  = function(values) {
+		fs.readFile(input.dir + '/' + input.file + '.json', 'utf8', function(err, data) {
+			if (err) {
+				console.trace("Here I am!")
+				console.log(err);
+			}
+	    var jdata = JSON.parse(data);
+	    var state = jdata[0];
+	    var rules = jdata[1];
+	    state = JSON.parse(values['state']);
+		  fs.writeFile(input.dir + '/' + input.file + '.json', JSON.stringify([state, rules], null, 4));
+		});
+	}
+
+	return f;
+}

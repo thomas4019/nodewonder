@@ -60,6 +60,34 @@ widgets.field_text = function (input, id) {
   }
 }
 
+widgets.textarea = function (input, id) {
+  var name = input.name || id;
+  var label = input.label;
+  var value = input.value || '';
+
+  this.toHTML = function(zones, value) {
+    return '<label for="' + name + '">' + label + '</label><textarea name="' + name + '" value="' + (value || input.value) + '"></textarea>';
+  }
+}
+
+widgets.ckeditor = function (input, id) {
+  var name = input.name || id;
+  var label = input.label;
+  var value = input.value || '';
+
+  this.toHTML = function(zones, value) {
+    return '<label for="' + name + '">' + label + '</label><textarea id="'+id+'" name="' + name + '" value="' + (value || input.value) + '"></textarea>';
+  }
+
+  this.script = function() {
+    return 'CKEDITOR.replace("' + id + '",{toolbar:"Basic"});';
+  }
+
+  this.deps = function() {
+    return {'ckeditor': ['ckeditor.js']};
+  }
+}
+
 widgets.field_text_select = function (input) {
 	var name = input.name;
 	var label = input.label;
@@ -131,7 +159,7 @@ widgets.itext = function (input, id) {
 
 widgets.test = function (input, id) {
   this.deps = function() {
-    return {'dynatree' : {}, 'jquery-ui': {} }
+    return {'dynatree' : [], 'jquery-ui': [] }
   }
 
   this.head = function() {

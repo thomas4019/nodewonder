@@ -181,7 +181,6 @@ functions.renderState = function(state, vars, callback, head_additional, deps) {
 
   var deps_head = '';
   var head = '';
-  var onready = '';
   var values = {};
 
   cms.functions.organizeState(state, function(widgets_buffer) {
@@ -197,6 +196,7 @@ functions.renderState = function(state, vars, callback, head_additional, deps) {
 
   function toHTML(widget) {
     var zones = {};
+    var onready = '';
 
     if (widget.head) {
       head += widget.head();
@@ -342,7 +342,7 @@ widgets.page_editor = function(input) {
   }
 
   this.deps = function() {
-    return {'jquery-ui': {}};
+    return {'jquery-ui': []};
   }
 
   this.toHTML = function(zones) {
@@ -422,16 +422,20 @@ widgets.state_editor = function (input, id) {
     });
   }
 
+  this.script = function() {
+    return '$("input[type=\'submit\']").click(exportState);';
+  }
+
   this.head = function() {
     return '<script src="/modules/pages/state-utils.js" type="text/javascript"></script><script type="text/javascript">var state = ' + JSON.stringify(state) + ';</script>';
   }
 
   this.deps = function() {
-    return {'angular': [], 'underscore': ['underscore.js']};
+    return {'angular': [], 'underscore': ['underscore.js'], 'font-awesome': ['css/font-awesome.css']};
   }
 
   this.toHTML = function(zones, value) {
-    return '<div ng-app><input type="text" ng-model="test" /><ul ng-controller="stateController"><li ng-init="id = \'start\';" ng-include="\'/modules/pages/state-editor.js\'"></li></div>';
+    return '<textarea style="display:none;" name="state">' + JSON.stringify(value) + '</textarea><div ng-app><ul id="state-ctrl" ng-controller="stateController"><li id="start" ng-init="id = \'start\';" ng-include="\'/modules/pages/state-editor.js\'"></li><a ng-click="saveState()" >Save</a</div>';
   }
 }
 

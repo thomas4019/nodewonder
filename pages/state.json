@@ -3,14 +3,13 @@
         "path": "admin.html",
         "zones": {
             "body": [
-                "ph",
-                "save",
-                "wl"
+                "storage"
             ]
         }
     },
+    "storage:statejson" : {"file" : "test2", "dir" : "pages" ,"zones" : {"form" : ["state","save","wl"] }},
     "save:submit": {"label": "Save"},
-    "ph:state_editor": {"page": "test2"},
+    "state:state_editor": {"page": "test2"},
     "wl:widget_selector": {}
 },
 []
