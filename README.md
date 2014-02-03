@@ -1,5 +1,11 @@
-cms
+Node Wonder
 ===
+##Getting Started
+1. Install [Node and NPM](http://nodejs.org/download/)
+2. Within project run "npm install"
+3. Run "node server.js"
+4. Visit [http://localhost:3000](http://localhost:3000)
+5. When debugging and programming using nodemon (from npm is useful)
 ##Todo
 * Show multiple zones of a widget together horizontally
 * Adding new widgets to page
