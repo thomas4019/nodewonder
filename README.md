@@ -12,8 +12,6 @@ Node Wonder
 2. [Technical Details (Widgets)](https://docs.google.com/document/d/1LL-SGv9wvnWPT5aZLaNGSyzU45xC27R1-6Fz67FupAo)
 
 ## Todo
-* Show multiple zones of a widget together horizontally
-* Adding new widgets to page
 * Moving widgets from zone to zone
 * Sorting widgets
 * Create a "model" stored in the file system
@@ -23,7 +21,6 @@ Node Wonder
 * Multi-valued fields
 * Heirarchical fields
 * Composition of fields
-* External library management (cdn/js)
 * Interal library functions
 * CSS/JS Aggregation
 
