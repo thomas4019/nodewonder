@@ -12,7 +12,7 @@
             }
         },
         "1:itext": {
-            "value": "My dear friends!!!"
+            "value": "Hello World!"
         },
         "2:htmlfile": {
             "path": "menu.html"

@@ -14,7 +14,8 @@
     "nodemon": "~0.7.10",
     "underscore": "~1.5.2",
     "bower": "~1.2.8",
-    "deep-extend": "~0.2.6"
+    "deep-extend": "~0.2.6",
+    "socket.io": "~0.9.16"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3"

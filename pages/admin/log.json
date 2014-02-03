@@ -1,0 +1,8 @@
+[{
+  "start:template" : {"path" : "admin.html", "zones" : {
+    "body" : ["log"]
+  }},
+  "log:site_log" : {}
+},
+[]
+]

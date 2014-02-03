@@ -70,8 +70,18 @@ var app = connect()
     }
   });
 
-http.createServer(app).listen(3000);
+var app2 = http.createServer(app);
+app2.listen(3000);
 repl.start({prompt: ':', useGlobal:true});
+
+var io = require('socket.io').listen(app2)
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
 
 console.log('Server running at http://127.0.0.1/');
 
