@@ -15,7 +15,13 @@
     "underscore": "~1.5.2",
     "bower": "~1.2.8",
     "deep-extend": "~0.2.6",
-    "socket.io": "~0.9.16"
+    "socket.io": "~0.9.16",
+    "dive": "~0.3.0",
+    "bower-json": "~0.4.0",
+    "dextend": "~0.1.1",
+    "mkdirp": "~0.3.5",
+    "passport": "~0.2.0",
+    "passport-local": "~0.1.6"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3"
