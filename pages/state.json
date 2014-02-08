@@ -1,15 +1,14 @@
 [{
-    "start:template": {
-        "path": "admin.html",
+    "start:echo": {
         "zones": {
             "body": [
                 "storage"
             ]
         }
     },
-    "storage:statejson" : {"file" : "test2", "dir" : "pages" ,"zones" : {"form" : ["state","save","wl"] }},
+    "storage:statejson" : {"file" : "test2", "dir" : "pages" ,"zones" : {"form" : ["editor","save","wl"] }},
     "save:submit": {"label": "Save"},
-    "state:state_editor": {"page": "test2"},
+    "editor:state_editor": {"page": "test2"},
     "wl:widget_selector": {}
 },
 []

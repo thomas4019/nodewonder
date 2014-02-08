@@ -13,21 +13,20 @@ module.exports = {
 };
 functions = module.exports.functions;
 
-functions.processDeps = function(deps, callback) {
-  var head = ''
+functions.processDeps = function(deps) {
   if (!deps) {
-    callback();
-    return;
+    return '';
   }
   var order = deps['order'];
   delete deps['order'];
   order = _.union(order, Object.keys(deps));
+  var head = [];
   _.each(order, function(dep, index) {
     var depFiles = _.union(cms.deps[dep], deps[dep]);
-    head += cms.functions.processDep(dep, depFiles);
+    head.push(cms.functions.processDep(dep, depFiles));
   });
 
-  callback(head);
+  return head;
 }
 
 functions.processDep = function(dep, depFiles) {
@@ -50,9 +49,9 @@ functions.fileToHTML = function(folder, file) {
  	var ext = file.split('.').pop();
 	var full = folder + file;
 	if (ext == 'js') {
-		return '\n<script type="text/javascript" src="' + full + '"></script>';
+		return '<script type="text/javascript" src="' + full + '"></script>';
 	} else if (ext == 'css') {
-		return '\n<link rel="stylesheet" href="' + full + '" />';
+		return '<link rel="stylesheet" href="' + full + '" />';
 	} else {
 		return '';
 	}

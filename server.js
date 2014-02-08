@@ -51,6 +51,7 @@ function loadPages() {
 }
 
 registerAllModules();
+registerAllThemes();
 
 loadPages();
 setTimeout(loadPaths, 100);
@@ -59,6 +60,7 @@ var app = connect()
   .use(connect.static('themes/html5up-tessellate/'))
   .use('/files', connect.static('files'))
   .use('/modules', connect.static('modules'))
+  .use('/themes', connect.static('themes'))
   .use('/bower_components', connect.static('bower_components'))
   .use(function (req, res) {
     if (req.method == 'POST') {
@@ -74,14 +76,14 @@ var app2 = http.createServer(app);
 app2.listen(3000);
 repl.start({prompt: ':', useGlobal:true});
 
-var io = require('socket.io').listen(app2)
+/*var io = require('socket.io').listen(app2)
 
 io.sockets.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
     console.log(data);
   });
-});
+});*/
 
 console.log('Server running at http://127.0.0.1/');
 
@@ -89,7 +91,16 @@ function registerAllModules() {
   var files = fs.readdirSync('modules');
   _.each(files, function(file) {
     if (file.charAt(0) !== '.' && fs.existsSync('modules/' + file + '/m.js')) {
-      registerModule(file);
+      registerModule('modules', file, '');
+    }
+  });
+}
+
+function registerAllThemes() {
+  var files = fs.readdirSync('themes');
+  _.each(files, function(file) {
+    if (file.charAt(0) !== '.' && fs.existsSync('themes/' + file + '/m.js')) {
+      registerModule('themes', file, file + '/');
     }
   });
 }
@@ -140,8 +151,8 @@ function registerDep(dep) {
   });
 }
 
-function registerModule(module) {
-  var m = require('./modules/' + module + '/m');
+function registerModule(directory, module, prefix) {
+  var m = require('./' + directory + '/' + module + '/m');
   cms.m[module] = m;
   if (m.register) {
     m.register(cms);
@@ -153,8 +164,8 @@ function registerModule(module) {
   });
 
   _.each(m.widgets, function(widget, name) {
-    widget.prototype.name = name;
-    cms.widgets[name] = widget;
+    widget.prototype.name = prefix+name;
+    cms.widgets[prefix+name] = widget;
     installDependencies(new widget({}));
     if (widget.init) {
       widget.init();
@@ -224,8 +235,8 @@ var view = function() {
   var url_parts = url.parse(this.req.url, true);
   var query = url_parts.query;
 
-  var viewReady = function(html) {
-    that.res.writeHead(200, {'Content-Type': 'text/html'});
+  var viewReady = function(html, content_type) {
+    that.res.writeHead(200, {'Content-Type': content_type});
     that.res.end(html);
   }
 

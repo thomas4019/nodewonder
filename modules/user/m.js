@@ -21,11 +21,16 @@ widgets.login = function() {
         "path": "login.html"
     }};*/
     var state = {
-        "username:field_text" : {},
-        "password:field_text" : {},
+        "start:form": {'widget': 'login','zones': {'form': ["username", "password", "save"]}},
+        "username:field_text" : {"label": "Username"},
+        "password:field_text" : {"label": "Password"},
         "save:submit" : {"label": "Login"},
     };
     callback({'body': state});
+  }
+
+  this.save = function(values) {
+    console.log(values);
   }
 
   this.toHTML = function(zones) {

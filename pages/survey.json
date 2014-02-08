@@ -1,14 +1,83 @@
-[{
-  "start:template" : {"path" : "admin.html", "zones" : {
-    "body" : ["storage"]
-  }},
-  "storage:ijson" : {"zones" : {
-    "form" : ["first_name", "last_name", "test", "save"]
-  }},
-  "first_name:field_text" : {"label" : "First Name"},
-  "last_name:field_text" : {"label" : "Last Name"},
-  "test:field_boolean" : {"label" : "Test"},
-  "save:submit" : {"label" : "Submit Results"}
-},
-[]
+[
+    {
+        "start:template": {
+            "path": "admin.html",
+            "zones": {
+                "body": [
+                    "storage",
+                    "3xdDvxab"
+                ]
+            },
+            "w": "template"
+        },
+        "storage:ijson": {
+            "zones": {
+                "form": [
+                    "first_name",
+                    "last_name",
+                    "test",
+                    "save",
+                    "PiJStfTn",
+                    "JiqZex9a",
+                    "0vX9eZT4",
+                    "sR7e7xRC",
+                    "JRLEOxy3",
+                    "MbI2rJhm",
+                    "6iGHG5cv",
+                    "SAMW1pC5",
+                    "Ccn2q8kL",
+                    "npAgWS5Q",
+                    "emytrV9L",
+                    "Mx82pjxz",
+                    "O8TN7cHU",
+                    "xaxQ54V7",
+                    "9H44150T",
+                    "eRN4Uw6e",
+                    "tgokKsFc",
+                    "1cO0Zwts",
+                    "ASbUNZe8",
+                    "xEksiMuX",
+                    "79HrqzPf",
+                    "XNNOxc5Y",
+                    "wdK0AIwQ",
+                    "poZMVCrR",
+                    "KD0FS4Fd",
+                    "3KAYJlTW"
+                ]
+            },
+            "w": "ijson"
+        },
+        "first_name:field_text": {
+            "label": "First Name",
+            "w": "field_text"
+        },
+        "last_name:field_text": {
+            "label": "Last Name",
+            "w": "field_text"
+        },
+        "test:field_boolean": {
+            "label": "Test",
+            "w": "field_boolean"
+        },
+        "3xdDvxab:two_col": {
+            "w": "two_col",
+            "zones": {
+                "left": [
+                    "SkggKtGl"
+                ],
+                "right": [
+                    "NdxnQvri"
+                ]
+            }
+        },
+        "SkggKtGl:hello_world": {
+            "w": "hello_world",
+            "zones": {}
+        },
+        "NdxnQvri:hello_world": {
+            "w": "hello_world",
+            "zones": {}
+        }
+    },
+    []
 ]

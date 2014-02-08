@@ -1,6 +1,5 @@
 [{
-    "start:template": {
-        "path": "admin.html",
+    "start:echo": {
         "zones": {
             "body": [
                 "1c",

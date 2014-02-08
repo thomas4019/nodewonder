@@ -1,49 +1,90 @@
 [
     {
-        "start:template": {
-            "path": "admin.html",
+        "start:bartik/home": {
             "zones": {
-                "body": [
-                    "two",
-                    "RSwriXVr",
-                    "fsc5eYxM"
+                "header": [
+                    "PA2Y1TR3"
                 ],
-                "top": [
-                    "2"
+                "featured": [],
+                "sidebar_first": [
+                    "orowjKln",
+                    "CfgSAaGd"
+                ],
+                "highlighted": [
+                    "B84MlNWN"
+                ],
+                "title": [
+                    "VkLKWdrB"
+                ],
+                "tabs": [],
+                "help": [],
+                "action_links": [],
+                "content": [
+                    "yXfb10f2",
+                    "rUyknXZX",
+                    "88DF663m",
+                    "GUijosAC",
+                    "FoHU2OYQ",
+                    "5y9Ox1vx",
+                    "0VAY5lVi",
+                    "jJklTCzd",
+                    "NZXVdo53",
+                    "WzKs1ahV",
+                    "BjKX4Xxk",
+                    "T0PSQSEx",
+                    "EJCSMXm3"
+                ],
+                "sidebar_second": [
+                    "IuQoX86k"
+                ],
+                "triptych": [
+                    "1hyes8Fl",
+                    "k7QaX2lE",
+                    "6d7oeFf6"
+                ],
+                "footer_above": [
+                    "1od6xx7A"
+                ],
+                "footer": [
+                    "BiMreYUI"
                 ]
             },
-            "w": "template"
+            "w": "bartik/home"
         },
-        "Dew9f0an:youtube_video": {
-            "w": "youtube_video",
-            "zones": {},
-            "id": "OZk8nlcpe3w"
-        },
-        "fsc5eYxM:two_col": {
-            "w": "two_col",
-            "zones": {
-                "left": [
-                    "UBC8erLx",
-                    "Q7MbPPDC",
-                    "2YubgJus",
-                    "PbZmXcR0"
-                ],
-                "right": [
-                    "RujEueDX",
-                    "WX0keBWb"
-                ]
-            }
-        },
-        "Q7MbPPDC:hello_world": {
+        "IuQoX86k:hello_world": {
             "w": "hello_world",
             "zones": {}
         },
-        "2YubgJus:ckeditor": {
-            "w": "ckeditor",
+        "BiMreYUI:hello_world": {
+            "w": "hello_world",
             "zones": {}
         },
-        "PbZmXcR0:submit": {
-            "w": "submit",
+        "PA2Y1TR3:hello_world": {
+            "w": "hello_world",
+            "zones": {}
+        },
+        "1od6xx7A:hello_world": {
+            "w": "hello_world",
+            "zones": {}
+        },
+        "6d7oeFf6:hello_world": {
+            "w": "hello_world",
+            "zones": {}
+        },
+        "VkLKWdrB:hello_world": {
+            "w": "hello_world",
+            "zones": {}
+        },
+        "B84MlNWN:hello_world": {
+            "w": "hello_world",
+            "zones": {}
+        },
+        "CfgSAaGd:login": {
+            "w": "login",
+            "zones": {}
+        },
+        "EJCSMXm3:youtube_video": {
+            "w": "youtube_video",
             "zones": {}
         }
     },

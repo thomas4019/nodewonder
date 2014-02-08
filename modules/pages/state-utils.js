@@ -40,6 +40,12 @@ function compressState(state) {
 function exportState() {
 	var cstate = angular.element($('#state-ctrl')).scope().state;
 	$("textarea").text(JSON.stringify(compressState(cstate)));
+	setTimeout('document.getElementsByTagName("iframe")[0].contentWindow.location.reload();', 250);
+	console.log(document.getElementsByTagName("iframe")[0]);
+}
+
+function stateChanged() {
+	setTimeout("$('#submit input').trigger('click');", 100);
 }
 
 function stateController($scope) {
@@ -65,17 +71,48 @@ function stateController($scope) {
 		$scope.state[new_id] = {w: type, zones: zones};
 		$scope.state[_id].zones[_zone].push(new_id);
 		$scope.$apply();
+		stateChanged();
 	});
 
 	$('.widget-selector').select2("container").hide();
 
 	$scope.deleteWidget = function(id) {
 		delete $scope.state[id];
-	}
+		stateChanged();
+	}	
+
+	$scope.configureWidget = function(id) {
+		$("#widgetForm").remove();
+		x = $('#'+id+' .configure').offset().left;
+		y = $('#'+id+' .configure').offset().top;
+		//var ne = document.createElement( "div" );
+		var ne = $( '<div id="widgetForm" style="left:'+x+'px; top:'+y+'px;" />' )
+		$('body').append(ne);
+		//ne.html('hello world');
+		var type = $scope.state[id].w;
+		console.log(type);
+		var data = {};
+		data['start-type'] = type;
+		//data['start-input'] = '{id:wjarzQWtBwM}';//'%7B"id"%3A"wjarzQWtBwM"%7D';
+		data['start-show_form'] = true;
+		//?start-type=youtube_video&start-input=%7B"id"%3A"wjarzQWtBwM"%7D&start-show_form=true
+		$.getJSON('/widget', data, function(result) {
+	    if (result.error) {
+	    	$("#widgetForm").remove();
+	    } else {
+				$("#widgetForm").html(result.html + '<a href>Save' + '<div class="close">X</div>');
+		    $("#widgetForm .close").click(function() {
+		    	$("#widgetForm").remove();
+		    });
+	    }
+	  });
+	}	
 
 	$scope.addWidget = function (id, zone) {
 		_id = id;
 		_zone = zone;
+		console.log(id);
+		console.log(zone);
 		x = $('#'+id+'-'+zone+' .add').offset().left;
 		y = $('#'+id+'-'+zone+' .add').offset().top;
 		$('.widget-selector').css({position: 'absolute', left: x, top: y })

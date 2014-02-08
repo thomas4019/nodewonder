@@ -1,9 +1,17 @@
 [{
-  "start:template" : {"path" : "admin.html", "zones" : {"body" : ["storage"]}},
-  "storage:pagejson" : {"file" : "test", "dir" : "pages" ,"zones" : {"form" : ["editor", "editor2", "save"]}},
-  "editor:page_editor" : {"page" : "test"},
-  "editor2:rule_page_editor" : {"page" : "test"},
-  "save:submit" : {"label" : "save"}
+    "start:echo": {
+        "zones": {
+            "body": [
+                "main"
+            ]
+        }
+    },
+    "main:two_col" : {"zones": {"left": ["storage"], "right": ["preview"]} },
+    "preview:iframe" : {"url" : "/"},
+    "storage:statejson" : {"file" : "test2", "dir" : "pages" ,"zones" : {"form" : ["editor","save","wl"] }},
+    "save:submit": {"label": "Save"},
+    "editor:state_editor": {"page": "test2"},
+    "wl:widget_selector": {}
 },
 []
 ]

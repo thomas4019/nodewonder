@@ -50,7 +50,7 @@ functions.processRules = function(rules, callback) {
 	var head = '';
 	var deps = {};
 	_.each(rules, function(rule, index) {
-		results = functions.ruleToJS(rule);
+		results = cms.functions.ruleToJS(rule);
 		script += results[0];
 		//head += results[1];
 		dextend(deps, results[1]);

@@ -28,7 +28,7 @@ var bootstrap_field = function (name, object) {
   var label = object.labelHTML(name);
   var error = object.error ? '<p class="form-error-tooltip">' + object.error + '</p>' : '';
   var widget = '<div class="controls">' + object.widget.toHTML(name, object) + error + '</div>';
-  return '<div class="field row ' + (error !== '' ? 'has-error' : '')  + '">' + label + widget + '</div>';
+  return '<div class="field ' + (error !== '' ? 'has-error' : '')  + '">' + label + widget + '</div>';
 }
 
 var widget_selector = function() {
@@ -49,6 +49,10 @@ widgets.two_col = function(input) {
     };
 	}
 
+  this.deps = function() {
+    return {'jquery':[],'bootstrap': []};
+  }
+
 	this.toHTML = function(zones) {
 		return '<div class="row"><div class="col-sm-' + this.col1 + '">' + zones['left'] + 
 			'</div><div class="col-sm-' + this.col2 + '">' + zones['right'] + '</div></div>';
@@ -65,7 +69,7 @@ widgets.widget_settings = function(input, id) {
   var winput2 = {};
 
 	this.head = function() {
-		return '<link href="/modules/widget/widget.css" rel="stylesheet" />';
+		return ['<link href="/modules/widget/widget.css" rel="stylesheet" />'];
 	}
 
   this.children = function(callback) {
@@ -125,10 +129,6 @@ widgets.widget_selector = function (input, id) {
   var children = [];
   var html;
 
-  this.head = function() {
-    return '';
-  }
-
   this.deps = function() {
     return {'select2': []};
   }
@@ -155,5 +155,80 @@ widgets.widget_selector = function (input, id) {
 
   this.toHTML = function(zones, value) {
     return html;
+  }
+}
+
+widgets.widget_exporter = function(input) {
+  var type = input.type || 'state_editor';
+  var widget_input = {};
+  var show_form = input.show_form || false;
+  var values = {};
+  var _html;
+  var _head;
+  var _script;
+
+  var error;
+
+  if (input.input) {
+    widget_input = JSON.parse(input.input);
+  }
+  if (input.values) {
+    values = JSON.parse(input.values);
+  }
+
+  this.isPage = function() {
+    return true;
+  }
+
+  this.contentType = function() {
+    return 'text/javascript';
+  }
+
+  this.load = function(callback) {
+    var viewReady = function(html, content_type, deps, head, javascript) {
+      var all_head = [];
+      all_head = all_head.concat(head);
+      all_head = all_head.concat(cms.functions.processDeps(deps));
+      _html = html;
+      _head = all_head;
+      _script = javascript;
+      callback();
+    }
+
+    var state = false;
+
+    if (show_form) {
+      widget = new cms.widgets[type](values);
+      if (widget.input) {
+        state = widget.input();
+      } else {
+        error = 'Widget does not have a form';
+      }
+    } else {
+      var key = "start:"+type;
+      state = {};
+      state[key] = widget_input;
+    }
+
+    if (state) {
+      cms.functions.renderStateParts(state, viewReady);
+    } else {
+      callback();
+    }
+  }
+
+  this.toHTML = function() {
+    if (error) {
+      var out = {error: error};
+      return JSON.stringify(out);
+    }
+
+    var out = {};
+    var widget = cms.widgets[type];
+    out['html'] = _html;
+    out['head'] = _head;
+    out['javascript'] = _script;
+    var json_out = JSON.stringify(out);
+    return json_out;
   }
 }

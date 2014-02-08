@@ -1,0 +1,39 @@
+[
+    {
+        "start:echo": {
+            "zones": {
+                "body": [
+                    "1",
+                    "OTt5RE38"
+                ]
+            },
+            "w": "echo"
+        },
+        "OTt5RE38:two_col": {
+            "w": "two_col",
+            "zones": {
+                "left": [
+                    "rQG7l4qp",
+                    "yI7fyV2D"
+                ],
+                "right": [
+                    "lCQhgoxR",
+                    "D9psZgqC"
+                ]
+            }
+        },
+        "yI7fyV2D:login": {
+            "w": "login",
+            "zones": {}
+        },
+        "lCQhgoxR:ckeditor": {
+            "w": "ckeditor",
+            "zones": {}
+        },
+        "D9psZgqC:youtube_video": {
+            "w": "youtube_video",
+            "zones": {}
+        }
+    },
+    []
+]

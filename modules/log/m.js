@@ -19,8 +19,8 @@ widgets = module.exports.widgets;
 
 widgets.site_log = function(input) {
 	this.head = function() {
-		return '<script src="/socket.io/socket.io.js"></script>' + 
-		'<script src="/modules/log/site_log.js" type="text/javascript"></script>';
+		return ['<script src="/socket.io/socket.io.js"></script>',
+			'<script src="/modules/log/site_log.js" type="text/javascript"></script>']
 	}
 
 	this.toHTML = function() {

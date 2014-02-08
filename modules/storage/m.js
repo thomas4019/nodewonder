@@ -25,7 +25,7 @@ widgets.json = function(input) {
 	var values;
 
 	this.deps = function() {
-		return {'jquery-form' : []};
+		return {'jquery' : [], 'jquery-form' : []};
 	}
 
 	this.toHTML = function(zones) {
@@ -65,7 +65,7 @@ widgets.ijson = function(input) {
 	var values;
 
 	this.deps = function() {
-		return {'jquery-form' : []};
+		return {'jquery' : [],'jquery-form' : []};
 	}
 
 	this.toHTML = function(zones) {
@@ -149,8 +149,11 @@ widgets.statejson = function(input) {
 	f.load = function(callback) {
 		fs.readFile(input.dir + '/' + input.file + '.json', 'utf8', function(err, data) {
 		  if (err) {
-		  	console.trace("Here I am!")
-		    return console.log(err);
+		  	console.log("JSON file doesn't exist");
+		  	current_state = {'start:echo': {'zones': {'page': []}}};
+		  	//console.log(err);
+		    callback();
+		    return;
 		  }
 	    var jdata = JSON.parse(data);
 	    current_state = jdata[0];
@@ -159,18 +162,19 @@ widgets.statejson = function(input) {
 	}
 
 	f.values = function() {
-		return {'state': current_state};
+		return {'editor': current_state};
 	}
 
 	f.save  = function(values) {
 		fs.readFile(input.dir + '/' + input.file + '.json', 'utf8', function(err, data) {
+			var rules = [];
 			if (err) {
-				console.trace("Here I am!")
-				console.log(err);
+				console.log("JSON file doesn't exist")
+				//console.log(err);
+			} else {
+				var jdata = JSON.parse(data);
+		    rules = jdata[1];
 			}
-	    var jdata = JSON.parse(data);
-	    var state = jdata[0];
-	    var rules = jdata[1];
 	    state = JSON.parse(values['state']);
 		  fs.writeFile(input.dir + '/' + input.file + '.json', JSON.stringify([state, rules], null, 4));
 		});

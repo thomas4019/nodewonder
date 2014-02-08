@@ -24,7 +24,7 @@ var bootstrap_field = function (name, object) {
   var label = object.labelHTML(name);
   var error = object.error ? '<p class="form-error-tooltip">' + object.error + '</p>' : '';
   var widget = '<div class="controls">' + object.widget.toHTML(name, object) + error + '</div>';
-  return '<div class="field row control-group ' + (error !== '' ? 'has-error' : '')  + '">' + label + widget + '</div>';
+  return '<div class="field control-group ' + (error !== '' ? 'has-error' : '')  + '">' + label + widget + '</div>';
 }
 
 widgets.field_boolean = function (input, id) {
@@ -43,20 +43,38 @@ widgets.field_boolean = function (input, id) {
   }
 }
 
+widgets.form = function (input, id) {
+  this.toHTML = function(zones, value) {
+    var html = '<form action="/post" method="post">'
+
+    if (input.widget) {
+      html += '<input type="hidden" name="widget" value="' + input.widget + '" />';
+    }
+
+    html += zones['form'];
+    html += '</form>';
+    return html;
+  }
+}
+
 widgets.field_text = function (input, id) {
 	var name = input.name;
-	var label = input.label;
 	var value = input.value || '';
-  //console.log(input);
+
+  this.deps = function() {
+    return {'bootstrap':[]};
+  }
 
   this.toHTML = function(zones, value) {
-    var form = {};
+    var label = '<label for="' + name + '">' + input.label + '</label>';
+    var element;
+    if (value) {
+      element = '<input class="form-control" type="text" name="' + name + '" value="' + (value || input.value) + '" />';
+    } else {
+      element = '<input class="form-control" type="text" name="' + name + '" />';
+    }
 
-    form[id] = fields.string(_.extend(bootstrap_settings,{value : (value || input.value), label : label}));
-    var form_html = forms.create(form).toHTML(bootstrap_f);
-    return form_html;
-
-    //return '<input type="text" name="' + name + '" value="' + (value || input.value) + '" />';
+    return label + element;
   }
 }
 
@@ -75,6 +93,10 @@ widgets.ckeditor = function (input, id) {
   var label = input.label;
   var value = input.value || '';
 
+  this.input = function() {
+    return {'toolbar:field_text_select': {'choices': ['Basic', 'Advanced'], label:'Toolbar Type'}};
+  }
+
   this.toHTML = function(zones, value) {
     return '<label for="' + name + '">' + label + '</label><textarea id="'+id+'" name="' + name + '" value="' + (value || input.value) + '"></textarea>';
   }
@@ -84,7 +106,17 @@ widgets.ckeditor = function (input, id) {
   }
 
   this.deps = function() {
-    return {'ckeditor': ['ckeditor.js']};
+    return {'jquery': [],'ckeditor': ['ckeditor.js']};
+  }
+}
+
+widgets.iframe = function(input, id) {
+  this.input = function() {
+    return {'url:field_text': {label:'URL'}};
+  }
+
+  this.toHTML = function() {
+    return '<iframe src="' + input.url  + '" style="width: 100%; height: 800px;" ></iframe>';
   }
 }
 
@@ -107,6 +139,12 @@ widgets.field_text_select = function (input) {
 widgets.submit = function (input) {
   var label = input.label;
 
+  this.input = function() {
+    return {"label:field_text": {"label": "Label"},
+        'type:field_text_select': {'choices': ['default', 'primary', 'success', 'info', 'warning', 'danger'], label:'Button Type'}
+      };
+  }
+
   this.toHTML = function() {
     return '<input type="submit" class="btn btn-primary" value="' + label + '" />'
   }
@@ -118,7 +156,7 @@ widgets.field_date = function (input) {
 	var value = input.value || '';
 
 	this.head = function() {
-		return '<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/" rel="stylesheet">';
+		return ['<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/" rel="stylesheet">'];
 	}
 
   this.deps = function() {
@@ -163,7 +201,7 @@ widgets.test = function (input, id) {
   }
 
   this.head = function() {
-    return '<script src="/modules/forms/data.js" type="text/javascript"></script>';
+    return ['<script src="/modules/forms/data.js" type="text/javascript"></script>'];
   }
 
   this.script = function() {
