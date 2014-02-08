@@ -85,6 +85,12 @@ actions.refresh = function(input) {
 	}
 }
 
+actions.execute = function(input) {
+	this.toJS = function() {
+		return input.js;
+	}
+}
+
 actions.alert = function(input) {
 	message = input.message;
 

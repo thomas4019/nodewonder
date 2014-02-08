@@ -28,20 +28,22 @@ fs.readFile('page.html', 'utf8', function(err, data) {
   page_template = Handlebars.compile(data);
 });
 
-functions.viewPage = function(path, vars, callback) {
+functions.viewPage = function(path, vars, callback, error_callback) {
   if (path == '/') {
     path = 'index'
   }
   fs.readFile('pages/' + path + '.json', 'utf8', function(err, data) {
     if (err) {
       console.trace("Here I am!")
-      return console.log(err);
+      console.log(err);
+      error_callback();
+      return;
     }
     var jdata = JSON.parse(data);
     var state = jdata[0];
     var rules = jdata[1];
     cms.functions.processRules(rules, function(script, deps) {
-      script = '<script>$(function() {' + script + '});</script>'
+      script = '<script>$(function() {' + script + '});</script>';
       state = cms.functions.splitAndFill(state, vars);
 
       if ('json' in vars) {
@@ -57,7 +59,7 @@ functions.viewPage = function(path, vars, callback) {
             var head_meta = '<script type="text/javascript">var head = ' + encoded_head + ';</script>';
             head.push(head_meta);
             var html = page_template({
-              'head': head.join('\n'),
+              'head': head.join('\n') + script,
               'body': html
             });
           }

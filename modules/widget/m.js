@@ -232,3 +232,103 @@ widgets.widget_exporter = function(input) {
     return json_out;
   }
 }
+
+widgets.page_widget_form = function(input) {
+  var widget_input = {};
+  var values = {};
+  var _html;
+  var _head;
+  var _script;
+
+  var error;
+
+  if (input.input) {
+    widget_input = JSON.parse(input.input);
+  }
+  if (input.values) {
+    values = JSON.parse(input.values);
+  }
+
+  this.isPage = function() {
+    return true;
+  }
+
+  this.contentType = function() {
+    return 'text/javascript';
+  }
+
+  this.load = function(callback) {
+    var viewReady = function(html, content_type, deps, head, javascript) {
+      var all_head = [];
+      all_head = all_head.concat(head);
+      all_head = all_head.concat(cms.functions.processDeps(deps));
+      _html = html;
+      _head = all_head;
+      _script = javascript;
+      callback();
+    }
+
+    var state = false;
+
+    fs.readFile('pages' + '/' + input.widget_page + '.json', 'utf8', function(err, data) {
+      if (err) {
+        console.trace('JSON missing');
+      }
+
+      var jdata = JSON.parse(data);
+      var widget_input = jdata[0][input.widget_id + ':' + input.widget_type];
+
+      widget = new cms.widgets[input.widget_type](widget_input);
+      if (widget.input) {
+        state = widget.input();
+      } else {
+        error = 'Widget does not have a form';
+      }
+
+      if (state) {
+        cms.functions.renderStateParts(state, viewReady, widget_input);
+      } else {
+        callback();
+      }
+    });
+  }
+
+  this.toHTML = function() {
+    if (error) {
+      var out = {error: error};
+      return JSON.stringify(out);
+    }
+
+    var out = {};
+    var widget = cms.widgets[input.widget_type];
+    out['html'] = _html;
+    out['head'] = _head;
+    out['javascript'] = _script;
+    var json_out = JSON.stringify(out);
+    return json_out;
+  }
+
+  this.save = function(values) {
+    fs.readFile('pages' + '/' + values.widget_page + '.json', 'utf8', function(err, data) {
+      if (err) {
+        console.trace("JSON file doesn't exist")
+        console.log(err);
+        return false
+      }
+      var jdata = JSON.parse(data);
+      state = jdata[0];
+      rules = jdata[1];
+
+      var page = values.widget_page;
+      var id = values.widget_id;
+      var type = values.widget_type;
+      delete values['widget_page'];
+      delete values['widget_id'];
+      delete values['widget_type'];
+        
+      state[id + ':' + type] = values;
+      fs.writeFile('pages' + '/' + page + '.json', JSON.stringify([state, rules], null, 4));
+      console.log('updated state of ' + page);
+    });
+  }
+}

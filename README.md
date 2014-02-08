@@ -11,6 +11,11 @@ Node Wonder
 1. [Summary Document](https://docs.google.com/document/d/1P1b4pfQa47nQUJXY59b_krdVow_mTHNrgHb6wNWI1Tg)
 2. [Technical Details (Widgets)](https://docs.google.com/document/d/1LL-SGv9wvnWPT5aZLaNGSyzU45xC27R1-6Fz67FupAo)
 
+## Key Principles
+1. Create advanced websites without code
+2. Reusable Sandboxed Widgets
+3. File based configuration based on url
+
 ## Todo
 * Moving widgets from zone to zone
 * Sorting widgets

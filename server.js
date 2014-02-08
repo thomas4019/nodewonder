@@ -36,8 +36,6 @@ var router = new director.http.Router();
 
 function loadPaths() {
   router.on('post', '/post', save);
-  router.on('get', '/', view);
-  router.on('get', '/hello', view);
 }
 
 function loadPages() {
@@ -53,7 +51,6 @@ function loadPages() {
 registerAllModules();
 registerAllThemes();
 
-loadPages();
 setTimeout(loadPaths, 100);
 
 var app = connect()
@@ -62,6 +59,7 @@ var app = connect()
   .use('/modules', connect.static('modules'))
   .use('/themes', connect.static('themes'))
   .use('/bower_components', connect.static('bower_components'))
+  .use(stateMiddleware)
   .use(function (req, res) {
     if (req.method == 'POST') {
       processPost(req, res, function() {
@@ -229,18 +227,16 @@ var save = function() {
   this.res.end();
 }
 
-var view = function() {
-  var that = this;
-
-  var url_parts = url.parse(this.req.url, true);
+function stateMiddleware(req, res, next) {
+  var url_parts = url.parse(req.url, true);
   var query = url_parts.query;
+  var path = url_parts.pathname;
+  console.log(path);
 
-  var viewReady = function(html, content_type) {
-    that.res.writeHead(200, {'Content-Type': content_type});
-    that.res.end(html);
-  }
-
-  cms.functions.viewPage(url_parts.pathname, query, viewReady);  
+  cms.functions.viewPage(path, query, function(html, content_type) {
+    res.writeHead(200, {'Content-Type': content_type});
+    res.end(html);
+  }, next);
 }
 
 var router_error = function(err) {

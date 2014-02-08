@@ -1,0 +1,35 @@
+[
+    {
+        "start:template": {
+            "path": "admin.html",
+            "zones": {
+                "body": [
+                    "listing",
+                    "Ky0xQ92b",
+                    "create",
+                    "ypxzmTrO"
+                ],
+                "top": [
+                    "menu"
+                ]
+            },
+            "w": "template"
+        },
+        "menu:htmlfile": {
+            "path": "menu.html",
+            "w": "htmlfile"
+        },
+        "create:submit": {
+            "label": "New Page",
+            "type": "danger"
+        },
+        "Ky0xQ92b:field_text": {
+            "label": "URL"
+        },
+        "ypxzmTrO:page_listing": {
+            "w": "page_listing",
+            "zones": {}
+        }
+    },
+    []
+]

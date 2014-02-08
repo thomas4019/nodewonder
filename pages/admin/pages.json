@@ -1,13 +1,53 @@
-[{
-	  "start:template" : {"path" : "admin.html", "zones" : {
-	    "body" : ["listing", "create"],
-	    "top" : ["menu"]
-	  }},
-    "menu:htmlfile": {
-        "path": "menu.html"
+[
+    {
+        "start:template": {
+            "path": "admin.html",
+            "zones": {
+                "body": [
+                    "listing",
+                    "Ky0xQ92b",
+                    "create",
+                    "ypxzmTrO",
+                    "Cp5smAya"
+                ],
+                "top": [
+                    "menu"
+                ]
+            },
+            "w": "template"
+        },
+        "menu:htmlfile": {
+            "path": "menu.html",
+            "w": "htmlfile"
+        },
+        "create:submit": {
+            "label": "Add a new page",
+            "type": "primary",
+            "w": "submit"
+        },
+        "Ky0xQ92b:field_text": {
+            "label": "URL",
+            "inline": "success",
+            "name": "page_url",
+            "w": "field_text"
+        },
+        "Cp5smAya:page_listing": {
+            "w": "page_listing",
+            "zones": {}
+        }
     },
-  	"listing:page_listing" : {"value" : "Site Title"},
-  	"create:submit" : {"label" : "Create a new page"}
-},
-[]
+    [        {
+            "event": {
+                "clicked": {
+                    "sel": "#submit input"
+                }
+            },
+            "actions": [
+                {
+                    "execute": {
+                        "js": "var page = $('input[name=\"page_url\"]').val(); window.location = '/admin/pages/edit?storage-file='+page+'&editor-page='+page+'&preview-url=/'+page;"
+                    }
+                }
+            ]
+        }]
 ]

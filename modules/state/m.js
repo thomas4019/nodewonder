@@ -18,20 +18,31 @@ module.exports = {
 widgets = module.exports.widgets;
 functions = module.exports.functions;
 
+functions.getBaseWidgetIds = function(state) {
+  var all_children = [];
+  _.each(state, function(widget, key) {
+    _.each(widget.zones, function(children, zone_name) {
+      all_children = _.union(all_children, children);
+    });
+  });
+  var all_ids = _.keys(state);
+  all_ids = _.map(all_ids, function(key) {return key.split(':')[0]})
+  var base_widget_ids = _.difference(all_ids, all_children)
+  return base_widget_ids;
+}
+
 functions.organizeState = function(state, callback) {
   var widgets_buffer = {};
   var count = 1;
 
+  var ids = cms.functions.getBaseWidgetIds(state);
   var heirarchical = false;
-  var ids = [];
   _.each(state, function(widgetInput, key) {
     var partsC = key.split(":");
     var idC = partsC[0];
-    var nameC = partsC[1];
     if (idC == 'start') {
       heirarchical = true;
     }
-    ids.push(idC);
   });
   if (!heirarchical) {
     state['start:echo'] = {zones: {body: ids}};
@@ -182,10 +193,12 @@ functions.renderState = function(state, callback, head_additional, deps) {
   });
 }
 
-functions.renderStateParts = function(state, callback) {
+functions.renderStateParts = function(state, callback, values) {
   var head = [];
   var head_map = {};
   var script = '';
+
+  var initial_values = values || {};
 
   cms.functions.organizeState(state, function(widgets_buffer) {
     loadAndPrepare(widgets_buffer);
@@ -253,7 +266,7 @@ functions.renderStateParts = function(state, callback) {
       else
         callback();
     }, function(err, results) {
-      var html = toHTML(widgets_buffer['start'], {});
+      var html = toHTML(widgets_buffer['start'], initial_values);
 
       var content_type = 'text/html';
 
@@ -267,9 +280,7 @@ functions.renderStateParts = function(state, callback) {
 }
 
 widgets.state_editor = function (input, id) {
-  var children = [];
-
-  page = input.page || 'test';
+  var page = input.page || 'test';
 
   this.script = function() {
     return '$("input[type=\'submit\']").click(exportState);';
@@ -281,15 +292,16 @@ widgets.state_editor = function (input, id) {
   }
 
   this.deps = function() {
-    return {'jquery': [], 'bootstrap': [], 'angular': [], 'underscore': ['underscore.js'], 'font-awesome': ['css/font-awesome.css']};
+    return {'jquery': [], 'jquery-form': [], 'bootstrap': [], 'angular': [], 'underscore': ['underscore.js'], 'font-awesome': ['css/font-awesome.css']};
   }
 
   this.toHTML = function(zones, value) {
     var v = JSON.stringify(value);
-    return '<script type="text/javascript">var state = ' + v + ';</script>' +
+    return '<script type="text/javascript">var page = "'+ page + '"; var state = ' + v + ';</script>' +
     '<textarea style="display:none;" name="state">' + v + '</textarea>' +
     '<div ng-app><ul id="state-ctrl" ng-controller="stateController">' +
-    '<li id="start" ng-init="id = \'start\';" ng-include="\'/modules/pages/state-editor.js\'"></li>' +
-    '<a ng-click="saveState()" >Save</a></div>';
+    '<li ng-init="id = \'base\'; zone_name = \'base\';" id="{{ id }}-{{ zone_name }}" ng-include="\'/modules/pages/state-editor-zone.js\'"></li>' +
+    '<li ng-repeat="id in base_widgets" id="{{ id }}" ng-include="\'/modules/pages/state-editor.js\'"></li>' +
+    '</div>';
   }
 }

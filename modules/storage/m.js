@@ -150,7 +150,7 @@ widgets.statejson = function(input) {
 		fs.readFile(input.dir + '/' + input.file + '.json', 'utf8', function(err, data) {
 		  if (err) {
 		  	console.log("JSON file doesn't exist");
-		  	current_state = {'start:echo': {'zones': {'page': []}}};
+		  	current_state = {};
 		  	//console.log(err);
 		    callback();
 		    return;

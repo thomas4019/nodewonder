@@ -41,7 +41,19 @@ function exportState() {
 	var cstate = angular.element($('#state-ctrl')).scope().state;
 	$("textarea").text(JSON.stringify(compressState(cstate)));
 	setTimeout('document.getElementsByTagName("iframe")[0].contentWindow.location.reload();', 250);
-	console.log(document.getElementsByTagName("iframe")[0]);
+}
+
+function getBaseWidgetIds(state) {
+	var all_children = [];
+	_.each(state, function(widget, key) {
+		_.each(widget.zones, function(children, zone_name) {
+			all_children = _.union(all_children, children);
+		});
+	});
+	var all_ids = _.keys(state);
+	all_ids = _.map(all_ids, function(key) {return key.split(':')[0]})
+	var base_widget_ids = _.difference(all_ids, all_children)
+	return base_widget_ids;
 }
 
 function stateChanged() {
@@ -49,7 +61,9 @@ function stateChanged() {
 }
 
 function stateController($scope) {
-	$scope.state = expandState(state);
+	$scope.state = expandState(state);	
+
+	$scope.base_widgets = getBaseWidgetIds(state);
 
 	var _id, _zone;
 
@@ -69,7 +83,11 @@ function stateController($scope) {
 		});
 		//var zones = JSON.parse()
 		$scope.state[new_id] = {w: type, zones: zones};
-		$scope.state[_id].zones[_zone].push(new_id);
+		if (_id == 'base') {
+			$scope.base_widgets.push(new_id);
+		} else {
+			$scope.state[_id].zones[_zone].push(new_id);
+		}
 		$scope.$apply();
 		stateChanged();
 	});
@@ -78,6 +96,7 @@ function stateController($scope) {
 
 	$scope.deleteWidget = function(id) {
 		delete $scope.state[id];
+		$scope.base_widgets = _.without($scope.base_widgets, id);
 		stateChanged();
 	}	
 
@@ -90,19 +109,28 @@ function stateController($scope) {
 		$('body').append(ne);
 		//ne.html('hello world');
 		var type = $scope.state[id].w;
-		console.log(type);
 		var data = {};
-		data['start-type'] = type;
+		data['start-widget_type'] = type;
+		data['start-widget_id'] = id;
 		//data['start-input'] = '{id:wjarzQWtBwM}';//'%7B"id"%3A"wjarzQWtBwM"%7D';
-		data['start-show_form'] = true;
+		data['start-widget_page'] = page;
 		//?start-type=youtube_video&start-input=%7B"id"%3A"wjarzQWtBwM"%7D&start-show_form=true
-		$.getJSON('/widget', data, function(result) {
+		$.getJSON('/internal/page_widget', data, function(result) {
 	    if (result.error) {
 	    	$("#widgetForm").remove();
 	    } else {
-				$("#widgetForm").html(result.html + '<a href>Save' + '<div class="close">X</div>');
+	    	var form_begin = '<form action="/post" method="post" >' + 
+	    	'<input type="hidden" name="widget" value="page_widget_form">' +
+	    	'<input type="hidden" name="widget_page" value="' + page + '">' +
+	    	'<input type="hidden" name="widget_id" value="' + id + '">' +
+	    	'<input type="hidden" name="widget_type" value="' + type + '">';
+				$("#widgetForm").html(form_begin + result.html + '<input type="submit" class="save" value="Save"> </form>' + '<div class="close">X</div>');
 		    $("#widgetForm .close").click(function() {
 		    	$("#widgetForm").remove();
+		    });
+		    $("#widgetForm .save").click(function() {
+		    	exportState();
+		    	$("#widgetForm").hide();
 		    });
 	    }
 	  });
@@ -111,8 +139,6 @@ function stateController($scope) {
 	$scope.addWidget = function (id, zone) {
 		_id = id;
 		_zone = zone;
-		console.log(id);
-		console.log(zone);
 		x = $('#'+id+'-'+zone+' .add').offset().left;
 		y = $('#'+id+'-'+zone+' .add').offset().top;
 		$('.widget-selector').css({position: 'absolute', left: x, top: y })
