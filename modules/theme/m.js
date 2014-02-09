@@ -18,7 +18,7 @@ widgets.template = function(input) {
 		return true;
 	}
 
-	this.input = function() {
+	this.form = function() {
 		return  {
 			"start:echo" : {"zones" : {"body" : ["path"] }},
 			"path:field_text" : {"label" : "path", "value" : input.path}
@@ -44,7 +44,7 @@ widgets.htmlfile = function(input) {
 	var that = this;
 	this.path = input.path;
 
-	this.input = function() {
+	this.form = function() {
 		return  {
 			"start:echo" : {"zones" : {"body" : ["path"] }},
 			"path:field_text" : {"label" : "path", "value" : input.path}
@@ -63,5 +63,17 @@ widgets.htmlfile = function(input) {
 
 	this.toHTML = function() {
 		return this.template;
+	}
+}
+
+widgets.centered = function() {
+	this.zones = function() {
+		return ['content'];
+	}
+
+	this.toHTML = function(zones) {
+		var template = Handlebars.compile('<div style="margin-left: auto; width: 700px; margin-right: auto; border: 1px solid black; border-radius: 10px; padding: 15px; ">' + 
+		' {{{ content }}} </div>');
+		return template(zones);
 	}
 }

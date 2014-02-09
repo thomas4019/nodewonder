@@ -1,8 +1,0 @@
-[{
-  "start:echo" : {"zones" : {"body" : ["heirarchy", "quantity", "three"] }},
-  "heirarchy:field_boolean" : {"label" : "Heirarchy"},
-  "quantity:field_text" : {"label" : "Quantity"},
-  "three:field_text_select" : {"name" : "test", "label" : "Test Text", "choices" : [1,2,3,5,7,9,11,13]}
-},
-[]
-]

@@ -131,10 +131,8 @@ widgets.pagejson = function(input) {
 				console.log(err);
 			}
 	    var jdata = JSON.parse(data);
-	    var state = jdata[0];
-	    var rules = jdata[1];
-			state = cms.m.pages.functions.fillValues(state, widgetValues);
-		  fs.writeFile(input.dir + '/' + input.file + '.json', JSON.stringify([state, rules], null, 4));
+			jdata.widgets = cms.m.pages.functions.fillValues(jdata.widgets, widgetValues);
+		  fs.writeFile(input.dir + '/' + input.file + '.json', JSON.stringify(jdata.widgets, null, 4));
 		});
 	}
 
@@ -156,7 +154,7 @@ widgets.statejson = function(input) {
 		    return;
 		  }
 	    var jdata = JSON.parse(data);
-	    current_state = jdata[0];
+	    current_state = jdata;
 			callback();
 		});
 	}
@@ -167,16 +165,21 @@ widgets.statejson = function(input) {
 
 	f.save  = function(values) {
 		fs.readFile(input.dir + '/' + input.file + '.json', 'utf8', function(err, data) {
-			var rules = [];
+			var jdata;
 			if (err) {
 				console.log("JSON file doesn't exist")
 				//console.log(err);
+				jdata = {};
 			} else {
-				var jdata = JSON.parse(data);
-		    rules = jdata[1];
+				jdata = JSON.parse(data);
 			}
-	    state = JSON.parse(values['state']);
-		  fs.writeFile(input.dir + '/' + input.file + '.json', JSON.stringify([state, rules], null, 4));
+			var newData = JSON.parse(values['state']);
+	    jdata.widgets = newData.widgets;
+	    jdata.slotAssignments = newData.slotAssignments;
+	    console.log(newData);
+	    console.log(JSON.stringify(jdata));
+	    console.log(input.dir + '/' + input.file + '.json');
+		  fs.writeFile(input.dir + '/' + input.file + '.json', JSON.stringify(jdata, null, 4));
 		});
 	}
 

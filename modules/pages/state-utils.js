@@ -8,52 +8,14 @@ function makeid() {
     return text;
 }
 
-function expandState(state) {
-	var map = {};
-
-	state2 = {};
-
-  _.each(state, function(w, key) {
-    var parts = key.split(":");
-    var id = parts[0];
-    var name = parts[1];
-
-    state2[id] = w;
-    w.w = name;
-  });
-
-  return state2;
-}
-
-function compressState(state) {
-	var map = {};
-
-	state2 = {};
-
-  _.each(state, function(w, id) {
-    state2[id + ':' + w.w] = w;
-  });
-
-  return state2;
-}
-
 function exportState() {
-	var cstate = angular.element($('#state-ctrl')).scope().state;
-	$("textarea").text(JSON.stringify(compressState(cstate)));
+	var $scope = angular.element($('#state-ctrl')).scope();
+	var cstate = {
+		widgets: $scope.widgets,
+		slotAssignments: $scope.slotAssignments
+	};
+	$("textarea").text(JSON.stringify(cstate));
 	setTimeout('document.getElementsByTagName("iframe")[0].contentWindow.location.reload();', 250);
-}
-
-function getBaseWidgetIds(state) {
-	var all_children = [];
-	_.each(state, function(widget, key) {
-		_.each(widget.zones, function(children, zone_name) {
-			all_children = _.union(all_children, children);
-		});
-	});
-	var all_ids = _.keys(state);
-	all_ids = _.map(all_ids, function(key) {return key.split(':')[0]})
-	var base_widget_ids = _.difference(all_ids, all_children)
-	return base_widget_ids;
 }
 
 function stateChanged() {
@@ -61,11 +23,19 @@ function stateChanged() {
 }
 
 function stateController($scope) {
-	$scope.state = expandState(state);	
+	$scope.widgets = state.widgets || {};
+	$scope.slotAssignments = state.slotAssignments;
 
-	$scope.base_widgets = getBaseWidgetIds(state);
+	if (!($scope.slotAssignments)) {
+		$scope.slotAssignments = {'body': []};
+	}
 
-	var _id, _zone;
+	_.each($scope.widgets, function(w) {
+		w.has_form = $('option[value="'+w.type+'"]').data('form');
+	});
+	
+
+	var _id, _slot;
 
 	$('.widget-selector').on('select2-close', function() {
 		$('.widget-selector').select2("container").hide();
@@ -77,16 +47,17 @@ function stateController($scope) {
 		$('.widget-selector').select2('val', '');
 		var new_id = makeid();
 		var zone_names = $('option[value="'+type+'"]').data('zones');
+		var has_form = $('option[value="'+type+'"]').data('form');
 		var zones = {};
 		_.each(zone_names, function(zone_name, index) {
 			zones[zone_name] = [];
 		});
 		//var zones = JSON.parse()
-		$scope.state[new_id] = {w: type, zones: zones};
-		if (_id == 'base') {
-			$scope.base_widgets.push(new_id);
+		$scope.widgets[new_id] = {type: type, slots: zones, has_form: has_form};
+		if (_id == 'body') {
+			$scope.slotAssignments['body'].push(new_id);
 		} else {
-			$scope.state[_id].zones[_zone].push(new_id);
+			$scope.widgets[_id].slots[_slot].push(new_id);
 		}
 		$scope.$apply();
 		stateChanged();
@@ -95,8 +66,13 @@ function stateController($scope) {
 	$('.widget-selector').select2("container").hide();
 
 	$scope.deleteWidget = function(id) {
-		delete $scope.state[id];
-		$scope.base_widgets = _.without($scope.base_widgets, id);
+		delete $scope.widgets[id];
+		_.each($scope.widgets, function(widget) {
+			_.each(widget.slots, function(slot, slot_name) {
+				widget.slots[slot_name] = _.without(slot, id);
+			})
+		});
+		$scope.slotAssignments['body'] = _.without($scope.slotAssignments['body'], id);
 		stateChanged();
 	}	
 
@@ -108,7 +84,7 @@ function stateController($scope) {
 		var ne = $( '<div id="widgetForm" style="left:'+x+'px; top:'+y+'px;" />' )
 		$('body').append(ne);
 		//ne.html('hello world');
-		var type = $scope.state[id].w;
+		var type = $scope.widgets[id].type;
 		var data = {};
 		data['start-widget_type'] = type;
 		data['start-widget_id'] = id;
@@ -136,17 +112,17 @@ function stateController($scope) {
 	  });
 	}	
 
-	$scope.addWidget = function (id, zone) {
+	$scope.addWidget = function (id, slot) {
 		_id = id;
-		_zone = zone;
-		x = $('#'+id+'-'+zone+' .add').offset().left;
-		y = $('#'+id+'-'+zone+' .add').offset().top;
+		_slot = slot;
+		x = $('#'+id+'-'+slot+' .add').offset().left;
+		y = $('#'+id+'-'+slot+' .add').offset().top;
 		$('.widget-selector').css({position: 'absolute', left: x, top: y })
 		$('.widget-selector').select2("container").show();
 		$('.widget-selector').select2("open");
 	}
 
 	$scope.saveState = function() {
-		$('textarea').text(JSON.stringify(compressState($scope.state)));
+		$('textarea').text(JSON.stringify($scope.state));
 	}
 }

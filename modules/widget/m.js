@@ -12,40 +12,16 @@ module.exports = {
     cms = _cms;
   }
 };
-widgets = module.exports.widgets; 
-
-var bootstrap_settings = {
-  errorAfterField: true,
-  cssClasses: {
-      label: ['control-label']
-  }};
-
-var bootstrap_f = function (name, object) {
-	return bootstrap_field(name, object);
-}
-
-var bootstrap_field = function (name, object) {
-  var label = object.labelHTML(name);
-  var error = object.error ? '<p class="form-error-tooltip">' + object.error + '</p>' : '';
-  var widget = '<div class="controls">' + object.widget.toHTML(name, object) + error + '</div>';
-  return '<div class="field ' + (error !== '' ? 'has-error' : '')  + '">' + label + widget + '</div>';
-}
-
-var widget_selector = function() {
-	function toHTML() {
-
-	}
-}
+widgets = module.exports.widgets;
 
 widgets.two_col = function(input) {
 	this.col1 = input.col1 || 6;
 	this.col2 = input.col2 || 6;
 
-	this.input = function() {
+	this.form = function() {
     return  {
-      "start:echo" : {"zones" : {"body" : ["col1", "col2"] }},
-      "col1:field_text" : {"label" : "Col 1 Width", "value" : this.col1},
-      "col2:field_text" : {"label" : "Col 2 Width", "value" : this.col2}
+      "col1" : {"type": "field_text", "label" : "Col 1 Width", "value" : this.col1},
+      "col2" : {"type": "field_text", "label" : "Col 2 Width", "value" : this.col2}
     };
 	}
 
@@ -60,68 +36,6 @@ widgets.two_col = function(input) {
 
   this.zones = function() {
     return ['left', 'right'];
-  }
-}
-
-widgets.widget_settings = function(input, id) {
-	var widget = input.widget;
-  var form_html;
-  var winput2 = {};
-
-	this.head = function() {
-		return ['<link href="/modules/widget/widget.css" rel="stylesheet" />'];
-	}
-
-  this.children = function(callback) {
-    if (cms.widgets[widget]) {
-      var w = new cms.widgets[widget](input, id);
-    } else {
-      console.log('Missing widget:' + widget);
-    }
-    
-    if (w.input) {
-      _.each(w.input(), function(w, key) {
-        var parts = key.split(":");
-        var _id = parts[0];
-        var _type = parts[1];
-
-        //prepend parent's id plus dash to ids
-        if (_id != 'start') {
-          winput2[id + '-' + _id + ':' + _type] = w;
-        } else {
-          winput2[key] = w;
-        }
-
-        if (w.zones) {
-          _.each(w.zones, function(widgetList, zone) {
-            w.zones[zone] = _.map(widgetList, function(sub_id, i) {
-              return id + '-' + sub_id;
-            });
-          });
-        }
-      });
-    }
-
-    callback( {'self_form' : winput2} );
-  }
-
-  this.toHTML = function(zones) {
-    var configure_gear = '<div class="configure"><span class="glyphicon glyphicon-cog"></span></div>';
-    
-    var zones_html = '<div class="zones">';
-    _.each(zones, function(zone_html, zone_name) {
-      if (zone_name != 'self_form') {
-        zones_html += '<div class="sortable zone"><h3 class="droppable zone-drop">' + zone_name + '</h3>' + zone_html + '</div>';
-      }
-    });
-    zones_html += '</div>';
-
-    return '<div class="well draggable">' +
-    '<h4>' + widget + '</h4>'
-     + configure_gear
-     + (zones['self_form'] || '')
-     + zones_html + 
-     '</div>';
   }
 }
 
@@ -140,7 +54,7 @@ widgets.widget_selector = function (input, id) {
     _.each(cms.widgets, function(widget) {
       w = new widget({});
       //children.push({title : w.name, copy: 'listing'});
-      html += '<option value="' + w.name + '" data-zones=\''+ (w.zones ? JSON.stringify(w.zones()) : []) +'\'>' + w.name + '</option>'
+      html += '<option value="' + w.name + '" data-form=\'' + (w.form ? true : false) + '\' data-zones=\''+ (w.zones ? JSON.stringify(w.zones()) : []) +'\'>' + w.name + '</option>'
     });
 
     html += '</select>';
@@ -180,10 +94,6 @@ widgets.widget_exporter = function(input) {
     return true;
   }
 
-  this.contentType = function() {
-    return 'text/javascript';
-  }
-
   this.load = function(callback) {
     var viewReady = function(html, content_type, deps, head, javascript) {
       var all_head = [];
@@ -205,13 +115,14 @@ widgets.widget_exporter = function(input) {
         error = 'Widget does not have a form';
       }
     } else {
-      var key = "start:"+type;
-      state = {};
-      state[key] = widget_input;
+      widget_input['type'] = type;
+      state = {
+        "start" : widget_input
+      };
     }
 
     if (state) {
-      cms.functions.renderStateParts(state, viewReady);
+      cms.functions.renderStateParts(state, ['start'], viewReady);
     } else {
       callback();
     }
@@ -253,13 +164,10 @@ widgets.page_widget_form = function(input) {
     return true;
   }
 
-  this.contentType = function() {
-    return 'text/javascript';
-  }
-
   this.load = function(callback) {
-    var viewReady = function(html, content_type, deps, head, javascript) {
+    var viewReady = function(html, deps, head, javascript) {
       var all_head = [];
+      console.log(html);
       all_head = all_head.concat(head);
       all_head = all_head.concat(cms.functions.processDeps(deps));
       _html = html;
@@ -276,31 +184,35 @@ widgets.page_widget_form = function(input) {
       }
 
       var jdata = JSON.parse(data);
-      var widget_input = jdata[0][input.widget_id + ':' + input.widget_type];
+      var widget_input = jdata.widgets[input.widget_id];
 
       widget = new cms.widgets[input.widget_type](widget_input);
-      if (widget.input) {
-        state = widget.input();
+      if (widget.form) {
+        state = widget.form();
       } else {
         error = 'Widget does not have a form';
       }
 
+      console.log(state);
+      console.log(_.keys(state));
+
       if (state) {
-        cms.functions.renderStateParts(state, viewReady, widget_input);
+        cms.functions.renderStateParts(state, {'body': _.keys(state) }, viewReady, widget_input);
       } else {
         callback();
       }
     });
   }
 
-  this.toHTML = function() {
+  this.toHTML = function(zones) {
     if (error) {
       var out = {error: error};
       return JSON.stringify(out);
     }
 
+    console.log('123');
+
     var out = {};
-    var widget = cms.widgets[input.widget_type];
     out['html'] = _html;
     out['head'] = _head;
     out['javascript'] = _script;
@@ -316,8 +228,6 @@ widgets.page_widget_form = function(input) {
         return false
       }
       var jdata = JSON.parse(data);
-      state = jdata[0];
-      rules = jdata[1];
 
       var page = values.widget_page;
       var id = values.widget_id;
@@ -326,9 +236,11 @@ widgets.page_widget_form = function(input) {
       delete values['widget_id'];
       delete values['widget_type'];
         
-      state[id + ':' + type] = values;
-      fs.writeFile('pages' + '/' + page + '.json', JSON.stringify([state, rules], null, 4));
+      jdata.widgets[id] = values;
+      jdata.widgets[id].type = type;
+      fs.writeFile('pages' + '/' + page + '.json', JSON.stringify(jdata, null, 4));
       console.log('updated state of ' + page);
+      console.log(values);
     });
   }
 }

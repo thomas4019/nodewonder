@@ -1,11 +1,16 @@
-[
-    {
-        "start:template": {
+{
+    "slotAssignments": {
+        "body": [
+            "start"
+        ]
+    },
+    "widgets": {
+        "start": {
             "path": "admin.html",
-            "zones": {
+            "slots": {
                 "body": [
+                    "eODpMrEO",
                     "listing",
-                    "Ky0xQ92b",
                     "create",
                     "ypxzmTrO",
                     "Cp5smAya"
@@ -14,29 +19,27 @@
                     "menu"
                 ]
             },
-            "w": "template"
+            "type": "template"
         },
-        "menu:htmlfile": {
+        "menu": {
             "path": "menu.html",
-            "w": "htmlfile"
+            "type": "htmlfile"
         },
-        "create:submit": {
+        "create": {
             "label": "Add a new page",
-            "type": "primary",
-            "w": "submit"
+            "type": "submit"
         },
-        "Ky0xQ92b:field_text": {
+        "Cp5smAya": {
+            "type": "page_listing"
+        },
+        "eODpMrEO": {
             "label": "URL",
-            "inline": "success",
-            "name": "page_url",
-            "w": "field_text"
-        },
-        "Cp5smAya:page_listing": {
-            "w": "page_listing",
-            "zones": {}
+            "type": "field_text",
+            "name": "page_url"
         }
     },
-    [        {
+    "rules": [
+        {
             "event": {
                 "clicked": {
                     "sel": "#submit input"
@@ -49,5 +52,6 @@
                     }
                 }
             ]
-        }]
-]
+        }
+    ]
+}

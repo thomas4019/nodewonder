@@ -1,0 +1,4 @@
+<i>{{ slot_name }}</i> <a class="add" ng-click="addWidget(id, slot_name)"><i class="fa fa-plus fa-lg"></i></a>
+<ul>
+<li id="{{ id }}" ng-repeat="id in slot" ng-if="widgets[id]" ng-include="'/modules/pages/widget.html'"></li>
+</ul>

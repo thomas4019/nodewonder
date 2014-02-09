@@ -1,0 +1,28 @@
+{
+    "widgets": {
+        "hiIn4zSc": {
+            "type": "bartik/home",
+            "slots": {
+                "header": [],
+                "featured": [],
+                "sidebar_first": [],
+                "highlighted": [],
+                "title": [],
+                "tabs": [],
+                "help": [],
+                "action_links": [],
+                "content": [],
+                "sidebar_second": [],
+                "triptych": [],
+                "footer_above": [],
+                "footer": []
+            },
+            "has_form": false
+        }
+    },
+    "slotAssignments": {
+        "body": [
+            "hiIn4zSc"
+        ]
+    }
+}

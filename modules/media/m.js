@@ -4,10 +4,9 @@ module.exports = {
 widgets = module.exports.widgets;
 
 widgets.youtube_video = function (input) {
-	this.input = function() {
+	this.form = function() {
 		return  {
-			"start:echo" : {"zones" : {"body" : ["id"] }},
-			"id:field_text" : {"label" : "Video ID", "value" : input.id}
+			"id" : {"name": "id", "type": "field_text", "label" : "Video ID", "value" : input.id}
 		};
 	}
 

@@ -1,10 +1,7 @@
 var _ = require('underscore'),
 		fs = require('fs'),
     async = require('async'),
-    file = require('file'),
-    dive = require('dive'),
     path = require('path'),
-    deepExtend = require('deep-extend'),
     dextend = require('dextend');
 
 var cms;
@@ -18,44 +15,12 @@ module.exports = {
 widgets = module.exports.widgets;
 functions = module.exports.functions;
 
-functions.getBaseWidgetIds = function(state) {
-  var all_children = [];
-  _.each(state, function(widget, key) {
-    _.each(widget.zones, function(children, zone_name) {
-      all_children = _.union(all_children, children);
-    });
-  });
-  var all_ids = _.keys(state);
-  all_ids = _.map(all_ids, function(key) {return key.split(':')[0]})
-  var base_widget_ids = _.difference(all_ids, all_children)
-  return base_widget_ids;
-}
-
 functions.organizeState = function(state, callback) {
   var widgets_buffer = {};
   var count = 1;
 
-  var ids = cms.functions.getBaseWidgetIds(state);
-  var heirarchical = false;
-  _.each(state, function(widgetInput, key) {
-    var partsC = key.split(":");
-    var idC = partsC[0];
-    if (idC == 'start') {
-      heirarchical = true;
-    }
-  });
-  if (!heirarchical) {
-    state['start:echo'] = {zones: {body: ids}};
-  }
-
-  var initializeWidget = function(w, key) {
-    if (!key) {
-      console.log('invalid key: ' + JSON.stringify(w, 0, 2));
-    }
-
-    var parts = key.split(":");
-    var id = parts[0];
-    var name = parts[1];
+  var initializeWidget = function(w, id) {
+    var name = w.type;
     if (cms.widgets[name]) {
       var widget = new cms.widgets[name](w, id);
       widget.id = id;
@@ -69,18 +34,16 @@ functions.organizeState = function(state, callback) {
       widget.children(function(children) {
         _.each(children, function(widgetStateList, zone) {
           var heirarchical = false;
-          _.each(widgetStateList, function(widgetInput, key) {
-            var partsC = key.split(":");
-            var idC = partsC[0];
-            var nameC = partsC[1];
+          _.each(widgetStateList, function(widgetInput, idC) {
+            var nameC = widgetInput.type;
             if (idC == 'start') {
               idC = id + 'inner-' + idC;
               key = idC + ':' + nameC;
             }
             if (!heirarchical) {
-              w.zones = w.zones || {};
-              w.zones[zone] = w.zones[zone] || [];
-              w.zones[zone].push(idC);
+              w.slots = w.slots || {};
+              w.slots[zone] = w.slots[zone] || [];
+              w.slots[zone].push(idC);
             }
             if (partsC[0] == 'start') {
               heirarchical = true;
@@ -114,14 +77,11 @@ functions.organizeState = function(state, callback) {
     //console.log(state);
 
     //connect the children to the parents
-    _.each(state, function(w, key) {
-      var parts = key.split(":");
-      var id = parts[0];
-      var name = parts[1];
+    _.each(state, function(w, id) {
       var widget = widgets_buffer[id];
 
-      if (w.zones) {
-        addChildrenToWidget(w.zones, widget);
+      if (w.slots) {
+        addChildrenToWidget(w.slots, widget);
       }
     });
 
@@ -129,14 +89,14 @@ functions.organizeState = function(state, callback) {
   }
 
   function addChildrenToWidget(zones, widget) {
-    _.each(zones, function(widgetList, zone) {
-      if (!widget.all_children[zone]) {
-        widget.all_children[zone] = [];
+    _.each(zones, function(widgetList, slot) {
+      if (!widget.all_children[slot]) {
+        widget.all_children[slot] = [];
       }
       _.each(widgetList, function(sub_id, i) {
         var sub = widgets_buffer[sub_id];
         if (typeof sub !== 'undefined') {
-          widget.all_children[zone].push(sub);
+          widget.all_children[slot].push(sub);
           sub.parent = widget;
         } else {
           console.log('Invalid widget reference:' + sub_id);
@@ -171,29 +131,26 @@ functions.splitValues = function(values) {
 }
 
 functions.fillValues = function(state, values) {
-  _.each(state, function(w, key) {
-    var parts = key.split(":");
-    var _id = parts[0];
-    var _type = parts[1];
-    if (values[_id]) {
-      state[key] = _.extend(w, values[_id]);
+  _.each(state, function(w, id) {
+    if (values[id]) {
+      state[id] = _.extend(w, values[id]);
     }
   });
 
   return state;
 }
 
-functions.renderState = function(state, callback, head_additional, deps) {
-  cms.functions.renderStateParts(state, function(html, content_type, deps, head, script) {
+functions.renderState = function(state, slotAssignments, callback, head_additional, deps) {
+  cms.functions.renderStateParts(state, slotAssignments, function(html, deps, head, script) {
     var all_head = [];
     all_head = all_head.concat(head);
     all_head = all_head.concat(cms.functions.processDeps(deps));
     all_head.push('<script>$(function() {' + script + '});</script>');
-    callback(html, content_type, all_head);
+    callback(html, all_head);
   });
 }
 
-functions.renderStateParts = function(state, callback, values) {
+functions.renderStateParts = function(state, slotAssignments, callback, values) {
   var head = [];
   var head_map = {};
   var script = '';
@@ -266,15 +223,16 @@ functions.renderStateParts = function(state, callback, values) {
       else
         callback();
     }, function(err, results) {
-      var html = toHTML(widgets_buffer['start'], initial_values);
+      var html = '';
+      _.each(slotAssignments['body'], function(id, index) {
+        if (widgets_buffer[id]) {
+          html += toHTML(widgets_buffer[id], initial_values);
+        } else {
+          console.log("Widget missing " + id);
+        }
+      });
 
-      var content_type = 'text/html';
-
-      if (widgets_buffer['start'].contentType) {
-        content_type = widgets_buffer['start'].contentType();
-      }
-
-      callback(html, content_type, deps, head, script);
+      callback(html, deps, head, script);
     });
   }
 }
@@ -300,8 +258,8 @@ widgets.state_editor = function (input, id) {
     return '<script type="text/javascript">var page = "'+ page + '"; var state = ' + v + ';</script>' +
     '<textarea style="display:none;" name="state">' + v + '</textarea>' +
     '<div ng-app><ul id="state-ctrl" ng-controller="stateController">' +
-    '<li ng-init="id = \'base\'; zone_name = \'base\';" id="{{ id }}-{{ zone_name }}" ng-include="\'/modules/pages/state-editor-zone.js\'"></li>' +
-    '<li ng-repeat="id in base_widgets" id="{{ id }}" ng-include="\'/modules/pages/state-editor.js\'"></li>' +
+    '<li ng-init="id = \'body\'; slot_name = \'body\';" id="{{ id }}-{{ slot_name }}" ng-include="\'/modules/pages/slot.html\'"></li>' +
+    '<li ng-repeat="id in slotAssignments[\'body\']" id="{{ id }}" ng-include="\'/modules/pages/widget.html\'"></li>' +
     '</div>';
   }
 }

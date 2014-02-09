@@ -1,8 +1,22 @@
-[
-    {
-        "start:template": {
+{
+    "slotAssignments": {
+        "body": [
+            "start"
+        ]
+    },
+    "widgets": {
+        "1": {
+            "type": "itext",
+            "value": "Hello World!"
+        },
+        "2": {
+            "type": "htmlfile",
+            "path": "menu.html"
+        },
+        "start": {
+            "type": "template",
             "path": "themes/html5up-tessellate/template.html",
-            "zones": {
+            "slots": {
                 "title": [
                     "1"
                 ],
@@ -10,13 +24,6 @@
                     "2"
                 ]
             }
-        },
-        "1:itext": {
-            "value": "Hello World!"
-        },
-        "2:htmlfile": {
-            "path": "menu.html"
         }
-    },
-    []
-]
+    }
+}

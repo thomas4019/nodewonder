@@ -61,10 +61,10 @@ widgets.field_text = function (input, id) {
     return {'bootstrap':[]};
   }
 
-  this.input = function() {
+  this.form = function() {
     return {
-      'label:field_text': {'name': 'label', 'label': 'Label'},
-      'inline:field_boolean': {'name': 'inline', 'label': 'Inline'}
+      'label': {'type': 'field_text','name': 'label', 'label': 'Label'},
+      'inline': {'type': 'field_boolean','name': 'inline', 'label': 'Inline'}
     };
   }
 
@@ -101,8 +101,8 @@ widgets.ckeditor = function (input, id) {
   var label = input.label;
   var value = input.value || '';
 
-  this.input = function() {
-    return {'toolbar:field_text_select': {'choices': ['Basic', 'Advanced'], label:'Toolbar Type'}};
+  this.form = function() {
+    return {'toolbar': {'type': 'field_text_select', 'choices': ['Basic', 'Advanced'], label:'Toolbar Type'}};
   }
 
   this.toHTML = function(zones, value) {
@@ -119,8 +119,8 @@ widgets.ckeditor = function (input, id) {
 }
 
 widgets.iframe = function(input, id) {
-  this.input = function() {
-    return {'url:field_text': {label:'URL'}};
+  this.form = function() {
+    return {'url': {'type': 'field_text', label:'URL'}};
   }
 
   this.toHTML = function() {
@@ -130,7 +130,6 @@ widgets.iframe = function(input, id) {
 
 widgets.field_text_select = function (input) {
 	var name = input.name;
-	var label = input.label;
 	var choices = input.choices || ['a', 'b', 'c'];
 
   if (Array.isArray(choices)) {
@@ -138,13 +137,17 @@ widgets.field_text_select = function (input) {
   }
 
   this.toHTML = function(zones, value) {
-    var form = {};
-    console.log(value);
-    form[name] = fields.string(_.extend(bootstrap_settings,{value : value, choices : choices, label : label, widget:fwidgets.select()}));
+    var label = '<label for="' + name + '" >' + input.label + '</label>';
 
-    var form_html = forms.create(form).toHTML(bootstrap_f);
+    var element = '<select name="' + name + '">';
 
-    return form_html;
+    _.each(choices, function(choice) {
+      element += '<option value="' + choice + '" >' + choice + '</option>';
+    });
+
+    element += '</select>';
+
+    return label + element;
   }
 }
 
@@ -152,9 +155,9 @@ widgets.submit = function (input) {
   var label = input.label;
   var type = input.type || 'primary';
 
-  this.input = function() {
-    return {"label:field_text": {"name": "label", "label": "Label"},
-        'type:field_text_select': {'name': "type",'choices': ['default', 'primary', 'success', 'info', 'warning', 'danger'], label:'Button Type'}
+  this.form = function() {
+    return {"label": {"type":"field_text", "name": "label", "label": "Label"},
+        'button_type': {'type':'field_text_select', 'name': "button_type",'choices': ['default', 'primary', 'success', 'info', 'warning', 'danger'], label:'Button Type'}
       };
   }
 
@@ -163,7 +166,7 @@ widgets.submit = function (input) {
   }
 
   this.toHTML = function() {
-    return '<input type="submit" class="btn btn-' + type + '" value="' + label + '" />'
+    return '<input type="submit" class="btn btn-' + input.button_type + '" value="' + label + '" />'
   }
 }
 
@@ -197,9 +200,9 @@ widgets.field_date = function (input) {
 
 
 widgets.itext = function (input, id) {
-  this.input = function() {
+  this.form = function() {
     return  {
-      "value:field_text" : {"label" : "Text", "value" : input.value}
+      "value" : {"type": "field_text", "label" : "Text", "value" : input.value}
     };
   }
 
@@ -209,23 +212,5 @@ widgets.itext = function (input, id) {
 
   this.toHTML = function(zones, value) {
     return input.value;
-  }
-}
-
-widgets.test = function (input, id) {
-  this.deps = function() {
-    return {'dynatree' : [], 'jquery-ui': [] }
-  }
-
-  this.head = function() {
-    return ['<script src="/modules/forms/data.js" type="text/javascript"></script>'];
-  }
-
-  this.script = function() {
-    return 'console.log(data); $("#tree").dynatree({children : data, dnd : dnd2});';
-  }
-
-  this.toHTML = function(zones, value) {
-    return '<div id="tree"></div>';
   }
 }

@@ -1,17 +1,53 @@
-[{
-    "start:echo": {
-        "zones": {
-            "body": [
-                "main"
-            ]
-        }
+{
+    "slotAssignments": {
+        "body": [
+            "main"
+        ]
     },
-    "main:two_col" : {"zones": {"left": ["storage"], "right": ["preview"]} },
-    "preview:iframe" : {"url" : "/"},
-    "storage:statejson" : {"file" : "test2", "dir" : "pages" ,"zones" : {"form" : ["editor","save","wl"] }},
-    "save:submit": {"label": "Save"},
-    "editor:state_editor": {"page": "test2"},
-    "wl:widget_selector": {}
-},
-[]
-]
+    "widgets": {
+        "main": {
+            "type": "two_col",
+            "slots": {
+                "left": [
+                    "storage"
+                ],
+                "right": [
+                    "preview"
+                ]
+            },
+            "has_form": true
+        },
+        "preview": {
+            "type": "iframe",
+            "url": "/",
+            "has_form": true
+        },
+        "storage": {
+            "type": "statejson",
+            "file": "test2",
+            "dir": "pages",
+            "slots": {
+                "form": [
+                    "editor",
+                    "save",
+                    "wl"
+                ]
+            },
+            "has_form": null
+        },
+        "save": {
+            "type": "submit",
+            "label": "Save",
+            "has_form": true
+        },
+        "editor": {
+            "type": "state_editor",
+            "page": "test2",
+            "has_form": false
+        },
+        "wl": {
+            "type": "widget_selector",
+            "has_form": false
+        }
+    }
+}
