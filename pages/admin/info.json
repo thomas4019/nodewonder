@@ -1,16 +1,10 @@
-[
-    {
-        "start:template": {
-            "path": "admin.html",
-            "zones": {
-                "body": [
-                    "storage"
-                ]
-            }
-        },
-        "storage:json": {
+{
+    "slotAssignments": {"body": ["storage"]},
+    "widgets": {
+        "storage": {
+            "type":"json",
             "file": "info",
-            "zones": {
+            "slots": {
                 "form": [
                     "title",
                     "subtitle",
@@ -20,21 +14,25 @@
                 ]
             }
         },
-        "title:field_text": {
+        "title": {
+            "type": "field_text",
             "label": "Site Title"
         },
-        "subtitle:field_text": {
+        "subtitle": {
+            "type": "field_text",
             "label": "Subtitle"
         },
-        "email:field_text": {
+        "email": {
+            "type": "field_text",
             "label": "Site Email"
         },
-        "online:field_boolean": {
+        "online": {
+            "type": "field_boolean",
             "label": "Site Online"
         },
-        "save:submit": {
+        "save": {
+            "type": "submit",
             "label": "save"
         }
-    },
-    []
-]
+    }
+}
