@@ -47,12 +47,6 @@ widgets.setting = function(input) {
 		fs.writeFile(file, JSON.stringify(out));
 	}
 
-	this.deps = function() {
-		return {
-			'jquery-form' : []
-		};
-	}
-
 	this.toHTML = function() {
 		var form = {};
 

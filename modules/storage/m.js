@@ -25,7 +25,7 @@ widgets.json = function(input) {
 	var values;
 
 	this.deps = function() {
-		return {'jquery' : [], 'jquery-form' : []};
+		return {'jquery' : []};
 	}
 
 	this.toHTML = function(zones) {
@@ -65,7 +65,7 @@ widgets.ijson = function(input) {
 	var values;
 
 	this.deps = function() {
-		return {'jquery' : [],'jquery-form' : []};
+		return {'jquery' : []};
 	}
 
 	this.toHTML = function(zones) {

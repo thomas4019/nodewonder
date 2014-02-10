@@ -250,7 +250,7 @@ widgets.state_editor = function (input, id) {
   }
 
   this.deps = function() {
-    return {'jquery': [], 'jquery-form': [], 'bootstrap': [], 'angular': [], 'underscore': ['underscore.js'], 'font-awesome': ['css/font-awesome.css']};
+    return {'jquery': [], 'bootstrap': [], 'angular': [], 'underscore': ['underscore.js'], 'font-awesome': ['css/font-awesome.css']};
   }
 
   this.toHTML = function(zones, value) {

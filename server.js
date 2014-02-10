@@ -47,8 +47,16 @@ function loadPages() {
   });
 }
 
-registerAllModules();
-registerAllThemes();
+var allDeps = [];
+
+async.series(
+  [registerAllModules,
+  registerAllThemes,
+  installAllDeps,
+  processDeps],
+  function() {
+    console.log('the server is ready - running at http://127.0.0.1:3000/');
+  });
 
 setTimeout(loadPaths, 100);
 
@@ -82,47 +90,75 @@ io.sockets.on('connection', function (socket) {
   });
 });*/
 
-console.log('Server running at http://127.0.0.1/');
+function registerAllModules(callback) {
+  console.log('registering modules: ');
 
-function registerAllModules() {
+  var funcs = [];
+
   var files = fs.readdirSync('modules');
   _.each(files, function(file) {
     if (file.charAt(0) !== '.' && fs.existsSync('modules/' + file + '/m.js')) {
-      registerModule('modules', file, '');
+      funcs.push( function(callback2) {
+        registerModule('modules', file, '', callback2);
+      });
     }
+  });
+
+  async.parallel(funcs, function() {
+    callback();
   });
 }
 
-function registerAllThemes() {
+function registerAllThemes(callback) {
+  console.log('registering themes: ');
+
+  var funcs = [];
+
   var files = fs.readdirSync('themes');
   _.each(files, function(file) {
     if (file.charAt(0) !== '.' && fs.existsSync('themes/' + file + '/m.js')) {
-      registerModule('themes', file, file + '/');
+      funcs.push( function(callback2) {
+        registerModule('themes', file, file + '/', callback2);
+      });
     }
   });
+
+  async.parallel(funcs, function() {
+    callback();
+  });
+}
+
+function installAllDeps(callback) {
+  console.log('installing bower dependencies: ');
+
+  async.filter(allDeps, function(file, callback) {
+    fs.exists('bower_components/' + file, function(exists) {
+      callback(!exists);
+    });
+  }, function(newDeps) {
+    bower.commands
+      .install(newDeps, { save: true }, { })
+      .on('end', function (installed) {
+        callback();
+      });
+  });
+}
+
+function processDeps(callback) {
+  async.each(allDeps, registerDep, callback);
 }
 
 function installDependencies(thing) {
   if (thing.deps) {
     _.each(Object.keys(thing.deps()), function(dep, index) {
-      if (dep != 'order') {
-        fs.exists('bower_components/' + dep, function (exists) {
-          if (!exists) {
-            bower.commands
-            .install([dep], { save: true }, { /* custom config */ })
-            .on('end', function (installed) {
-                console.log('bower: installed ' + dep);
-            });
-          } else {
-            registerDep(dep);
-          }
-        });
+      if (dep != 'order' && !_.contains(allDeps, dep)) {
+        allDeps.push(dep);
       }
     });
   }
 }
 
-function registerDep(dep) {
+function registerDep(dep, callback) {
   if (cms.deps[dep])
     return;
 
@@ -145,10 +181,13 @@ function registerDep(dep) {
         console.log('unexpected bower.json main: ' + dep);
       }
     }
+
+    callback();
   });
 }
 
-function registerModule(directory, module, prefix) {
+function registerModule(directory, module, prefix, callback) {
+  //console.log('registering ' + module);
   var m = require('./' + directory + '/' + module + '/m');
   cms.m[module] = m;
   if (m.register) {
@@ -180,6 +219,8 @@ function registerModule(directory, module, prefix) {
     cms.actions[name] = action;
     installDependencies(new action({}));
   });
+
+  callback();
 }
 
 function processPost(request, response, callback) {

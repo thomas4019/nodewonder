@@ -1,0 +1,14 @@
+{
+    "widgets": {
+        "DNKKuofB": {
+            "type": "calendar",
+            "slots": {},
+            "has_form": false
+        }
+    },
+    "slotAssignments": {
+        "body": [
+            "DNKKuofB"
+        ]
+    }
+}
