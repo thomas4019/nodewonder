@@ -15,24 +15,24 @@ module.exports = {
 widgets = module.exports.widgets;
 
 widgets.two_col = function(input) {
-	this.col1 = input.col1 || 6;
-	this.col2 = input.col2 || 6;
+  this.col1 = input.col1 || 6;
+  this.col2 = input.col2 || 6;
 
-	this.form = function() {
+  this.form = function() {
     return  {
       "col1" : {"type": "field_text", "label" : "Col 1 Width", "value" : this.col1},
       "col2" : {"type": "field_text", "label" : "Col 2 Width", "value" : this.col2}
     };
-	}
+  }
 
   this.deps = function() {
     return {'jquery':[],'bootstrap': []};
   }
 
-	this.toHTML = function(zones) {
-		return '<div class="row"><div class="col-sm-' + this.col1 + '">' + zones['left'] + 
-			'</div><div class="col-sm-' + this.col2 + '">' + zones['right'] + '</div></div>';
-	}
+  this.toHTML = function(zones) {
+    return '<div class="row"><div class="col-sm-' + this.col1 + '">' + zones['left'] + 
+      '</div><div class="col-sm-' + this.col2 + '">' + zones['right'] + '</div></div>';
+  }
 
   this.zones = function() {
     return ['left', 'right'];

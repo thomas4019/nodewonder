@@ -1,5 +1,5 @@
 var _ = require('underscore'),
-		fs = require('fs'),
+    fs = require('fs'),
     async = require('async'),
     file = require('file');
 var passport = require('passport'),
@@ -10,7 +10,7 @@ module.exports = {
   widgets : {},
   functions : {},
   register : function(_cms) {
-  	cms = _cms;
+    cms = _cms;
   }
 };
 widgets = module.exports.widgets;

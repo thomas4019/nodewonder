@@ -1,5 +1,5 @@
 var _ = require('underscore'),
-		fs = require('fs'),
+    fs = require('fs'),
     async = require('async'),
     path = require('path'),
     dextend = require('dextend');
@@ -9,7 +9,7 @@ module.exports = {
   widgets : {},
   functions : {},
   register : function(_cms) {
-  	cms = _cms;
+    cms = _cms;
   }
 };
 widgets = module.exports.widgets;

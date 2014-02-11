@@ -17,7 +17,7 @@ var bootstrap_settings = {
   }};
 
 var bootstrap_f = function (name, object) {
-	return bootstrap_field(name, object);
+  return bootstrap_field(name, object);
 }
 
 var bootstrap_field = function (name, object) {
@@ -28,9 +28,9 @@ var bootstrap_field = function (name, object) {
 }
 
 widgets.field_boolean = function (input, id) {
-	var name = input.name;
-	var label = input.label;
-	var value = input.value || false;
+  var name = input.name;
+  var label = input.label;
+  var value = input.value || false;
 
   this.toHTML = function() {
     var form_html = '<label for="' + name + '" >' + label + '</label>' + '<input type="checkbox" name="' + name + '" >'
@@ -54,8 +54,8 @@ widgets.form = function (input, id) {
 }
 
 widgets.field_text = function (input, id) {
-	var name = input.name;
-	var value = input.value || '';
+  var name = input.name;
+  var value = input.value || '';
 
   this.deps = function() {
     return {'bootstrap':[]};
@@ -129,8 +129,8 @@ widgets.iframe = function(input, id) {
 }
 
 widgets.field_text_select = function (input) {
-	var name = input.name;
-	var choices = input.choices || ['a', 'b', 'c'];
+  var name = input.name;
+  var choices = input.choices || ['a', 'b', 'c'];
 
   if (Array.isArray(choices)) {
     choices = _.object(choices, choices);
@@ -171,31 +171,31 @@ widgets.submit = function (input) {
 }
 
 widgets.field_date = function (input) {
-	var name = input.name;
-	var label = input.label;
-	var value = input.value || '';
+  var name = input.name;
+  var label = input.label;
+  var value = input.value || '';
 
-	this.head = function() {
-		return ['<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/" rel="stylesheet">'];
-	}
+  this.head = function() {
+    return ['<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/" rel="stylesheet">'];
+  }
 
   this.deps = function() {
     return {'jquery-ui': ['themes/smoothness/jquery-ui.min.css'] }
   }
 
-	this.toHTML = function() {
-		var form = {};
+  this.toHTML = function() {
+    var form = {};
 
     form['text'] = fields.string(_.extend(bootstrap_settings,{value : value, label : label}));
 
     var form_html = forms.create(form).toHTML(bootstrap_f);
     
     return form_html;
-	}
+  }
 
-	this.script = function(container_id) {
-		return '$("#' + container_id + ' input").datepicker();';
-	}
+  this.script = function(container_id) {
+    return '$("#' + container_id + ' input").datepicker();';
+  }
 }
 
 

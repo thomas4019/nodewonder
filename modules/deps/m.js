@@ -1,14 +1,14 @@
 var _ = require('underscore'),
-		bowerJson = require('bower-json'),
-		path = require('path'),
-		async = require('async');
+    bowerJson = require('bower-json'),
+    path = require('path'),
+    async = require('async');
 
 var cms;
 module.exports = {
   widgets : {},
   functions : {},
   register : function(_cms) {
-  	cms = _cms;
+    cms = _cms;
   }
 };
 functions = module.exports.functions;
@@ -30,7 +30,7 @@ functions.processDeps = function(deps) {
 }
 
 functions.processDep = function(dep, depFiles) {
-	var folder = 'bower_components/' + dep + '/';
+  var folder = 'bower_components/' + dep + '/';
 
   var html = '';
   _.each(depFiles, function(file, index) {
@@ -46,13 +46,13 @@ functions.fileToHTML = function(folder, file) {
     console.log('invalid dependency:' + folder + ' ' + JSON.stringify(file));
     return;
   }
- 	var ext = file.split('.').pop();
-	var full = folder + file;
-	if (ext == 'js') {
-		return '<script type="text/javascript" src="' + full + '"></script>';
-	} else if (ext == 'css') {
-		return '<link rel="stylesheet" href="' + full + '" />';
-	} else {
-		return '';
-	}
+  var ext = file.split('.').pop();
+  var full = folder + file;
+  if (ext == 'js') {
+    return '<script type="text/javascript" src="' + full + '"></script>';
+  } else if (ext == 'css') {
+    return '<link rel="stylesheet" href="' + full + '" />';
+  } else {
+    return '';
+  }
 }

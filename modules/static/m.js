@@ -29,9 +29,9 @@ functions.pageToStatic = function(fpath) {
       script = '<script>$(function() {' + script + '});</script>'
       console.log('- ' + fpath);
       cms.functions.renderState(state, {}, function(html) {
-      	mkdirp(path.dirname('static/' + fpath), function(err) { 
-      		fs.writeFile('static/' + fpath  + '.html', html);
-				});
+        mkdirp(path.dirname('static/' + fpath), function(err) { 
+          fs.writeFile('static/' + fpath  + '.html', html);
+        });
       }, script, deps); //'<base href="http://localhost:3000/" target="_blank" >'
     });
   });
@@ -39,7 +39,7 @@ functions.pageToStatic = function(fpath) {
 
 functions.allPagesToStatic = function() {
   dive('pages', {}, function(err, file) {
-  	var ext = path.extname(file);
+    var ext = path.extname(file);
     var pa = path.relative('pages',file).slice(0, -ext.length);
     if (ext == '.json') {
       cms.functions.pageToStatic(pa);
@@ -73,29 +73,29 @@ functions.copyFile = function(source, target, cb) {
 }
 
 functions.staticThemeCopy = function() {
-	var theme = 'themes/html5up-tessellate/';
+  var theme = 'themes/html5up-tessellate/';
   dive(theme, {}, function(err, file) {
-  	var ext = path.extname(file);
+    var ext = path.extname(file);
     var pa = path.relative(theme, file);
-  	mkdirp(path.dirname('static/' + pa), function(err) { 
-    	cms.functions.copyFile(file, 'static/' + pa, function() {
+    mkdirp(path.dirname('static/' + pa), function(err) { 
+      cms.functions.copyFile(file, 'static/' + pa, function() {
 
-    	});
+      });
     });
   });
 }
 
 functions.staticModulesCopy = function() {
-	var theme = 'modules/';
+  var theme = 'modules/';
   dive(theme, {}, function(err, file) {
-  	var ext = path.extname(file);
+    var ext = path.extname(file);
     var pa = path.relative(theme, file);
     if (ext == '.css' || ext == '.js' && pa.substr(pa.length - 4) != 'm.js') {
-  		mkdirp(path.dirname('static/' + pa), function(err) { 
-    		cms.functions.copyFile(file, 'static/' + pa, function() {
+      mkdirp(path.dirname('static/' + pa), function(err) { 
+        cms.functions.copyFile(file, 'static/' + pa, function() {
 
-    		});
-    	});
+        });
+      });
     }
   });
 }
