@@ -1,8 +1,4 @@
-var forms = require('forms'),
-    fields = forms.fields,
-    validators = forms.validators,
-    widgets = forms.widgets,
-    _ = require('underscore');
+var _ = require('underscore');
 
 var cms;
 module.exports = {

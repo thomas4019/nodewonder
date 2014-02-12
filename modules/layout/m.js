@@ -32,13 +32,24 @@ widgets.two_col = function(input) {
 }
 
 widgets.popup = function() {
+	this.zones = function() {
+		return ['container'];
+	}
+
+	this.deps = function() {
+		return {'jquery': [], 'jquery-ui': [], 'bootstrap': [], 'font-awesome': ['css/font-awesome.min.css'], 'jquery-ui-bootstrap': ['jquery.ui.theme.css', 'jquery.ui.theme.font-awesome.css']	}; //'themes/smoothness/jquery-ui.min.css'
+	}
+
 	this.toHTML = function(zones, id) {
-		return '<div id="dialog-confirm" title="Empty the recycle bin?">' + 
-  '<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>' +
+		return '<div id="dialog-confirm" title="Title?">' + 
+  '<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>' + 
+  'Hello</p>' +
 '</div>';
 	}
 
 	this.script = function() {
-		'$( "#dialog-confirm" ).dialog({ resizable: false, height:140, modal: true });'
+		return '$( "#dialog-confirm" ).dialog({ resizable: false, height:140, modal: true, buttons: {' +
+        '"Ok": function () { $(this).dialog("close"); }, "Cancel": function () { $(this).dialog("close"); }' +
+    '}});';
 	}
 }

@@ -1,8 +1,4 @@
-var forms = require('forms'),
-    fields = forms.fields,
-    fvalidators = forms.validators,
-    fwidgets = forms.widgets,
-    fs = require('fs'),
+var fs = require('fs'),
     _ = require('underscore');
 
 module.exports = {
@@ -14,18 +10,8 @@ var bootstrap_settings = {
   errorAfterField: true,
   cssClasses: {
       label: ['control-label']
-  }};
-
-var bootstrap_f = function (name, object) {
-  return bootstrap_field(name, object);
-}
-
-var bootstrap_field = function (name, object) {
-  var label = object.labelHTML(name);
-  var error = object.error ? '<p class="form-error-tooltip">' + object.error + '</p>' : '';
-  var widget = '<div class="controls">' + object.widget.toHTML(name, object) + error + '</div>';
-  return '<div class="field control-group ' + (error !== '' ? 'has-error' : '')  + '">' + label + widget + '</div>';
-}
+  }
+};
 
 widgets.field_boolean = function (input, id) {
   var name = input.name;

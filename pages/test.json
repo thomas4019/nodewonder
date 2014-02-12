@@ -1,0 +1,14 @@
+{
+    "widgets": {
+        "BzDJwN45": {
+            "type": "youtube_video",
+            "slots": {},
+            "has_form": true
+        }
+    },
+    "slotAssignments": {
+        "body": [
+            "BzDJwN45"
+        ]
+    }
+}
