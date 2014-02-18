@@ -3,10 +3,11 @@ Node Wonder
 ## Getting Started
 1. Install [Node and NPM](http://nodejs.org/download/)
 2. Within project run "npm install"
-3. Run "bower install jquery#1.10" (this is needed because otherwise bower cannot decide which version of jQuery to use)
-4. Run "node server.js"
-5. Visit [http://localhost:3000](http://localhost:3000)
-6. When debugging and programming using nodemon (from npm is useful)
+3. Ensure bower is installed by running "sudo npm install -g bower"
+4. Run "bower install jquery#1.10" (this is needed because otherwise bower cannot decide which version of jQuery to use)
+5. Run "node server.js"
+6. Visit [http://localhost:3000](http://localhost:3000)
+7. When debugging and programming using nodemon (from npm is useful)
 
 ## Resources
 1. [Summary Document](https://docs.google.com/document/d/1P1b4pfQa47nQUJXY59b_krdVow_mTHNrgHb6wNWI1Tg)
