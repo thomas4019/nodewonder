@@ -73,7 +73,7 @@ widgets.centered = function() {
 
   this.toHTML = function(zones) {
     var template = Handlebars.compile('<div style="margin-left: auto; width: 700px; margin-right: auto; border: 1px solid black; border-radius: 10px; padding: 15px; ">' + 
-    ' {{{ content }}} </div>');
+    ' {{{ content.html }}} </div>');
     return template(zones);
   }
 }

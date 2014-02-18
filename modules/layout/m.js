@@ -1,5 +1,6 @@
 var fs = require('fs'),
-    _ = require('underscore');
+    _ = require('underscore'),
+    Handlebars = require('Handlebars');
 
 module.exports = {
   widgets : {}
@@ -9,6 +10,9 @@ widgets = module.exports.widgets;
 widgets.two_col = function(input) {
   this.col1 = input.col1 || 6;
   this.col2 = input.col2 || 6;
+
+  var template = Handlebars.compile('<div class="row"><div class="col-sm-6">{{{ left.html }}} ' +
+    '</div><div class="col-sm-6">{{{ right.html }}}</div></div>');
 
   this.form = function() {
     return  {
@@ -22,8 +26,9 @@ widgets.two_col = function(input) {
   }
 
   this.toHTML = function(zones) {
-    return '<div class="row"><div class="col-sm-' + this.col1 + '">' + zones['left'] + 
-      '</div><div class="col-sm-' + this.col2 + '">' + zones['right'] + '</div></div>';
+    return template(zones);
+    //return '<div class="row"><div class="col-sm-' + this.col1 + '">' + zones['left'].html() + 
+    //  '</div><div class="col-sm-' + this.col2 + '">' + zones['right'].html() + '</div></div>';
   }
 
   this.zones = function() {
@@ -36,20 +41,115 @@ widgets.popup = function() {
 		return ['container'];
 	}
 
+  this.form = function() {
+    return {
+      'resizable' : {'name': 'resizable', 'type': 'field_boolean'},
+    };
+  }
+
 	this.deps = function() {
-		return {'jquery': [], 'jquery-ui': [], 'bootstrap': [], 'font-awesome': ['css/font-awesome.min.css'], 'jquery-ui-bootstrap': ['jquery.ui.theme.css', 'jquery.ui.theme.font-awesome.css']	}; //'themes/smoothness/jquery-ui.min.css'
+		//return {'jquery': [], 'jquery-ui': [], 'bootstrap': [], 'font-awesome': ['css/font-awesome.min.css'], 'jquery-ui-bootstrap': ['jquery.ui.theme.css', 'jquery.ui.theme.font-awesome.css']	}; //'themes/smoothness/jquery-ui.min.css'
+    return {'jquery': [], 'jquery-ui': ['themes/smoothness/jquery-ui.min.css', 'themes/smoothness/jquery.ui.theme.css'] };
 	}
 
 	this.toHTML = function(zones, id) {
 		return '<div id="dialog-confirm" title="Title?">' + 
-  '<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>' + 
-  'Hello</p>' +
-'</div>';
-	}
+      '<p>' +
+      //'<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>' + 
+      zones.container.html() +
+      '</p>' +
+    '</div>';
+  }
 
 	this.script = function() {
-		return '$( "#dialog-confirm" ).dialog({ resizable: false, height:140, modal: true, buttons: {' +
+		return '$( "#dialog-confirm" ).dialog({ show: { effect: "blind", duration: 1000 }, hide: { effect: "explode", duration: 1000}, resizable: false, modal: true, autoOpen: false, minHeight:"350", height:"auto", minWidth: "500px", width: "auto", buttons: {' +
         '"Ok": function () { $(this).dialog("close"); }, "Cancel": function () { $(this).dialog("close"); }' +
-    '}});';
+    '}});' + '$("#jHtdjRQt button").click(function() { console.log(1234); $( "#dialog-confirm" ).dialog("open"); });';
 	}
+}
+
+widgets.tabs = function(input, id) {
+  this.zones = function() {
+    return ['tabs'];
+  }
+
+  this.form = function() {
+    return {
+      'onmouseover' : {'name': "onmouseover", "type": "field_boolean"}
+    };
+  }
+
+  this.deps = function() {
+    return {'jquery': [], 'jquery-ui': ['themes/smoothness/jquery-ui.min.css', 'themes/smoothness/jquery.ui.theme.css'] };
+  }
+
+  this.script = function() {
+    var options = {};
+
+    if (input.onmouseover) {
+      options['event'] = 'mouseover';
+    }
+
+    return '$( "#' + id + '" ).tabs(' + JSON.stringify(options) + ');'
+  }
+
+  this.toHTML = function(zones) {
+    var html = '<ul>';
+
+    _.each(zones.tabs, function(widget, index) {
+      html += '<li><a href="#tabs-' + index + '"> Tab ' + index + '</a></li>';
+    });
+    html += '</ul>';
+
+    _.each(zones.tabs, function(widget, index) {
+      html += '<div id="tabs-' + index + '">' + widget.html() + '</div>';
+    });
+
+    return html;
+  }
+}
+
+widgets.bootstrap_popup = function() {
+  this.zones = function() {
+    return ['container'];
+  }
+
+  this.form = function() {
+    return {
+      'resizable' : {'name': 'resizable', 'type': 'field_boolean'},
+    };
+  }
+
+  this.deps = function() {
+    return {'jquery': [], 'bootstrap': [], 'font-awesome': ['css/font-awesome.min.css'] };
+  }
+
+  this.toHTML = function(zones, id) {
+    return  '<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">\
+      Launch demo modal\
+    </button>' +
+    '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+      <div class="modal-dialog">\
+        <div class="modal-content">\
+          <div class="modal-header">\
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>\
+          </div>\
+          <div class="modal-body">' + 
+            zones.container.html() + 
+          '</div>\
+          <div class="modal-footer">\
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
+            <button type="button" class="btn btn-primary">Save changes</button>\
+          </div>\
+        </div>\
+      </div>\
+    </div>';
+  }
+
+  this.script = function() {
+    return '$( "#dialog-confirm" ).dialog({ show: { effect: "blind", duration: 1000 }, hide: { effect: "explode", duration: 1000}, resizable: false, modal: true, autoOpen: false, minHeight:"350", height:"auto", minWidth: "500px", width: "auto", buttons: {' +
+        '"Ok": function () { $(this).dialog("close"); }, "Cancel": function () { $(this).dialog("close"); }' +
+    '}});' + '$("#jHtdjRQt button").click(function() { console.log(1234); $( "#dialog-confirm" ).dialog("open"); });';
+  }
 }

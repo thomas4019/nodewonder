@@ -6,7 +6,7 @@ widgets = module.exports.widgets;
 widgets.youtube_video = function (input) {
   this.form = function() {
     return  {
-      "id" : {"name": "id", "type": "field_text", "label" : "Video ID", "value" : input.id}
+      "id" : {"name": "id", "type": "field_text", "label" : "Video ID", "value" : (input ? input.id : '') }
     };
   }
 

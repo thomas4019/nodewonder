@@ -100,7 +100,7 @@ function stateController($scope) {
 	    	'<input type="hidden" name="widget_page" value="' + page + '">' +
 	    	'<input type="hidden" name="widget_id" value="' + id + '">' +
 	    	'<input type="hidden" name="widget_type" value="' + type + '">';
-				$("#widgetForm").html(form_begin + result.html + '<input type="submit" class="save" value="Save"> </form>' + '<div class="close">X</div>');
+				$("#widgetForm").html('<div>' + id + '</div>' + form_begin + result.html + '<input type="submit" class="save" value="Save"> </form>' + '<div class="close">X</div>');
 		    $("#widgetForm .close").click(function() {
 		    	$("#widgetForm").remove();
 		    });

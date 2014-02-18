@@ -15,7 +15,7 @@ module.exports = {
 widgets = module.exports.widgets;
 functions = module.exports.functions;
 
-functions.organizeState = function(state, callback) {
+functions.initializeState = function(state, callback) {
   var widgets_buffer = {};
   var count = 1;
 
@@ -140,84 +140,31 @@ functions.fillValues = function(state, values) {
   return state;
 }
 
-functions.renderState = function(state, slotAssignments, callback, head_additional, deps) {
-  cms.functions.renderStateParts(state, slotAssignments, function(html, deps, head, script) {
+functions.renderState = function(state, slotAssignments, callback) {
+  cms.functions.renderStateParts(state, slotAssignments, function(html, results) {
     var all_head = [];
-    all_head = all_head.concat(head);
-    all_head = all_head.concat(cms.functions.processDeps(deps));
-    all_head.push('<script>$(function() {' + script + '});</script>');
+    all_head = all_head.concat(results.head);
+    all_head = all_head.concat(cms.functions.processDeps(results.deps));
+    all_head.push('<script>$(function() {' + results.script + '});</script>');
     callback(html, all_head);
   });
 }
 
 functions.renderStateParts = function(state, slotAssignments, callback, values) {
-  var head = [];
-  var head_map = {};
-  var script = '';
 
-  var initial_values = values || {};
-
-  cms.functions.organizeState(state, function(widgets_buffer) {
-    loadAndPrepare(widgets_buffer);
-  });
-
-  function toHTML(widget, values) {
-    if (widget.head) {
-      _.each(widget.head(), function(head_element) {
-        if (!(head_element in head_map)) {
-          head_map[head_element] = true;
-          head.push(head_element);
-        }
-      });
-    }
-    if (widget.script) {
-      script += widget.script(widget.name);
-    }
-    if (widget.values) {
-      _.extend(values, widget.values());
-    }
-
-    var zones = {};
-    if (widget.zones) {
-      _.each(widget.zones(), function(zone) {
-        zones[zone] = '';
-      });
-    }
-
-    _.each(widget.all_children, function(widgetList, zone) {
-      var zone_html = '';
-
-      _.each(widgetList, function(w, i) {
-        zone_html += toHTML(w, values);
-      });
-
-      zones[zone] = zone_html;
-    });
-
-    var widget_html = '';
-    if (widget.toHTML) {
-      widget_html = widget.toHTML(zones, values[widget.id]);
-    } else {
-      _.each(zones, function(zone_html) {
-        widget_html += zone_html;
-      });
-    }
-
-    if (widget.isPage) {
-      return widget_html;
-    } else {
-      return '<div class="widget-container widget-' + widget.name + '" id="' + widget.name + '">' + widget_html + '</div>';
-    }
-  }
-
-  function loadAndPrepare(widgets_buffer) {
-    var deps = {};
+  cms.functions.initializeState(state, function(widgets_buffer) {
+    var render_results = {
+      'head': [],
+      'head_map': {},
+      'script': '',
+      'values': (values || {}),
+      'deps': {}
+    };
 
     async.each(Object.keys(widgets_buffer), function(id, callback) {
       var widget = widgets_buffer[id];
-      if (widget.deps) {
-        dextend(deps, widget.deps());
-      }
+      widget.results = render_results;
+
       if (widget.load)
         widget.load(callback);
       else
@@ -226,40 +173,14 @@ functions.renderStateParts = function(state, slotAssignments, callback, values) 
       var html = '';
       _.each(slotAssignments['body'], function(id, index) {
         if (widgets_buffer[id]) {
-          html += toHTML(widgets_buffer[id], initial_values);
+          html += widgets_buffer[id].html();
         } else {
           console.log("Widget missing " + id);
         }
       });
 
-      callback(html, deps, head, script);
+      callback(html, render_results);
     });
-  }
-}
 
-widgets.state_editor = function (input, id) {
-  var page = input.page || 'test';
-
-  this.script = function() {
-    return '$("input[type=\'submit\']").click(exportState);';
-  }
-
-  this.head = function() {
-    return ['<script src="/modules/pages/state-utils.js" type="text/javascript"></script>',
-    '<link rel="stylesheet" href="/modules/pages/state-editor.css" />']
-  }
-
-  this.deps = function() {
-    return {'jquery': [], 'bootstrap': [], 'angular': [], 'underscore': ['underscore.js'], 'font-awesome': ['css/font-awesome.css']};
-  }
-
-  this.toHTML = function(zones, value) {
-    var v = JSON.stringify(value);
-    return '<script type="text/javascript">var page = "'+ page + '"; var state = ' + v + ';</script>' +
-    '<textarea style="display:none;" name="state">' + v + '</textarea>' +
-    '<div ng-app><ul id="state-ctrl" ng-controller="stateController">' +
-    '<li ng-init="id = \'body\'; slot_name = \'body\';" id="{{ id }}-{{ slot_name }}" ng-include="\'/modules/pages/slot.html\'"></li>' +
-    '<li ng-repeat="id in slotAssignments[\'body\']" id="{{ id }}" ng-include="\'/modules/pages/widget.html\'"></li>' +
-    '</div>';
-  }
+  });
 }

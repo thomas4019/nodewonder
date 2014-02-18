@@ -33,7 +33,7 @@ widgets.json = function(input) {
      + '<input type="hidden" name="widget" value="' + widget + '">'
      + '<input type="hidden" name="file" value="' + file + '">'
      + '<input type="hidden" name="dir" value="' + dir + '">'
-     + zones['form'] + 
+     + zones.form.html() + 
     '</form>';
   }
 
@@ -73,7 +73,7 @@ widgets.ijson = function(input) {
      + '<input type="hidden" name="widget" value="' + widget + '">'
      + '<input type="hidden" name="id" value="' + input.id + '">'
      + '<input type="hidden" name="dir" value="' + dir + '">'
-     + zones['form'] + 
+     + zones.form.html() + 
     '</form>';
   }
 
@@ -176,6 +176,7 @@ widgets.statejson = function(input) {
       var newData = JSON.parse(values['state']);
       jdata.widgets = newData.widgets;
       jdata.slotAssignments = newData.slotAssignments;
+      console.log('hello');
       console.log(newData);
       console.log(JSON.stringify(jdata));
       console.log(input.dir + '/' + input.file + '.json');

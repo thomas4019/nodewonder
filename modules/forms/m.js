@@ -19,7 +19,7 @@ widgets.field_boolean = function (input, id) {
   var value = input.value || false;
 
   this.toHTML = function() {
-    var form_html = '<label for="' + name + '" >' + label + '</label>' + '<input type="checkbox" name="' + name + '" >'
+    var form_html = '<label for="' + name + '" >' + (label ? label : name) + '</label>' + '<input type="checkbox" name="' + name + '" >'
     
     return form_html;
   }
@@ -33,7 +33,7 @@ widgets.form = function (input, id) {
       html += '<input type="hidden" name="widget" value="' + input.widget + '" />';
     }
 
-    html += zones['form'];
+    html += zones.form.html();
     html += '</form>';
     return html;
   }
@@ -57,6 +57,8 @@ widgets.field_text = function (input, id) {
   this.toHTML = function(zones, value) {
     var label = '<label for="' + name + '" style="padding-right: 5px;">' + input.label + ':' + '</label>';
     var element;
+
+    console.log(value);
     
     if (value) {
       element = '<input class="form-control input-small" type="text" name="' + name + '" value="' + (value || input.value) + '" />';
@@ -137,6 +139,25 @@ widgets.field_text_select = function (input) {
   }
 }
 
+widgets.button = function (input) {
+  var label = input.label;
+  var type = input.type || 'primary';
+
+  this.form = function() {
+    return {"label": {"type":"field_text", "name": "label", "label": "Label"},
+        'button_type': {'type':'field_text_select', 'name': "button_type",'choices': ['default', 'primary', 'success', 'info', 'warning', 'danger'], label:'Button Type'}
+      };
+  }
+
+  this.deps = function() {
+    return {'jquery': [], 'bootstrap': []};
+  }
+
+  this.toHTML = function() {
+    return '<button class="btn btn-' + input.button_type + '" >' + label + '</button>';
+  }
+}
+
 widgets.submit = function (input) {
   var label = input.label;
   var type = input.type || 'primary';
@@ -170,13 +191,20 @@ widgets.field_date = function (input) {
   }
 
   this.toHTML = function() {
-    var form = {};
-
-    form['text'] = fields.string(_.extend(bootstrap_settings,{value : value, label : label}));
-
-    var form_html = forms.create(form).toHTML(bootstrap_f);
+    var label = '<label for="' + name + '" style="padding-right: 5px;">' + input.label + ':' + '</label>';
+    var element;
     
-    return form_html;
+    if (value) {
+      element = '<input class="form-control input-small" type="text" name="' + name + '" value="' + (value || input.value) + '" />';
+    } else {
+      element = '<input class="form-control input-small" type="text" name="' + name + '" />';
+    }
+    
+    if (input.inline) {
+      return '<div class="controls form-inline">' + label + element + '</div>';
+    } else {
+      return label + element;
+    }
   }
 
   this.script = function(container_id) {

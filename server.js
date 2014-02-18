@@ -16,7 +16,8 @@ var fs = require('fs'),
     path = require('path'),
     repl = require("repl"),
     bower = require('bower'),
-    bowerJson = require('bower-json');
+    bowerJson = require('bower-json'),
+    dextend = require('dextend');
 
 cms = {};
 cms.m = {};
@@ -30,6 +31,61 @@ cms.deps = {};
 /*cms.functions.allPagesToStatic();
 cms.functions.staticThemeCopy();
 cms.functions.staticModulesCopy();*/
+
+var Widget = function() {};
+
+Widget.prototype.html = function() {
+  var results = this.results;
+  var zone_object = this.getZoneObject();
+
+  if (this.deps) {
+    dextend(results.deps, this.deps());
+  }
+  if (this.head) {
+    _.each(this.head(), function(head_element) {
+      if (!(head_element in results.head_map)) {
+        results.head_map[head_element] = true;
+        results.head.push(head_element);
+      }
+    });
+  }
+  if (this.script) {
+    results.script += this.script(this.id, zone_object);
+  }
+  if (this.values) {
+    _.extend(results.values, this.values());
+  }
+
+  var rel_value = (results.values && this.id in results.values) ? results.values[this.id] : undefined;
+  widget_html = (this.toHTML) ? this.toHTML(zone_object, rel_value) : '';
+
+  if (this.isPage) {
+    return widget_html;
+  } else {
+    return '<div class="widget-container widget-' + this.name + '" id="' + this.id + '">' + widget_html + '</div>';
+  }
+}
+
+Widget.prototype.getZoneObject = function() {
+  var zones = {};
+
+  _.each(this.all_children, function(widgetList, zoneName) {
+
+    var zone = widgetList;
+
+    zone.html = function() {
+      var zone_html = '';
+      _.each(widgetList, function(w, i) {
+        zone_html += w.html(this.values);
+      });
+      return zone_html;
+    }
+
+    zones[zoneName] = zone;
+  });
+
+  return zones;
+}
 
 var router = new director.http.Router();
 
@@ -200,24 +256,13 @@ function registerModule(directory, module, prefix, callback) {
   });
 
   _.each(m.widgets, function(widget, name) {
+    widget.prototype = new Widget();
     widget.prototype.name = prefix+name;
     cms.widgets[prefix+name] = widget;
     installDependencies(new widget({}));
     if (widget.init) {
       widget.init();
     }
-  });
-
-  _.each(m.events, function(event, name) {
-    event.prototype.name = name;
-    cms.events[name] = event;
-    installDependencies(new event({}));
-  });
-
-  _.each(m.actions, function(action, name) {
-    action.prototype.name = name;
-    cms.actions[name] = action;
-    installDependencies(new action({}));
   });
 
   callback();
