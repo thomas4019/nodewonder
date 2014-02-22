@@ -1,8 +1,4 @@
 var http = require('http');
-var forms = require('forms'),
-    fields = forms.fields,
-    validators = forms.validators,
-    widgets = forms.widgets;
 
 var fs = require('fs'),
     url = require('url'),
@@ -23,6 +19,7 @@ cms = {};
 cms.m = {};
 cms.functions = {};
 cms.widgets = {};
+cms.model_widgets = {};
 cms.events = {};
 cms.conditions = {};
 cms.actions = {};
@@ -34,15 +31,19 @@ cms.functions.staticModulesCopy();*/
 
 var Widget = function() {};
 
+function retreive(val) {
+  return (typeof val == 'function') ? val() : val;
+}
+
 Widget.prototype.html = function() {
   var results = this.results;
   var zone_object = this.getZoneObject();
 
   if (this.deps) {
-    dextend(results.deps, this.deps());
+    dextend(results.deps, retreive(this.deps));
   }
   if (this.head) {
-    _.each(this.head(), function(head_element) {
+    _.each(retreive(this.head), function(head_element) {
       if (!(head_element in results.head_map)) {
         results.head_map[head_element] = true;
         results.head.push(head_element);
@@ -50,7 +51,10 @@ Widget.prototype.html = function() {
     });
   }
   if (this.script) {
-    results.script += this.script(this.id, zone_object);
+    if (typeof this.script == 'function')
+      results.script += this.script(this.id, zone_object);
+    else
+      results.script += this.script;
   }
   if (this.values) {
     _.extend(results.values, this.values());
@@ -59,10 +63,16 @@ Widget.prototype.html = function() {
   var rel_value = (results.values && this.id in results.values) ? results.values[this.id] : undefined;
   widget_html = (this.toHTML) ? this.toHTML(zone_object, rel_value) : '';
 
-  if (this.isPage) {
+  var wrapper = this.wrapper ? this.wrapper : 'div';
+
+  var style = this.wrapper_style ? ' style="' + retreive(this.wrapper_style) + '" ' : '';
+
+  var wclass = this.wrapper_class ? retreive(this.wrapper_class) : '';
+
+  if (wrapper == 'none') {
     return widget_html;
   } else {
-    return '<div class="widget-container widget-' + this.name + '" id="' + this.id + '">' + widget_html + '</div>';
+    return '<' + wrapper + style + ' class="widget-container widget-' + this.name + ' ' + wclass + '" id="' + this.id + '">' + widget_html + '</' + wrapper + '>';
   }
 }
 
@@ -206,7 +216,7 @@ function processDeps(callback) {
 
 function installDependencies(thing) {
   if (thing.deps) {
-    _.each(Object.keys(thing.deps()), function(dep, index) {
+    _.each(Object.keys(retreive(thing.deps)), function(dep, index) {
       if (dep != 'order' && !_.contains(allDeps, dep)) {
         allDeps.push(dep);
       }
@@ -259,9 +269,17 @@ function registerModule(directory, module, prefix, callback) {
     widget.prototype = new Widget();
     widget.prototype.name = prefix+name;
     cms.widgets[prefix+name] = widget;
-    installDependencies(new widget({}));
+    var instance = new widget({});
+    installDependencies(instance);
     if (widget.init) {
       widget.init();
+    }
+    if (instance.model) {
+      var type = instance.model;
+      if (!(type in cms.model_widgets)) {
+        cms.model_widgets[type] = {};
+      }
+      cms.model_widgets[type][name] = widget;
     }
   });
 

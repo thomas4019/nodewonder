@@ -1,5 +1,7 @@
 var fs = require('fs'),
-    _ = require('underscore');
+    _ = require('underscore'),
+    mkdirp = require('mkdirp'),
+    path = require('path');
 
 var cms;
 module.exports = {
@@ -9,7 +11,21 @@ module.exports = {
     cms = _cms;
   }
 };
+var functions = module.exports.functions;
 var widgets = module.exports.widgets;
+
+functions.wrapInForm = function(html, widget, vars) {
+  var out = '<form action="/post" method="post">'
+   + '<input type="hidden" name="widget" value="' + widget + '">';
+
+  _.each(vars, function(value, key) {
+    out += '<input type="hidden" name="' + key + '" value="' + value + '">';
+  });
+  out += html;
+  out += '</form>';
+
+  return out;
+}
 
 var copy = function (original) {
   return Object.keys(original).reduce(function (copy, key) {
@@ -24,9 +40,7 @@ widgets.json = function(input) {
   var widget = input.widget || 'json'
   var values;
 
-  this.deps = function() {
-    return {'jquery' : []};
-  }
+  this.deps = {'jquery' : []};
 
   this.toHTML = function(zones) {
     return '<form class="well" action="/post" method="post">'
@@ -64,9 +78,7 @@ widgets.ijson = function(input) {
   var widget = input.widget || 'ijson'
   var values;
 
-  this.deps = function() {
-    return {'jquery' : []};
-  }
+  this.deps = {'jquery' : []};
 
   this.toHTML = function(zones) {
     return '<form class="well" action="/post" method="post">'
@@ -180,6 +192,11 @@ widgets.statejson = function(input) {
       console.log(newData);
       console.log(JSON.stringify(jdata));
       console.log(input.dir + '/' + input.file + '.json');
+
+      mkdirp(path.dirname(input.dir + '/' + input.file + '.json'), function(err) {
+
+      });
+
       fs.writeFile(input.dir + '/' + input.file + '.json', JSON.stringify(jdata, null, 4));
     });
   }

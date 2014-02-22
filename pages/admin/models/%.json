@@ -1,0 +1,17 @@
+{
+    "widgets": {
+        "wyobn3bP": {
+            "type": "model_form",
+            "slots": {},
+            "model": "user"
+        }
+    },
+    "arguments": {
+        "wyobn3bP": {"model": "2"}
+    },
+    "slotAssignments": {
+        "body": [
+            "wyobn3bP"
+        ]
+    }
+}

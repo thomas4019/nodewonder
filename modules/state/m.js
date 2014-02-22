@@ -2,7 +2,8 @@ var _ = require('underscore'),
     fs = require('fs'),
     async = require('async'),
     path = require('path'),
-    dextend = require('dextend');
+    dextend = require('dextend'),
+    deep = require('deep');
 
 var cms;
 module.exports = {
@@ -36,21 +37,15 @@ functions.initializeState = function(state, callback) {
           var heirarchical = false;
           _.each(widgetStateList, function(widgetInput, idC) {
             var nameC = widgetInput.type;
-            if (idC == 'start') {
-              idC = id + 'inner-' + idC;
-              key = idC + ':' + nameC;
-            }
-            if (!heirarchical) {
-              w.slots = w.slots || {};
-              w.slots[zone] = w.slots[zone] || [];
-              w.slots[zone].push(idC);
-            }
-            if (partsC[0] == 'start') {
-              heirarchical = true;
-            }
-            state[key] = widgetInput;
+            idC = id + '-' + idC;
 
-            initializeWidget(widgetInput, key);
+            w.slots = w.slots || {};
+            w.slots[zone] = w.slots[zone] || [];
+            w.slots[zone].push(idC);
+
+            state[idC] = widgetInput;
+
+            initializeWidget(widgetInput, idC);
           });
         });
         count--;
@@ -85,7 +80,7 @@ functions.initializeState = function(state, callback) {
       }
     });
 
-    callback(widgets_buffer);
+    callback(widgets_buffer, state);
   }
 
   function addChildrenToWidget(zones, widget) {

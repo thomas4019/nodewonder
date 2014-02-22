@@ -1,14 +1,14 @@
 {
     "widgets": {
-        "BzDJwN45": {
-            "type": "youtube_video",
-            "slots": {},
-            "has_form": true
-        }
+     "5": 
+      { "type": "field_multi",
+        "name": "sites",
+        "widget": "model_form",
+        "model": "link" }
     },
     "slotAssignments": {
         "body": [
-            "BzDJwN45"
+            "5"
         ]
     }
 }

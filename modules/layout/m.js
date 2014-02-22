@@ -21,9 +21,7 @@ widgets.two_col = function(input) {
     };
   }
 
-  this.deps = function() {
-    return {'jquery':[],'bootstrap': []};
-  }
+  this.deps = {'jquery':[],'bootstrap': []};
 
   this.toHTML = function(zones) {
     return template(zones);
@@ -31,15 +29,11 @@ widgets.two_col = function(input) {
     //  '</div><div class="col-sm-' + this.col2 + '">' + zones['right'].html() + '</div></div>';
   }
 
-  this.zones = function() {
-    return ['left', 'right'];
-  }
+  this.zones = ['left', 'right'];
 }
 
 widgets.popup = function() {
-	this.zones = function() {
-		return ['container'];
-	}
+	this.zones = ['container'];
 
   this.form = function() {
     return {
@@ -47,10 +41,7 @@ widgets.popup = function() {
     };
   }
 
-	this.deps = function() {
-		//return {'jquery': [], 'jquery-ui': [], 'bootstrap': [], 'font-awesome': ['css/font-awesome.min.css'], 'jquery-ui-bootstrap': ['jquery.ui.theme.css', 'jquery.ui.theme.font-awesome.css']	}; //'themes/smoothness/jquery-ui.min.css'
-    return {'jquery': [], 'jquery-ui': ['themes/smoothness/jquery-ui.min.css', 'themes/smoothness/jquery.ui.theme.css'] };
-	}
+	this.deps = {'jquery': [], 'jquery-ui': ['themes/smoothness/jquery-ui.min.css', 'themes/smoothness/jquery.ui.theme.css'] };
 
 	this.toHTML = function(zones, id) {
 		return '<div id="dialog-confirm" title="Title?">' + 
@@ -69,9 +60,7 @@ widgets.popup = function() {
 }
 
 widgets.tabs = function(input, id) {
-  this.zones = function() {
-    return ['tabs'];
-  }
+  this.zones = ['tabs'];
 
   this.form = function() {
     return {
@@ -79,9 +68,7 @@ widgets.tabs = function(input, id) {
     };
   }
 
-  this.deps = function() {
-    return {'jquery': [], 'jquery-ui': ['themes/smoothness/jquery-ui.min.css', 'themes/smoothness/jquery.ui.theme.css'] };
-  }
+  this.deps = {'jquery': [], 'jquery-ui': ['themes/smoothness/jquery-ui.min.css', 'themes/smoothness/jquery.ui.theme.css'] };
 
   this.script = function() {
     var options = {};
@@ -110,9 +97,7 @@ widgets.tabs = function(input, id) {
 }
 
 widgets.bootstrap_popup = function() {
-  this.zones = function() {
-    return ['container'];
-  }
+  this.zones = ['container'];
 
   this.form = function() {
     return {
@@ -120,9 +105,7 @@ widgets.bootstrap_popup = function() {
     };
   }
 
-  this.deps = function() {
-    return {'jquery': [], 'bootstrap': [], 'font-awesome': ['css/font-awesome.min.css'] };
-  }
+  this.deps = {'jquery': [], 'bootstrap': [], 'font-awesome': ['css/font-awesome.min.css'] };
 
   this.toHTML = function(zones, id) {
     return  '<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">\

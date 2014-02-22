@@ -1,0 +1,24 @@
+{
+    "name": "Model",
+    "description": "",
+    "revisioned": false,
+    "fields": [
+        {
+            "name": "name",
+            "type": "String"
+        },
+        {
+            "name": "description",
+        	"type": "String"
+        },
+        {
+            "name": "revisioned",
+        	"type": "Boolean"
+        },
+        {
+            "name": "fields",
+            "type": "field",
+            "quantity": "+"
+        }
+    ]
+}

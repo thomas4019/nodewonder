@@ -14,7 +14,9 @@ widgets.template = function(input) {
     {name : 'body'};
   }
 
-  this.wrapper = 'none';
+  this.isPage = function() {
+    return true;
+  }
 
   this.form = function() {
     return  {

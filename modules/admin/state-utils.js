@@ -1,13 +1,3 @@
-function makeid() {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for( var i=0; i < 8; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
-}
-
 function exportState() {
 	var $scope = angular.element($('#state-ctrl')).scope();
 	var cstate = {
@@ -45,7 +35,7 @@ function stateController($scope) {
 		$('.widget-selector').select2("container").hide();
 		var type = $('.widget-selector').select2('val');
 		$('.widget-selector').select2('val', '');
-		var new_id = makeid();
+		var new_id = nw.makeid();
 		var zone_names = $('option[value="'+type+'"]').data('zones');
 		var has_form = $('option[value="'+type+'"]').data('form');
 		var zones = {};
@@ -84,9 +74,7 @@ function stateController($scope) {
 		var ne = $( '<div id="widgetForm" style="left:'+x+'px; top:'+y+'px;" />' )
 		$('body').append(ne);
 		//ne.html('hello world');
-		var type = $scope.widgets[id].type;
 		var data = {};
-		data['start-widget_type'] = type;
 		data['start-widget_id'] = id;
 		//data['start-input'] = '{id:wjarzQWtBwM}';//'%7B"id"%3A"wjarzQWtBwM"%7D';
 		data['start-widget_page'] = page;
@@ -99,7 +87,6 @@ function stateController($scope) {
 	    	'<input type="hidden" name="widget" value="page_widget_form">' +
 	    	'<input type="hidden" name="widget_page" value="' + page + '">' +
 	    	'<input type="hidden" name="widget_id" value="' + id + '">' +
-	    	'<input type="hidden" name="widget_type" value="' + type + '">';
 				$("#widgetForm").html('<div>' + id + '</div>' + form_begin + result.html + '<input type="submit" class="save" value="Save"> </form>' + '<div class="close">X</div>');
 		    $("#widgetForm .close").click(function() {
 		    	$("#widgetForm").remove();

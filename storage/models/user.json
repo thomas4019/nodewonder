@@ -1,0 +1,36 @@
+{
+    "name": "User",
+    "description": "A registered user on this site",
+    "fields": [
+        {
+            "name": "username",
+            "type": "String",
+            "quantity": ""
+        },
+        {
+            "name": "password",
+            "type": "String",
+            "quantity": ""
+        },
+        {
+            "name": "created",
+            "type": "Date",
+            "quantity": ""
+        },
+        {
+            "name": "last_login",
+            "type": "Date",
+            "quantity": ""
+        },
+        {
+            "name": "active",
+            "type": "Boolean",
+            "quantity": ""
+        },
+        {
+            "name": "sites",
+            "type": "link",
+            "quantity": ""
+        }
+    ]
+}

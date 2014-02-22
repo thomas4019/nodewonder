@@ -15,9 +15,7 @@ functions = module.exports.functions;
 widgets = module.exports.widgets;
 
 widgets.calendar = function() {
-  this.deps = function() {
-    return {'jquery': [], 'jquery-ui': [], 'fullcalendar': ['fullcalendar.min.js','fullcalendar.css']};
-  }
+  this.deps = {'jquery': [], 'jquery-ui': [], 'fullcalendar': ['fullcalendar.min.js','fullcalendar.css']};
 
   this.script = function() {
     return "$('#fcalendar').fullCalendar({ header: { left: 'prev,next today', center: 'title', " + 

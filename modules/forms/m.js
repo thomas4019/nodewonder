@@ -1,5 +1,6 @@
 var fs = require('fs'),
-    _ = require('underscore');
+    _ = require('underscore'),
+    deep = require('deep');
 
 module.exports = {
   widgets : {}
@@ -18,8 +19,10 @@ widgets.field_boolean = function (input, id) {
   var label = input.label;
   var value = input.value || false;
 
+  this.model = 'Boolean';
+
   this.toHTML = function() {
-    var form_html = '<label for="' + name + '" >' + (label ? label : name) + '</label>' + '<input type="checkbox" name="' + name + '" >'
+    var form_html = '<label for="' + name + '" style="margin-right: 5px;" >' + (label ? label : name) + '</label>' + '<input type="checkbox" name="' + id + '" >'
     
     return form_html;
   }
@@ -40,12 +43,11 @@ widgets.form = function (input, id) {
 }
 
 widgets.field_text = function (input, id) {
-  var name = input.name;
   var value = input.value || '';
 
-  this.deps = function() {
-    return {'bootstrap':[]};
-  }
+  this.model = 'String';
+
+  this.deps = {'jquery': [],'bootstrap':[]};
 
   this.form = function() {
     return {
@@ -55,15 +57,13 @@ widgets.field_text = function (input, id) {
   }
 
   this.toHTML = function(zones, value) {
-    var label = '<label for="' + name + '" style="padding-right: 5px;">' + input.label + ':' + '</label>';
+    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
     var element;
-
-    console.log(value);
     
     if (value) {
-      element = '<input class="form-control input-small" type="text" name="' + name + '" value="' + (value || input.value) + '" />';
+      element = '<input class="form-control input-small" type="text" name="' + id + '" value="' + (value || input.value) + '" />';
     } else {
-      element = '<input class="form-control input-small" type="text" name="' + name + '" />';
+      element = '<input class="form-control input-small" type="text" name="' + id + '" />';
     }
 
     if (input.inline) {
@@ -79,6 +79,8 @@ widgets.textarea = function (input, id) {
   var label = input.label;
   var value = input.value || '';
 
+  this.model = 'String';
+
   this.toHTML = function(zones, value) {
     return '<label for="' + name + '">' + label + '</label><textarea name="' + name + '" value="' + (value || input.value) + '"></textarea>';
   }
@@ -88,6 +90,8 @@ widgets.ckeditor = function (input, id) {
   var name = input.name || id;
   var label = input.label;
   var value = input.value || '';
+
+  this.model = 'String';
 
   this.form = function() {
     return {'toolbar': {'type': 'field_text_select', 'choices': ['Basic', 'Advanced'], label:'Toolbar Type'}};
@@ -101,9 +105,7 @@ widgets.ckeditor = function (input, id) {
     return 'CKEDITOR.replace("' + id + '",{toolbar:"Basic"});';
   }
 
-  this.deps = function() {
-    return {'jquery': [],'ckeditor': ['ckeditor.js']};
-  }
+  this.deps = {'jquery': [],'ckeditor': ['ckeditor.js']};
 }
 
 widgets.iframe = function(input, id) {
@@ -149,12 +151,10 @@ widgets.button = function (input) {
       };
   }
 
-  this.deps = function() {
-    return {'jquery': [], 'bootstrap': []};
-  }
+  this.deps = {'jquery': [], 'bootstrap': []};
 
   this.toHTML = function() {
-    return '<button class="btn btn-' + input.button_type + '" >' + label + '</button>';
+    return '<input type="button" class="btn btn-' + input.button_type + '" value="' + label + '" >';
   }
 }
 
@@ -168,9 +168,7 @@ widgets.submit = function (input) {
       };
   }
 
-  this.deps = function() {
-    return {'jquery': []};
-  }
+  this.deps = {'jquery': []};
 
   this.toHTML = function() {
     return '<input type="submit" class="btn btn-' + input.button_type + '" value="' + label + '" />'
@@ -179,19 +177,19 @@ widgets.submit = function (input) {
 
 widgets.field_date = function (input) {
   var name = input.name;
-  var label = input.label;
   var value = input.value || '';
 
-  this.head = function() {
-    return ['<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/" rel="stylesheet">'];
-  }
+  this.model = 'Date';
 
-  this.deps = function() {
-    return {'jquery-ui': ['themes/smoothness/jquery-ui.min.css'] }
-  }
+  //this.head = ['<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/" rel="stylesheet">'];
+
+  this.deps = {'jquery-ui': ['themes/smoothness/jquery-ui.min.css'] };
 
   this.toHTML = function() {
-    var label = '<label for="' + name + '" style="padding-right: 5px;">' + input.label + ':' + '</label>';
+    var label = '';
+    if (input.label)
+      label = '<label for="' + name + '" style="padding-right: 5px;">' + input.label + ':' + '</label>';
+
     var element;
     
     if (value) {
@@ -220,11 +218,60 @@ widgets.itext = function (input, id) {
     };
   }
 
-  this.isPage = function () {
-    return true;
-  }
+  this.wrapper = 'none';
 
   this.toHTML = function(zones, value) {
     return input.value;
+  }
+}
+
+widgets.field_multi = function(input, id) {
+  this.model = 'Array';
+
+  var w_type = input.widget;
+  var w_input = input;
+  delete w_input['widget'];
+  w_input['type'] = w_type;
+
+  this.children = function(callback) {
+    var state = {"body": {}};
+    state["body"]["add"] = {"type": "button", "label": "Add more items"}
+
+    var count = input.data ? input.data.length : 3;
+
+    for (var i = 0; i < count; i++) {
+      state["body"]["" + i] = deep.clone(w_input);
+    }
+
+    state["body"]["click"] = {
+      "sel": "#" + id + "-add input",
+      "type": "clicked",
+    }
+    state["body"]["add_action"] = {
+      //"js": "$('#" + id + " button').before('<div>Hello World</div>');",
+      "js": "nw.insertWidgetBefore('" + w_type + "','" + id + "-'+(nw.counter++), '"+ JSON.stringify(w_input) + "', '#" + id + "-add')",
+      "type": "execute",
+    }
+    state["body"]["rule"] = {
+      "type": "rule",
+      "slots": {
+        "events": [id+"-"+"click"],
+        "conditions": [],
+        "actions": [id+"-"+"add_action"]
+      }
+    };
+    callback(state);
+  }
+
+  this.wrapper_style = "padding-left: 5px;";  
+
+  this.script = function() {
+    return 'nw.counter = 3;';
+  }
+
+  this.toHTML = function(slots) {
+    var label = '<label style="padding-right: 5px;">' + input.name + ':' + '</label>';
+    var arr = '<input type="hidden" name="'+id+'" value="new Array" />';
+    return label + arr + slots.body.html();
   }
 }

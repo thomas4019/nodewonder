@@ -3,4 +3,4 @@
 <a href="" ng-if="widgets[id]['has_form']" ng-click="configureWidget(id)"><i class="fa fa-cog fa-lg configure"></i></a>
 <button ng-click="delete(data)" ng-show="data.nodes.length > 0">Delete nodes</button>
 
-<div ng-repeat="(slot_name, slot) in widgets[id].slots" id="{{ id }}-{{ slot_name }}" ng-include="'/modules/pages/slot.html'"></div>
+<div ng-repeat="(slot_name, slot) in widgets[id].slots" id="{{ id }}-{{ slot_name }}" ng-include="'/modules/admin/slot.html'"></div>

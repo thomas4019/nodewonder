@@ -19,10 +19,13 @@ functions.processDeps = function(deps) {
   }
   var order = deps['order'];
   delete deps['order'];
-  order = _.union(order, Object.keys(deps));
+  if (order)
+    order = _.union(order, Object.keys(deps));
+  else
+    order = Object.keys(deps);
   var head = [];
   _.each(order, function(dep, index) {
-    var depFiles = _.union(cms.deps[dep], deps[dep]);
+    var depFiles = _.union(cms.deps[dep], deps[dep]);;
     head.push(cms.functions.processDep(dep, depFiles));
   });
 

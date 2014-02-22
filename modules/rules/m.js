@@ -73,7 +73,7 @@ widgets.clicked = function(input) {
   } 
 }
 
-actions.refresh = function(input) {
+widgets.refresh = function(input) {
   this.toJS = function() {
     return 'location.reload();';
   }
@@ -91,17 +91,15 @@ widgets.execute = function(input) {
   }
 }
 
-actions.alert = function(input) {
-  message = input.message;
-
-  this.input = function() {
+widgets.alert = function(input) {
+  this.form = function() {
     return  {
-      "message:field_text" : {"label" : "Message", "value" : input.message},
+      "message" : {"type" : "field_text" ,"label" : "Message", "value" : input.message},
     };
   }
 
   this.toJS = function() {
-    return 'alert("' + message + '");';
+    return 'alert("' + input.message + '");';
   }
 }
 
@@ -112,19 +110,17 @@ widgets.message = function(input) {
     };
   }
 
+  this.deps = {'jquery': [],'toastr': []};
+
+  this.type = 'action';
+
   this.toJS = function() {
     return 'toastr.info("' + input.message + '");';
-  }
-
-  this.deps = function() {
-    return {'jquery': [],'toastr': []};
   }
 }
 
 widgets.rule = function() {
-  this.zones = function() {
-    return ['events', 'conditions', 'actions'];
-  }
+  this.zones = ['events', 'conditions', 'actions'];
 
   this.script = function(id, slots) {
     var actionCode = '';

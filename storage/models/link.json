@@ -1,0 +1,19 @@
+{
+    "name": "Link",
+    "description": "",
+    "inline": true,
+    "fields": [
+        {
+            "name": "url",
+            "type": "String"
+        },
+        {
+            "name": "title",
+            "type": "String"
+        },
+        {
+            "name": "alt",
+            "type": "String"
+        }
+    ]
+}

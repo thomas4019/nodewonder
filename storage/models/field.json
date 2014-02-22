@@ -1,0 +1,23 @@
+{
+    "name": "Field",
+    "description": "",
+    "inline": true,
+    "fields": [
+        {
+            "name": "name",
+            "type": "String"
+        },
+        {
+            "name": "type",
+            "type": "String"
+        },
+        {
+            "name": "quantity",
+            "type": "String"
+        },
+        {
+            "name": "required",
+            "type": "Boolean"
+        }
+    ]
+}

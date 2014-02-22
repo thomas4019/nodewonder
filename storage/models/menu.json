@@ -1,0 +1,11 @@
+{
+    "name": "menu",
+    "description": "",
+    "fields": [
+        {
+            "name": "link",
+            "type": "String",
+            "required": "on"
+        }
+    ]
+}

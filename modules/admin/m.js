@@ -14,6 +14,10 @@ module.exports = {
 };
 widgets = module.exports.widgets;
 
+function retreive(val) {
+  return (typeof val == 'function') ? val() : val;
+}
+
 widgets.page_listing = function(input) {
   var paths = [];
 
@@ -43,26 +47,20 @@ widgets.page_listing = function(input) {
 widgets.state_editor = function (input, id) {
   var page = input.page || 'test';
 
-  this.script = function() {
-    return '$("input[type=\'submit\']").click(exportState);';
-  }
+  this.script = '$("input[type=\'submit\']").click(exportState);';
 
-  this.head = function() {
-    return ['<script src="/modules/pages/state-utils.js" type="text/javascript"></script>',
-    '<link rel="stylesheet" href="/modules/pages/state-editor.css" />']
-  }
+  this.head = ['<script src="/modules/admin/state-utils.js" type="text/javascript"></script>',
+    '<link rel="stylesheet" href="/modules/admin/state-editor.css" />'];
 
-  this.deps = function() {
-    return {'jquery': [], 'bootstrap': [], 'angular': [], 'underscore': ['underscore.js'], 'font-awesome': ['css/font-awesome.css']};
-  }
+  this.deps = {'jquery': [], 'bootstrap': [], 'angular': [], 'underscore': ['underscore.js'], 'font-awesome': ['css/font-awesome.css']};
 
   this.toHTML = function(zones, value) {
     var v = JSON.stringify(value);
     return '<script type="text/javascript">var page = "'+ page + '"; var state = ' + v + ';</script>' +
     '<textarea style="display:none;" name="state">' + v + '</textarea>' +
     '<div ng-app><ul id="state-ctrl" ng-controller="stateController">' +
-    '<li ng-init="id = \'body\'; slot_name = \'body\';" id="{{ id }}-{{ slot_name }}" ng-include="\'/modules/pages/slot.html\'"></li>' +
-    '<li ng-repeat="id in slotAssignments[\'body\']" id="{{ id }}" ng-include="\'/modules/pages/widget.html\'"></li>' +
+    '<li ng-init="id = \'body\'; slot_name = \'body\';" id="{{ id }}-{{ slot_name }}" ng-include="\'/modules/admin/slot.html\'"></li>' +
+    '<li ng-repeat="id in slotAssignments[\'body\']" id="{{ id }}" ng-include="\'/modules/admin/widget.html\'"></li>' +
     '</div>';
   }
 }
@@ -71,9 +69,7 @@ widgets.widget_selector = function (input, id) {
   var children = [];
   var html;
 
-  this.deps = function() {
-    return {'select2': []};
-  }
+  this.deps = {'select2': []};
 
   this.load = function(callback) {
     html = '<select class="widget-selector" style="display: none; width: 300px;">'
@@ -82,7 +78,7 @@ widgets.widget_selector = function (input, id) {
     _.each(cms.widgets, function(widget) {
       w = new widget({});
       //children.push({title : w.name, copy: 'listing'});
-      html += '<option value="' + w.name + '" data-form=\'' + (w.form ? true : false) + '\' data-zones=\''+ (w.zones ? JSON.stringify(w.zones()) : []) +'\'>' + w.name + '</option>'
+      html += '<option value="' + w.name + '" data-form=\'' + (w.form ? true : false) + '\' data-zones=\''+ (w.zones ? JSON.stringify(retreive(w.zones)) : []) +'\'>' + w.name + '</option>'
     });
 
     html += '</select>';
@@ -127,9 +123,7 @@ widgets.widget_exporter = function(input) {
     values = JSON.parse(input.values);
   }
 
-  this.isPage = function() {
-    return true;
-  }
+  this.wrapper = 'none';
 
   this.load = function(callback) {
     var viewReady = function(html, results) {
@@ -197,9 +191,7 @@ widgets.page_widget_form = function(input) {
     values = JSON.parse(input.values);
   }
 
-  this.isPage = function() {
-    return true;
-  }
+  this.wrapper = 'none';
 
   this.load = function(callback) {
     var viewReady = function(html, results) {
@@ -223,15 +215,12 @@ widgets.page_widget_form = function(input) {
       var jdata = JSON.parse(data);
       var widget_input = jdata.widgets[input.widget_id];
 
-      widget = new cms.widgets[input.widget_type](widget_input);
+      widget = new cms.widgets[widget_input.type](widget_input);
       if (widget.form) {
         state = widget.form();
       } else {
         error = 'Widget does not have a form';
       }
-
-      console.log(state);
-      console.log(_.keys(state));
 
       if (state) {
         cms.functions.renderStateParts(state, {'body': _.keys(state) }, viewReady, widget_input);
@@ -246,8 +235,6 @@ widgets.page_widget_form = function(input) {
       var out = {error: error};
       return JSON.stringify(out);
     }
-
-    console.log('123');
 
     var out = {};
     out['html'] = _html;
@@ -268,12 +255,11 @@ widgets.page_widget_form = function(input) {
 
       var page = values.widget_page;
       var id = values.widget_id;
-      var type = values.widget_type;
       delete values['widget_page'];
       delete values['widget_id'];
-      delete values['widget_type'];
 
       var slots = jdata.widgets[id].slots;
+      var type = jdata.widgets[id].type;
         
       jdata.widgets[id] = values;
       jdata.widgets[id].type = type;
@@ -282,5 +268,61 @@ widgets.page_widget_form = function(input) {
       console.log('updated state of ' + page + '.json id:' + id + ' type: ' + type);
       console.log(values);
     });
+  }
+}
+
+widgets.render_widget = function(input) {
+  var values = {};
+  var _html;
+  var _head;
+  var _script;
+
+  var error;
+
+  console.log(input);
+
+  widget_input = (input.input) ? JSON.parse(input.input) : {};
+
+  if (input.values) {
+    values = JSON.parse(input.values);
+  }
+
+  this.wrapper = 'none';
+
+  this.load = function(callback) {
+    var viewReady = function(html, results) {
+      var all_head = [];
+      all_head = all_head.concat(results.head);
+      all_head = all_head.concat(cms.functions.processDeps(results.deps));
+      _html = html;
+      _head = all_head;
+      _script = results.script;
+      callback();
+    }
+
+    widget_input['type'] = input.widget_type;
+    var state = {};
+    state[input.widget_id] = widget_input;
+    console.log(widget_input);
+
+    if (state) {
+      cms.functions.renderStateParts(state, {'body': _.keys(state) }, viewReady);
+    } else {
+      callback();
+    }
+  }
+
+  this.toHTML = function(zones) {
+    if (error) {
+      var out = {error: error};
+      return JSON.stringify(out);
+    }
+
+    var out = {};
+    out['html'] = _html;
+    out['head'] = _head;
+    out['javascript'] = _script;
+    var json_out = JSON.stringify(out);
+    return json_out;
   }
 }
