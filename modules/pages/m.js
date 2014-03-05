@@ -37,10 +37,20 @@ functions.viewPage = function(path, vars, callback, error_callback) {
       if (path.lastIndexOf('/', path.length - 3) === -1 || path == '/%') {
         error_callback();
       } else {
-        var index = path.lastIndexOf('/', path.length - 3);
-        var arg = path.substring(index + 1);
-        vars['arg'] = arg;
+        var last = path.substring(path.length - 2);
+        var count = path.split('/').length - 1;
+        var end = path.length;
+        if (last == '/%') {
+          count--;
+          end -= 2;
+        }
+        var index = path.lastIndexOf('/', end - 1);
+
+        var arg = path.substring(index + 1, end);
+        vars['arg' + count] = arg;
         path = path.substring(0, index + 1) + '%';
+        console.log(vars);
+        console.log(last);
         console.log('searching: ' + path);
         cms.functions.viewPage(path, vars, callback, error_callback);
       }
@@ -53,8 +63,8 @@ functions.viewPage = function(path, vars, callback, error_callback) {
     if (page.arguments) {
       _.each(page.arguments, function(input, id) {
         _.each(input, function(arg, name) {
-          vars[id + '-' + name] = vars['arg'];
-          console.log(id + '-' + name + '=' + vars['arg']);
+          vars[id + '-' + name] = vars['arg' + arg];
+          console.log(id + '-' + name + '=' + vars['arg' + arg]);
         });
       });
     }

@@ -22,7 +22,8 @@ widgets.field_boolean = function (input, id) {
   this.model = 'Boolean';
 
   this.toHTML = function() {
-    var form_html = '<label for="' + name + '" style="margin-right: 5px;" >' + (label ? label : name) + '</label>' + '<input type="checkbox" name="' + id + '" >'
+    var form_html = '<label for="' + name + '" style="margin-right: 5px;" >' + (label ? label : name) + '</label>' + 
+    '<input type="checkbox" name="' + id + '" ' + (input.data ? 'checked="checked"': '' ) + ' >'
     
     return form_html;
   }
@@ -175,9 +176,8 @@ widgets.submit = function (input) {
   }
 }
 
-widgets.field_date = function (input) {
+widgets.field_date = function (input, id) {
   var name = input.name;
-  var value = input.value || '';
 
   this.model = 'Date';
 
@@ -185,17 +185,22 @@ widgets.field_date = function (input) {
 
   this.deps = {'jquery-ui': ['themes/smoothness/jquery-ui.min.css'] };
 
-  this.toHTML = function() {
+  this.toHTML = function(value_in) {
     var label = '';
     if (input.label)
       label = '<label for="' + name + '" style="padding-right: 5px;">' + input.label + ':' + '</label>';
 
     var element;
+
+    var value = input.data || value_in;
+
+    if (!value || _.isEmpty(value))
+      value = '';
     
     if (value) {
-      element = '<input class="form-control input-small" type="text" name="' + name + '" value="' + (value || input.value) + '" />';
+      element = '<input class="form-control input-small" type="text" name="' + id + '" value="' + value + '" />';
     } else {
-      element = '<input class="form-control input-small" type="text" name="' + name + '" />';
+      element = '<input class="form-control input-small" type="text" name="' + id + '" />';
     }
     
     if (input.inline) {

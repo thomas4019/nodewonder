@@ -1,0 +1,25 @@
+{
+    "name": "Link",
+    "description": "",
+    "inline": "on",
+    "fields": [
+        {
+            "name": "url",
+            "type": "String",
+            "quantity": "",
+            "widget": ""
+        },
+        {
+            "name": "title",
+            "type": "String",
+            "quantity": "",
+            "widget": ""
+        },
+        {
+            "name": "alt",
+            "type": "String",
+            "quantity": "",
+            "widget": ""
+        }
+    ]
+}

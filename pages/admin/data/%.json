@@ -3,11 +3,12 @@
         "wyobn3bP": {
             "type": "model_form",
             "slots": {},
-            "model": "user"
+            "model": "model",
+            "record": "link"
         }
     },
     "arguments": {
-        "wyobn3bP": {"model": "2"}
+        "wyobn3bP": {"model": "3", "record": "4"}
     },
     "slotAssignments": {
         "body": [

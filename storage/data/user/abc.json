@@ -1,0 +1,9 @@
+{
+    "username": "thomas",
+    "password": "334123",
+    "sites": {
+        "url": "google.com",
+        "title": "Search Engine",
+        "alt": ""
+    }
+}

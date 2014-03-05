@@ -1,0 +1,9 @@
+{
+    "username": "admin",
+    "password": "blah",
+    "sites": {
+        "url": "thomashansen.me",
+        "title": "My Site",
+        "alt": ""
+    }
+}

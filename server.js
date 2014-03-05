@@ -25,6 +25,9 @@ cms.conditions = {};
 cms.actions = {};
 cms.deps = {};
 
+cms.model_data = {};
+cms.pending_forms = {};
+
 /*cms.functions.allPagesToStatic();
 cms.functions.staticThemeCopy();
 cms.functions.staticModulesCopy();*/

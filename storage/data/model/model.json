@@ -16,6 +16,10 @@
         	"type": "Boolean"
         },
         {
+            "name": "inline",
+            "type": "Boolean"
+        },
+        {
             "name": "fields",
             "type": "field",
             "quantity": "+"

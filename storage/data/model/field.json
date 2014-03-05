@@ -1,0 +1,32 @@
+{
+    "name": "Field",
+    "description": "",
+    "inline": true,
+    "fields": [
+        {
+            "name": "name",
+            "type": "String",
+            "quantity": ""
+        },
+        {
+            "name": "type",
+            "type": "String",
+            "quantity": ""
+        },
+        {
+            "name": "quantity",
+            "type": "String",
+            "quantity": ""
+        },
+        {
+            "name": "widget",
+            "type": "String",
+            "quantity": ""
+        },
+        {
+            "name": "required",
+            "type": "Boolean",
+            "quantity": ""
+        }
+    ]
+}

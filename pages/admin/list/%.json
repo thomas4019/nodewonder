@@ -1,0 +1,17 @@
+{
+    "widgets": {
+        "bSTlkYv9": {
+            "type": "model_data_listing",
+            "slots": {},
+            "model": "model"
+        }
+    },
+    "arguments": {
+        "bSTlkYv9": {"model": "3"}
+    },
+    "slotAssignments": {
+        "body": [
+            "bSTlkYv9"
+        ]
+    }
+}
