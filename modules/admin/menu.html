@@ -1,0 +1,21 @@
+<div id="admin-menu" class="admin-menu-processed admin-menu-position-fixed" style="position: fixed;">
+   <div id="admin-menu-wrapper">
+      <ul id="admin-menu-icon" class="dropdown">
+         <li class="admin-menu-icon admin-menu-toolbar-category expandable">
+            <a href="/" class="active active-trail"><span>Home</span></a>
+            <ul class="dropdown" style="left: -999em; display: none;">
+               <li><a href="/admin/index">Index</a></li>
+            </ul>
+         </li>
+      </ul>
+      {{#each input.links}}
+      <ul id="admin-menu-menu" class="dropdown">
+         <li class="admin-menu-toolbar-category"><a href="{{ url }}">{{ title }}</a></li>
+      </ul id="admin-menu-menu" class="dropdown">
+      {{/each}}
+      <ul id="admin-menu-account" class="dropdown">
+         <li class="admin-menu-action"><a href="/user/logout">Log out</a></li>
+         <li class="admin-menu-action admin-menu-account"><a href="/user/1">Hello <strong>admin</strong></a></li>
+      </ul>
+   </div>
+</div>

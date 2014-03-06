@@ -1,32 +1,43 @@
 {
     "name": "Field",
     "description": "",
-    "inline": true,
+    "revisioned": false,
+    "inline": false,
     "fields": [
         {
             "name": "name",
             "type": "String",
-            "quantity": ""
+            "quantity": "",
+            "widget": "",
+            "required": false
         },
         {
             "name": "type",
             "type": "String",
-            "quantity": ""
+            "quantity": "",
+            "widget": "",
+            "required": false
         },
         {
             "name": "quantity",
             "type": "String",
-            "quantity": ""
+            "quantity": "",
+            "widget": "",
+            "required": false
         },
         {
             "name": "widget",
             "type": "String",
-            "quantity": ""
+            "quantity": "",
+            "widget": "",
+            "required": false
         },
         {
             "name": "required",
             "type": "Boolean",
-            "quantity": ""
+            "quantity": "",
+            "widget": "",
+            "required": false
         }
     ]
 }

@@ -1,25 +1,29 @@
 {
     "name": "Link",
     "description": "",
-    "inline": "on",
+    "revisioned": false,
+    "inline": false,
     "fields": [
         {
             "name": "url",
             "type": "String",
             "quantity": "",
-            "widget": ""
+            "widget": "",
+            "required": false
         },
         {
             "name": "title",
             "type": "String",
             "quantity": "",
-            "widget": ""
+            "widget": "",
+            "required": false
         },
         {
             "name": "alt",
             "type": "String",
             "quantity": "",
-            "widget": ""
+            "widget": "",
+            "required": false
         }
     ]
 }

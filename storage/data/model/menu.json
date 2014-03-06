@@ -3,9 +3,18 @@
     "description": "",
     "fields": [
         {
-            "name": "link",
+            "name": "name",
             "type": "String",
-            "required": "on"
+            "quantity": "",
+            "widget": "",
+            "required": false
+        },
+        {
+            "name": "link",
+            "type": "link",
+            "quantity": "5+",
+            "widget": "",
+            "required": false
         }
     ]
 }

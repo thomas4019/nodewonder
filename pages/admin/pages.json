@@ -5,6 +5,7 @@
             "M0BNipJi"
         ]
     },
+    "controller": "widgets['menu'].links = load('menu','admin').link; ",
     "widgets": {
         "start": {
             "path": "admin.html",
@@ -24,9 +25,8 @@
             "has_form": true
         },
         "menu": {
-            "path": "menu.html",
-            "type": "htmlfile",
-            "has_form": true
+            "type": "template",
+            "path": "modules/admin/menu.html"
         },
         "create": {
             "label": "Add a new page",

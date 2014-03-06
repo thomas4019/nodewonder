@@ -21,6 +21,10 @@ widgets.field_boolean = function (input, id) {
 
   this.model = 'Boolean';
 
+  this.processData = function(value) {
+    return value == "on";
+  }
+
   this.toHTML = function() {
     var form_html = '<label for="' + name + '" style="margin-right: 5px;" >' + (label ? label : name) + '</label>' + 
     '<input type="checkbox" name="' + id + '" ' + (input.data ? 'checked="checked"': '' ) + ' >'
@@ -89,8 +93,7 @@ widgets.textarea = function (input, id) {
 
 widgets.ckeditor = function (input, id) {
   var name = input.name || id;
-  var label = input.label;
-  var value = input.value || '';
+  var label = input.label || input.name;
 
   this.model = 'String';
 
@@ -99,11 +102,11 @@ widgets.ckeditor = function (input, id) {
   }
 
   this.toHTML = function(zones, value) {
-    return '<label for="' + name + '">' + label + '</label><textarea id="'+id+'" name="' + name + '" value="' + (value || input.value) + '"></textarea>';
+    return '<label for="' + name + '">' + label + '</label><textarea id="'+id+'-Editor" name="' + name + '">' + (value || input.value || '') + '</textarea>';
   }
 
   this.script = function() {
-    return 'CKEDITOR.replace("' + id + '",{toolbar:"Basic"});';
+    return 'CKEDITOR.replace("' + id + '-Editor",{toolbar:"Basic"});';
   }
 
   this.deps = {'jquery': [],'ckeditor': ['ckeditor.js']};
@@ -161,7 +164,6 @@ widgets.button = function (input) {
 
 widgets.submit = function (input) {
   var label = input.label;
-  var type = input.type || 'primary';
 
   this.form = function() {
     return {"label": {"type":"field_text", "name": "label", "label": "Label"},
@@ -187,8 +189,8 @@ widgets.field_date = function (input, id) {
 
   this.toHTML = function(value_in) {
     var label = '';
-    if (input.label)
-      label = '<label for="' + name + '" style="padding-right: 5px;">' + input.label + ':' + '</label>';
+    if (input.label != '<none>')
+      label = '<label for="' + name + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
 
     var element;
 
@@ -235,14 +237,31 @@ widgets.field_multi = function(input, id) {
 
   var w_type = input.widget;
   var w_input = input;
+  var count;
+
   delete w_input['widget'];
   w_input['type'] = w_type;
+  w_input['inline'] = 'multi';
 
   this.children = function(callback) {
     var state = {"body": {}};
-    state["body"]["add"] = {"type": "button", "label": "Add more items"}
 
-    var count = input.data ? input.data.length : 3;
+    var can_add = false;
+
+    if (input.quantity.slice(-1) == '+') {
+      can_add = true;
+      input.quantity = input.quantity.substring(0, input.quantity.length - 1)
+    }
+
+    if (can_add) {
+      state["body"]["add"] = {"type": "button", "button_type": "primary", "label": "Add more items"}
+    }
+
+    count = (input.data && Array.isArray(input.data)) ? input.data.length : input.quantity;
+
+    if (count == '') {
+      count = 3;
+    }
 
     for (var i = 0; i < count; i++) {
       state["body"]["" + i] = deep.clone(w_input);
@@ -271,12 +290,23 @@ widgets.field_multi = function(input, id) {
   this.wrapper_style = "padding-left: 5px;";  
 
   this.script = function() {
-    return 'nw.counter = 3;';
+    return 'nw.counter = ' + (count) + ';';
   }
 
   this.toHTML = function(slots) {
     var label = '<label style="padding-right: 5px;">' + input.name + ':' + '</label>';
     var arr = '<input type="hidden" name="'+id+'" value="new Array" />';
     return label + arr + slots.body.html();
+  }
+
+  this.processData = function(value) {
+    var out = [];
+    var widget = new cms.widgets[w_type](input);
+
+    _.each(value, function(ivalue) {
+      out.push(widget.processData(ivalue));
+    });
+
+    return out;
   }
 }

@@ -100,6 +100,10 @@ Widget.prototype.getZoneObject = function() {
   return zones;
 }
 
+Widget.prototype.processData = function(value) {
+  return value;
+}
+
 var router = new director.http.Router();
 
 function loadPaths() {

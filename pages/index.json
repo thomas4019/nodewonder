@@ -4,14 +4,15 @@
             "start"
         ]
     },
+    "controller": "widgets[2].links = load('menu','admin').link; ",
     "widgets": {
         "1": {
             "type": "itext",
             "value": "Hello World!"
         },
         "2": {
-            "type": "htmlfile",
-            "path": "menu.html"
+            "type": "template",
+            "path": "modules/admin/menu.html"
         },
         "start": {
             "type": "template",

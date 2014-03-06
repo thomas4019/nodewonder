@@ -1,27 +1,25 @@
 {
-    "name": "Model",
+    "name": "Page",
     "description": "",
-    "revisioned": false,
-    "inline": false,
     "fields": [
         {
-            "name": "name",
+            "name": "Title",
             "type": "String",
             "quantity": "",
             "widget": "",
             "required": false
         },
         {
-            "name": "description",
+            "name": "Content",
             "type": "String",
             "quantity": "",
-            "widget": "",
+            "widget": "ckeditor",
             "required": false
         },
         {
-            "name": "fields",
-            "type": "field",
-            "quantity": "+",
+            "name": "Published",
+            "type": "Boolean",
+            "quantity": "",
             "widget": "",
             "required": false
         }

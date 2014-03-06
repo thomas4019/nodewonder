@@ -4,8 +4,8 @@
             "type": "model_data_listing",
             "slots": {},
             "model": "model",
-            "row_template": "<li class=\"list-group-item\" ><a href=\"/admin/list/{{ key }}/\"><span class=\"glyphicon glyphicon-list\"></span> {{ key }}</a></li>",
-            "title": "Site Data"
+            "row_template": "<li class=\"list-group-item\" ><a href=\"/admin/data/model/{{ key }}/\"><span class=\"glyphicon glyphicon-edit\"></span> {{ key }}</a></li>",
+            "title":"Site Models"
         }
     },
     "slotAssignments": {

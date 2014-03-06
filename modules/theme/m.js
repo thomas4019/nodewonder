@@ -34,6 +34,7 @@ widgets.template = function(input) {
   }
 
   this.toHTML = function(zones) {
+    zones['input'] = input;
     return this.template(zones);
   }
 }

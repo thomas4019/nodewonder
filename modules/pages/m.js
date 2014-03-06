@@ -6,14 +6,24 @@ var _ = require('underscore'),
     path = require('path'),
     deepExtend = require('deep-extend'),
     dextend = require('dextend'),
-    Handlebars = require("handlebars");
+    Handlebars = require("handlebars"),
+    vm = require("vm");
 
 var cms;
+var context;
+
 module.exports = {
   widgets : {},
   functions : {},
   register : function(_cms) {
     cms = _cms;
+
+    initSandbox = {
+      animal: 'cat',
+      count: 2,
+      load: cms.functions.loadRecord
+    },
+    context = vm.createContext(initSandbox);
   }
 };
 widgets = module.exports.widgets;
@@ -27,6 +37,8 @@ fs.readFile('page.html', 'utf8', function(err, data) {
   }
   page_template = Handlebars.compile(data);
 });
+
+
 
 functions.viewPage = function(path, vars, callback, error_callback) {
   if (path == '/') {
@@ -71,6 +83,17 @@ functions.viewPage = function(path, vars, callback, error_callback) {
 
     state = cms.functions.splitAndFill(state, vars);
 
+    var scope = {};
+
+    if (page.controller) {
+      //eval(page.controller);
+      context['widgets'] = state;
+      vm.runInContext(page.controller, context);
+      console.log(util.inspect(context));
+      scope = context.scope;
+    }
+
+
     if ('json' in vars) {
         var json = JSON.stringify(state, null, 4);
         callback(json, 'text/javascript');
@@ -79,6 +102,9 @@ functions.viewPage = function(path, vars, callback, error_callback) {
           var json = JSON.stringify(state, null, 4);
           callback(json, 'text/javascript');
         });
+    } else if ('scope' in vars) {
+      var json = JSON.stringify(scope, null, 4);
+      callback(json, 'text/javascript');
     } else {
       cms.functions.renderState(state, slotAssignments, function(html, head) {
         var content_type = page.contentType ? page.contentType : 'text/html';
