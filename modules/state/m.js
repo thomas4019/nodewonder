@@ -135,14 +135,14 @@ functions.fillValues = function(state, values) {
   return state;
 }
 
-functions.renderState = function(state, slotAssignments, callback) {
+functions.renderState = function(state, slotAssignments, callback, values) {
   cms.functions.renderStateParts(state, slotAssignments, function(html, results) {
     var all_head = [];
     all_head = all_head.concat(results.head);
     all_head = all_head.concat(cms.functions.processDeps(results.deps));
     all_head.push('<script>$(function() {' + results.script + '});</script>');
     callback(html, all_head);
-  });
+  }, values);
 }
 
 functions.renderStateParts = function(state, slotAssignments, callback, values) {

@@ -25,9 +25,10 @@ widgets.field_boolean = function (input, id) {
     return value == "on";
   }
 
-  this.toHTML = function() {
-    var form_html = '<label for="' + name + '" style="margin-right: 5px;" >' + (label ? label : name) + '</label>' + 
-    '<input type="checkbox" name="' + id + '" ' + (input.data ? 'checked="checked"': '' ) + ' >'
+  this.toHTML = function(slots, value) {
+    var form_html = '<div class="checkbox"> <label for="' + name + '" style="margin-right: 5px;" >' + 
+    '<input type="checkbox" name="' + id + '" ' + (input.data || value ? 'checked="checked"': '' ) + ' >' + (label ? label : name)
+    + '</label></div>';
     
     return form_html;
   }
@@ -65,8 +66,8 @@ widgets.field_text = function (input, id) {
     var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
     var element;
     
-    if (value) {
-      element = '<input class="form-control input-small" type="text" name="' + id + '" value="' + (value || input.value) + '" />';
+    if (input.data || value) {
+      element = '<input class="form-control input-small" type="text" name="' + id + '" value="' + (input.data || value || input.value) + '" />';
     } else {
       element = '<input class="form-control input-small" type="text" name="' + id + '" />';
     }
@@ -87,7 +88,10 @@ widgets.textarea = function (input, id) {
   this.model = 'String';
 
   this.toHTML = function(zones, value) {
-    return '<label for="' + name + '">' + label + '</label><textarea name="' + name + '" value="' + (value || input.value) + '"></textarea>';
+    var label = '<label for="' + name + '">' + (input.label ? input.label : input.name) + ':</label>'
+    var element = '<textarea class="form-control input-small"  name="' + name + '" >'+ (input.data || value || input.value || ' ')+'</textarea>';
+
+    return label + element;
   }
 }
 
@@ -248,7 +252,7 @@ widgets.field_multi = function(input, id) {
 
     var can_add = false;
 
-    if (input.quantity.slice(-1) == '+') {
+    if (input.quantity && input.quantity.slice(-1) == '+') {
       can_add = true;
       input.quantity = input.quantity.substring(0, input.quantity.length - 1)
     }
@@ -265,6 +269,8 @@ widgets.field_multi = function(input, id) {
 
     for (var i = 0; i < count; i++) {
       state["body"]["" + i] = deep.clone(w_input);
+      if (input.data && input.data[i])
+        state["body"]["" + i]['data'] = input.data[i];
     }
 
     state["body"]["click"] = {

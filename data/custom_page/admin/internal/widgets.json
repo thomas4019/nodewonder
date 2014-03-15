@@ -1,0 +1,8 @@
+{
+	"slotAssignments": {"body": ["start"]},
+	"widgets": {
+    "start": {
+    	"type": "widget_listing"
+    }
+  }
+}

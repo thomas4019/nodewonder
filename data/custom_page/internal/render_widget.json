@@ -1,0 +1,9 @@
+{
+	"contentType": "text/javascript",
+	"slotAssignments": {"body": ["start"]},
+	"widgets": {
+    "start": {
+    	"type": "render_widget"
+    }
+  }
+}

@@ -2,7 +2,9 @@ var _ = require('underscore'),
     fs = require('fs'),
     path = require('path'),
     mkdirp = require('mkdirp'),
-    Handlebars = require('handlebars');
+    Handlebars = require('handlebars'),
+    dive = require('dive'),
+    diveSync = require('diveSync');
 
 var cms;
 module.exports = {
@@ -73,10 +75,11 @@ functions.expandPostValues = function(values) {
 	return data;
 }
 
-function flatten(out, prefix, value) {
-	if (typeof value == 'object') {
+function flatten(out, prefix, value, fields) {
+	if (typeof value == 'object' ) {
+		//out[prefix] = value;
 		for (var key in value)
-			flatten(out, prefix+'-'+key, value[key])
+			flatten(out, prefix+'-'+key, value[key], fields)
 	} else if(Array.isArray(value)) {
 		out[prefix] = '[' + value[0] + ']';
 	} else {
@@ -87,8 +90,6 @@ function flatten(out, prefix, value) {
 }
 
 widgets.model_form = function(input, id) {
-	var count = 0;
-
 	var model;
 	var model_values;
 	var model_values_obj;
@@ -101,8 +102,8 @@ widgets.model_form = function(input, id) {
 
 	this.children = function(callback) {
 		if (!inline && input.record != 'create') {
-			console.log('loadingi data: ' + input.model + '/' + input.record);
-			fs.readFile('storage/data/' + input.model + '/' + input.record + '.json', function(err, data2) {
+			//console.log('loadingi data: ' + input.model + '/' + input.record);
+			fs.readFile('data/' + input.model + '/' + input.record + '.json', function(err, data2) {
 				if (err) {
 					console.log(err);
 					model_values_obj = {};
@@ -110,13 +111,14 @@ widgets.model_form = function(input, id) {
 					process();
 				} else {
 					model_values_obj = JSON.parse(data2);
-					model_values = flatten({}, id, model_values_obj);
+					//console.log(model.fields);
+					model_values = flatten({}, id, model_values_obj, model.fields);
 					process();
 				}
 			});
 		} else {
 			model_values_obj = input.data;
-			model_values = flatten({}, id, model_values_obj);
+			model_values = flatten({}, id, model_values_obj, model.fields);
 			process();
 		}
 
@@ -127,24 +129,32 @@ widgets.model_form = function(input, id) {
 
 		  var state = {"body": {}};
 		  var index = 0;
-		  count = model.fields.length;
-
+		  
+		  if (!model) {
+		  	console.log("model error");
+		  	console.log(input);
+		  }
 		  _.each(model.fields, function(field, index) {
-		  	var subdata = (model_values_obj) ? model_values_obj[field.name] : {};
+		  	var subdata = (model_values_obj) ? model_values_obj[field.name] : undefined;
 		  	var default_widget = cms.functions.getDefaultWidget(field.type);
+
+		  	var input = field.input || {};
 
 		  	if (default_widget) {
 		  		var name = field.widget ? field.widget : default_widget;
-		  		state["body"][field.name] = {type: name, name: field.name, data: subdata};
+		  		input = _.extend(input, {type: name, name: field.name, data: subdata});
 		  	} else {
-		  		state["body"][field.name] = {type: 'model_form', name: field.name, model: field.type, data: subdata, inline: 'model'};
+		  		input = _.extend({type: 'model_form', name: field.name, model: field.type, data: subdata, inline: 'model'});
 		  	}
 
 		  	if (field.quantity) {
-		  		state["body"][field.name]['widget'] = state["body"][field.name]['type'];
-		  		state["body"][field.name]['type'] = 'field_multi';
-		  		state["body"][field.name]['quantity'] = field.quantity;
+		  		input['widget'] = input['type'];
+		  		input['type'] = 'field_multi';
+		  		input['quantity'] = field.quantity;
+		  		input['data'] = model_values_obj.fields;
 		  	}
+
+		  	state["body"][field.name] = input;
 		  });
 
 		  if (!inline)
@@ -191,9 +201,15 @@ widgets.model_form = function(input, id) {
 		//console.log(related);
 		//console.log(processed);
 
-		var dir = 'storage/data/' + related.collection + '/';
+		var dir = 'data/' + related.collection + '/';
 		mkdirp(dir);
-		var record = related.record == 'create' ? cms.functions.generateRecordID() : (related.record);
+		var record = related.record;
+		if (related.record == 'create') {
+			if (related.model.key && processed[related.model.key])
+				record = processed[related.model.key];
+			else
+				record = cms.functions.generateRecordID();
+		}
 		fs.writeFile(dir + record + '.json', JSON.stringify(processed, null, 4));
 		cms.model_data[related.collection][record] = processed;
 	}
@@ -209,7 +225,7 @@ widgets.model_form = function(input, id) {
 		if (inline)
 			return {};
 		console.log(model_values);
-		return model_values;
+		//return model_values;
 	}
 
 	this.toHTML = function(slots) {
@@ -230,24 +246,25 @@ widgets.model_form = function(input, id) {
 		}
 	}
 }
-function loadModelIntoMemory(model) {
-	if (!fs.existsSync('storage/data/' + model + '/'))
+function loadModelIntoMemory(model, callback) {
+	if (!fs.existsSync('data/' + model + '/'))
 		return;
 
 	console.log('loading data for "' + model + '"');
 
-  var models = fs.readdirSync('storage/data/' + model + '/');
+  var models = fs.readdirSync('data/' + model + '/');
   cms.model_data = cms.model_data || {};
   cms.model_data[model] = {};
-  _.each(models, function(file) {
-  	
-  	var ext = path.extname(file);
-  	if (ext == '.json') {
-  		var record_id = file.slice(0, -5);
-  		var data = fs.readFileSync('storage/data/' + model + '/' + file, {encoding: 'utf8'});
+
+  diveSync('data/' + model + '/', {}, function(err, file) {
+    var key = path.relative('data/' + model + '/',file).slice(0, -5);
+    var ext = path.extname(file);
+    if (ext == '.json') {
+  		var record_id = key;
+  		var data = fs.readFileSync(file, {encoding: 'utf8'});
   		cms.model_data[model] = cms.model_data[model] || {};
   		cms.model_data[model][record_id] = JSON.parse(data);
-  	}
+    }
   });
 }
 widgets.model_form.init = function() {
@@ -278,7 +295,7 @@ widgets.model_data_listing = function(input) {
 		_.each(data, function(list, key) {
 			if (!input.row_template) {
 				html += '<li class="list-group-item" >';
-				html += '<a href="/admin/data/' + input.model + '/' + key + '/">' + key + '</a></li>';
+				html += '<a href="/admin/data/?model=' + input.model + '&record=' + key + '">' + key + '</a></li>';
 			} else {
 				list['key'] = key;
 				html += row_template(list);
@@ -287,10 +304,105 @@ widgets.model_data_listing = function(input) {
 
 		html += '</ul>';
 
-		html += '<a class="btn btn-primary" href="/admin/data/' + input.model + '/create/">Create new</a></li>';
+		html += '<a class="btn btn-primary" href="/admin/data/?model=' + input.model + '&record=create/">Create new</a></li>';
 
 		return html;
 	}
 
 	this.deps = {'bootstrap': []};
+}
+
+widgets.model_type_selector = function(input, id) {
+	/*this.children = function(callback) {
+		var body = {};
+		body['sel'] = {type: "field_text_select", label: 'Type'};
+		body['sel']['choices'] = ['String', 'Boolean'];
+
+		callback({body: body});
+	}*/
+
+	this.toHTML = function(slots, value) {
+		//return slots['body'].html();
+		var choices = ['String', 'Boolean', 'Date', 'RecordRef'];
+
+		choices = choices.concat(Object.keys(cms.model_data['model']));
+
+		var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
+
+	 	var html = label + '<select class="form-control" name="'+id+'">';
+	 	html += '<option value=""> - Select - </option>';
+	 	_.each(choices, function(choice) {
+	 		html += '<option value="' +choice + '" '+ (input.data == choice ? 'selected': '') + '>' + choice + '</option>';
+	 	});
+	 	html += '</select>';
+	 	return html;
+	}
+}
+
+widgets.model_widget_selector = function(input, id) {
+	this.toHTML = function(slots, value) {
+		var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
+
+	 	var html = label + '<select class="form-control" name="'+id+'">';
+	 	html += '<option value=""> - Select - </option>';
+	 	_.each(cms.widgets, function(widget) {
+      w = new widget({});
+      //children.push({title : w.name, copy: 'listing'});
+      html += '<option value="' + w.name + '" '+ (input.data == w.name ? 'selected': '') + '>' + w.name + '</option>'
+    });
+	 	html += '</select>';
+	 	return html;
+	}
+}
+
+
+widgets.model_record_reference = function(input, id) {
+	var model = 'user'
+
+  this.deps = {'jquery': [],'select2': []};
+
+  this.model = 'RecordRef';
+
+	this.toHTML = function(slots, value) {
+		var choices = [];
+
+		choices = choices.concat(Object.keys(cms.model_data[model]));
+
+		var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
+
+	 	var html = label + '<select class="sel form-control" name="'+id+'">';
+	 	html += '<option value=""> - Select - </option>';
+	 	_.each(choices, function(choice) {
+	 		html += '<option value="' +choice + '" '+ (input.data == choice ? 'selected': '') + '>' + choice + '</option>';
+	 	});
+	 	html += '</select>';
+	 	return html;
+	}
+
+  this.script = function() {
+    return '$(".sel").select2();';
+  }
+
+}
+
+widgets.widget_input_config = function(input, id) {
+  this.deps = {'jquery': [],'bootstrap': [], 'font-awesome': ['css/font-awesome.css']};
+
+	//this.head = ['<script src="/modules/models/widget-input.js" type="text/javascript"></script>'];
+
+	this.processData = function(data) {
+		if (!data)
+			return data;
+		console.log(data);
+		return JSON.parse(data);
+	}
+
+	this.toHTML = function(slots, value) {
+		var html = '';
+
+		html += '<textarea style="display:none;" id="'+id+'-text" name="'+id+'"></textarea><a onclick="nw.configureWidget(this.id)" id="'+id+'"><i class="fa fa-cog fa-lg configure"></i></a>';
+
+		return html;
+	}
+
 }

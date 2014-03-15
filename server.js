@@ -288,9 +288,27 @@ function registerModule(directory, module, prefix, callback) {
       }
       cms.model_widgets[type][name] = widget;
     }
+    setTags(widget, instance);
   });
 
   callback();
+}
+
+function setTags(widget, instance) {
+  widget.prototype.tags = widget.tags || [];
+
+  if (instance.toHTML) {
+    widget.prototype.tags.push('view');
+  }
+  if (instance.makeEventJS) {
+    widget.prototype.tags.push('event');
+  }
+  if (instance.makeActionJS) {
+    widget.prototype.tags.push('action');
+  }
+  if (instance.execute) {
+    widget.prototype.tags.push('executable');
+  }
 }
 
 function processPost(request, response, callback) {
@@ -341,7 +359,7 @@ function stateMiddleware(req, res, next) {
   var url_parts = url.parse(req.url, true);
   var query = url_parts.query;
   var path = url_parts.pathname;
-  console.log(path);
+  //console.log(path);
 
   cms.functions.viewPage(path, query, function(html, content_type) {
     res.writeHead(200, {'Content-Type': content_type});

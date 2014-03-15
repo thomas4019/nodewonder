@@ -1,0 +1,49 @@
+{
+    "name": "Field",
+    "description": "",
+    "fields": [
+        {
+            "name": "name",
+            "type": "String",
+            "quantity": "",
+            "widget": "",
+            "required": true
+        },
+        {
+            "name": "type",
+            "type": "String",
+            "quantity": "",
+            "widget": "model_type_selector",
+            "required": false
+        },
+        {
+            "name": "quantity",
+            "type": "String",
+            "quantity": "",
+            "widget": "",
+            "required": false
+        },
+        {
+            "name": "widget",
+            "type": "String",
+            "quantity": "",
+            "widget": "model_widget_selector",
+            "required": false
+        },
+        {
+            "name": "input",
+            "type": "String",
+            "quantity": "",
+            "widget": "widget_input_config",
+            "required": false
+        },
+        {
+            "name": "required",
+            "type": "Boolean",
+            "quantity": "",
+            "widget": "",
+            "required": false
+        }
+    ],
+    "key": ""
+}

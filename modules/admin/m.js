@@ -65,6 +65,35 @@ widgets.state_editor = function (input, id) {
   }
 }
 
+widgets.widget_code_editor = function (input, id) {
+  var page = input.page || 'admin/pages';
+
+  this.head = ['<script src="/modules/admin/state-utils.js" type="text/javascript"></script>',
+    '<link rel="stylesheet" href="/modules/admin/state-editor.css" />'];
+
+  this.deps = {'jquery': [], 'bootstrap': [], 'angular': [], 'underscore': ['underscore.js'], 'font-awesome': ['css/font-awesome.css']};
+
+  this.children = function(callback) {
+    var body = {};
+    body['sel'] = {'type': 'widget_selector'}
+    callback({'body': body});
+  }
+
+  this.processData = function(data) {
+    return JSON.parse(data);
+  }
+
+  this.toHTML = function(slots, value) {
+    var v = JSON.stringify(input.data || value || {});
+    return slots['body'].html() + '<script type="text/javascript">var page = "'+ page + '"; var state = ' + v + ';</script>' +
+    '<textarea style="display: none;" class="widget-code-editor" name="'+id+'">'+v+'</textarea>' +
+    '<label>Widget Code:</label><div ng-app><ul id="state-ctrl" ng-controller="stateController">' +
+    '<li ng-init="id = \'body\'; slot_name = \'body\';" id="{{ id }}-{{ slot_name }}" ng-include="\'/modules/admin/slot.html\'"></li>' +
+    '<li ng-repeat="id in slotAssignments[\'body\']" id="{{ id }}" ng-include="\'/modules/admin/widget.html\'"></li>' +
+    '</div>';
+  }
+}
+
 widgets.widget_selector = function (input, id) {
   var children = [];
   var html;
@@ -89,6 +118,33 @@ widgets.widget_selector = function (input, id) {
 
   this.script = function() {
     return '$(".widget-selector").select2();';
+  }
+
+  this.toHTML = function(zones, value) {
+    return html;
+  }
+}
+
+widgets.widget_listing = function (input, id) {
+  var children = [];
+  var html;
+
+  this.deps = {bootstrap: []};
+
+  this.load = function(callback) {
+    html = '<table class="table">';
+    html += '<tr><th>Widget Name</th> <th>Deps</th> <th>Tags</th></tr>'
+    //html += '<option value="">- Select Widget -</option>';
+
+    _.each(cms.widgets, function(widget) {
+      w = new widget({});
+      //children.push({title : w.name, copy: 'listing'});
+      html += '<tr><td>' + w.name + '</td> <td>' + (w.deps ? JSON.stringify(w.deps) : '') + '</td> <td>' + (w.tags ? JSON.stringify(w.tags) : '') + '</td> </tr>';
+    });
+
+    html += '</table>';
+
+    callback();
   }
 
   this.toHTML = function(zones, value) {
@@ -196,7 +252,6 @@ widgets.page_widget_form = function(input) {
   this.load = function(callback) {
     var viewReady = function(html, results) {
       var all_head = [];
-      console.log(html);
       all_head = all_head.concat(results.head);
       all_head = all_head.concat(cms.functions.processDeps(results.deps));
       _html = html;
@@ -205,16 +260,7 @@ widgets.page_widget_form = function(input) {
       callback();
     }
 
-    var state = false;
-
-    fs.readFile('pages' + '/' + input.widget_page + '.json', 'utf8', function(err, data) {
-      if (err) {
-        console.trace('JSON missing');
-      }
-
-      var jdata = JSON.parse(data);
-      var widget_input = jdata.widgets[input.widget_id];
-
+    var render = function(widget_input) {
       widget = new cms.widgets[widget_input.type](widget_input);
       if (widget.form) {
         state = widget.form();
@@ -227,7 +273,28 @@ widgets.page_widget_form = function(input) {
       } else {
         callback();
       }
-    });
+
+    }
+
+    var state = false;
+
+    if (input.widget_page) {
+      fs.readFile('pages' + '/' + input.widget_page + '.json', 'utf8', function(err, data) {
+        if (err) {
+          console.trace('JSON missing');
+        }
+
+        var jdata = JSON.parse(data);
+        var widget_input = jdata.widgets[input.widget_id];
+        render(widget_id);
+      });
+    } else if (input.widget_input) {
+      var widget_input = JSON.parse(input.widget_input);
+      widget_input['type'] = input.widget_type;
+      render(widget_input);
+    } else {
+      render({type: 'echo'});
+    }
   }
 
   this.toHTML = function(zones) {
@@ -265,8 +332,8 @@ widgets.page_widget_form = function(input) {
       jdata.widgets[id].type = type;
       jdata.widgets[id].slots = slots;
       fs.writeFile('pages' + '/' + page, JSON.stringify(jdata, null, 4));
-      console.log('updated state of ' + page + '.json id:' + id + ' type: ' + type);
-      console.log(values);
+      //console.log('updated state of ' + page + '.json id:' + id + ' type: ' + type);
+      //console.log(values);
     });
   }
 }
@@ -278,8 +345,6 @@ widgets.render_widget = function(input) {
   var _script;
 
   var error;
-
-  console.log(input);
 
   widget_input = (input.input) ? JSON.parse(input.input) : {};
 
@@ -303,7 +368,6 @@ widgets.render_widget = function(input) {
     widget_input['type'] = input.widget_type;
     var state = {};
     state[input.widget_id] = widget_input;
-    console.log(widget_input);
 
     if (state) {
       cms.functions.renderStateParts(state, {'body': _.keys(state) }, viewReady);

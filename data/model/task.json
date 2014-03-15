@@ -1,43 +1,41 @@
 {
-    "name": "Field",
-    "description": "",
-    "revisioned": false,
-    "inline": false,
+    "name": "Task",
+    "description": "Something to be done",
     "fields": [
         {
-            "name": "name",
+            "name": "Title",
             "type": "String",
             "quantity": "",
             "widget": "",
+            "input": "",
             "required": false
         },
         {
-            "name": "type",
+            "name": "description",
             "type": "String",
             "quantity": "",
-            "widget": "",
+            "widget": "field_text",
+            "input": {
+                "label": "Desc"
+            },
             "required": false
         },
         {
-            "name": "quantity",
-            "type": "String",
-            "quantity": "",
-            "widget": "",
-            "required": false
-        },
-        {
-            "name": "widget",
-            "type": "String",
-            "quantity": "",
-            "widget": "",
-            "required": false
-        },
-        {
-            "name": "required",
+            "name": "Completed",
             "type": "Boolean",
             "quantity": "",
             "widget": "",
+            "input": "",
+            "required": false
+        },
+        {
+            "name": "Due",
+            "type": "Date",
+            "quantity": "",
+            "widget": "",
+            "input": "",
             "required": false
         }
-    ]
+    ],
+    "key": ""
 }

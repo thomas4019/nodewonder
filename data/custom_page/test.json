@@ -1,0 +1,14 @@
+{
+    "widgets": {
+     "5": 
+      { "type": "field_multi",
+        "name": "sites",
+        "widget": "model_form",
+        "model": "link" }
+    },
+    "slotAssignments": {
+        "body": [
+            "5"
+        ]
+    }
+}

@@ -1,16 +1,8 @@
-function exportState() {
-	var $scope = angular.element($('#state-ctrl')).scope();
-	var cstate = {
-		widgets: $scope.widgets,
-		slotAssignments: $scope.slotAssignments
-	};
-	$("textarea").text(JSON.stringify(cstate));
-	setTimeout('document.getElementsByTagName("iframe")[0].contentWindow.location.reload();', 250);
-}
 
-function stateChanged() {
+
+/*function stateChanged() {
 	setTimeout("$('#submit input').trigger('click');", 100);
-}
+}*/
 
 function stateController($scope) {
 	$scope.widgets = state.widgets || {};
@@ -50,7 +42,8 @@ function stateController($scope) {
 			$scope.widgets[_id].slots[_slot].push(new_id);
 		}
 		$scope.$apply();
-		stateChanged();
+		//stateChanged();
+		$scope.exportState();
 	});
 
 	$('.widget-selector').select2("container").hide();
@@ -63,7 +56,8 @@ function stateController($scope) {
 			})
 		});
 		$scope.slotAssignments['body'] = _.without($scope.slotAssignments['body'], id);
-		stateChanged();
+		//stateChanged();
+		$scope.exportState();
 	}	
 
 	$scope.configureWidget = function(id) {
@@ -92,7 +86,7 @@ function stateController($scope) {
 		    	$("#widgetForm").remove();
 		    });
 		    $("#widgetForm .save").click(function() {
-		    	exportState();
+		    	$scope.exportState();
 		    	$("#widgetForm").hide();
 		    });
 	    }
@@ -109,7 +103,17 @@ function stateController($scope) {
 		$('.widget-selector').select2("open");
 	}
 
-	$scope.saveState = function() {
-		$('textarea').text(JSON.stringify($scope.state));
+	$scope.exportState = function() {
+		var $scope = angular.element($('#state-ctrl')).scope();
+		var cstate = {
+			widgets: $scope.widgets,
+			slotAssignments: $scope.slotAssignments
+		};
+		cstate['widgets'] = JSON.parse(JSON.stringify(cstate['widgets'])); //deep clone
+		_.each(cstate['widgets'], function(widget, key) {
+			delete widget['has_form'];
+		});
+		$('.widget-code-editor').attr('value', JSON.stringify(cstate));
+		//setTimeout('document.getElementsByTagName("iframe")[0].contentWindow.location.reload();', 250);
 	}
 }

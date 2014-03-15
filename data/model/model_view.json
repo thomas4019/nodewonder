@@ -1,29 +1,28 @@
 {
-    "name": "Model",
+    "name": "Model View",
     "description": "",
-    "revisioned": false,
-    "inline": false,
     "fields": [
         {
-            "name": "name",
+            "name": "Name",
             "type": "String",
             "quantity": "",
             "widget": "",
             "required": false
         },
         {
-            "name": "description",
+            "name": "Code",
             "type": "String",
             "quantity": "",
-            "widget": "",
+            "widget": "widget_code_editor",
             "required": false
         },
         {
-            "name": "fields",
-            "type": "field",
-            "quantity": "+",
+            "name": "Model",
+            "type": "RecordRef",
+            "quantity": "",
             "widget": "",
             "required": false
         }
-    ]
+    ],
+    "key": ""
 }

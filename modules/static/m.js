@@ -22,6 +22,7 @@ functions.pageToStatic = function(fpath) {
       return console.log(err);
     }
     console.log('static: ' + fpath);
+    //TODO: Update this code below
     var jdata = JSON.parse(data);
     var state = jdata[0];
     var rules = jdata[1];

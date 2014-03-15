@@ -1,0 +1,42 @@
+{
+    "name": "Page",
+    "description": "",
+    "fields": [
+        {
+            "name": "URL",
+            "type": "String",
+            "quantity": "",
+            "widget": "",
+            "required": false
+        },
+        {
+            "name": "Parent",
+            "type": "RecordRef",
+            "quantity": "",
+            "widget": "model_record_reference",
+            "required": false
+        },
+        {
+            "name": "contentType",
+            "type": "String",
+            "quantity": "",
+            "widget": "",
+            "required": false
+        },
+        {
+            "name": "controller",
+            "type": "String",
+            "quantity": "",
+            "widget": "textarea",
+            "required": false
+        },
+        {
+            "name": "code",
+            "type": "String",
+            "quantity": "",
+            "widget": "widget_code_editor",
+            "required": false
+        }
+    ],
+    "key": "URL"
+}

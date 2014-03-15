@@ -1,0 +1,35 @@
+{
+    "name": "Model",
+    "description": "",
+    "fields": [
+        {
+            "name": "name",
+            "type": "String",
+            "quantity": "",
+            "widget": "",
+            "required": false
+        },
+        {
+            "name": "description",
+            "type": "String",
+            "quantity": "",
+            "widget": "",
+            "required": false
+        },
+        {
+            "name": "fields",
+            "type": "field",
+            "quantity": "+",
+            "widget": "",
+            "required": false
+        },
+        {
+            "name": "key",
+            "type": "String",
+            "quantity": "",
+            "widget": "",
+            "required": false
+        }
+    ],
+    "key": "name"
+}

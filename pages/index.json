@@ -4,7 +4,7 @@
             "start"
         ]
     },
-    "controller": "widgets[2].links = load('menu','admin').link; ",
+    "controller": "widgets[2].links = load('menu','admin').link; callback(); ",
     "widgets": {
         "1": {
             "type": "itext",

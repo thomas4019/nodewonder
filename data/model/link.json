@@ -1,8 +1,6 @@
 {
     "name": "Link",
     "description": "",
-    "revisioned": false,
-    "inline": false,
     "fields": [
         {
             "name": "url",

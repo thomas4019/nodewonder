@@ -1,0 +1,32 @@
+{
+    "controller": "widgets[2].links = load('menu','admin').link; callback(); ",
+    "code": {
+        "slotAssignments": {
+            "body": [
+                "start"
+            ]
+        },
+        "widgets": {
+            "1": {
+                "type": "itext",
+                "value": "Hello World!"
+            },
+            "2": {
+                "type": "template",
+                "path": "modules/admin/menu.html"
+            },
+            "start": {
+                "type": "template",
+                "path": "themes/html5up-tessellate/template.html",
+                "slots": {
+                    "title": [
+                        "1"
+                    ],
+                    "top": [
+                        "2"
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,90 @@
+{
+    "widgets": {
+        "7zjz0mfL": {
+            "type": "popup",
+            "slots": {
+                "container": [
+                    "SE83aadc"
+                ]
+            },
+            "has_form": true
+        },
+        "SE83aadc": {
+            "type": "ckeditor",
+            "slots": {},
+            "has_form": true
+        },
+        "jHtdjRQt": {
+            "label": "Show",
+            "button_type": "primary",
+            "type": "button",
+            "has_form": true
+        },
+        "Mvsp4cqT": {
+            "type": "hello_world",
+            "slots": {},
+            "has_form": false
+        },
+        "oMd3dDle": {
+            "type": "calendar",
+            "slots": {},
+            "has_form": false
+        },
+        "H8sGsYgH": {
+            "type": "youtube_video",
+            "slots": {},
+            "has_form": true
+        },
+        "Zp158Da1": {
+            "type": "textarea",
+            "slots": {},
+            "has_form": false
+        },
+        "RZNxqNJ3": {
+            "type": "ckeditor",
+            "slots": {},
+            "has_form": true
+        },
+        "hmyCkIKh": {
+            "type": "hello_world",
+            "slots": {},
+            "has_form": false
+        },
+        "08xBzSHP": {
+            "type": "calendar",
+            "slots": {},
+            "has_form": false
+        },
+        "DKMrxt7g": {
+            "type": "youtube_video",
+            "slots": {},
+            "has_form": true
+        },
+        "LzoFa4Dx": {
+            "type": "hello_world",
+            "slots": {},
+            "has_form": false
+        },
+        "pRzA5u72": {
+            "type": "youtube_video",
+            "slots": {},
+            "has_form": true
+        },
+        "cmODl8Nf": {
+            "type": "calendar",
+            "slots": {},
+            "has_form": false
+        },
+        "ImZmcgL1": {
+            "type": "ckeditor",
+            "slots": {},
+            "has_form": true
+        }
+    },
+    "slotAssignments": {
+        "body": [
+            "7zjz0mfL",
+            "jHtdjRQt"
+        ]
+    }
+}

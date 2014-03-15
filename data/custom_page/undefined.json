@@ -1,0 +1,40 @@
+{
+    "widgets": {
+        "IzwUtNRR": {
+            "type": "hello_world",
+            "slots": {},
+            "has_form": false
+        },
+        "HB7JDrhw": {
+            "type": "tabs",
+            "slots": {
+                "tabs": [
+                    "Jl7BhM6f",
+                    "d1au6Vry",
+                    "Z5ITbbI3"
+                ]
+            },
+            "has_form": true
+        },
+        "Jl7BhM6f": {
+            "type": "youtube_video",
+            "slots": {},
+            "has_form": true
+        },
+        "d1au6Vry": {
+            "type": "calendar",
+            "slots": {},
+            "has_form": false
+        },
+        "Z5ITbbI3": {
+            "type": "button",
+            "slots": {},
+            "has_form": true
+        }
+    },
+    "slotAssignments": {
+        "body": [
+            "HB7JDrhw"
+        ]
+    }
+}

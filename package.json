@@ -21,7 +21,8 @@
     "dextend": "~0.1.1",
     "mkdirp": "~0.3.5",
     "passport": "~0.2.0",
-    "passport-local": "~0.1.6"
+    "passport-local": "~0.1.6",
+    "diveSync": "~0.2.0"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3"

@@ -1,0 +1,8 @@
+{
+	"slotAssignments": {"body": ["start"]},
+	"widgets":{
+  "start" : {"type": "template", "path" : "admin.html", "slots" : { "body" : ["1"],  "top" : ["2"]}},
+  "1" : {"type": "setting","file" : "info"},
+  "2" : {"type": "htmlfile","path" : "menu.html"}
+	}
+}
