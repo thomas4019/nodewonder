@@ -14,9 +14,10 @@ Node Wonder
 2. [Technical Details (Widgets)](https://docs.google.com/document/d/1LL-SGv9wvnWPT5aZLaNGSyzU45xC27R1-6Fz67FupAo)
 
 ## Key Principles
-1. Create advanced websites without code
-2. Reusable Sandboxed Widgets
-3. File based configuration based on url
+1. Create advanced websites without code via Widgets
+2. Everything is Widgets
+3. Widgets are Open-Source, Reusable, and Sandboxed
+4. File-based configuration based on url
 
 ## Todo
 * Moving widgets from zone to zone
@@ -28,7 +29,7 @@ Node Wonder
 * Multi-valued fields
 * Heirarchical fields
 * Composition of fields
-* Interal library functions
+* Internal library functions
 * CSS/JS Aggregation
 
 ## Unsure
