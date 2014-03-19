@@ -358,8 +358,7 @@ var save = function() {
 function stateMiddleware(req, res, next) {
   var url_parts = url.parse(req.url, true);
   var query = url_parts.query;
-  var path = url_parts.pathname;
-  //console.log(path);
+  var path = url_parts.pathname.substring(1);
 
   cms.functions.viewPage(path, query, function(html, content_type) {
     res.writeHead(200, {'Content-Type': content_type});
@@ -373,4 +372,23 @@ var router_error = function(err) {
     this.res.writeHead(404);
     this.res.end('404');
   }
+}
+
+cms.migrate = function() {
+  _.each(cms.model_data['custom_page'], function(page, name) {
+    if (name == 'admin') {
+      console.log(page);
+      page.code = page.code || {};
+      if (page.widgets) {
+        page.code.widgets = page.widgets;
+        delete page.widgets;
+      }
+      if (page.slotAssignments) {
+        page.code.slotAssignments = page.slotAssignments;
+        delete page.slotAssignments;
+      }
+      console.log(page);
+      cms.functions.saveRecord('custom_page', name, page);
+    }
+  });
 }

@@ -1,13 +1,21 @@
 {
-    "slotAssignments": {
-        "body": ["menu"]
+    "exposedSlots": {
+        "start": [
+            "body"
+        ]
     },
-    "exposedSlots": {"start": ["body"]},
     "controller": "widgets['menu'].links = load('menu','admin').link; callback(); ",
-    "widgets": {
-        "menu": {
-            "type": "template",
-            "path": "modules/admin/menu.html"
+    "code": {
+        "widgets": {
+            "menu": {
+                "type": "template",
+                "path": "modules/admin/menu.html"
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "menu"
+            ]
         }
     }
 }

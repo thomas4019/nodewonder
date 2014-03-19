@@ -42,14 +42,12 @@ fs.readFile('page.html', 'utf8', function(err, data) {
 /* This takes in a template and 
  */
 functions.loadPageState = function(path, callback) {
-  fs.readFile('pages/' + path + '.json', 'utf8', function(err, data) {
+  cms.functions.getRecord('custom_page', path, function(err, page) {
     if (err) {
       //console.log(err);
-      callback(err, data);
+      callback(err, page);
       return;
     }
-
-    var page = JSON.parse(data);
 
     if (page.parent) {
       cms.functions.loadPageState(page.parent, function(err, parent) {
@@ -104,7 +102,6 @@ functions.viewPage = function(path, vars, callback, error_callback) {
 
     //cms.functions.processInheritance(rawPage, function(page) {
 
-    var state = page.widgets;
     //console.log(page.arguments);
     if (page.arguments) {
       _.each(page.arguments, function(input, id) {
@@ -119,7 +116,7 @@ functions.viewPage = function(path, vars, callback, error_callback) {
 
     if (page.controller) {
       //eval(page.controller);
-      context['widgets'] = state;
+      context['widgets'] = page.code.widgets;
       context['scope'] = page.scope;
       context['args'] = vars;
       context['callback'] = function() {
@@ -139,10 +136,10 @@ functions.renderPage = function(page, vars, callback) {
   page.widgets = cms.functions.splitAndFill(page.widgets, vars);
 
   if ('json' in vars) {
-      var json = JSON.stringify(page.widgets, null, 4);
+      var json = JSON.stringify(page.code.widgets, null, 4);
       callback(json, 'text/javascript');
   } else if ('processedjson' in vars) {
-      cms.functions.initializeState(page.widgets, function(widgets_buffer, state) {
+      cms.functions.initializeState(page.code.widgets, function(widgets_buffer, state) {
         var json = JSON.stringify(state, null, 4);
         callback(json, 'text/javascript');
       });
@@ -153,7 +150,7 @@ functions.renderPage = function(page, vars, callback) {
     var json = JSON.stringify(vars, null, 4);
     callback(json, 'text/javascript');
   } else {
-    cms.functions.renderState(page.widgets, page.slotAssignments, function(html, head) {
+    cms.functions.renderState(page.code.widgets, page.code.slotAssignments, function(html, head) {
       var content_type = page.contentType ? page.contentType : 'text/html';
       head.unshift('<script type="text/javascript" src="/modules/admin/nw.js"></script><link rel="stylesheet" href="/modules/admin/nw.css"></link>')
       if (content_type == 'text/html') {

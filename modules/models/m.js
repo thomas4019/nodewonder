@@ -25,6 +25,17 @@ functions.loadRecord = function(model_name, record_id) {
 	return cms.model_data[model_name][record_id];
 }
 
+//callback = function(err, record)
+functions.getRecord = function(model_name, record_id, callback) {
+	console.log(record_id);
+	console.log(cms.model_data[model_name][record_id]);
+	callback(undefined, cms.model_data[model_name][record_id]);
+}
+
+functions.saveRecord = function(model_name, record_id, value) {
+	fs.writeFile('data/' + model_name + '/' + record_id  + '.json', JSON.stringify(value, null, 4));
+}
+
 functions.getDefaultWidget = function(type) {
 	var widgets = cms.model_widgets[type];
 	if (widgets)

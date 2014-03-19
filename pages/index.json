@@ -8,7 +8,9 @@
     "widgets": {
         "1": {
             "type": "itext",
-            "value": "Hello World!"
+            "input": {
+                "value": "Hello World!2"
+            }
         },
         "2": {
             "type": "template",
