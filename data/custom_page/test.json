@@ -1,14 +1,19 @@
 {
-    "widgets": {
-     "5": 
-      { "type": "field_multi",
-        "name": "sites",
-        "widget": "model_form",
-        "model": "link" }
-    },
-    "slotAssignments": {
-        "body": [
-            "5"
-        ]
+    "code": {
+        "widgets": {
+            "5": {
+                "input": {
+                    "name": "sites",
+                    "widget": "model_form",
+                    "model": "link"
+                },
+                "type": "field_multi"
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "5"
+            ]
+        }
     }
 }

@@ -1,69 +1,87 @@
 {
-    "slotAssignments": {
-        "body": [
-            "main"
-        ]
-    },
     "controller": "widgets.editor.page = widgets.storage.file = args.page; widgets.preview.url = '/' + args.page; loadPage(args.page, function(err, page) { scope.parent = page.parent; scope.controller = page.controller; callback(); }); ",
     "parent": "admin",
-    "widgets": {
-        "main": {
-            "type": "two_col",
-            "slots": {
-                "left": [
-                    "parent",
-                    "controller",
-                    "storage"
-                ],
-                "right": [
-                    "preview"
-                ]
+    "code": {
+        "widgets": {
+            "main": {
+                "input": {
+                    "has_form": true
+                },
+                "type": "two_col",
+                "slots": {
+                    "left": [
+                        "parent",
+                        "controller",
+                        "storage"
+                    ],
+                    "right": [
+                        "preview"
+                    ]
+                }
             },
-            "has_form": true
-        },
-        "preview": {
-            "type": "iframe",
-            "url": "/",
-            "has_form": true
-        },
-        "parent": {
-            "label": "Parent",
-            "type": "field_text",
-            "name": "parent",
-            "has_form": true
-        },
-        "controller": {
-            "label": "Controller",
-            "type": "textarea",
-            "name": "parent",
-            "has_form": true
-        },
-        "storage": {
-            "type": "statejson",
-            "file": "test2",
-            "dir": "pages",
-            "slots": {
-                "form": [
-                    "editor",
-                    "save",
-                    "wl"
-                ]
+            "preview": {
+                "input": {
+                    "url": "/",
+                    "has_form": true
+                },
+                "type": "iframe"
             },
-            "has_form": null
+            "parent": {
+                "input": {
+                    "label": "Parent",
+                    "name": "parent",
+                    "has_form": true
+                },
+                "type": "field_text"
+            },
+            "controller": {
+                "input": {
+                    "label": "Controller",
+                    "name": "parent",
+                    "has_form": true
+                },
+                "type": "textarea"
+            },
+            "storage": {
+                "input": {
+                    "file": "test2",
+                    "dir": "pages",
+                    "has_form": null
+                },
+                "type": "statejson",
+                "slots": {
+                    "form": [
+                        "editor",
+                        "save",
+                        "wl"
+                    ]
+                }
+            },
+            "save": {
+                "input": {
+                    "label": "Save",
+                    "has_form": true
+                },
+                "type": "submit"
+            },
+            "editor": {
+                "input": {
+                    "page": "test2",
+                    "has_form": false
+                },
+                "type": "state_editor"
+            },
+            "wl": {
+                "input": {
+                    "has_form": false
+                },
+                "type": "widget_selector"
+            }
         },
-        "save": {
-            "type": "submit",
-            "label": "Save",
-            "has_form": true
-        },
-        "editor": {
-            "type": "state_editor",
-            "page": "test2",
-            "has_form": false
-        },
-        "wl": {
-            "type": "widget_selector",
-            "has_form": false
+        "slotAssignments": {
+            "body": [
+                "main"
+            ]
         }
     }
 }

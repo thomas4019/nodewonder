@@ -244,7 +244,6 @@ widgets.field_multi = function(input, id) {
   var count;
 
   delete w_input['widget'];
-  w_input['type'] = w_type;
   w_input['inline'] = 'multi';
 
   this.children = function(callback) {
@@ -258,7 +257,8 @@ widgets.field_multi = function(input, id) {
     }
 
     if (can_add) {
-      state["body"]["add"] = {"type": "button", "button_type": "primary", "label": "Add more items"}
+      state["body"]["add"] = {"type": "button"}
+      state["body"]["add"]["input"] = {"button_type": "primary", "label": "Add more items"}
     }
 
     count = (input.data && Array.isArray(input.data)) ? input.data.length : input.quantity;
@@ -268,19 +268,20 @@ widgets.field_multi = function(input, id) {
     }
 
     for (var i = 0; i < count; i++) {
-      state["body"]["" + i] = deep.clone(w_input);
+      state["body"]["" + i] = {};
+      state["body"]["" + i]['type'] = w_type;
+      state["body"]["" + i]['input'] = deep.clone(w_input);
       if (input.data && input.data[i])
-        state["body"]["" + i]['data'] = input.data[i];
+        state["body"]["" + i]['input']['data'] = input.data[i];
     }
 
     state["body"]["click"] = {
-      "sel": "#" + id + "-add input",
       "type": "clicked",
+      "input": {"sel": "#" + id + "-add input"},
     }
     state["body"]["add_action"] = {
-      //"js": "$('#" + id + " button').before('<div>Hello World</div>');",
-      "js": "nw.insertWidgetBefore('" + w_type + "','" + id + "-'+(nw.counter++), '"+ JSON.stringify(w_input) + "', '#" + id + "-add')",
       "type": "execute",
+      "input": {"js": "nw.insertWidgetBefore('" + w_type + "','" + id + "-'+(nw.counter++), '"+ JSON.stringify(w_input) + "', '#" + id + "-add')"},
     }
     state["body"]["rule"] = {
       "type": "rule",

@@ -4,7 +4,8 @@ var _ = require('underscore'),
     mkdirp = require('mkdirp'),
     Handlebars = require('handlebars'),
     dive = require('dive'),
-    diveSync = require('diveSync');
+    diveSync = require('diveSync'),
+    deep = require('deep');
 
 var cms;
 module.exports = {
@@ -27,9 +28,16 @@ functions.loadRecord = function(model_name, record_id) {
 
 //callback = function(err, record)
 functions.getRecord = function(model_name, record_id, callback) {
-	console.log(record_id);
-	console.log(cms.model_data[model_name][record_id]);
-	callback(undefined, cms.model_data[model_name][record_id]);
+	if (!cms.model_data[model_name]) {
+		callback("model not found");
+		console.log('model:' + model_name + ' missing');
+		return;
+	}
+	if (!cms.model_data[model_name][record_id]) {
+		callback("record not found", undefined);
+		return;
+	}
+	callback(undefined, deep.clone(cms.model_data[model_name][record_id]));
 }
 
 functions.saveRecord = function(model_name, record_id, value) {
@@ -114,14 +122,14 @@ widgets.model_form = function(input, id) {
 	this.children = function(callback) {
 		if (!inline && input.record != 'create') {
 			//console.log('loadingi data: ' + input.model + '/' + input.record);
-			fs.readFile('data/' + input.model + '/' + input.record + '.json', function(err, data2) {
+			cms.functions.getRecord(input.model, input.record, function(err, data2) {
 				if (err) {
 					console.log(err);
 					model_values_obj = {};
 					model_values = {};
 					process();
 				} else {
-					model_values_obj = JSON.parse(data2);
+					model_values_obj = data2;
 					//console.log(model.fields);
 					model_values = flatten({}, id, model_values_obj, model.fields);
 					process();
@@ -150,26 +158,29 @@ widgets.model_form = function(input, id) {
 		  	var default_widget = cms.functions.getDefaultWidget(field.type);
 
 		  	var input = field.input || {};
+		  	var type;
 
 		  	if (default_widget) {
 		  		var name = field.widget ? field.widget : default_widget;
-		  		input = _.extend(input, {type: name, name: field.name, data: subdata});
+		  		input = _.extend(input, {name: field.name, data: subdata});
+		  		type = name;
 		  	} else {
-		  		input = _.extend({type: 'model_form', name: field.name, model: field.type, data: subdata, inline: 'model'});
+		  		input = _.extend({name: field.name, model: field.type, data: subdata, inline: 'model'});
+		  		type = 'model_form';
 		  	}
 
 		  	if (field.quantity) {
-		  		input['widget'] = input['type'];
-		  		input['type'] = 'field_multi';
+		  		input['widget'] = type;
+		  		type = 'field_multi';
 		  		input['quantity'] = field.quantity;
 		  		input['data'] = model_values_obj.fields;
 		  	}
 
-		  	state["body"][field.name] = input;
+		  	state["body"][field.name] = {type: type, input: input};
 		  });
 
 		  if (!inline)
-		  	state["body"]["submit"] = {type: 'submit', button_type: 'primary', label: 'Submit'};
+		  	state["body"]["submit"] = {type: 'submit', input: {button_type: 'primary', label: 'Submit'}};
 
 		  callback(state);
 		}
@@ -268,6 +279,13 @@ function loadModelIntoMemory(model, callback) {
   cms.model_data[model] = {};
 
   diveSync('data/' + model + '/', {}, function(err, file) {
+  	if (err) {
+  		console.trace(err);
+  		console.log(file);
+  		console.log(model);
+  		return;
+  	}
+  	
     var key = path.relative('data/' + model + '/',file).slice(0, -5);
     var ext = path.extname(file);
     if (ext == '.json') {

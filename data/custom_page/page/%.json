@@ -1,7 +1,8 @@
 {
-    "slotAssignments": {
-        "body": []
-    },
-    "widgets": {
+    "code": {
+        "widgets": {},
+        "slotAssignments": {
+            "body": []
+        }
     }
 }

@@ -1,8 +1,15 @@
 {
-	"slotAssignments": {"body": ["start"]},
-	"widgets": {
-    "start": {
-    	"type": "widget_listing"
+    "code": {
+        "widgets": {
+            "start": {
+                "input": {},
+                "type": "widget_listing"
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "start"
+            ]
+        }
     }
-  }
 }

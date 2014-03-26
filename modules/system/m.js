@@ -18,3 +18,11 @@ functions.makeid = function(length) {
 
     return text;
 }
+
+widgets.header = function(input, id) {
+  this.wrapper = input.type || 'h1';
+
+  this.toHTML = function(slots) {
+    return input.text;
+  }
+}

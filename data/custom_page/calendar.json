@@ -1,14 +1,18 @@
 {
-    "widgets": {
-        "DNKKuofB": {
-            "type": "calendar",
-            "slots": {},
-            "has_form": false
+    "code": {
+        "widgets": {
+            "DNKKuofB": {
+                "input": {
+                    "has_form": false
+                },
+                "type": "calendar",
+                "slots": {}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "DNKKuofB"
+            ]
         }
-    },
-    "slotAssignments": {
-        "body": [
-            "DNKKuofB"
-        ]
     }
 }

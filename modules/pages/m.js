@@ -43,21 +43,29 @@ fs.readFile('page.html', 'utf8', function(err, data) {
  */
 functions.loadPageState = function(path, callback) {
   cms.functions.getRecord('custom_page', path, function(err, page) {
+    //console.log('l: ' + path + "=" + err);
     if (err) {
       //console.log(err);
       callback(err, page);
       return;
     }
 
+    //console.log('loading: ' + path);
+    //console.log(page);
+    //console.log(err);
     if (page.parent) {
       cms.functions.loadPageState(page.parent, function(err, parent) {
         //here we do the merge
+        if (err || !parent) {
+          console.log('missing parent');
+          console.log(err);
+        }
         var combined = dextend(parent, page);
-        _.each(combined.slotAssignments, function(value, key) {
+        _.each(combined.code.slotAssignments, function(value, key) {
           if (key.indexOf(':') !== -1) {
             var parts = key.split(":");
             //console.log(parts);
-            var slots = combined.widgets[parts[0]].slots;
+            var slots = combined.code.widgets[parts[0]].slots;
             slots[parts[1]] = value;
           }
         });
@@ -72,7 +80,7 @@ functions.loadPageState = function(path, callback) {
 }
 
 functions.viewPage = function(path, vars, callback, error_callback) {
-  if (path == '/') {
+  if (path == '') {
     path = 'index'
   }
   cms.functions.loadPageState(path, function(err, page) {

@@ -1,0 +1,29 @@
+{
+    "code": {
+        "widgets": {
+            "uZWXfDhd": {
+                "input": {
+                    "text": "hello"
+                },
+                "type": "header"
+            },
+            "dL6rnuBk": {
+                "input": {
+                    "text": "hello"
+                },
+                "type": "header"
+            },
+            "m2hXUttc": {
+                "input": {
+                    "id": "dQiNVk_u0po"
+                },
+                "type": "youtube_video"
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "uZWXfDhd", "dL6rnuBk", "m2hXUttc"
+            ]
+        }
+    }
+}

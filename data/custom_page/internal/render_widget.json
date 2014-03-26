@@ -1,9 +1,16 @@
 {
-	"contentType": "text/javascript",
-	"slotAssignments": {"body": ["start"]},
-	"widgets": {
-    "start": {
-    	"type": "render_widget"
+    "contentType": "text/javascript",
+    "code": {
+        "widgets": {
+            "start": {
+                "input": {},
+                "type": "render_widget"
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "start"
+            ]
+        }
     }
-  }
 }

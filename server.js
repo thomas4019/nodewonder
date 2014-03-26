@@ -376,8 +376,7 @@ var router_error = function(err) {
 
 cms.migrate = function() {
   _.each(cms.model_data['custom_page'], function(page, name) {
-    if (name == 'admin') {
-      console.log(page);
+    //if (name == 'admin/data') {
       page.code = page.code || {};
       if (page.widgets) {
         page.code.widgets = page.widgets;
@@ -387,8 +386,21 @@ cms.migrate = function() {
         page.code.slotAssignments = page.slotAssignments;
         delete page.slotAssignments;
       }
+      _.each(page.code.widgets, function(widget, id) {
+        if (!widget.input) {
+          var input = widget;
+          var new_widget = {input: input, type: widget.type, slots: widget.slots};
+          delete input['type'];
+          delete input['slots'];
+          page.code.widgets[id] = new_widget;
+        }
+        if (!widget.setting && widget.input) {
+          page.code.widgets[id]['settings'] = page.code.widgets[id]['input'];
+          delete page.code.widgets[id]['input'];
+        }
+      });
       console.log(page);
       cms.functions.saveRecord('custom_page', name, page);
-    }
+    //}
   });
 }

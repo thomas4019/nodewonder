@@ -1,17 +1,21 @@
 {
-    "widgets": {
-        "bSTlkYv9": {
-            "type": "model_data_listing",
-            "slots": {},
-            "model": "model",
-            "row_template": "<li class=\"list-group-item\" ><a href=\"/admin/data/model/{{ key }}/\"><span class=\"glyphicon glyphicon-edit\"></span> {{ key }}</a></li>",
-            "title":"Site Models"
-        }
-    },
     "parent": "admin",
-    "slotAssignments": {
-        "body": [
-            "bSTlkYv9"
-        ]
+    "code": {
+        "widgets": {
+            "bSTlkYv9": {
+                "input": {
+                    "model": "model",
+                    "row_template": "<li class=\"list-group-item\" ><a href=\"/admin/data/?model=model&record={{ key }}\"><span class=\"glyphicon glyphicon-edit\"></span> {{ key }}</a></li>",
+                    "title": "Site Models"
+                },
+                "type": "model_data_listing",
+                "slots": {}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "bSTlkYv9"
+            ]
+        }
     }
 }

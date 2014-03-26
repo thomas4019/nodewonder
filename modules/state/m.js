@@ -22,8 +22,9 @@ functions.initializeState = function(state, callback) {
 
   var initializeWidget = function(w, id) {
     var name = w.type;
+    console.log(w);
     if (cms.widgets[name]) {
-      var widget = new cms.widgets[name](w, id);
+      var widget = new cms.widgets[name](w.input || {}, id);
       widget.id = id;
     } else {
       console.log('Missing widget:' + name);
@@ -128,7 +129,7 @@ functions.splitValues = function(values) {
 functions.fillValues = function(state, values) {
   _.each(state, function(w, id) {
     if (values[id]) {
-      state[id] = _.extend(w, values[id]);
+      state[id]['input'] = _.extend(w, values[id]);
     }
   });
 

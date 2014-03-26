@@ -1,38 +1,56 @@
 {
-    "slotAssignments": {"body": ["storage"]},
-    "widgets": {
-        "storage": {
-            "type":"json",
-            "file": "info",
-            "slots": {
-                "form": [
-                    "title",
-                    "subtitle",
-                    "email",
-                    "online",
-                    "save"
-                ]
+    "code": {
+        "widgets": {
+            "storage": {
+                "input": {
+                    "file": "info"
+                },
+                "type": "json",
+                "slots": {
+                    "form": [
+                        "title",
+                        "subtitle",
+                        "email",
+                        "online",
+                        "save"
+                    ]
+                }
+            },
+            "title": {
+                "input": {
+                    "label": "Site Title"
+                },
+                "type": "field_text"
+            },
+            "subtitle": {
+                "input": {
+                    "label": "Subtitle"
+                },
+                "type": "field_text"
+            },
+            "email": {
+                "input": {
+                    "label": "Site Email"
+                },
+                "type": "field_text"
+            },
+            "online": {
+                "input": {
+                    "label": "Site Online"
+                },
+                "type": "field_boolean"
+            },
+            "save": {
+                "input": {
+                    "label": "save"
+                },
+                "type": "submit"
             }
         },
-        "title": {
-            "type": "field_text",
-            "label": "Site Title"
-        },
-        "subtitle": {
-            "type": "field_text",
-            "label": "Subtitle"
-        },
-        "email": {
-            "type": "field_text",
-            "label": "Site Email"
-        },
-        "online": {
-            "type": "field_boolean",
-            "label": "Site Online"
-        },
-        "save": {
-            "type": "submit",
-            "label": "save"
+        "slotAssignments": {
+            "body": [
+                "storage"
+            ]
         }
     }
 }

@@ -1,18 +1,25 @@
 {
-    "widgets": {
+    "arguments": {
         "bSTlkYv9": {
-            "type": "model_data_listing",
-            "slots": {},
-            "model": "model"
+            "model": "3"
         }
     },
-    "arguments": {
-        "bSTlkYv9": {"model": "3"}
-    },
+    "controller": "widgets['bSTlkYv9'].input.model = args['arg2']; callback(); ",
     "parent": "admin",
-    "slotAssignments": {
-        "body": [
-            "bSTlkYv9"
-        ]
+    "code": {
+        "widgets": {
+            "bSTlkYv9": {
+                "input": {
+                    "model": "model"
+                },
+                "type": "model_data_listing",
+                "slots": {}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "bSTlkYv9"
+            ]
+        }
     }
 }

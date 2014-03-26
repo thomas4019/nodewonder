@@ -1,17 +1,21 @@
 {
-    "widgets": {
-        "wyobn3bP": {
-            "type": "model_form",
-            "slots": {},
-            "model": "model",
-            "record": "link"
-        }
-    },
-    "controller": "widgets.wyobn3bP.model = args.model; widgets.wyobn3bP.record = args.record; callback();",
+    "controller": "widgets.wyobn3bP.input.model = args.model; widgets.wyobn3bP.input.record = args.record; callback();",
     "parent": "admin",
-    "slotAssignments": {
-        "body": [
-            "wyobn3bP"
-        ]
+    "code": {
+        "widgets": {
+            "wyobn3bP": {
+                "input": {
+                    "model": "model",
+                    "record": "link"
+                },
+                "type": "model_form",
+                "slots": {}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "wyobn3bP"
+            ]
+        }
     }
 }

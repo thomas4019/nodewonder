@@ -4,12 +4,14 @@
             "body"
         ]
     },
-    "controller": "widgets['menu'].links = load('menu','admin').link; callback(); ",
+    "controller": "widgets['menu'].input.links = load('menu','admin').link; callback(); ",
     "code": {
         "widgets": {
             "menu": {
-                "type": "template",
-                "path": "modules/admin/menu.html"
+                "input": {
+                    "path": "modules/admin/menu.html"
+                },
+                "type": "template"
             }
         },
         "slotAssignments": {
