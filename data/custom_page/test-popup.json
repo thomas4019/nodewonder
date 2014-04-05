@@ -2,114 +2,114 @@
     "code": {
         "widgets": {
             "7zjz0mfL": {
-                "input": {
-                    "has_form": true
-                },
                 "type": "popup",
                 "slots": {
                     "container": [
                         "SE83aadc"
                     ]
+                },
+                "settings": {
+                    "has_form": true
                 }
             },
             "SE83aadc": {
-                "input": {
-                    "has_form": true
-                },
                 "type": "ckeditor",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": true
+                }
             },
             "jHtdjRQt": {
-                "input": {
+                "type": "button",
+                "settings": {
                     "label": "Show",
                     "button_type": "primary",
                     "has_form": true
-                },
-                "type": "button"
+                }
             },
             "Mvsp4cqT": {
-                "input": {
-                    "has_form": false
-                },
                 "type": "hello_world",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": false
+                }
             },
             "oMd3dDle": {
-                "input": {
-                    "has_form": false
-                },
                 "type": "calendar",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": false
+                }
             },
             "H8sGsYgH": {
-                "input": {
-                    "has_form": true
-                },
                 "type": "youtube_video",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": true
+                }
             },
             "Zp158Da1": {
-                "input": {
-                    "has_form": false
-                },
                 "type": "textarea",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": false
+                }
             },
             "RZNxqNJ3": {
-                "input": {
-                    "has_form": true
-                },
                 "type": "ckeditor",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": true
+                }
             },
             "hmyCkIKh": {
-                "input": {
-                    "has_form": false
-                },
                 "type": "hello_world",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": false
+                }
             },
             "08xBzSHP": {
-                "input": {
-                    "has_form": false
-                },
                 "type": "calendar",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": false
+                }
             },
             "DKMrxt7g": {
-                "input": {
-                    "has_form": true
-                },
                 "type": "youtube_video",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": true
+                }
             },
             "LzoFa4Dx": {
-                "input": {
-                    "has_form": false
-                },
                 "type": "hello_world",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": false
+                }
             },
             "pRzA5u72": {
-                "input": {
-                    "has_form": true
-                },
                 "type": "youtube_video",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": true
+                }
             },
             "cmODl8Nf": {
-                "input": {
-                    "has_form": false
-                },
                 "type": "calendar",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": false
+                }
             },
             "ImZmcgL1": {
-                "input": {
-                    "has_form": true
-                },
                 "type": "ckeditor",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": true
+                }
             }
         },
         "slotAssignments": {

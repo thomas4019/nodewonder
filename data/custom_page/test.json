@@ -1,13 +1,16 @@
 {
+    "URL": "",
+    "Parent": "",
+    "contentType": "",
     "code": {
         "widgets": {
             "5": {
-                "input": {
+                "type": "field_multi",
+                "settings": {
                     "name": "sites",
                     "widget": "model_form",
                     "model": "link"
-                },
-                "type": "field_multi"
+                }
             }
         },
         "slotAssignments": {

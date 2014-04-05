@@ -73,9 +73,10 @@ Widget.prototype.html = function() {
   var wclass = this.wrapper_class ? retreive(this.wrapper_class) : '';
 
   if (wrapper == 'none') {
-    return widget_html;
+    return widget_html + '\r\n';
   } else {
-    return '<' + wrapper + style + ' class="widget-container widget-' + this.name + ' ' + wclass + '" id="' + this.id + '">' + widget_html + '</' + wrapper + '>';
+    return '<' + wrapper + style + ' class="widget-container widget-' + this.name + ' ' + wclass + '" id="' + this.id + '">' + '\r\n  '
+     + widget_html + '\r\n' + '</' + wrapper + '>' + '\r\n';
   }
 }
 
@@ -387,14 +388,14 @@ cms.migrate = function() {
         delete page.slotAssignments;
       }
       _.each(page.code.widgets, function(widget, id) {
-        if (!widget.input) {
+        if (!widget.input && !widget.settings) {
           var input = widget;
           var new_widget = {input: input, type: widget.type, slots: widget.slots};
           delete input['type'];
           delete input['slots'];
           page.code.widgets[id] = new_widget;
         }
-        if (!widget.setting && widget.input) {
+        if (!widget.settings && widget.input) {
           page.code.widgets[id]['settings'] = page.code.widgets[id]['input'];
           delete page.code.widgets[id]['input'];
         }

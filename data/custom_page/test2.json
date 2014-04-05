@@ -1,28 +1,38 @@
 {
+    "URL": "",
+    "Parent": "",
+    "contentType": "",
     "code": {
         "widgets": {
             "uZWXfDhd": {
-                "input": {
-                    "text": "hello"
-                },
-                "type": "header"
+                "type": "header",
+                "settings": {
+                    "text": "Hello World"
+                }
             },
             "dL6rnuBk": {
-                "input": {
-                    "text": "hello"
-                },
-                "type": "header"
+                "type": "text",
+                "settings": {
+                    "text": "Lorem ipsum quis volutpat primis duis sed scelerisque fames felis porttitor pharetra blandit feugiat, nam malesuada fusce netus ac bibendum mollis maecenas ornare etiam dolor. Tempus faucibus interdum aenean vel eros torquent vel donec et hac semper pulvinar quam suspendisse, sollicitudin aliquam semper sociosqu torquent quis varius quam aptent ligula purus vivamus nisi."
+                }
             },
             "m2hXUttc": {
-                "input": {
-                    "id": "dQiNVk_u0po"
-                },
-                "type": "youtube_video"
+                "type": "youtube_video",
+                "settings": {
+                    "id": "T2DXrs0OpHU"
+                }
+            },
+            "7ftLVrFa": {
+                "type": "echo",
+                "slots": {}
             }
         },
         "slotAssignments": {
             "body": [
-                "uZWXfDhd", "dL6rnuBk", "m2hXUttc"
+                "uZWXfDhd",
+                "dL6rnuBk",
+                "m2hXUttc",
+                "7ftLVrFa"
             ]
         }
     }

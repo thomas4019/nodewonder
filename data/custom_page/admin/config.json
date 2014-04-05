@@ -2,21 +2,18 @@
     "code": {
         "widgets": {
             "1": {
-                "input": {
+                "type": "setting",
+                "settings": {
                     "file": "info"
-                },
-                "type": "setting"
+                }
             },
             "2": {
-                "input": {
+                "type": "htmlfile",
+                "settings": {
                     "path": "menu.html"
-                },
-                "type": "htmlfile"
+                }
             },
             "start": {
-                "input": {
-                    "path": "admin.html"
-                },
                 "type": "template",
                 "slots": {
                     "body": [
@@ -25,6 +22,9 @@
                     "top": [
                         "2"
                     ]
+                },
+                "settings": {
+                    "path": "admin.html"
                 }
             }
         },

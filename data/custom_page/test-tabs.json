@@ -2,52 +2,49 @@
     "code": {
         "widgets": {
             "7rLFXuot": {
-                "input": {
-                    "has_form": true
-                },
                 "type": "youtube_video",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": true
+                }
             },
             "fDp0qouK": {
-                "input": {
-                    "has_form": true
-                },
                 "type": "ckeditor",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": true
+                }
             },
             "rSB6JUEy": {
-                "input": {
-                    "has_form": false
-                },
                 "type": "hello_world",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": false
+                }
             },
             "HGTEBBZj": {
-                "input": {
-                    "has_form": false
-                },
                 "type": "calendar",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": false
+                }
             },
             "ZvmIMUkZ": {
-                "input": {
+                "type": "youtube_video",
+                "slots": {},
+                "settings": {
                     "id": "ZuC69YEyyTQ",
                     "has_form": true
-                },
-                "type": "youtube_video",
-                "slots": {}
+                }
             },
             "dT92MyT0": {
-                "input": {
-                    "has_form": false
-                },
                 "type": "textarea",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": false
+                }
             },
             "KiXduprz": {
-                "input": {
-                    "has_form": true
-                },
                 "type": "tabs",
                 "slots": {
                     "tabs": [
@@ -55,28 +52,31 @@
                         "wWtG2heL",
                         "ToTlMINf"
                     ]
+                },
+                "settings": {
+                    "has_form": true
                 }
             },
             "IjBt8zWW": {
-                "input": {
-                    "has_form": false
-                },
                 "type": "calendar",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": false
+                }
             },
             "wWtG2heL": {
-                "input": {
-                    "has_form": true
-                },
                 "type": "youtube_video",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": true
+                }
             },
             "ToTlMINf": {
-                "input": {
-                    "has_form": false
-                },
                 "type": "textarea",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "has_form": false
+                }
             }
         },
         "slotAssignments": {

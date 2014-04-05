@@ -107,7 +107,7 @@ widgets.widget_selector = function (input, id) {
     _.each(cms.widgets, function(widget) {
       w = new widget({});
       //children.push({title : w.name, copy: 'listing'});
-      html += '<option value="' + w.name + '" data-form=\'' + (w.form ? true : false) + '\' data-zones=\''+ (w.zones ? JSON.stringify(retreive(w.zones)) : []) +'\'>' + w.name + '</option>'
+      html += '<option value="' + w.name + '" data-settings=\'' + (w.settings ? JSON.stringify(w.settings()) : false) + '\' data-zones=\''+ (w.zones ? JSON.stringify(retreive(w.zones)) : []) +'\'>' + w.name + '</option>'
     });
 
     html += '</select>';

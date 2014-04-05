@@ -4,9 +4,6 @@
     "code": {
         "widgets": {
             "main": {
-                "input": {
-                    "has_form": true
-                },
                 "type": "two_col",
                 "slots": {
                     "left": [
@@ -17,37 +14,35 @@
                     "right": [
                         "preview"
                     ]
+                },
+                "settings": {
+                    "has_form": true
                 }
             },
             "preview": {
-                "input": {
+                "type": "iframe",
+                "settings": {
                     "url": "/",
                     "has_form": true
-                },
-                "type": "iframe"
+                }
             },
             "parent": {
-                "input": {
+                "type": "field_text",
+                "settings": {
                     "label": "Parent",
                     "name": "parent",
                     "has_form": true
-                },
-                "type": "field_text"
+                }
             },
             "controller": {
-                "input": {
+                "type": "textarea",
+                "settings": {
                     "label": "Controller",
                     "name": "parent",
                     "has_form": true
-                },
-                "type": "textarea"
+                }
             },
             "storage": {
-                "input": {
-                    "file": "test2",
-                    "dir": "pages",
-                    "has_form": null
-                },
                 "type": "statejson",
                 "slots": {
                     "form": [
@@ -55,27 +50,32 @@
                         "save",
                         "wl"
                     ]
+                },
+                "settings": {
+                    "file": "test2",
+                    "dir": "pages",
+                    "has_form": null
                 }
             },
             "save": {
-                "input": {
+                "type": "submit",
+                "settings": {
                     "label": "Save",
                     "has_form": true
-                },
-                "type": "submit"
+                }
             },
             "editor": {
-                "input": {
+                "type": "state_editor",
+                "settings": {
                     "page": "test2",
                     "has_form": false
-                },
-                "type": "state_editor"
+                }
             },
             "wl": {
-                "input": {
+                "type": "widget_selector",
+                "settings": {
                     "has_form": false
-                },
-                "type": "widget_selector"
+                }
             }
         },
         "slotAssignments": {

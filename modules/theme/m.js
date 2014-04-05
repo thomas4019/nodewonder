@@ -16,11 +16,8 @@ widgets.template = function(input) {
 
   this.wrapper = 'none';
 
-  this.form = function() {
-    return  {
-      "start:echo" : {"zones" : {"body" : ["path"] }},
-      "path:field_text" : {"label" : "path", "value" : input.path}
-    };
+  this.settings = function() {
+    return  [ {"name" : "path", "type": "String"} ]; 
   }
 
   this.load = function(callback) {
@@ -42,6 +39,10 @@ widgets.template = function(input) {
 widgets.htmlfile = function(input) {
   var that = this;
   this.path = input.path;
+
+  this.settings = function() {
+    return  [ {"name": "path", "type": "String"} ];
+  }
 
   this.form = function() {
     return  {

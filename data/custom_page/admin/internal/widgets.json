@@ -2,8 +2,8 @@
     "code": {
         "widgets": {
             "start": {
-                "input": {},
-                "type": "widget_listing"
+                "type": "widget_listing",
+                "settings": {}
             }
         },
         "slotAssignments": {

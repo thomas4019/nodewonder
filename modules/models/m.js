@@ -117,10 +117,23 @@ widgets.model_form = function(input, id) {
 
 	if (input.model) {
 		model = cms.model_data['model'][input.model];
+	} else if (input.fields) {
+	 	model = {"fields": JSON.parse(input.fields) };
 	}
 
+	if (input.values) {
+		input.data = JSON.parse(input.values);
+	}
+
+  this.settings = function() {
+    return  [ {"name": "model", "type": "String"},
+    	{"name": "fields", "type": "field", "quantity": "1+"},
+    	{"name": "inline", "type": "Boolean"},
+    	{"name": "record", "type": "String"} ];
+  }
+
 	this.children = function(callback) {
-		if (!inline && input.record != 'create') {
+		if (!inline && input.record && input.record != 'create') {
 			//console.log('loadingi data: ' + input.model + '/' + input.record);
 			cms.functions.getRecord(input.model, input.record, function(err, data2) {
 				if (err) {
@@ -142,6 +155,8 @@ widgets.model_form = function(input, id) {
 		}
 
 		function process() {
+			console.log('&&&&&&&&');
+			console.log(model_values_obj);
 			//model = JSON.parse(data3);
 			//console.log(model);
 			//console.log('&&&&&&&&&&&&&');
@@ -157,7 +172,7 @@ widgets.model_form = function(input, id) {
 		  	var subdata = (model_values_obj) ? model_values_obj[field.name] : undefined;
 		  	var default_widget = cms.functions.getDefaultWidget(field.type);
 
-		  	var input = field.input || {};
+		  	var input = field.settings || {};
 		  	var type;
 
 		  	if (default_widget) {
@@ -176,11 +191,11 @@ widgets.model_form = function(input, id) {
 		  		input['data'] = model_values_obj.fields;
 		  	}
 
-		  	state["body"][field.name] = {type: type, input: input};
+		  	state["body"][field.name] = {type: type, settings: input};
 		  });
 
-		  if (!inline)
-		  	state["body"]["submit"] = {type: 'submit', input: {button_type: 'primary', label: 'Submit'}};
+		  if (!inline && input.submit !== false)
+		  	state["body"]["submit"] = {type: 'submit', settings: {button_type: 'primary', label: 'Submit'}};
 
 		  callback(state);
 		}
@@ -263,7 +278,7 @@ widgets.model_form = function(input, id) {
 			token = id + '-form_token';
 			var values = {};
 			values[token] = form_token;
-			return cms.functions.wrapInForm( '<h2><a href="/admin/list/model">Models</a> : <a href="/admin/list/' + input.model + '/">' + input.model + '</a> : ' + input.record + '</h2>' +  slots.body.html(), 'model_form',  values);
+			return cms.functions.wrapInForm( slots.body.html(), 'model_form',  values);
 			//return cms.functions.wrapInForm( slots.body.html(), 'model_form', {model: input.model, record: input.record} );
 		}
 	}
@@ -306,6 +321,11 @@ widgets.model_form.init = function() {
 }
 
 widgets.model_data_listing = function(input) {
+	this.settings = function() {
+		return [{"name": "row_template", "type": "String", "widget": "textarea"}, 
+			{"name": "model", "type": "String"}]
+	}
+
 	this.toHTML = function() {
 
 		var row_template;

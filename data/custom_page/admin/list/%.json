@@ -4,16 +4,16 @@
             "model": "3"
         }
     },
-    "controller": "widgets['bSTlkYv9'].input.model = args['arg2']; callback(); ",
+    "controller": "widgets['bSTlkYv9'].settings.model = args['arg2']; callback(); ",
     "parent": "admin",
     "code": {
         "widgets": {
             "bSTlkYv9": {
-                "input": {
-                    "model": "model"
-                },
                 "type": "model_data_listing",
-                "slots": {}
+                "slots": {},
+                "settings": {
+                    "model": "model"
+                }
             }
         },
         "slotAssignments": {

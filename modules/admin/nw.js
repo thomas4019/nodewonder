@@ -9,6 +9,48 @@ var nw = function() {
 	    return text;
 	}
 
+	function expandPostValues(values) {
+		var data = {};
+		var tocheck = [];
+
+		_.each(values, function(value, key) {
+			var parts = key.split('-');
+			if (parts.length >= 2) {
+				var current = data;
+				for (var i = 1; i < parts.length - 1; i++) {
+					var v = parts[i];
+					current = current[v] = current[v] || {};
+				}
+				var last = parts[parts.length - 1];
+				if (value == 'new Array') {
+					value = [];
+					tocheck.push(last);
+				}
+				current[last] = value;
+			}
+		});
+
+		function hasValues(value) {
+			if (typeof value == 'object') {
+				for (var key in value)
+					if (hasValues(value[key]))
+						return true;
+
+				return false;
+			}
+
+			return value;
+		}
+
+		_.each(tocheck, function(key, index) {
+			data[key] = _.filter(data[key], function(value) {
+				return hasValues(value);
+			});
+		});
+
+		return data;
+	}
+
 	//data['start-input'] = '{id:wjarzQWtBwM}';//'%7B"id"%3A"wjarzQWtBwM"%7D';
 
 	function loadWidgetForm(page, id, callback) {
@@ -85,6 +127,7 @@ var nw = function() {
 		loadWidgetForm: loadWidgetForm,
 		renderWidget: renderWidget,
 		insertWidgetBefore: insertWidgetBefore,
-		configureWidget: configureWidget
+		configureWidget: configureWidget,
+		expandPostValues: expandPostValues
 	};
 }();

@@ -1,15 +1,15 @@
 {
-    "controller": "widgets.wyobn3bP.input.model = args.model; widgets.wyobn3bP.input.record = args.record; callback();",
+    "controller": "widgets.wyobn3bP.settings.model = args.model; widgets.wyobn3bP.settings.record = args.record; callback();",
     "parent": "admin",
     "code": {
         "widgets": {
             "wyobn3bP": {
-                "input": {
+                "type": "model_form",
+                "slots": {},
+                "settings": {
                     "model": "model",
                     "record": "link"
-                },
-                "type": "model_form",
-                "slots": {}
+                }
             }
         },
         "slotAssignments": {

@@ -1,0 +1,17 @@
+{
+    "contentType": "text/html",
+    "controller": "widgets.start.settings.fields = args.fields; widgets.start.settings.values = args.values; callback();",
+    "code": {
+        "widgets": {
+            "start": {
+                "type": "model_form",
+                "settings": {"fields": "[ {\"name\": \"path\", \"type\": \"String\"}]", "submit": false}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "start"
+            ]
+        }
+    }
+}

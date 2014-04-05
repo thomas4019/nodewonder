@@ -3,8 +3,8 @@
     "code": {
         "widgets": {
             "start": {
-                "input": {},
-                "type": "render_widget"
+                "type": "render_widget",
+                "settings": {}
             }
         },
         "slotAssignments": {

@@ -3,13 +3,13 @@
     "code": {
         "widgets": {
             "bSTlkYv9": {
-                "input": {
+                "type": "model_data_listing",
+                "slots": {},
+                "settings": {
                     "model": "model",
                     "row_template": "<li class=\"list-group-item\" ><a href=\"/admin/data/?model=model&record={{ key }}\"><span class=\"glyphicon glyphicon-edit\"></span> {{ key }}</a></li>",
                     "title": "Site Models"
-                },
-                "type": "model_data_listing",
-                "slots": {}
+                }
             }
         },
         "slotAssignments": {

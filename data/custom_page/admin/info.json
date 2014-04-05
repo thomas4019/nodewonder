@@ -2,9 +2,6 @@
     "code": {
         "widgets": {
             "storage": {
-                "input": {
-                    "file": "info"
-                },
                 "type": "json",
                 "slots": {
                     "form": [
@@ -14,37 +11,40 @@
                         "online",
                         "save"
                     ]
+                },
+                "settings": {
+                    "file": "info"
                 }
             },
             "title": {
-                "input": {
+                "type": "field_text",
+                "settings": {
                     "label": "Site Title"
-                },
-                "type": "field_text"
+                }
             },
             "subtitle": {
-                "input": {
+                "type": "field_text",
+                "settings": {
                     "label": "Subtitle"
-                },
-                "type": "field_text"
+                }
             },
             "email": {
-                "input": {
+                "type": "field_text",
+                "settings": {
                     "label": "Site Email"
-                },
-                "type": "field_text"
+                }
             },
             "online": {
-                "input": {
+                "type": "field_boolean",
+                "settings": {
                     "label": "Site Online"
-                },
-                "type": "field_boolean"
+                }
             },
             "save": {
-                "input": {
+                "type": "submit",
+                "settings": {
                     "label": "save"
-                },
-                "type": "submit"
+                }
             }
         },
         "slotAssignments": {

@@ -26,3 +26,11 @@ widgets.header = function(input, id) {
     return input.text;
   }
 }
+
+widgets.text =  function(input, id) {
+  this.wrapper = 'p';
+
+  this.toHTML = function(slots) {
+    return input.text;
+  }
+}

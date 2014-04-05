@@ -21,6 +21,11 @@ widgets.field_boolean = function (input, id) {
 
   this.model = 'Boolean';
 
+  this.settings = function() {
+    return  [ {"name": "label", "type": "String"},
+      {"name": "name", "type": "String"} ];
+  }
+
   this.processData = function(value) {
     return value == "on";
   }
@@ -34,6 +39,7 @@ widgets.field_boolean = function (input, id) {
   }
 }
 
+//DELETE?
 widgets.form = function (input, id) {
   this.toHTML = function(zones, value) {
     var html = '<form action="/post" method="post">'
@@ -55,11 +61,9 @@ widgets.field_text = function (input, id) {
 
   this.deps = {'jquery': [],'bootstrap':[]};
 
-  this.form = function() {
-    return {
-      'label': {'type': 'field_text','name': 'label', 'label': 'Label'},
-      'inline': {'type': 'field_boolean','name': 'inline', 'label': 'Inline'}
-    };
+  this.settings = function() {
+    return  [ {"name": "label", "type": "String"},
+      {"name": "inline", "type": "Boolean"} ];
   }
 
   this.toHTML = function(zones, value) {
@@ -87,6 +91,11 @@ widgets.textarea = function (input, id) {
 
   this.model = 'String';
 
+  this.settings = function() {
+    return  [ {"name": "label", "type": "String"},
+      {"name": "name", "type": "String"} ];
+  }
+
   this.toHTML = function(zones, value) {
     var label = '<label for="' + name + '">' + (input.label ? input.label : input.name) + ':</label>'
     var element = '<textarea class="form-control input-small"  name="' + name + '" >'+ (input.data || value || input.value || ' ')+'</textarea>';
@@ -101,8 +110,9 @@ widgets.ckeditor = function (input, id) {
 
   this.model = 'String';
 
-  this.form = function() {
-    return {'toolbar': {'type': 'field_text_select', 'choices': ['Basic', 'Advanced'], label:'Toolbar Type'}};
+  this.settings = function() {
+    return  [ {"name": "label", "type": "String"},
+      {"name": "toolbar", "type": "String", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['Basic', 'Advanced']} } ];
   }
 
   this.toHTML = function(zones, value) {
@@ -117,8 +127,8 @@ widgets.ckeditor = function (input, id) {
 }
 
 widgets.iframe = function(input, id) {
-  this.form = function() {
-    return {'url': {'type': 'field_text', label:'URL'}};
+  this.settings = function() {
+    return [ {"name": "url", 'type': 'String'} ];
   }
 
   this.toHTML = function() {
@@ -169,10 +179,9 @@ widgets.button = function (input) {
 widgets.submit = function (input) {
   var label = input.label;
 
-  this.form = function() {
-    return {"label": {"type":"field_text", "name": "label", "label": "Label"},
-        'button_type': {'type':'field_text_select', 'name': "button_type",'choices': ['default', 'primary', 'success', 'info', 'warning', 'danger'], label:'Button Type'}
-      };
+  this.settings = function() {
+    return  [ {"name": "label", "type": "String"},
+      {"name": "button_type", "type": "String", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ];
   }
 
   this.deps = {'jquery': []};
@@ -258,7 +267,7 @@ widgets.field_multi = function(input, id) {
 
     if (can_add) {
       state["body"]["add"] = {"type": "button"}
-      state["body"]["add"]["input"] = {"button_type": "primary", "label": "Add more items"}
+      state["body"]["add"]["settings"] = {"button_type": "primary", "label": "Add more items"}
     }
 
     count = (input.data && Array.isArray(input.data)) ? input.data.length : input.quantity;
@@ -270,18 +279,18 @@ widgets.field_multi = function(input, id) {
     for (var i = 0; i < count; i++) {
       state["body"]["" + i] = {};
       state["body"]["" + i]['type'] = w_type;
-      state["body"]["" + i]['input'] = deep.clone(w_input);
+      state["body"]["" + i]['settings'] = deep.clone(w_input);
       if (input.data && input.data[i])
-        state["body"]["" + i]['input']['data'] = input.data[i];
+        state["body"]["" + i]['settings']['data'] = input.data[i];
     }
 
     state["body"]["click"] = {
       "type": "clicked",
-      "input": {"sel": "#" + id + "-add input"},
+      "settings": {"sel": "#" + id + "-add input"},
     }
     state["body"]["add_action"] = {
       "type": "execute",
-      "input": {"js": "nw.insertWidgetBefore('" + w_type + "','" + id + "-'+(nw.counter++), '"+ JSON.stringify(w_input) + "', '#" + id + "-add')"},
+      "settings": {"js": "nw.insertWidgetBefore('" + w_type + "','" + id + "-'+(nw.counter++), '"+ JSON.stringify(w_input) + "', '#" + id + "-add')"},
     }
     state["body"]["rule"] = {
       "type": "rule",

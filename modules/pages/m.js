@@ -157,6 +157,20 @@ functions.renderPage = function(page, vars, callback) {
   } else if ('vars' in vars) {
     var json = JSON.stringify(vars, null, 4);
     callback(json, 'text/javascript');
+  } else if ('raw' in vars) {
+    cms.functions.renderStateParts(page.code.widgets, page.code.slotAssignments, function(html, results) {
+      var head = results.head;
+      head = head.concat(cms.functions.processDeps(results.deps));
+      /*encoded_head = _.map(encoded_head, function (element) {
+        return element.replace(/<\/script/g, '</scr"+"ipt');
+      });*/
+      var out = {};
+      out['html'] = html;
+      out['head'] = head;
+      out['javascript'] = results.script;
+      var json_out = JSON.stringify(out, 0, 4);
+      callback(json_out, 'text/javascript');
+    }, page.scope);
   } else {
     cms.functions.renderState(page.code.widgets, page.code.slotAssignments, function(html, head) {
       var content_type = page.contentType ? page.contentType : 'text/html';

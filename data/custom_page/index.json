@@ -1,5 +1,5 @@
 {
-    "controller": "widgets[2].input.links = load('menu','admin').link; callback(); ",
+    "controller": "widgets[2].settings.links = load('menu','admin').link; callback(); ",
     "code": {
         "slotAssignments": {
             "body": [
@@ -8,17 +8,18 @@
         },
         "widgets": {
             "1": {
-                "input": {
+                "type": "itext",
+                "settings": {
                     "value": "Hello World!"
-                },
-                "type": "itext"
+                }
             },
             "2": {
-                "path": "modules/admin/menu.html",
-                "type": "template"
+                "type": "template",
+                "settings": {
+                    "path": "modules/admin/menu.html"
+                }
             },
             "start": {
-                "path": "themes/html5up-tessellate/template.html",
                 "type": "template",
                 "slots": {
                     "title": [
@@ -27,6 +28,9 @@
                     "top": [
                         "2"
                     ]
+                },
+                "settings": {
+                    "path": "themes/html5up-tessellate/template.html"
                 }
             }
         }

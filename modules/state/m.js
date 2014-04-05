@@ -24,7 +24,7 @@ functions.initializeState = function(state, callback) {
     var name = w.type;
     console.log(w);
     if (cms.widgets[name]) {
-      var widget = new cms.widgets[name](w.input || {}, id);
+      var widget = new cms.widgets[name](w.settings || {}, id);
       widget.id = id;
     } else {
       console.log('Missing widget:' + name);
@@ -129,7 +129,7 @@ functions.splitValues = function(values) {
 functions.fillValues = function(state, values) {
   _.each(state, function(w, id) {
     if (values[id]) {
-      state[id]['input'] = _.extend(w, values[id]);
+      state[id]['settings'] = _.extend(w, values[id]);
     }
   });
 

@@ -4,10 +4,8 @@ module.exports = {
 widgets = module.exports.widgets;
 
 widgets.youtube_video = function (input) {
-  this.form = function() {
-    return  {
-      "id" : {"name": "id", "type": "field_text", "label" : "Video ID", "value" : (input ? input.id : '') }
-    };
+  this.settings = function() {
+    return  [ {"name": "id", "type": "String", "label": "Video ID"} ];
   }
 
   this.toHTML = function() {
