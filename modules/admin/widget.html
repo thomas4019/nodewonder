@@ -1,4 +1,10 @@
+<span ng-if="!(widgets[id]['field'])">
 {{ widgets[id]['type'] }}
+</span>
+<span ng-if="widgets[id]['field']">
+{{ widgets[id]['field'] }} [{{ widgets[id]['model'] }}] ({{ widgets[id]['model_type'] }}) <select ng-change="exportState()" ng-model="widgets[id]['widget']"
+ng-options="w for w in field_widgets[widgets[id]['model_type']]"></select>
+</span>
 <a href="" ng-click="deleteWidget(id)"><i class="fa fa-trash-o fa-lg"></i></a>
 <a href="" ng-if="widgets[id]['has_form']" ng-click="configureWidget(id)"><i class="fa fa-cog fa-lg configure"></i></a>
 <button ng-click="delete(data)" ng-show="data.nodes.length > 0">Delete nodes</button>

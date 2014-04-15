@@ -1,0 +1,17 @@
+{
+    "contentType": "text/javascript",
+    "controller": "widgets.start.settings.widget_type = args.widget_type; callback();",
+    "code": {
+        "widgets": {
+            "start": {
+                "type": "widget_settings_model",
+                "settings": {}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "start"
+            ]
+        }
+    }
+}

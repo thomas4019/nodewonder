@@ -4,14 +4,14 @@
     "fields": [
         {
             "name": "Title",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
             "required": false
         },
         {
             "name": "Content",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "ckeditor",
             "required": false

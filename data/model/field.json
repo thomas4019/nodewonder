@@ -4,35 +4,35 @@
     "fields": [
         {
             "name": "name",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
             "required": true
         },
         {
             "name": "type",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "model_type_selector",
             "required": false
         },
         {
             "name": "quantity",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
             "required": false
         },
         {
             "name": "widget",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "model_widget_selector",
             "required": false
         },
         {
-            "name": "input",
-            "type": "String",
+            "name": "settings",
+            "type": "Text",
             "quantity": "",
             "widget": "widget_input_config",
             "required": false

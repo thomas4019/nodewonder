@@ -4,21 +4,21 @@
     "fields": [
         {
             "name": "url",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
             "required": false
         },
         {
             "name": "title",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
             "required": false
         },
         {
             "name": "alt",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
             "required": false

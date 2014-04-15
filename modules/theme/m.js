@@ -17,7 +17,7 @@ widgets.template = function(input) {
   this.wrapper = 'none';
 
   this.settings = function() {
-    return  [ {"name" : "path", "type": "String"} ]; 
+    return  [ {"name" : "path", "type": "Text"} ]; 
   }
 
   this.load = function(callback) {
@@ -41,7 +41,7 @@ widgets.htmlfile = function(input) {
   this.path = input.path;
 
   this.settings = function() {
-    return  [ {"name": "path", "type": "String"} ];
+    return  [ {"name": "path", "type": "Text"} ];
   }
 
   this.form = function() {

@@ -1,5 +1,5 @@
 {
-    "contentType": "text/html",
+    "contentType": "text/javascript",
     "controller": "widgets.start.settings.fields = args.fields; widgets.start.settings.values = args.values; callback();",
     "code": {
         "widgets": {

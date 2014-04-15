@@ -4,37 +4,45 @@
     "fields": [
         {
             "name": "URL",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
+            "settings": "",
             "required": false
         },
         {
-            "name": "Parent",
+            "name": "parent",
             "type": "RecordRef",
             "quantity": "",
             "widget": "model_record_reference",
+            "settings": {
+                "label": "",
+                "model": "custom_page"
+            },
             "required": false
         },
         {
             "name": "contentType",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
+            "settings": "",
             "required": false
         },
         {
             "name": "controller",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "textarea",
+            "settings": "",
             "required": false
         },
         {
             "name": "code",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "widget_code_editor",
+            "settings": "",
             "required": false
         }
     ],

@@ -1,6 +1,8 @@
 {
-    "controller": "widgets.wyobn3bP.settings.model = args.model; widgets.wyobn3bP.settings.record = args.record; callback();",
+    "URL": "",
     "parent": "admin",
+    "contentType": "",
+    "controller": "widgets.wyobn3bP.settings.model = args.model; widgets.wyobn3bP.settings.record = args.record; callback();",
     "code": {
         "widgets": {
             "wyobn3bP": {
@@ -10,10 +12,18 @@
                     "model": "model",
                     "record": "link"
                 }
+            },
+            "ZA56joXJ": {
+                "type": "header",
+                "slots": {},
+                "settings": {
+                    "data": "<a href=\"/admin/list/model\">Models</a> : <a href=\"/admin/list/{{ args.model }}/\">{{ args.model }}</a> : {{ args.record }}"
+                }
             }
         },
         "slotAssignments": {
             "body": [
+                "ZA56joXJ",
                 "wyobn3bP"
             ]
         }

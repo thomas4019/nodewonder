@@ -1,4 +1,8 @@
 {
+    "URL": "",
+    "parent": "",
+    "contentType": "",
+    "controller": " ",
     "code": {
         "widgets": {
             "1": {
@@ -26,11 +30,20 @@
                 "settings": {
                     "path": "admin.html"
                 }
+            },
+            "NYfR460F": {
+                "type": "widget_code_editor",
+                "slots": {},
+                "field": "code",
+                "model_type": "Text",
+                "model": "custom_page",
+                "widget": "plaintext"
             }
         },
         "slotAssignments": {
             "body": [
-                "start"
+                "start",
+                "NYfR460F"
             ]
         }
     }

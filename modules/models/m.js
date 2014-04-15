@@ -117,6 +117,9 @@ widgets.model_form = function(input, id) {
 
 	if (input.model) {
 		model = cms.model_data['model'][input.model];
+		if (!model) {
+			console.log('Unknown model type: '+ input.model);
+		}
 	} else if (input.fields) {
 	 	model = {"fields": JSON.parse(input.fields) };
 	}
@@ -126,10 +129,10 @@ widgets.model_form = function(input, id) {
 	}
 
   this.settings = function() {
-    return  [ {"name": "model", "type": "String"},
+    return  [ {"name": "model", "type": "Text"},
     	{"name": "fields", "type": "field", "quantity": "1+"},
     	{"name": "inline", "type": "Boolean"},
-    	{"name": "record", "type": "String"} ];
+    	{"name": "record", "type": "Text"} ];
   }
 
 	this.children = function(callback) {
@@ -155,8 +158,7 @@ widgets.model_form = function(input, id) {
 		}
 
 		function process() {
-			console.log('&&&&&&&&');
-			console.log(model_values_obj);
+
 			//model = JSON.parse(data3);
 			//console.log(model);
 			//console.log('&&&&&&&&&&&&&');
@@ -261,7 +263,7 @@ widgets.model_form = function(input, id) {
 	this.values = function() {
 		if (inline)
 			return {};
-		console.log(model_values);
+		//console.log(model_values);
 		//return model_values;
 	}
 
@@ -322,8 +324,8 @@ widgets.model_form.init = function() {
 
 widgets.model_data_listing = function(input) {
 	this.settings = function() {
-		return [{"name": "row_template", "type": "String", "widget": "textarea"}, 
-			{"name": "model", "type": "String"}]
+		return [{"name": "row_template", "type": "Text", "widget": "textarea"}, 
+			{"name": "model", "type": "Text"}]
 	}
 
 	this.toHTML = function() {
@@ -358,21 +360,21 @@ widgets.model_data_listing = function(input) {
 		return html;
 	}
 
-	this.deps = {'bootstrap': []};
+	this.deps = {'jquery': [],'bootstrap': []};
 }
 
 widgets.model_type_selector = function(input, id) {
 	/*this.children = function(callback) {
 		var body = {};
 		body['sel'] = {type: "field_text_select", label: 'Type'};
-		body['sel']['choices'] = ['String', 'Boolean'];
+		body['sel']['choices'] = ['Text', 'Boolean'];
 
 		callback({body: body});
 	}*/
 
 	this.toHTML = function(slots, value) {
 		//return slots['body'].html();
-		var choices = ['String', 'Boolean', 'Date', 'RecordRef'];
+		var choices = ['Text', 'Boolean', 'Date', 'RecordRef'];
 
 		choices = choices.concat(Object.keys(cms.model_data['model']));
 
@@ -406,11 +408,16 @@ widgets.model_widget_selector = function(input, id) {
 
 
 widgets.model_record_reference = function(input, id) {
-	var model = 'user'
+	var model = input.model || 'user';
 
   this.deps = {'jquery': [],'select2': []};
 
   this.model = 'RecordRef';
+
+  this.settings = function() {
+  	return [ {"name": "label", "type": "Text"},
+  		{"name": "model", "type": "RecordRef", "settings": {"model": "model"} } ]
+  }
 
 	this.toHTML = function(slots, value) {
 		var choices = [];
@@ -419,7 +426,7 @@ widgets.model_record_reference = function(input, id) {
 
 		var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
 
-	 	var html = label + '<select class="sel form-control" name="'+id+'">';
+	 	var html = label + '<select class="sel" style="width: 100%;height: 34px;" name="'+id+'">';
 	 	html += '<option value=""> - Select - </option>';
 	 	_.each(choices, function(choice) {
 	 		html += '<option value="' +choice + '" '+ (input.data == choice ? 'selected': '') + '>' + choice + '</option>';
@@ -435,9 +442,12 @@ widgets.model_record_reference = function(input, id) {
 }
 
 widgets.widget_input_config = function(input, id) {
-  this.deps = {'jquery': [],'bootstrap': [], 'font-awesome': ['css/font-awesome.css']};
+  this.head = ['<script src="/modules/admin/state-utils.js" type="text/javascript"></script>',
+    '<link rel="stylesheet" href="/modules/admin/state-editor.css" />'];
 
-	//this.head = ['<script src="/modules/models/widget-input.js" type="text/javascript"></script>'];
+  this.deps = {'jquery': [],'bootstrap': [], 'font-awesome': ['css/font-awesome.css'], 'underscore': []};
+
+	this.head = ['<script src="/modules/models/widget_config.js" type="text/javascript"></script>'];
 
 	this.processData = function(data) {
 		if (!data)
@@ -449,9 +459,20 @@ widgets.widget_input_config = function(input, id) {
 	this.toHTML = function(slots, value) {
 		var html = '';
 
-		html += '<textarea style="display:none;" id="'+id+'-text" name="'+id+'"></textarea><a onclick="nw.configureWidget(this.id)" id="'+id+'"><i class="fa fa-cog fa-lg configure"></i></a>';
+		html += '<textarea style="display:none;" id="'+id+'-text" name="'+id+'">'+(input.data ? JSON.stringify(input.data) : '')+'</textarea><a onclick="configureModelWidget(this.id);" id="'+id+'"><i class="fa fa-cog fa-lg configure"></i></a>';
 
 		return html;
 	}
 
+}
+
+widgets.widget_settings_model = function(settings, id) {
+	this.wrapper = 'none';
+
+	this.toHTML = function() {
+		var w = new cms.widgets[settings.widget_type]({}, '');
+		var settings_model = w.settings ? w.settings() : [];
+
+		return JSON.stringify(settings_model);
+	}
 }

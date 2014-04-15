@@ -50,6 +50,12 @@ functions.loadPageState = function(path, callback) {
       return;
     }
 
+    if (page.controller && typeof(page.controller) == "string") {
+      page.controller = [page.controller];
+    } else {
+      page.controller = [];
+    }
+
     //console.log('loading: ' + path);
     //console.log(page);
     //console.log(err);
@@ -61,6 +67,8 @@ functions.loadPageState = function(path, callback) {
           console.log(err);
         }
         var combined = dextend(parent, page);
+        combined.controller = parent.controller.concat(page.controller);
+
         _.each(combined.code.slotAssignments, function(value, key) {
           if (key.indexOf(':') !== -1) {
             var parts = key.split(":");
@@ -122,15 +130,23 @@ functions.viewPage = function(path, vars, callback, error_callback) {
 
     page.scope = {};
 
-    if (page.controller) {
+    if (page.controller && page.controller.length > 0) {
       //eval(page.controller);
+      var i = 0;
       context['widgets'] = page.code.widgets;
       context['scope'] = page.scope;
+      context['scope']['args'] = vars;
       context['args'] = vars;
       context['callback'] = function() {
-        cms.functions.renderPage(page, vars, callback);
+        i++;
+        if (i == page.controller.length) {
+          console.log(page.code.widgets);
+          cms.functions.renderPage(page, vars, callback);
+        } else {
+          vm.runInContext(page.controller[i], context);
+        }
       }
-      vm.runInContext(page.controller, context);
+      vm.runInContext(page.controller[0], context);
       //console.log(util.inspect(context));
       page.scope = context.scope;
     } else {

@@ -4,25 +4,32 @@
     "fields": [
         {
             "name": "Name",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
-            "required": false
-        },
-        {
-            "name": "Code",
-            "type": "String",
-            "quantity": "",
-            "widget": "widget_code_editor",
+            "settings": "",
             "required": false
         },
         {
             "name": "Model",
             "type": "RecordRef",
             "quantity": "",
-            "widget": "",
+            "widget": "model_record_reference",
+            "settings": {
+                "label": "",
+                "model": "menu"
+            },
+            "required": false
+        },
+        {
+            "name": "Code",
+            "type": "Text",
+            "quantity": "",
+            "widget": "widget_code_editor",
+            "settings": "",
             "required": false
         }
     ],
-    "key": ""
+    "key": "",
+    "controller": "Code.settings.models = [{model: Code.model.data}]"
 }

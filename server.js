@@ -20,6 +20,7 @@ cms.m = {};
 cms.functions = {};
 cms.widgets = {};
 cms.model_widgets = {};
+cms.view_widgets = {};
 cms.events = {};
 cms.conditions = {};
 cms.actions = {};
@@ -289,6 +290,13 @@ function registerModule(directory, module, prefix, callback) {
       }
       cms.model_widgets[type][name] = widget;
     }
+    if (instance.view) {
+      var type = instance.view;
+      if (!(type in cms.view_widgets)) {
+        cms.view_widgets[type] = [];
+      }
+      cms.view_widgets[type].push(name);
+    }
     setTags(widget, instance);
   });
 
@@ -403,5 +411,16 @@ cms.migrate = function() {
       console.log(page);
       cms.functions.saveRecord('custom_page', name, page);
     //}
+  });
+}
+
+cms.migrate2 = function() {
+_.each(cms.model_data['model'], function(model, name) {
+    _.each(model.fields, function(field, id) {
+      if (field.type == 'String') {
+        field.type = 'Text';
+      }
+    });
+    cms.functions.saveRecord('model', name, model);
   });
 }

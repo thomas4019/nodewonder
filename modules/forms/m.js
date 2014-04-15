@@ -14,6 +14,15 @@ var bootstrap_settings = {
   }
 };
 
+function htmlEscape(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 widgets.field_boolean = function (input, id) {
   var name = input.name;
   var label = input.label;
@@ -22,8 +31,8 @@ widgets.field_boolean = function (input, id) {
   this.model = 'Boolean';
 
   this.settings = function() {
-    return  [ {"name": "label", "type": "String"},
-      {"name": "name", "type": "String"} ];
+    return  [ {"name": "label", "type": "Text"},
+      {"name": "name", "type": "Text"} ];
   }
 
   this.processData = function(value) {
@@ -57,12 +66,12 @@ widgets.form = function (input, id) {
 widgets.field_text = function (input, id) {
   var value = input.value || '';
 
-  this.model = 'String';
+  this.model = 'Text';
 
   this.deps = {'jquery': [],'bootstrap':[]};
 
   this.settings = function() {
-    return  [ {"name": "label", "type": "String"},
+    return  [ {"name": "label", "type": "Text"},
       {"name": "inline", "type": "Boolean"} ];
   }
 
@@ -71,7 +80,7 @@ widgets.field_text = function (input, id) {
     var element;
     
     if (input.data || value) {
-      element = '<input class="form-control input-small" type="text" name="' + id + '" value="' + (input.data || value || input.value) + '" />';
+      element = '<input class="form-control input-small" type="text" name="' + id + '" value="' + htmlEscape(input.data || value || input.value) + '" />';
     } else {
       element = '<input class="form-control input-small" type="text" name="' + id + '" />';
     }
@@ -89,16 +98,16 @@ widgets.textarea = function (input, id) {
   var label = input.label;
   var value = input.value || '';
 
-  this.model = 'String';
+  this.model = 'Text';
 
   this.settings = function() {
-    return  [ {"name": "label", "type": "String"},
-      {"name": "name", "type": "String"} ];
+    return  [ {"name": "label", "type": "Text"},
+      {"name": "name", "type": "Text"} ];
   }
 
   this.toHTML = function(zones, value) {
     var label = '<label for="' + name + '">' + (input.label ? input.label : input.name) + ':</label>'
-    var element = '<textarea class="form-control input-small"  name="' + name + '" >'+ (input.data || value || input.value || ' ')+'</textarea>';
+    var element = '<textarea class="form-control input-small"  name="' + id + '" >'+ (input.data || value || input.value || ' ')+'</textarea>';
 
     return label + element;
   }
@@ -108,11 +117,11 @@ widgets.ckeditor = function (input, id) {
   var name = input.name || id;
   var label = input.label || input.name;
 
-  this.model = 'String';
+  this.model = 'Text';
 
   this.settings = function() {
-    return  [ {"name": "label", "type": "String"},
-      {"name": "toolbar", "type": "String", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['Basic', 'Advanced']} } ];
+    return  [ {"name": "label", "type": "Text"},
+      {"name": "toolbar", "type": "Text", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['Basic', 'Advanced']} } ];
   }
 
   this.toHTML = function(zones, value) {
@@ -128,7 +137,7 @@ widgets.ckeditor = function (input, id) {
 
 widgets.iframe = function(input, id) {
   this.settings = function() {
-    return [ {"name": "url", 'type': 'String'} ];
+    return [ {"name": "url", 'type': 'Text'} ];
   }
 
   this.toHTML = function() {
@@ -180,8 +189,8 @@ widgets.submit = function (input) {
   var label = input.label;
 
   this.settings = function() {
-    return  [ {"name": "label", "type": "String"},
-      {"name": "button_type", "type": "String", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ];
+    return  [ {"name": "label", "type": "Text"},
+      {"name": "button_type", "type": "Text", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ];
   }
 
   this.deps = {'jquery': []};

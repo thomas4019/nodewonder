@@ -4,14 +4,14 @@
     "fields": [
         {
             "name": "username",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
             "required": false
         },
         {
             "name": "password",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
             "required": false

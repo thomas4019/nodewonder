@@ -16,15 +16,14 @@ module.exports = {
 widgets = module.exports.widgets;
 functions = module.exports.functions;
 
-functions.initializeState = function(state, callback) {
+functions.initializeState = function(state, scope, callback) {
   var widgets_buffer = {};
   var count = 1;
 
   var initializeWidget = function(w, id) {
     var name = w.type;
-    console.log(w);
     if (cms.widgets[name]) {
-      var widget = new cms.widgets[name](w.settings || {}, id);
+      var widget = new cms.widgets[name](w.settings || {}, id, scope);
       widget.id = id;
     } else {
       console.log('Missing widget:' + name);
@@ -148,7 +147,7 @@ functions.renderState = function(state, slotAssignments, callback, values) {
 
 functions.renderStateParts = function(state, slotAssignments, callback, values) {
 
-  cms.functions.initializeState(state, function(widgets_buffer) {
+  cms.functions.initializeState(state, values, function(widgets_buffer) {
     var render_results = {
       'head': [],
       'head_map': {},

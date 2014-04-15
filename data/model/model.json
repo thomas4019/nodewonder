@@ -4,14 +4,14 @@
     "fields": [
         {
             "name": "name",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
             "required": false
         },
         {
             "name": "description",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
             "required": false
@@ -25,7 +25,7 @@
         },
         {
             "name": "key",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "",
             "required": false

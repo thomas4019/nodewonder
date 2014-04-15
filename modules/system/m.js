@@ -1,3 +1,5 @@
+var Handlebars = require('handlebars');
+
 var cms;
 module.exports = {
   widgets : {},
@@ -19,18 +21,41 @@ functions.makeid = function(length) {
     return text;
 }
 
-widgets.header = function(input, id) {
+widgets.header = function(input, id, scope) {
   this.wrapper = input.type || 'h1';
 
+  this.view = 'Text';
+
+  this.settings = function() {
+    return [{"name": "data", "type": "Text"}];
+  }
+
   this.toHTML = function(slots) {
-    return input.text;
+    var text = Handlebars.compile(input.data);
+    return text(scope);
   }
 }
 
-widgets.text =  function(input, id) {
+widgets.plaintext =  function(input, id) {
   this.wrapper = 'p';
 
+  this.view = 'Text';
+
+  this.settings = [{"name": "data", "type": "Text"}];
+
   this.toHTML = function(slots) {
-    return input.text;
+    return input.data;
+  }
+}
+
+widgets.filtered_html =  function(input, id) {
+  this.wrapper = 'p';
+
+  this.view = 'Text';
+
+  this.settings = [{"name": "data", "type": "Text"}];
+
+  this.toHTML = function(slots) {
+    return input.data;
   }
 }

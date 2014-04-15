@@ -4,14 +4,14 @@
     "fields": [
         {
             "name": "a",
-            "type": "String",
+            "type": "Text",
             "quantity": "6+",
             "widget": "field_text",
             "required": false
         },
         {
             "name": "b",
-            "type": "String",
+            "type": "Text",
             "quantity": "",
             "widget": "field_text",
             "required": false

@@ -5,7 +5,7 @@ widgets = module.exports.widgets;
 
 widgets.youtube_video = function (input) {
   this.settings = function() {
-    return  [ {"name": "id", "type": "String", "label": "Video ID"} ];
+    return  [ {"name": "id", "type": "Text", "label": "Video ID"} ];
   }
 
   this.toHTML = function() {
