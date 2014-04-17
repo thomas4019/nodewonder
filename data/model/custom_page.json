@@ -1,12 +1,12 @@
 {
     "name": "Page",
-    "description": "",
+    "description": "for advanced pages",
     "fields": [
         {
             "name": "URL",
             "type": "Text",
             "quantity": "",
-            "widget": "",
+            "widget": "field_text",
             "settings": "",
             "required": false
         },
@@ -17,7 +17,8 @@
             "widget": "model_record_reference",
             "settings": {
                 "label": "",
-                "model": "custom_page"
+                "model": "custom_page",
+                "name": "parent"
             },
             "required": false
         },
@@ -25,7 +26,7 @@
             "name": "contentType",
             "type": "Text",
             "quantity": "",
-            "widget": "",
+            "widget": "field_text",
             "settings": "",
             "required": false
         },
@@ -33,18 +34,23 @@
             "name": "controller",
             "type": "Text",
             "quantity": "",
-            "widget": "textarea",
+            "widget": "field_text",
             "settings": "",
             "required": false
         },
         {
             "name": "code",
-            "type": "Text",
+            "type": "Widgets",
             "quantity": "",
             "widget": "widget_code_editor",
-            "settings": "",
+            "settings": {
+                "label": "Widget Code"
+            },
             "required": false
         }
     ],
-    "key": "URL"
+    "key": "custom_page",
+    "views": [
+        []
+    ]
 }

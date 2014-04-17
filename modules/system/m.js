@@ -59,3 +59,25 @@ widgets.filtered_html =  function(input, id) {
     return input.data;
   }
 }
+
+widgets.render_widget = function(input) {
+  var values = {};
+
+  widget_input = (input.input) ? JSON.parse(input.input) : {};
+
+  if (input.values) {
+    values = JSON.parse(input.values);
+  }
+
+  this.wrapper = 'none';
+
+  this.children = function(callback) {
+    var body = {};
+    body['sel'] = {'type': input.widget_type, 'settings': widget_input}
+    callback({'body': body});
+  }
+
+  this.toHTML = function(slots, value) {
+    return slots['body'].html();
+  }
+}

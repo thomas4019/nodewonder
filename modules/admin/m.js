@@ -20,8 +20,12 @@ function retreive(val) {
 
 widgets.widget_code_editor = function (input, id) {
 
+  this.model = ['Widgets']
+
   this.head = ['<script src="/modules/admin/state-utils.js" type="text/javascript"></script>',
     '<link rel="stylesheet" href="/modules/admin/state-editor.css" />'];
+
+  this.settings = [{'name': 'label', 'type': 'Text'}];
 
   this.deps = {'jquery': [], 'bootstrap': [], 'angular': [], 'underscore': ['underscore.js'], 'font-awesome': ['css/font-awesome.css']};
 
@@ -31,15 +35,21 @@ widgets.widget_code_editor = function (input, id) {
     callback({'body': body});
   }
 
+  this.script = function() {
+    return 'angular.bootstrap("#' + id + '");';
+  }
+
   this.processData = function(data) {
     return JSON.parse(data);
   }
 
   this.toHTML = function(slots, value) {
+    console.log(input.data);
     var v = JSON.stringify(input.data || value || {});
-    return slots['body'].html() + '<script type="text/javascript">var state = ' + v + ';</script>' +
+    return slots['body'].html() +
     '<textarea style="display: none;" class="widget-code-editor" name="'+id+'">'+v+'</textarea>' +
-    '<label>Widget Code:</label><div ng-app ng-init=\'field_widgets = '+JSON.stringify(cms.view_widgets)+'\' >' +
+    (input.label ? '<label>'+input.label+':</label>' : '') +
+    '<div class="ng" ng-init=\'field_widgets = '+JSON.stringify(cms.view_widgets)+';state = ' + v + ';field_id="'+id+'";\' >' +
     '<ul id="state-ctrl" ng-controller="stateController">' +
     '<li ng-init="id = \'body\'; slot_name = \'body\';" id="{{ id }}-{{ slot_name }}" ng-include="\'/modules/admin/slot.html\'"></li>' +
     '<li ng-repeat="id in slotAssignments[\'body\']" id="{{ id }}" ng-include="\'/modules/admin/widget.html\'"></li>' +
@@ -53,8 +63,27 @@ widgets.widget_selector = function (input, id) {
 
   this.deps = {'select2': []};
 
+  this.head = function() {
+  	var widgets = {};
+  	_.each(cms.widgets, function(widget) {
+  		w = new widget({});
+  		widgets[w.name] = {
+  			id: w.name,
+  			text: w.name,
+  			name: w.name,
+        widget: w.name,
+  			tags: w.tags,
+  			settings: (w.settings ? retreive(w.settings) : false),
+  			zones: (w.zones ? retreive(w.zones) : []),
+        zone_tags: (w.zone_tags ? retreive(w.zone_tags) : []),
+  		};
+    });
+  
+  	return ['<script type="text/javascript">var widgets=' + JSON.stringify(widgets) + ';</script>'];
+  }
+
   this.load = function(callback) {
-    html = '<select class="widget-selector" style="display: none; width: 300px;">'
+    /*html = '<select class="widget-selector" style="display: none; width: 300px;">'
     html += '<option value="">- Select Widget -</option>'
 
     var model = cms.model_data['model']['custom_page'];
@@ -85,14 +114,16 @@ widgets.widget_selector = function (input, id) {
       html += '</optgroup>';
     });
 
-    html += '</select>';
+    html += '</select>';*/
+      
+    html = '<input type="hidden" class="widget-selector">';
 
     callback();
   }
 
 
   this.script = function() {
-    return '$(".widget-selector").select2();';
+    return 'setupWidgetSelector("#' + id + ' .widget-selector");';
   }
 
   this.toHTML = function(zones, value) {

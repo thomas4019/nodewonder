@@ -81,6 +81,8 @@ widgets.message = function(input) {
 widgets.rule = function() {
   this.zones = ['events', 'conditions', 'actions'];
 
+  this.zone_tags = {events: ['event'], conditions: ['condition'], actions: ['action']};
+
   this.script = function(id, slots) {
     var actionCode = '';
 
@@ -96,4 +98,6 @@ widgets.rule = function() {
 
     return code;
   }
+  
+  this.toHTML = function() {return '';}
 }

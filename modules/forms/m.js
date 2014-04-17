@@ -281,6 +281,9 @@ widgets.field_multi = function(input, id) {
 
     count = (input.data && Array.isArray(input.data)) ? input.data.length : input.quantity;
 
+    if (count == 0) {
+      count = input.quantity;
+    }
     if (count == '') {
       count = 3;
     }
@@ -299,7 +302,7 @@ widgets.field_multi = function(input, id) {
     }
     state["body"]["add_action"] = {
       "type": "execute",
-      "settings": {"js": "nw.insertWidgetBefore('" + w_type + "','" + id + "-'+(nw.counter++), '"+ JSON.stringify(w_input) + "', '#" + id + "-add')"},
+      "settings": {"js": "nw.insertWidgetBefore('" + w_type + "','" + id + "-'+(nw.counter['"+id+"']++), '"+ JSON.stringify(w_input) + "', '#" + id + "-add')"},
     }
     state["body"]["rule"] = {
       "type": "rule",
@@ -315,7 +318,7 @@ widgets.field_multi = function(input, id) {
   this.wrapper_style = "padding-left: 5px;";  
 
   this.script = function() {
-    return 'nw.counter = ' + (count) + ';';
+    return 'nw.counter["'+id+'"] = ' + (count) + ';';
   }
 
   this.toHTML = function(slots) {

@@ -18,6 +18,10 @@ module.exports = {
 functions = module.exports.functions;
 widgets = module.exports.widgets;
 
+function retreive(val) {
+  return (typeof val == 'function') ? val() : val;
+}
+
 functions.generateRecordID = function() {
 	return cms.functions.makeid(16);
 }
@@ -81,6 +85,9 @@ functions.expandPostValues = function(values) {
 
 			return false;
 		}
+
+		if (value == '{}')
+			return false;
 
 		return value;
 	}
@@ -177,6 +184,12 @@ widgets.model_form = function(input, id) {
 		  	var input = field.settings || {};
 		  	var type;
 
+		  	if (field.name == 'views') {
+		  		console.log(field.name);
+		  		console.log(model_values_obj);
+		  		console.log(subdata);
+		  	}
+
 		  	if (default_widget) {
 		  		var name = field.widget ? field.widget : default_widget;
 		  		input = _.extend(input, {name: field.name, data: subdata});
@@ -190,7 +203,6 @@ widgets.model_form = function(input, id) {
 		  		input['widget'] = type;
 		  		type = 'field_multi';
 		  		input['quantity'] = field.quantity;
-		  		input['data'] = model_values_obj.fields;
 		  	}
 
 		  	state["body"][field.name] = {type: type, settings: input};
@@ -215,6 +227,8 @@ widgets.model_form = function(input, id) {
 			var input = {};
 			if (!widget_name) {
 				widget_name = 'model_form';
+			}
+			if (field.type == 'field') {
 				input['model'] = field.type;
 			}
 
@@ -372,9 +386,16 @@ widgets.model_type_selector = function(input, id) {
 		callback({body: body});
 	}*/
 
+	this.head = ['<script type="text/javascript">edit_widgets='+JSON.stringify(cms.edit_widgets)+';</script>', 
+	'<script type="text/javascript" src="/modules/models/field.js"></script>'];
+
+	this.script = function() {
+		return 'model_field_type_setup("'+id+'"); $("#' + id + ' select").on("change", function() {model_field_type_setup("'+id+'"); });';
+	}
+
 	this.toHTML = function(slots, value) {
 		//return slots['body'].html();
-		var choices = ['Text', 'Boolean', 'Date', 'RecordRef'];
+		var choices = Object.keys(cms.model_widgets);
 
 		choices = choices.concat(Object.keys(cms.model_data['model']));
 
@@ -471,7 +492,7 @@ widgets.widget_settings_model = function(settings, id) {
 
 	this.toHTML = function() {
 		var w = new cms.widgets[settings.widget_type]({}, '');
-		var settings_model = w.settings ? w.settings() : [];
+		var settings_model = w.settings ? retreive(w.settings) : [];
 
 		return JSON.stringify(settings_model);
 	}

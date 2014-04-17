@@ -6,30 +6,43 @@
             "name": "name",
             "type": "Text",
             "quantity": "",
-            "widget": "",
+            "widget": "field_text",
+            "settings": "",
             "required": false
         },
         {
             "name": "description",
             "type": "Text",
             "quantity": "",
-            "widget": "",
+            "widget": "field_text",
+            "settings": "",
             "required": false
         },
         {
             "name": "fields",
             "type": "field",
             "quantity": "+",
-            "widget": "",
+            "widget": "model_form",
+            "settings": "",
             "required": false
         },
         {
             "name": "key",
             "type": "Text",
             "quantity": "",
-            "widget": "",
+            "widget": "field_text",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "views",
+            "type": "Widgets",
+            "quantity": "1+",
+            "widget": "widget_code_editor",
+            "settings": "",
             "required": false
         }
     ],
-    "key": "name"
+    "key": "name",
+    "views": []
 }

@@ -9,6 +9,14 @@ var nw = function() {
 	    return text;
 	}
 
+	function serializedArrayToValues(values) {
+		var settings_post = {};
+		_.map(values, function(value) {
+			settings_post[value.name] = value.value;
+		});
+		return settings_post;
+	}
+
 	function expandPostValues(values) {
 		var data = {};
 		var tocheck = [];
@@ -64,19 +72,23 @@ var nw = function() {
 
 	function renderWidget(type, id, input, callback) {
 		var data = {};
-		data['start-widget_id'] = id;
-		data['start-widget_type'] = type;
-		data['start-input'] = input;
-		$.getJSON('/internal/render_widget', data, function(result) {
+		data['widget_id'] = id;
+		data['widget_type'] = type;
+		data['input'] = input;
+		$.getJSON('/internal/render_widget?raw', data, function(result) {
 			callback(result);
 		});
 	}
 
 	function insertWidgetBefore(type, id, input, selector) {
 		renderWidget(type, id, input, function(result) {
-			console.log(result);
 			$(selector).before(result.html);
+
+			//This scrolltop hack is here because some widgets use angular whose bootstrap method
+			//causes it to scroll to tho top for some reason.
+			var tempScrollTop = $(window).scrollTop();
 			eval(result.javascript);
+			$(window).scrollTop(tempScrollTop);
 		});	
 	}
 
@@ -98,18 +110,14 @@ var nw = function() {
 		$("#widgetForm").remove();
 		x = $('#'+id+' .configure').offset().left;
 		y = $('#'+id+' .configure').offset().top;
-		//var ne = document.createElement( "div" );
+
 		var ne = $( '<div id="widgetForm" style="left:'+x+'px; top:'+y+'px;" />' )
 		$('body').append(ne);
-		console.log(settings);
-		console.log(settings_model);
-		//ne.html('hello world');
+
 		var data = {};
 		data['fields'] = JSON.stringify(settings_model);
 		data['values'] = JSON.stringify(settings);
-		//data['start-input'] = '{id:wjarzQWtBwM}';//'%7B"id"%3A"wjarzQWtBwM"%7D';
-		//data['start-widget_page'] = page;
-		//?start-type=youtube_video&start-input=%7B"id"%3A"wjarzQWtBwM"%7D&start-show_form=true
+
 		$.getJSON('/internal/render_model?raw', data, function(result) {
 			console.log(result);
 	    if (result.error) {
@@ -121,14 +129,8 @@ var nw = function() {
 		    });
 		    $("#widgetForm .save").click(function() {
 					var settings_raw = $( '#start form').serializeArray();
-					console.log(id);
-					var settings_post = {};
-					_.map(settings_raw, function(value) {
-						settings_post[value.name] = value.value;
-					});
+					var settings_post = nw.serializedArrayToValues(settings_raw);
 					delete settings_post['start-form_token'];
-					console.log(settings_raw);
-					console.log(settings_post);
 					var settings = nw.expandPostValues(settings_post);
 					console.log(settings);
 		    	callback(settings);
@@ -139,11 +141,13 @@ var nw = function() {
 	}
 
 	return {
+		counter: {},
 		makeid: makeid,
 		loadWidgetForm: loadWidgetForm,
 		renderWidget: renderWidget,
 		insertWidgetBefore: insertWidgetBefore,
 		configureWidget: configureWidget,
+		serializedArrayToValues: serializedArrayToValues,
 		expandPostValues: expandPostValues,
 		getWidgetSettingsModel: getWidgetSettingsModel
 	};

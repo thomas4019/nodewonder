@@ -132,15 +132,15 @@ functions.viewPage = function(path, vars, callback, error_callback) {
 
     if (page.controller && page.controller.length > 0) {
       //eval(page.controller);
-      var i = 0;
+      var i = 0;  
       context['widgets'] = page.code.widgets;
+      context['slotAssignments'] = page.code.slotAssignments;
       context['scope'] = page.scope;
       context['scope']['args'] = vars;
       context['args'] = vars;
       context['callback'] = function() {
         i++;
         if (i == page.controller.length) {
-          console.log(page.code.widgets);
           cms.functions.renderPage(page, vars, callback);
         } else {
           vm.runInContext(page.controller[i], context);
@@ -163,7 +163,7 @@ functions.renderPage = function(page, vars, callback) {
       var json = JSON.stringify(page.code.widgets, null, 4);
       callback(json, 'text/javascript');
   } else if ('processedjson' in vars) {
-      cms.functions.initializeState(page.code.widgets, function(widgets_buffer, state) {
+      cms.functions.initializeState(page.code.widgets, page.scope, function(widgets_buffer, state) {
         var json = JSON.stringify(state, null, 4);
         callback(json, 'text/javascript');
       });

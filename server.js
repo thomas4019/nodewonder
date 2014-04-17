@@ -20,6 +20,7 @@ cms.m = {};
 cms.functions = {};
 cms.widgets = {};
 cms.model_widgets = {};
+cms.edit_widgets = {};
 cms.view_widgets = {};
 cms.events = {};
 cms.conditions = {};
@@ -33,13 +34,13 @@ cms.pending_forms = {};
 cms.functions.staticThemeCopy();
 cms.functions.staticModulesCopy();*/
 
-var Widget = function() {};
+var Widget = function () {};
 
 function retreive(val) {
-  return (typeof val == 'function') ? val() : val;
+  return (typeof val === 'function') ? val() : val;
 }
 
-Widget.prototype.html = function() {
+Widget.prototype.html = function () {
   var results = this.results;
   var zone_object = this.getZoneObject();
 
@@ -288,7 +289,9 @@ function registerModule(directory, module, prefix, callback) {
       if (!(type in cms.model_widgets)) {
         cms.model_widgets[type] = {};
       }
+      cms.edit_widgets[type] = cms.edit_widgets[type] || [];
       cms.model_widgets[type][name] = widget;
+      cms.edit_widgets[type].push(name);
     }
     if (instance.view) {
       var type = instance.view;
