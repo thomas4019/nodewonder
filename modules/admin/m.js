@@ -50,9 +50,12 @@ widgets.widget_code_editor = function (input, id) {
     '<textarea style="display: none;" class="widget-code-editor" name="'+id+'">'+v+'</textarea>' +
     (input.label ? '<label>'+input.label+':</label>' : '') +
     '<div class="ng" ng-init=\'field_widgets = '+JSON.stringify(cms.view_widgets)+';state = ' + v + ';field_id="'+id+'";\' >' +
-    '<ul id="state-ctrl" ng-controller="stateController">' +
+    '<div ng-controller="stateController">' +
+    '<div class="widget-menu" ng-if="menu || cut" ng-include="\'/modules/admin/widget-menu.html\'"></div>' +
+    '<ul id="state-ctrl">' +
     '<li ng-init="id = \'body\'; slot_name = \'body\';" id="{{ id }}-{{ slot_name }}" ng-include="\'/modules/admin/slot.html\'"></li>' +
     '<li ng-repeat="id in slotAssignments[\'body\']" id="{{ id }}" ng-include="\'/modules/admin/widget.html\'"></li>' +
+    '</div>' +
     '</div>';
   }
 }

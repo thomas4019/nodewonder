@@ -13,17 +13,21 @@ function setupWidgetSelector(id) {
 			var data = {more: false, results: []};
 			var groups = {};
 			
-			var model = {text: 'Model', children: []};
-			data.results.push(model);
-			var fields = nw.expandPostValues(nw.serializedArrayToValues($('#wyobn3bP-fields :input').serializeArray())).fields;
-			_.each(fields, function(field) {
-				var w = JSON.parse(JSON.stringify(widgets[field.widget]));
-				w.field = field.type;
-				w.text = field.name;
-				w.name = field.name;
-				w.model = 'Model';
-				model.children.push(w);
-			});
+			if ( $('#wyobn3bP-fields') ) {
+				var model = {text: 'Model', children: []};
+				data.results.push(model);
+				var fields = nw.expandPostValues(nw.serializedArrayToValues($('#wyobn3bP-fields :input').serializeArray())).fields;
+				_.each(fields, function(field) {
+					if(!query.term || field.name.indexOf(query.term) !== -1) {
+						var w = JSON.parse(JSON.stringify(widgets[field.widget]));
+						w.field = field.type;
+						w.text = field.name;
+						w.name = field.name;
+						w.model = 'Model';
+						model.children.push(w);
+					}
+				});
+			}
 
 			_.each(widgets, function(widget) {
 				_.each(widget.tags, function(tag) {
@@ -46,13 +50,14 @@ function setupWidgetSelector(id) {
 function stateController($scope) {
 	$scope.widgets = $scope.state.widgets || {};
 	$scope.slotAssignments = $scope.state.slotAssignments;
+	$scope.menu = false;
 
 	if (!($scope.slotAssignments)) {
 		$scope.slotAssignments = {'body': []};
 	}
 
 	_.each($scope.widgets, function(w) {
-		w.has_form = widgets[type].settings;
+		w.has_form = widgets[w.type].settings;
 	});
 	
 
@@ -75,7 +80,10 @@ function stateController($scope) {
 		});
 		//var zones = JSON.parse()
 		var new_id = nw.makeid();
-		$scope.widgets[new_id] = {type: selected.widget, slots: zones, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, zone_tags: selected.zone_tags};
+		if (selected.model)
+			$scope.widgets[new_id] = {type: selected.widget, slots: zones, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, zone_tags: selected.zone_tags};
+		else
+			$scope.widgets[new_id] = {type: selected.widget, slots: zones, has_form: selected.settings, zone_tags: selected.zone_tags};
 		if (_id == 'body') {
 			$scope.slotAssignments['body'].push(new_id);
 		} else {
@@ -135,8 +143,55 @@ function stateController($scope) {
 		cstate['widgets'] = JSON.parse(JSON.stringify(cstate['widgets'])); //deep clone
 		_.each(cstate['widgets'], function(widget, key) {
 			delete widget['has_form'];
+			delete widget['cut'];
+			delete widget['selected'];
 		});
 		$('#' + $scope.field_id + ' .widget-code-editor').html(JSON.stringify(cstate));
-		//setTimeout('document.getElementsByTagName("iframe")[0].contentWindow.location.reload();', 250);
+	}
+
+	$scope.deleteSelected = function() {
+		_.each($scope.widgets, function(widget, index) {
+			if(widget.selected) {
+				$scope.deleteWidget(index);
+			}
+		});
+		$scope.check();
+	}
+
+	$scope.cutSelected = function() {
+		_.each($scope.widgets, function(widget, index) {
+			widget.cut = widget.selected;
+			widget.selected = false;
+		});
+		$scope.cut = true;
+		$scope.check();
+	}
+
+	$scope.pasteAt = function(_id, _slot) {
+		_.each($scope.widgets, function(widget, id) {
+			if(widget.cut) {
+				$scope.deleteWidget(id);
+
+				if (_id == 'body') {
+					$scope.slotAssignments['body'].push(id);
+				} else {
+					$scope.widgets[_id].slots[_slot].push(id);
+					console.log($scope.widgets[_id]);
+				}
+				$scope.widgets[id] = widget;
+				widget.cut = false;
+			}
+		});
+		$scope.cut = false;
+		$scope.exportState();
+	}
+
+	$scope.check = function(element) {
+		var count = 0;
+		_.each($scope.widgets, function(widget) {
+			if(widget.selected)
+				count++;
+		});
+		$scope.menu = count ? true : false;
 	}
 }

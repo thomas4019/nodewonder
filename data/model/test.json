@@ -22,10 +22,11 @@
             "name": "c",
             "type": "Widgets",
             "quantity": "2+",
-            "widget": "",
+            "widget": "widget_code_editor",
             "settings": "",
             "required": false
         }
     ],
-    "key": ""
+    "key": "test",
+    "views": []
 }

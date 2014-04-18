@@ -36,13 +36,18 @@
         },
         {
             "name": "views",
-            "type": "Widgets",
+            "type": "model_view",
             "quantity": "1+",
-            "widget": "widget_code_editor",
+            "widget": "model_form",
             "settings": "",
             "required": false
         }
     ],
     "key": "name",
-    "views": []
+    "views": [
+        {
+            "Name": "default",
+            "Code": {}
+        }
+    ]
 }

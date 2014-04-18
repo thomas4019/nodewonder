@@ -32,18 +32,34 @@ functions.initializeState = function(state, scope, callback) {
 
     if (widget.children) {
       count++;
-      widget.children(function(children) {
+      widget.children(function(children, slotAssignments) {
+        if (slotAssignments) {
+          w.slots = {};
+          _.each(slotAssignments, function(ids, slot) {
+            w.slots[slot] = _.map(ids, function(_id) {
+              return id+'-'+_id;
+            });
+          })
+        }
         _.each(children, function(widgetStateList, zone) {
           var heirarchical = false;
           _.each(widgetStateList, function(widgetInput, idC) {
             var nameC = widgetInput.type;
             idC = id + '-' + idC;
 
-            w.slots = w.slots || {};
-            w.slots[zone] = w.slots[zone] || [];
-            w.slots[zone].push(idC);
+            if (!slotAssignments) {
+              w.slots = w.slots || {};
+              w.slots[zone] = w.slots[zone] || [];
+              w.slots[zone].push(idC);
+            }
 
             state[idC] = widgetInput;
+
+            _.each(widgetInput.slots, function(ids, slot) {
+              widgetInput.slots[slot] = _.map(ids, function(_id) {
+                return id+'-'+_id;
+              });
+            })
 
             initializeWidget(widgetInput, idC);
           });

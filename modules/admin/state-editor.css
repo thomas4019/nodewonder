@@ -12,3 +12,19 @@
 	top: 5px;
 	right: 5px;
 }
+
+.selected {
+	font-weight: bold;
+}
+
+.widget-menu {
+	border-bottom: 1px solid black;
+}
+
+.cut {
+	color: #999;
+}
+
+.cut.selected {
+	font-weight: normal;
+}

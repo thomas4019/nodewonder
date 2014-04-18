@@ -1,4 +1,5 @@
-var Handlebars = require('handlebars');
+var Handlebars = require('handlebars'),
+  moment = require('moment');
 
 var cms;
 module.exports = {
@@ -79,5 +80,26 @@ widgets.render_widget = function(input) {
 
   this.toHTML = function(slots, value) {
     return slots['body'].html();
+  }
+}
+
+widgets.formatted_date = function(settings) {
+  this.view = 'Date';
+
+  this.settings = [{"name": "format", "type": "Text"}];
+
+  this.toHTML = function() {
+    return moment(settings.data).format(settings.format || 'MMMM Do YYYY');
+  }
+}
+
+widgets.yes_no = function(settings) {
+  this.view = 'Boolean';
+
+  this.settings = [{"name": "true_text", "type": "Text"},
+    {"name": "false_text", "type": "Text"}];
+
+  this.toHTML = function() {
+    return settings.data ? settings.true_text || 'Yes' : settings.false_text || 'No';
   }
 }

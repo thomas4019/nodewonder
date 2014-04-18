@@ -225,13 +225,9 @@ widgets.model_form = function(input, id) {
 			var field_data = data[field.name];
 			var widget_name = field.widget ? field.widget : cms.functions.getDefaultWidget(field.type);
 			var input = {};
-			if (!widget_name) {
-				widget_name = 'model_form';
-			}
-			if (field.type == 'field') {
+			if (widget_name == 'model_form') {
 				input['model'] = field.type;
 			}
-
 			if (field.quantity) {
 				input['widget'] = widget_name;
 				widget_name = 'field_multi';
@@ -336,10 +332,48 @@ widgets.model_form.init = function() {
 	});
 }
 
+widgets.model_record_view = function(settings, id) {
+	this.settings = function() {
+		return [{"name": "model", "type": "RecordRef", "settings": {"model": "model"}},
+		{"name": "record", "type": "Text"},
+		{"name": "view", "type": "Text"}];
+	}
+
+	var record;
+	var model;
+	var model_view;
+
+	this.children = function(callback) {
+		cms.functions.getRecord(settings.model, settings.record, function(err, data) {
+			record = data;
+			cms.functions.getRecord('model', settings.model, function(err, data2) {
+				model = data2;
+				_.each(model.views, function(view) {
+					if (view.Name == settings.view) {
+						model_view = view;
+					}
+				});
+				_.each(model_view.Code.widgets, function(widget) {
+					if (widget.model && widget.field) {
+						widget.settings = widget.settings || {};
+						widget.settings.data = record[widget.field];
+					}
+				});
+				callback({'body': model_view.Code.widgets}, model_view.Code.slotAssignments);
+			});
+		});
+	}
+
+	this.toHTML = function(slots) {
+		return slots.body.html();
+	}
+}
+
 widgets.model_data_listing = function(input) {
 	this.settings = function() {
 		return [{"name": "row_template", "type": "Text", "widget": "textarea"}, 
-			{"name": "model", "type": "Text"}]
+			{"name": "model", "type": "Text"},
+			{"name": "add_button", "type": "Boolean"}]
 	}
 
 	this.toHTML = function() {
@@ -369,7 +403,9 @@ widgets.model_data_listing = function(input) {
 
 		html += '</ul>';
 
-		html += '<a class="btn btn-primary" href="/admin/data/?model=' + input.model + '&record=create/">Create new</a></li>';
+		if (input.add_button) {
+			html += '<a class="btn btn-primary" href="/admin/data/?model=' + input.model + '&record=create">Create new</a></li>';
+		}
 
 		return html;
 	}

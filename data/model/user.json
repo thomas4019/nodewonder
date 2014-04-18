@@ -6,43 +6,115 @@
             "name": "username",
             "type": "Text",
             "quantity": "",
-            "widget": "",
+            "widget": "field_text",
+            "settings": "",
             "required": false
         },
         {
             "name": "password",
             "type": "Text",
             "quantity": "",
-            "widget": "",
+            "widget": "field_text",
+            "settings": "",
             "required": false
         },
         {
             "name": "created",
             "type": "Date",
             "quantity": "",
-            "widget": "",
+            "widget": "field_date",
+            "settings": "",
             "required": false
         },
         {
             "name": "last_login",
             "type": "Date",
             "quantity": "",
-            "widget": "",
+            "widget": "field_date",
+            "settings": "",
             "required": false
         },
         {
             "name": "active",
             "type": "Boolean",
             "quantity": "",
-            "widget": "",
+            "widget": "field_boolean",
+            "settings": "",
             "required": false
         },
         {
             "name": "sites",
             "type": "link",
             "quantity": "",
-            "widget": "",
+            "widget": "model_form",
+            "settings": "",
             "required": false
+        }
+    ],
+    "key": "user",
+    "views": [
+        {
+            "Name": "default",
+            "Code": {
+                "widgets": {
+                    "PtcghRnJ": {
+                        "type": "tabs",
+                        "slots": {
+                            "tabs": [
+                                "rPxssndd",
+                                "fCcwJARi",
+                                "NyXkb3S3",
+                                "QeVjAF8p"
+                            ]
+                        },
+                        "zone_tags": []
+                    },
+                    "rPxssndd": {
+                        "type": "formatted_date",
+                        "slots": {},
+                        "field": "created",
+                        "model_type": "Date",
+                        "model": "Model",
+                        "zone_tags": [],
+                        "settings": {
+                            "format": "DD/MM/YYYY"
+                        }
+                    },
+                    "fCcwJARi": {
+                        "type": "yes_no",
+                        "slots": {},
+                        "field": "active",
+                        "model_type": "Boolean",
+                        "model": "Model",
+                        "zone_tags": [],
+                        "settings": {
+                            "true_text": "Active",
+                            "false_text": "Inactive"
+                        }
+                    },
+                    "NyXkb3S3": {
+                        "type": "plaintext",
+                        "slots": {},
+                        "field": "username",
+                        "model_type": "Text",
+                        "model": "Model",
+                        "zone_tags": []
+                    },
+                    "QeVjAF8p": {
+                        "type": "plaintext",
+                        "slots": {},
+                        "field": "password",
+                        "model_type": "Text",
+                        "model": "Model",
+                        "zone_tags": []
+                    }
+                },
+                "slotAssignments": {
+                    "body": [
+                        "PtcghRnJ"
+                    ]
+                }
+            }
         }
     ]
 }

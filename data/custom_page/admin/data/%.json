@@ -17,7 +17,7 @@
                 "type": "header",
                 "slots": {},
                 "settings": {
-                    "data": "<a href=\"/admin/list/model\">Models</a> : <a href=\"/admin/list/{{ args.model }}/\">{{ args.model }}</a> : {{ args.record }}"
+                    "data": "<a href=\"/admin/list/model\">Models</a> : <a href=\"/admin/list//\"></a> : "
                 }
             }
         },

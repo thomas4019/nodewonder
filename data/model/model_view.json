@@ -6,30 +6,25 @@
             "name": "Name",
             "type": "Text",
             "quantity": "",
-            "widget": "",
+            "widget": "field_text",
             "settings": "",
-            "required": false
-        },
-        {
-            "name": "Model",
-            "type": "RecordRef",
-            "quantity": "",
-            "widget": "model_record_reference",
-            "settings": {
-                "label": "",
-                "model": "menu"
-            },
             "required": false
         },
         {
             "name": "Code",
-            "type": "Text",
+            "type": "Widgets",
             "quantity": "",
             "widget": "widget_code_editor",
-            "settings": "",
+            "settings": {
+                "label": "",
+                "model": "menu",
+                "name": "Model"
+            },
             "required": false
         }
     ],
-    "key": "",
-    "controller": "Code.settings.models = [{model: Code.model.data}]"
+    "key": "model_view",
+    "views": [
+        []
+    ]
 }

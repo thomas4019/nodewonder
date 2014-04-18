@@ -1,6 +1,7 @@
 var fs = require('fs'),
     _ = require('underscore'),
-    deep = require('deep');
+    deep = require('deep'),
+    moment = require('moment');
 
 module.exports = {
   widgets : {}
@@ -107,7 +108,7 @@ widgets.textarea = function (input, id) {
 
   this.toHTML = function(zones, value) {
     var label = '<label for="' + name + '">' + (input.label ? input.label : input.name) + ':</label>'
-    var element = '<textarea class="form-control input-small"  name="' + id + '" >'+ (input.data || value || input.value || ' ')+'</textarea>';
+    var element = '<textarea class="form-control input-small"  name="' + id + '" >'+ (input.data || value || input.value || '')+'</textarea>';
 
     return label + element;
   }
@@ -209,14 +210,14 @@ widgets.field_date = function (input, id) {
 
   this.deps = {'jquery-ui': ['themes/smoothness/jquery-ui.min.css'] };
 
-  this.toHTML = function(value_in) {
+  this.toHTML = function() {
     var label = '';
     if (input.label != '<none>')
       label = '<label for="' + name + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
 
     var element;
 
-    var value = input.data || value_in;
+    var value = input.data ? moment(input.data).format('MM/DD/YYYY') : '';
 
     if (!value || _.isEmpty(value))
       value = '';
@@ -232,6 +233,10 @@ widgets.field_date = function (input, id) {
     } else {
       return label + element;
     }
+  }
+
+  this.processData = function(data) {
+    return new Date(data).getTime();
   }
 
   this.script = function(container_id) {
@@ -307,9 +312,9 @@ widgets.field_multi = function(input, id) {
     state["body"]["rule"] = {
       "type": "rule",
       "slots": {
-        "events": [id+"-"+"click"],
+        "events": ["click"],
         "conditions": [],
-        "actions": [id+"-"+"add_action"]
+        "actions": ["add_action"]
       }
     };
     callback(state);

@@ -44,13 +44,12 @@
             "quantity": "",
             "widget": "widget_code_editor",
             "settings": {
-                "label": "Widget Code"
+                "label": "Widget Code",
+                "name": "code"
             },
             "required": false
         }
     ],
-    "key": "custom_page",
-    "views": [
-        []
-    ]
+    "key": "URL",
+    "views": []
 }

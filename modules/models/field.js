@@ -3,7 +3,9 @@ function model_field_type_setup(type_id) {
 	var type = $('#'+type_id+ ' select').val();
 	var options = edit_widgets[type];
 
-	if (!options) {
+	if (!type) {
+		options = [];
+	} else if (!options) {
 		options = ['model_form'];
 	}
 

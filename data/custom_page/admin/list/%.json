@@ -1,18 +1,17 @@
 {
-    "arguments": {
-        "bSTlkYv9": {
-            "model": "3"
-        }
-    },
-    "controller": "widgets['bSTlkYv9'].settings.model = args['arg2']; callback(); ",
+    "URL": "",
     "parent": "admin",
+    "contentType": "",
+    "controller": "widgets['bSTlkYv9'].settings.model = args['arg2']; callback(); ",
     "code": {
         "widgets": {
             "bSTlkYv9": {
                 "type": "model_data_listing",
                 "slots": {},
                 "settings": {
-                    "model": "model"
+                    "row_template": "",
+                    "model": "model",
+                    "add_button": "on"
                 }
             }
         },
