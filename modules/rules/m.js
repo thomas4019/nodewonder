@@ -24,12 +24,6 @@ widgets.load = function (input) {
 widgets.clicked = function(input) {
   this.settings = [{"name": "sel", "label": "CSS Selector", "type": "Text"}];
 
-  this.form = function() {
-    return  {
-      "sel" : {"type":"field_text", "name":"sel", "label" : "CSS Selector", "value" : (input ? input.sel : '') },
-    };
-  }
-
   this.makeEventJS = function(code) {
     return '$("' + input.sel + '").on( "click", function() {' + code + '});'
   } 
@@ -42,11 +36,7 @@ widgets.refresh = function(input) {
 }
 
 widgets.execute = function(input) {
-  this.form = function() {
-    return  {
-      "js" : {"type":"field_text", "name":"sel", "label" : "Javascript Code", "value" : (input ? input.js : '') },
-    };
-  }
+  this.settings = [{"name":"js", "type": "Javascript", "widget": "textarea"}];
 
   this.makeActionJS = function() {
     return input.js;

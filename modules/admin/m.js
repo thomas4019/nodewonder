@@ -61,7 +61,6 @@ widgets.widget_code_editor = function (input, id) {
 
 widgets.widget_selector = function (input, id) {
   var children = [];
-  var html;
 
   this.deps = {'select2': []};
 
@@ -84,52 +83,12 @@ widgets.widget_selector = function (input, id) {
   	return ['<script type="text/javascript">var widgets=' + JSON.stringify(widgets) + ';</script>'];
   }
 
-  this.load = function(callback) {
-    /*html = '<select class="widget-selector" style="display: none; width: 300px;">'
-    html += '<option value="">- Select Widget -</option>'
-
-    var model = cms.model_data['model']['custom_page'];
-    var groups = {};
-
-    html += '<optgroup label="'+'model record'+'">';
-    _.each(model.fields, function(field) {
-      var w = field.widget ? new cms.widgets[field.widget]({}) : {};
-      html += '<option value="'+field.widget+'" data-field="'+field.name+ '" data-type="'+field.type+'" data-model="' +'custom_page' + '" ' +
-      'data-settings=\'' + (w.settings ? JSON.stringify(retreive(w.settings)) : false) + '\' data-zones=\''+ (w.zones ? JSON.stringify(retreive(w.zones)) : []) + '\'>' +
-      field.name+'</option>';
-    });
-    html += '</optgroup>';
-
-    _.each(cms.widgets, function(widget) {
-      w = new widget({});
-      _.each(w.tags, function(tag) {
-        groups[tag] = groups[tag] || [];
-        groups[tag].push(w);
-      });
-    });
-
-    _.each(groups, function(widgets, name) {
-      html += '<optgroup label="'+name+'">';
-      _.each(widgets, function(w) {
-        html += '<option value="' + w.name + '" data-settings=\'' + (w.settings ? JSON.stringify(retreive(w.settings)) : false) + '\' data-zones=\''+ (w.zones ? JSON.stringify(retreive(w.zones)) : []) +'\'>' + w.name + '</option>'
-      });
-      html += '</optgroup>';
-    });
-
-    html += '</select>';*/
-      
-    html = '<input type="hidden" class="widget-selector">';
-
-    callback();
-  }
-
-
   this.script = function() {
     return 'setupWidgetSelector("#' + id + ' .widget-selector");';
   }
 
   this.toHTML = function(zones, value) {
-    return html;
+    return '<input type="hidden" class="widget-selector">';
   }
 }
 
@@ -142,11 +101,9 @@ widgets.widget_listing = function (input, id) {
   this.load = function(callback) {
     html = '<table class="table">';
     html += '<tr><th>Widget Name</th> <th>Deps</th> <th>Tags</th></tr>'
-    //html += '<option value="">- Select Widget -</option>';
 
     _.each(cms.widgets, function(widget) {
       w = new widget({});
-      //children.push({title : w.name, copy: 'listing'});
       html += '<tr><td>' + w.name + '</td> <td>' + (w.deps ? JSON.stringify(w.deps) : '') + '</td> <td>' + (w.tags ? JSON.stringify(w.tags) : '') + '</td> </tr>';
     });
 

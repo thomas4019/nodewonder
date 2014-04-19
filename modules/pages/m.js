@@ -116,9 +116,6 @@ functions.viewPage = function(path, vars, callback, error_callback) {
       return;
     }
 
-    //cms.functions.processInheritance(rawPage, function(page) {
-
-    //console.log(page.arguments);
     if (page.arguments) {
       _.each(page.arguments, function(input, id) {
         _.each(input, function(arg, name) {
