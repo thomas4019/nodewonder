@@ -34,7 +34,7 @@ var page_template;
 
 fs.readFile('page.html', 'utf8', function(err, data) {
   if (err) {
-    return console.log(err);
+    return console.error(err);
   }
   page_template = Handlebars.compile(data);
 });
@@ -63,8 +63,8 @@ functions.loadPageState = function(path, callback) {
       cms.functions.loadPageState(page.parent, function(err, parent) {
         //here we do the merge
         if (err || !parent) {
-          console.log('missing parent');
-          console.log(err);
+          console.error('missing parent');
+          console.error(err);
         }
         var combined = dextend(parent, page);
         combined.controller = parent.controller.concat(page.controller);
@@ -163,7 +163,7 @@ functions.renderPage = function(page, vars, callback) {
       var json = JSON.stringify(page.code.widgets, null, 4);
       callback(json, 'text/javascript');
   } else if ('processedjson' in vars) {
-      cms.functions.initializeState(page.code.widgets, page.scope, function(widgets_buffer, state) {
+      cms.functions.initializeState(page.code.widgets, page.scope, function(widgets_buffer, results, state) {
         var json = JSON.stringify(state, null, 4);
         callback(json, 'text/javascript');
       });

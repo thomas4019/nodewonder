@@ -1,21 +1,85 @@
 {
     "URL": "",
-    "Parent": "",
+    "parent": "",
     "contentType": "",
+    "controller": "",
     "code": {
         "widgets": {
-            "5": {
-                "type": "field_multi",
-                "settings": {
-                    "name": "sites",
-                    "widget": "model_form",
-                    "model": "link"
+            "0u3FeYgS": {
+                "type": "button",
+                "slots": {},
+                "zone_tags": []
+            },
+            "xCiy71RR": {
+                "type": "rule",
+                "slots": {
+                    "events": [
+                        "4dKE3ntC"
+                    ],
+                    "conditions": [],
+                    "actions": [
+                        "AQ00ZaHO",
+                        "6b7E0RmU"
+                    ]
+                },
+                "zone_tags": {
+                    "events": [
+                        "event"
+                    ],
+                    "conditions": [
+                        "condition"
+                    ],
+                    "actions": [
+                        "action"
+                    ]
                 }
+            },
+            "4dKE3ntC": {
+                "type": "clicked",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "sel": "#0u3FeYgS"
+                }
+            },
+            "AQ00ZaHO": {
+                "type": "message",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "message": "123",
+                    "type": "info"
+                }
+            },
+            "6b7E0RmU": {
+                "type": "delete_record",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "model": "custom_page",
+                    "record": "57gfq67NHJFsCQ72"
+                }
+            },
+            "aOSrgm6A": {
+                "type": "bootstrap_popup",
+                "slots": {
+                    "container": [
+                        "XaBg5tGK"
+                    ]
+                },
+                "zone_tags": []
+            },
+            "XaBg5tGK": {
+                "type": "hello_world",
+                "slots": {},
+                "zone_tags": []
             }
         },
         "slotAssignments": {
             "body": [
-                "5"
+                "0u3FeYgS",
+                "xCiy71RR",
+                "aOSrgm6A"
             ]
         }
     }

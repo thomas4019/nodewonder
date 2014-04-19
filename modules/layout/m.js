@@ -96,27 +96,31 @@ widgets.tabs = function(input, id) {
   }
 }
 
-widgets.bootstrap_popup = function() {
+widgets.show_bootstrap_popup = function(settings) {
+  this.settings = [{"name": "selector", "type": "Text"}]
+
+  this.makeActionJS = function() {
+    return '$( "'+settings.selector+'" ).modal("show");';
+  }
+}
+
+widgets.bootstrap_popup = function(settings) {
   this.zones = ['container'];
 
-  this.form = function() {
-    return {
-      'resizable' : {'name': 'resizable', 'type': 'field_boolean'},
-    };
-  }
+  this.settings = [{"name": "resizable", "type": "Boolean"},
+    {"name": "title", "type": "Text"},
+    {"name": "options", "type": "Text", "quantity": "2+"}];
 
   this.deps = {'jquery': [], 'bootstrap': [], 'font-awesome': ['css/font-awesome.min.css'] };
 
   this.toHTML = function(zones, id) {
-    return  '<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">\
-      Launch demo modal\
-    </button>' +
+    return '' +
     '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
       <div class="modal-dialog">\
         <div class="modal-content">\
           <div class="modal-header">\
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>\
-            <h4 class="modal-title" id="myModalLabel">Modal title</h4>\
+            <h4 class="modal-title" id="myModalLabel">'+settings.title+'</h4>\
           </div>\
           <div class="modal-body">' + 
             zones.container.html() + 
@@ -131,8 +135,8 @@ widgets.bootstrap_popup = function() {
   }
 
   this.script = function() {
-    return '$( "#dialog-confirm" ).dialog({ show: { effect: "blind", duration: 1000 }, hide: { effect: "explode", duration: 1000}, resizable: false, modal: true, autoOpen: false, minHeight:"350", height:"auto", minWidth: "500px", width: "auto", buttons: {' +
-        '"Ok": function () { $(this).dialog("close"); }, "Cancel": function () { $(this).dialog("close"); }' +
-    '}});' + '$("#jHtdjRQt button").click(function() { console.log(1234); $( "#dialog-confirm" ).dialog("open"); });';
+    return '$( "#dialog-confirm" ).modal({ show: { effect: "blind", duration: 1000 }, hide: { effect: "explode", duration: 1000}, resizable: false, modal: true, autoOpen: false, minHeight:"350", height:"auto", minWidth: "500px", width: "auto", buttons: {' +
+        '"Ok": function () { $(this).modal("close"); }, "Cancel": function () { $(this).modal("close"); }' +
+    '}});';
   }
 }

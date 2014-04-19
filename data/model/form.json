@@ -1,0 +1,45 @@
+{
+    "name": "form",
+    "description": "",
+    "fields": [
+        {
+            "name": "name2",
+            "type": "Text",
+            "quantity": "",
+            "widget": "field_text",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "Code",
+            "type": "Widgets",
+            "quantity": "",
+            "widget": "widget_code_editor",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "key": "form",
+    "views": [
+        {
+            "Name": "",
+            "Code": {
+                "widgets": {
+                    "8RlClimI": {
+                        "type": "header",
+                        "slots": {},
+                        "field": "name2",
+                        "model_type": "Text",
+                        "model": "Model",
+                        "zone_tags": []
+                    }
+                },
+                "slotAssignments": {
+                    "body": [
+                        "8RlClimI"
+                    ]
+                }
+            }
+        }
+    ]
+}

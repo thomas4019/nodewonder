@@ -29,6 +29,7 @@ cms.deps = {};
 
 cms.model_data = {};
 cms.pending_forms = {};
+cms.pending_processes = {};
 
 /*cms.functions.allPagesToStatic();
 cms.functions.staticThemeCopy();
@@ -44,9 +45,6 @@ Widget.prototype.html = function () {
   var results = this.results;
   var zone_object = this.getZoneObject();
 
-  if (this.deps) {
-    dextend(results.deps, retreive(this.deps));
-  }
   if (this.head) {
     _.each(retreive(this.head), function(head_element) {
       if (!(head_element in results.head_map)) {
@@ -263,7 +261,6 @@ function registerDep(dep, callback) {
 }
 
 function registerModule(directory, module, prefix, callback) {
-  //console.log('registering ' + module);
   var m = require('./' + directory + '/' + module + '/m');
   cms.m[module] = m;
   if (m.register) {
@@ -380,7 +377,7 @@ function stateMiddleware(req, res, next) {
 
 var router_error = function(err) {
   if (err) {
-    console.log(err);
+    console.error(err);
     this.res.writeHead(404);
     this.res.end('404');
   }
@@ -411,7 +408,6 @@ cms.migrate = function() {
           delete page.code.widgets[id]['input'];
         }
       });
-      console.log(page);
       cms.functions.saveRecord('custom_page', name, page);
     //}
   });

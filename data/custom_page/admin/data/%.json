@@ -19,12 +19,218 @@
                 "settings": {
                     "data": "<a href=\"/admin/list/model\">Models</a> : <a href=\"/admin/list//\"></a> : "
                 }
+            },
+            "LTQLJQLU": {
+                "type": "button",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "label": "Save",
+                    "button_type": "success"
+                }
+            },
+            "pLV1GjLh": {
+                "type": "button",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "label": "Delete",
+                    "button_type": "danger"
+                }
+            },
+            "MfcKdSdQ": {
+                "type": "button",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "label": "Cancel",
+                    "button_type": "warning"
+                }
+            },
+            "ltGoaYnB": {
+                "type": "rule",
+                "slots": {
+                    "events": [
+                        "YQsLMhyR"
+                    ],
+                    "conditions": [],
+                    "actions": [
+                        "P0mL9zHp"
+                    ]
+                },
+                "zone_tags": {
+                    "events": [
+                        "event"
+                    ],
+                    "conditions": [
+                        "condition"
+                    ],
+                    "actions": [
+                        "action"
+                    ]
+                }
+            },
+            "YQsLMhyR": {
+                "type": "clicked",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "sel": "#LTQLJQLU"
+                }
+            },
+            "P0mL9zHp": {
+                "type": "submit_form",
+                "slots": {
+                    "success": [
+                        "wnQoygT4",
+                        "3dule9Au"
+                    ],
+                    "failure": [
+                        "sW3JyLUo"
+                    ]
+                },
+                "zone_tags": {
+                    "success": [
+                        "action"
+                    ],
+                    "failure": [
+                        "action"
+                    ]
+                }
+            },
+            "sW3JyLUo": {
+                "type": "message",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "message": "Save failed. Please copy important data to avoid data loss.",
+                    "type": "error"
+                }
+            },
+            "wnQoygT4": {
+                "type": "message",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "message": "Saved successfully",
+                    "type": "success"
+                }
+            },
+            "3dule9Au": {
+                "type": "goto_page",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "URL": "admin/list/{{args.model}}"
+                }
+            },
+            "OZmPxypj": {
+                "type": "rule",
+                "slots": {
+                    "events": [
+                        "c8TyCU3a"
+                    ],
+                    "conditions": [],
+                    "actions": [
+                        "xiEZPoX5"
+                    ]
+                },
+                "zone_tags": {
+                    "events": [
+                        "event"
+                    ],
+                    "conditions": [
+                        "condition"
+                    ],
+                    "actions": [
+                        "action"
+                    ]
+                }
+            },
+            "c8TyCU3a": {
+                "type": "clicked",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "sel": "#MfcKdSdQ"
+                }
+            },
+            "xiEZPoX5": {
+                "type": "go_back",
+                "slots": {},
+                "zone_tags": []
+            },
+            "fXCIsLc3": {
+                "type": "bootstrap_popup",
+                "slots": {
+                    "container": [
+                        "rttac46i"
+                    ]
+                },
+                "zone_tags": [],
+                "settings": {
+                    "title": "Are you sure?"
+                }
+            },
+            "9OAwet6T": {
+                "type": "rule",
+                "slots": {
+                    "events": [
+                        "C7YPrg9j"
+                    ],
+                    "conditions": [],
+                    "actions": [
+                        "1zzSdHSt"
+                    ]
+                },
+                "zone_tags": {
+                    "events": [
+                        "event"
+                    ],
+                    "conditions": [
+                        "condition"
+                    ],
+                    "actions": [
+                        "action"
+                    ]
+                }
+            },
+            "C7YPrg9j": {
+                "type": "clicked",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "sel": "#pLV1GjLh input"
+                }
+            },
+            "1zzSdHSt": {
+                "type": "show_bootstrap_popup",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "selector": "#fXCIsLc3 .modal"
+                }
+            },
+            "rttac46i": {
+                "type": "plaintext",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "data": "Do you really want to delete this record?"
+                }
             }
         },
         "slotAssignments": {
             "body": [
                 "ZA56joXJ",
-                "wyobn3bP"
+                "wyobn3bP",
+                "LTQLJQLU",
+                "pLV1GjLh",
+                "MfcKdSdQ",
+                "ltGoaYnB",
+                "OZmPxypj",
+                "fXCIsLc3",
+                "9OAwet6T"
             ]
         }
     }

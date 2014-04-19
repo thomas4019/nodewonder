@@ -146,7 +146,7 @@ widgets.iframe = function(input, id) {
   }
 }
 
-widgets.field_text_select = function (input) {
+widgets.field_text_select = function (input, id) {
   var name = input.name;
   var choices = input.choices || ['a', 'b', 'c'];
 
@@ -157,10 +157,10 @@ widgets.field_text_select = function (input) {
   this.toHTML = function(zones, value) {
     var label = '<label for="' + name + '" >' + input.label + '</label>';
 
-    var element = '<select name="' + name + '">';
+    var element = '<select name="' + id + '">';
 
     _.each(choices, function(choice) {
-      element += '<option value="' + choice + '" >' + choice + '</option>';
+      element += '<option value="' + choice + '" ' + (choice == input.data ? 'selected="selected"' : '') + ' >' + choice + '</option>';
     });
 
     element += '</select>';
@@ -173,10 +173,11 @@ widgets.button = function (input) {
   var label = input.label;
   var type = input.type || 'primary';
 
-  this.form = function() {
-    return {"label": {"type":"field_text", "name": "label", "label": "Label"},
-        'button_type': {'type':'field_text_select', 'name': "button_type",'choices': ['default', 'primary', 'success', 'info', 'warning', 'danger'], label:'Button Type'}
-      };
+  this.wrapper = 'span';
+
+  this.settings = function() {
+    return  [ {"name": "label", "type": "Text"},
+      {"name": "button_type", "type": "Text", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ];
   }
 
   this.deps = {'jquery': [], 'bootstrap': []};

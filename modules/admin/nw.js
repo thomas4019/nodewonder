@@ -140,6 +140,16 @@ var nw = function() {
 	  });
 	}
 
+	function doProcess(token) {
+		console.log(token);
+		var data = {};
+		data['token'] = token;
+		data['widget'] = 'process';
+		$.ajax('/post', {type: 'POST', data: data, success: function(result) {
+			console.log(result);
+		} });
+	}
+
 	return {
 		counter: {},
 		makeid: makeid,
@@ -149,6 +159,7 @@ var nw = function() {
 		configureWidget: configureWidget,
 		serializedArrayToValues: serializedArrayToValues,
 		expandPostValues: expandPostValues,
-		getWidgetSettingsModel: getWidgetSettingsModel
+		getWidgetSettingsModel: getWidgetSettingsModel,
+		doProcess: doProcess
 	};
 }();

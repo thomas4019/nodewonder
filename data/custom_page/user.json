@@ -1,0 +1,25 @@
+{
+    "URL": "test4",
+    "parent": "",
+    "contentType": "",
+    "controller": "widgets['vlb3rn7L'].settings.record = args.id; callback();",
+    "code": {
+        "widgets": {
+            "vlb3rn7L": {
+                "type": "model_record_view",
+                "slots": {},
+                "zone_tags": [],
+                "settings": {
+                    "model": "user",
+                    "record": "abc",
+                    "view": "default"
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "vlb3rn7L"
+            ]
+        }
+    }
+}

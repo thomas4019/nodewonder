@@ -26,6 +26,40 @@ functions.generateRecordID = function() {
 	return cms.functions.makeid(16);
 }
 
+functions.loadModelIntoMemory = function(model, callback) {
+	if (!fs.existsSync('data/' + model + '/'))
+		return;
+
+	console.log('loading data for "' + model + '"');
+
+  var models = fs.readdirSync('data/' + model + '/');
+  cms.model_data = cms.model_data || {};
+  cms.model_data[model] = {};
+
+  diveSync('data/' + model + '/', {}, function(err, file) {
+  	if (err) {
+  		console.trace(err);
+  		console.error(file);
+  		console.error(model);
+  		return;
+  	}
+  	
+    var key = path.relative('data/' + model + '/',file).slice(0, -5);
+    var ext = path.extname(file);
+    if (ext == '.json') {
+  		var record_id = key;
+  		var data = fs.readFileSync(file, {encoding: 'utf8'});
+
+  		if (data) {
+  			cms.model_data[model] = cms.model_data[model] || {};
+  			cms.model_data[model][record_id] = JSON.parse(data);
+  		} else {
+  			console.error('empty record: ' + model+'-'+record_id);
+  		}
+    }
+  });
+}
+
 functions.loadRecord = function(model_name, record_id) {
 	return cms.model_data[model_name][record_id];
 }
@@ -34,7 +68,7 @@ functions.loadRecord = function(model_name, record_id) {
 functions.getRecord = function(model_name, record_id, callback) {
 	if (!cms.model_data[model_name]) {
 		callback("model not found");
-		console.log('model:' + model_name + ' missing');
+		console.error('model:' + model_name + ' missing');
 		return;
 	}
 	if (!cms.model_data[model_name][record_id]) {
@@ -45,7 +79,14 @@ functions.getRecord = function(model_name, record_id, callback) {
 }
 
 functions.saveRecord = function(model_name, record_id, value) {
+	mkdirp('data/' + model_name + '/');
 	fs.writeFile('data/' + model_name + '/' + record_id  + '.json', JSON.stringify(value, null, 4));
+	cms.model_data[model_name][record_id] = value;
+}
+
+functions.deleteRecord = function(model_name, record_id) {
+	fs.unlink('data/' + model_name + '/' + record_id  + '.json');
+	delete cms.model_data[model_name][record_id];
 }
 
 functions.getDefaultWidget = function(type) {
@@ -125,7 +166,7 @@ widgets.model_form = function(input, id) {
 	if (input.model) {
 		model = cms.model_data['model'][input.model];
 		if (!model) {
-			console.log('Unknown model type: '+ input.model);
+			console.error('Unknown model type: '+ input.model);
 		}
 	} else if (input.fields) {
 	 	model = {"fields": JSON.parse(input.fields) };
@@ -147,7 +188,7 @@ widgets.model_form = function(input, id) {
 			//console.log('loadingi data: ' + input.model + '/' + input.record);
 			cms.functions.getRecord(input.model, input.record, function(err, data2) {
 				if (err) {
-					console.log(err);
+					console.error(err);
 					model_values_obj = {};
 					model_values = {};
 					process();
@@ -165,38 +206,23 @@ widgets.model_form = function(input, id) {
 		}
 
 		function process() {
-
-			//model = JSON.parse(data3);
-			//console.log(model);
-			//console.log('&&&&&&&&&&&&&');
-
 		  var state = {"body": {}};
 		  var index = 0;
 		  
 		  if (!model) {
-		  	console.log("model error");
-		  	console.log(input);
+		  	console.error("model error");
+		  	console.error(input);
 		  }
 		  _.each(model.fields, function(field, index) {
 		  	var subdata = (model_values_obj) ? model_values_obj[field.name] : undefined;
 		  	var default_widget = cms.functions.getDefaultWidget(field.type);
 
-		  	var input = field.settings || {};
-		  	var type;
+	  		var input = _.extend(field.settings || {}, {name: field.name, data: subdata});
+	  		var type = field.widget ? field.widget : default_widget;
 
-		  	if (field.name == 'views') {
-		  		console.log(field.name);
-		  		console.log(model_values_obj);
-		  		console.log(subdata);
-		  	}
-
-		  	if (default_widget) {
-		  		var name = field.widget ? field.widget : default_widget;
-		  		input = _.extend(input, {name: field.name, data: subdata});
-		  		type = name;
-		  	} else {
-		  		input = _.extend({name: field.name, model: field.type, data: subdata, inline: 'model'});
-		  		type = 'model_form';
+		  	if (type == 'model_form') {
+		  		input['model'] = field.type;
+		  		input['inline'] = 'model';
 		  	}
 
 		  	if (field.quantity) {
@@ -207,9 +233,6 @@ widgets.model_form = function(input, id) {
 
 		  	state["body"][field.name] = {type: type, settings: input};
 		  });
-
-		  if (!inline && input.submit !== false)
-		  	state["body"]["submit"] = {type: 'submit', settings: {button_type: 'primary', label: 'Submit'}};
 
 		  callback(state);
 		}
@@ -227,6 +250,7 @@ widgets.model_form = function(input, id) {
 			var input = {};
 			if (widget_name == 'model_form') {
 				input['model'] = field.type;
+				input['inline'] = 'model';
 			}
 			if (field.quantity) {
 				input['widget'] = widget_name;
@@ -247,11 +271,7 @@ widgets.model_form = function(input, id) {
 		delete data['form_token'];
 		model = related.model;
 		var processed = this.processData(data);
-		//console.log(related);
-		//console.log(processed);
 
-		var dir = 'data/' + related.collection + '/';
-		mkdirp(dir);
 		var record = related.record;
 		if (related.record == 'create') {
 			if (related.model.key && processed[related.model.key])
@@ -259,8 +279,7 @@ widgets.model_form = function(input, id) {
 			else
 				record = cms.functions.generateRecordID();
 		}
-		fs.writeFile(dir + record + '.json', JSON.stringify(processed, null, 4));
-		cms.model_data[related.collection][record] = processed;
+		cms.functions.saveRecord(related.collection, record, processed);
 	}
 
 	this.wrapper_class = function() {
@@ -268,13 +287,6 @@ widgets.model_form = function(input, id) {
 			return 'inline-model-form';
 		else
 			return '';
-	}
-
-	this.values = function() {
-		if (inline)
-			return {};
-		//console.log(model_values);
-		//return model_values;
 	}
 
 	this.toHTML = function(slots) {
@@ -295,39 +307,11 @@ widgets.model_form = function(input, id) {
 		}
 	}
 }
-function loadModelIntoMemory(model, callback) {
-	if (!fs.existsSync('data/' + model + '/'))
-		return;
-
-	console.log('loading data for "' + model + '"');
-
-  var models = fs.readdirSync('data/' + model + '/');
-  cms.model_data = cms.model_data || {};
-  cms.model_data[model] = {};
-
-  diveSync('data/' + model + '/', {}, function(err, file) {
-  	if (err) {
-  		console.trace(err);
-  		console.log(file);
-  		console.log(model);
-  		return;
-  	}
-  	
-    var key = path.relative('data/' + model + '/',file).slice(0, -5);
-    var ext = path.extname(file);
-    if (ext == '.json') {
-  		var record_id = key;
-  		var data = fs.readFileSync(file, {encoding: 'utf8'});
-  		cms.model_data[model] = cms.model_data[model] || {};
-  		cms.model_data[model][record_id] = JSON.parse(data);
-    }
-  });
-}
 widgets.model_form.init = function() {
-	loadModelIntoMemory('model');
+	cms.functions.loadModelIntoMemory('model');
 	_.each(cms.model_data.model, function(list, key) {
 		if (key != 'model') {
-			loadModelIntoMemory(key);
+			cms.functions.loadModelIntoMemory(key);
 		}
 	});
 }
@@ -509,7 +493,6 @@ widgets.widget_input_config = function(input, id) {
 	this.processData = function(data) {
 		if (!data)
 			return data;
-		console.log(data);
 		return JSON.parse(data);
 	}
 

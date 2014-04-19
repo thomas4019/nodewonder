@@ -16,9 +16,14 @@ module.exports = {
 widgets = module.exports.widgets;
 functions = module.exports.functions;
 
+function retreive(val) {
+  return (typeof val === 'function') ? val() : val;
+}
+
 functions.initializeState = function(state, scope, callback) {
   var widgets_buffer = {};
   var count = 1;
+  var results = {deps: {}};
 
   var initializeWidget = function(w, id) {
     var name = w.type;
@@ -26,7 +31,7 @@ functions.initializeState = function(state, scope, callback) {
       var widget = new cms.widgets[name](w.settings || {}, id, scope);
       widget.id = id;
     } else {
-      console.log('Missing widget:' + name);
+      console.error('Missing widget:' + name);
     }
     widget.all_children = {};
 
@@ -68,6 +73,9 @@ functions.initializeState = function(state, scope, callback) {
         part2();
       });
     }
+    if (widget.deps) {
+      dextend(results.deps, retreive(widget.deps));
+    }
 
     widgets_buffer[id] = widget;
     return widget;
@@ -96,7 +104,7 @@ functions.initializeState = function(state, scope, callback) {
       }
     });
 
-    callback(widgets_buffer, state);
+    callback(widgets_buffer, results, state);
   }
 
   function addChildrenToWidget(zones, widget) {
@@ -110,7 +118,7 @@ functions.initializeState = function(state, scope, callback) {
           widget.all_children[slot].push(sub);
           sub.parent = widget;
         } else {
-          console.log('Invalid widget reference:' + sub_id);
+          console.error('Invalid widget reference:' + sub_id);
         }
       });
     });
@@ -163,13 +171,13 @@ functions.renderState = function(state, slotAssignments, callback, values) {
 
 functions.renderStateParts = function(state, slotAssignments, callback, values) {
 
-  cms.functions.initializeState(state, values, function(widgets_buffer) {
+  cms.functions.initializeState(state, values, function(widgets_buffer, results, state) {
     var render_results = {
       'head': [],
       'head_map': {},
       'script': '',
       'values': (values || {}),
-      'deps': {}
+      'deps': results.deps
     };
 
     async.each(Object.keys(widgets_buffer), function(id, callback) {
@@ -186,7 +194,7 @@ functions.renderStateParts = function(state, slotAssignments, callback, values) 
         if (widgets_buffer[id]) {
           html += widgets_buffer[id].html();
         } else {
-          console.log("Widget missing " + id);
+          console.error("Widget missing " + id);
         }
       });
 

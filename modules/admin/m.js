@@ -44,7 +44,6 @@ widgets.widget_code_editor = function (input, id) {
   }
 
   this.toHTML = function(slots, value) {
-    console.log(input.data);
     var v = JSON.stringify(input.data || value || {});
     return slots['body'].html() +
     '<textarea style="display: none;" class="widget-code-editor" name="'+id+'">'+v+'</textarea>' +
