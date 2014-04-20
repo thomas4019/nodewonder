@@ -11,7 +11,7 @@ widgets.template = function(input) {
   this.path = input.path;
 
   this.zones = function() {
-    {name : 'body'};
+    return ['body'];
   }
 
   this.wrapper = 'none';

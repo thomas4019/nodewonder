@@ -169,15 +169,35 @@ widgets.field_text_select = function (input, id) {
   }
 }
 
-widgets.button = function (input) {
+widgets.button = function (input, id) {
   var label = input.label;
   var type = input.type || 'primary';
+
+  this.zones = ['onclick', 'on_dblclick', 'enter'];
+
+  this.zone_tags = {"onclick": ["action"], "on_dblclick": ["action"], "enter": ["action"]};
 
   this.wrapper = 'span';
 
   this.settings = function() {
     return  [ {"name": "label", "type": "Text"},
       {"name": "button_type", "type": "Text", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ];
+  }
+
+  this.script = function() {
+    var slots = this.all_children;
+    var code = '';
+    console.log(slots);
+    if (slots.onclick) {
+      code += '$("#' + id + '").on( "click", function() {' + cms.functions.concatActions(slots.onclick) + '});';
+    }
+    if (slots.on_dblclick) {
+      code += '$("#' + id + '").on( "dblclick", function() {' + cms.functions.concatActions(slots.on_dblclick) + '});';
+    }
+    if (slots.enter) {
+      code += '$("#' + id + '").on( "mouseenter", function() {' + cms.functions.concatActions(slots.enter) + '});';
+    }
+    return code;
   }
 
   this.deps = {'jquery': [], 'bootstrap': []};

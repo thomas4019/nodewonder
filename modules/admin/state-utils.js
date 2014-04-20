@@ -96,6 +96,32 @@ function stateController($scope) {
 
 	select.select2("container").hide();
 
+	var slotSelect = $('#' + $scope.field_id + ' .slot-selector')
+
+	slotSelect.select2({
+		width: 300,
+		query: function (query) {
+			var data = {more: false, results: []};
+			console.log($scope.widgets[_id]);
+			_.each(widgets[$scope.widgets[_id].type].zones, function(zone) {
+				data.results.push({"id":zone, "text": zone});	
+			});
+			query.callback(data);
+		}
+	});
+	slotSelect.select2('container').hide();
+
+	slotSelect.on('select2-close', function() {
+		slotSelect.select2("container").hide();
+	});
+
+	slotSelect.on('change', function (argument) {
+		slotSelect.select2("container").hide();
+		var selected = slotSelect.select2('data');
+		$scope.widgets[_id].slots[selected.id] = [];
+		$scope.$apply();
+	});
+
 	$scope.deleteWidget = function(id) {
 		delete $scope.widgets[id];
 		_.each($scope.widgets, function(widget) {
@@ -135,6 +161,23 @@ function stateController($scope) {
 		select.select2("open");
 	}
 
+	$scope.addSlot = function (id, slot) {
+		_id = id;
+		_slot = slot;
+		x = $('#'+id+' .addSlot').offset().left;
+		y = $('#'+id+' .addSlot').offset().top;
+		var select = $('#' + $scope.field_id + ' .slot-selector')
+		console.log(select);
+		if ($scope.widgets[id] && widgets[$scope.widgets[id].type]) {
+			zone_tag_targets = widgets[$scope.widgets[id].type].zone_tags[slot] || ['view'];
+		} else {
+			zone_tag_targets = ['view'];
+		}
+		select.css({position: 'absolute', left: x, top: y })
+		select.select2("container").show();
+		select.select2("open");
+	}
+
 	$scope.exportState = function() {
 		var cstate = {
 			widgets: $scope.widgets,
@@ -145,6 +188,7 @@ function stateController($scope) {
 			delete widget['has_form'];
 			delete widget['cut'];
 			delete widget['selected'];
+			delete widget['zone_tags'];
 		});
 		$('#' + $scope.field_id + ' .widget-code-editor').html(JSON.stringify(cstate));
 	}

@@ -15,10 +15,25 @@ module.exports = {
 functions = module.exports.functions;
 widgets = module.exports.widgets;
 
-widgets.load = function (input) {
-  this.makeEventJS = function(code) {
-    return code
+functions.concatActions = function(actions) {
+  var code = '';
+  _.each(actions, function(action) {
+    code += action.makeActionJS()+'\n';
+  });
+  return code;
+}
+
+widgets.onload = function (input) {
+  this.zones = ['actions'];
+
+  this.zone_tags = {actions: ['action']};
+
+  this.script = function() {
+    var slots = this.all_children;
+    return cms.functions.concatActions(slots.actions);
   }
+
+  this.toHTML = function() {return '';}
 }
 
 widgets.clicked = function(input) {

@@ -55,7 +55,7 @@ widgets.widget_code_editor = function (input, id) {
     '<li ng-init="id = \'body\'; slot_name = \'body\';" id="{{ id }}-{{ slot_name }}" ng-include="\'/modules/admin/slot.html\'"></li>' +
     '<li ng-repeat="id in slotAssignments[\'body\']" id="{{ id }}" ng-include="\'/modules/admin/widget.html\'"></li>' +
     '</div>' +
-    '</div>';
+    '</div>' + '<input type="hidden" class="slot-selector">';
   }
 }
 
@@ -66,7 +66,7 @@ widgets.widget_selector = function (input, id) {
 
   this.head = function() {
   	var widgets = {};
-  	_.each(cms.widgets, function(widget) {
+  	_.each(cms.widgets, function(widget, name) {
   		w = new widget({});
   		widgets[w.name] = {
   			id: w.name,
@@ -75,7 +75,7 @@ widgets.widget_selector = function (input, id) {
         widget: w.name,
   			tags: w.tags,
   			settings: (w.settings ? retreive(w.settings) : false),
-  			zones: (w.zones ? retreive(w.zones) : []),
+  			zones: (w.zones ? retreive(w.zones).concat(['actions']) : []),
         zone_tags: (w.zone_tags ? retreive(w.zone_tags) : []),
   		};
     });

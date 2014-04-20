@@ -7,37 +7,25 @@
         "widgets": {
             "0u3FeYgS": {
                 "type": "button",
-                "slots": {},
-                "zone_tags": []
-            },
-            "xCiy71RR": {
-                "type": "rule",
                 "slots": {
-                    "events": [
-                        "4dKE3ntC"
+                    "onclick": [
+                        "a0edD4bc"
                     ],
-                    "conditions": [],
-                    "actions": [
-                        "AQ00ZaHO",
-                        "6b7E0RmU"
+                    "on_dblclick": [
+                        "bWXtJOYU"
+                    ],
+                    "enter": [
+                        "AyTsRDEG"
                     ]
                 },
-                "zone_tags": {
-                    "events": [
-                        "event"
-                    ],
-                    "conditions": [
-                        "condition"
-                    ],
-                    "actions": [
-                        "action"
-                    ]
+                "settings": {
+                    "label": "",
+                    "button_type": "default"
                 }
             },
             "4dKE3ntC": {
                 "type": "clicked",
                 "slots": {},
-                "zone_tags": [],
                 "settings": {
                     "sel": "#0u3FeYgS"
                 }
@@ -45,7 +33,6 @@
             "AQ00ZaHO": {
                 "type": "message",
                 "slots": {},
-                "zone_tags": [],
                 "settings": {
                     "message": "123",
                     "type": "info"
@@ -54,32 +41,51 @@
             "6b7E0RmU": {
                 "type": "delete_record",
                 "slots": {},
-                "zone_tags": [],
                 "settings": {
                     "model": "custom_page",
                     "record": "57gfq67NHJFsCQ72"
                 }
             },
-            "aOSrgm6A": {
-                "type": "bootstrap_popup",
-                "slots": {
-                    "container": [
-                        "XaBg5tGK"
-                    ]
-                },
-                "zone_tags": []
-            },
             "XaBg5tGK": {
                 "type": "hello_world",
+                "slots": {}
+            },
+            "6PpFnmZO": {
+                "type": "message",
                 "slots": {},
-                "zone_tags": []
+                "settings": {
+                    "message": "hello",
+                    "type": "info"
+                }
+            },
+            "a0edD4bc": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "hello",
+                    "type": "info"
+                }
+            },
+            "bWXtJOYU": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "The secret",
+                    "type": "info"
+                }
+            },
+            "AyTsRDEG": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "click me",
+                    "type": "info"
+                }
             }
         },
         "slotAssignments": {
             "body": [
-                "0u3FeYgS",
-                "xCiy71RR",
-                "aOSrgm6A"
+                "0u3FeYgS"
             ]
         }
     }

@@ -178,7 +178,7 @@ widgets.model_form = function(input, id) {
 
   this.settings = function() {
     return  [ {"name": "model", "type": "Text"},
-    	{"name": "fields", "type": "field", "quantity": "1+"},
+    	//{"name": "fields", "type": "field", "quantity": "1+"},
     	{"name": "inline", "type": "Boolean"},
     	{"name": "record", "type": "Text"} ];
   }

@@ -6,15 +6,19 @@
             "name": "name",
             "type": "Text",
             "quantity": "",
-            "widget": "",
+            "widget": "field_text",
+            "settings": "",
             "required": false
         },
         {
             "name": "link",
             "type": "link",
             "quantity": "5+",
-            "widget": "",
+            "widget": "model_form",
+            "settings": "",
             "required": false
         }
-    ]
+    ],
+    "key": "menu",
+    "views": []
 }
