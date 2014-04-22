@@ -121,11 +121,11 @@ widgets.ckeditor = function (input, id) {
   var name = input.name || id;
   var label = input.label || input.name;
 
-  this.model = ['field_edit'];
+  this.tags = ['field_edit'];
 
   this.settings = function() {
     return  [ {"name": "label", "type": "Text"},
-      {"name": "toolbar", "type": "Text", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['Basic', 'Advanced']} },
+      {"name": "toolbar", "type": "Text", "widget": "select", "settings": {label:'Button Type', choices: ['Basic', 'Advanced']} },
       {"name": "data", "type": "Text"} ];
   }
 
@@ -184,7 +184,7 @@ widgets.button = function (input, id) {
 
   this.settings = function() {
     return  [ {"name": "label", "type": "Text"},
-      {"name": "button_type", "type": "Text", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ];
+      {"name": "button_type", "type": "Text", "widget": "select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ];
   }
 
   this.script = function() {
@@ -214,7 +214,7 @@ widgets.submit = function (input) {
 
   this.settings = function() {
     return  [ {"name": "label", "type": "Text"},
-      {"name": "button_type", "type": "Text", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ];
+      {"name": "button_type", "type": "Text", "widget": "select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ];
   }
 
   this.deps = {'jquery': []};
@@ -266,8 +266,6 @@ widgets.date = function (input, id) {
 }
 
 widgets.field_multi = function(input, id) {
-  this.model = 'Array';
-
   var w_type = input.widget;
   var w_input = input;
   var count;

@@ -14,13 +14,6 @@ widgets.two_col = function(input) {
   var template = Handlebars.compile('<div class="row"><div class="col-sm-6">{{{ left.html }}} ' +
     '</div><div class="col-sm-6">{{{ right.html }}}</div></div>');
 
-  this.form = function() {
-    return  {
-      "col1" : {"type": "field_text", "label" : "Col 1 Width", "value" : this.col1},
-      "col2" : {"type": "field_text", "label" : "Col 2 Width", "value" : this.col2}
-    };
-  }
-
   this.deps = {'jquery':[],'bootstrap': []};
 
   this.toHTML = function(zones) {

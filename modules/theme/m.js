@@ -44,13 +44,6 @@ widgets.htmlfile = function(input) {
     return  [ {"name": "path", "type": "Text"} ];
   }
 
-  this.form = function() {
-    return  {
-      "start:echo" : {"zones" : {"body" : ["path"] }},
-      "path:field_text" : {"label" : "path", "value" : input.path}
-    };
-  }
-
   this.load = function(callback) {
     fs.readFile(this.path, 'utf8', function(err, data) {
       if (err) {

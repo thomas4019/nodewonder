@@ -6,7 +6,7 @@
             "name": "name",
             "type": "Text",
             "quantity": "",
-            "widget": "",
+            "widget": "textbox",
             "required": true
         },
         {
@@ -20,7 +20,7 @@
             "name": "quantity",
             "type": "Text",
             "quantity": "",
-            "widget": "",
+            "widget": "textbox",
             "required": false
         },
         {
@@ -41,7 +41,7 @@
             "name": "required",
             "type": "Boolean",
             "quantity": "",
-            "widget": "",
+            "widget": "checkbox",
             "required": false
         }
     ],

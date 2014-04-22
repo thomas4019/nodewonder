@@ -410,14 +410,6 @@ widgets.model_data_listing = function(input) {
 }
 
 widgets.model_type_selector = function(input, id) {
-	/*this.children = function(callback) {
-		var body = {};
-		body['sel'] = {type: "field_text_select", label: 'Type'};
-		body['sel']['choices'] = ['Text', 'Boolean'];
-
-		callback({body: body});
-	}*/
-
 	this.head = ['<script type="text/javascript">edit_widgets='+JSON.stringify(cms.edit_widgets)+';</script>', 
 	'<script type="text/javascript" src="/modules/models/field.js"></script>'];
 

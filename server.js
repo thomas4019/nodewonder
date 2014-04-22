@@ -37,7 +37,7 @@ cms.functions.staticModulesCopy();*/
 
 var Widget = function () {};
 
-function retreive(val) {
+function retrieve(val) {
   return (typeof val === 'function') ? val() : val;
 }
 
@@ -46,7 +46,7 @@ Widget.prototype.html = function () {
   var zone_object = this.getZoneObject();
 
   if (this.head) {
-    _.each(retreive(this.head), function(head_element) {
+    _.each(retrieve(this.head), function(head_element) {
       if (!(head_element in results.head_map)) {
         results.head_map[head_element] = true;
         results.head.push(head_element);
@@ -62,9 +62,9 @@ Widget.prototype.html = function () {
 
   var wrapper = this.wrapper ? this.wrapper : 'div';
 
-  var style = this.wrapper_style ? ' style="' + retreive(this.wrapper_style) + '" ' : '';
+  var style = this.wrapper_style ? ' style="' + retrieve(this.wrapper_style) + '" ' : '';
 
-  var wclass = this.wrapper_class ? retreive(this.wrapper_class) : '';
+  var wclass = this.wrapper_class ? retrieve(this.wrapper_class) : '';
 
   if (wrapper == 'none') {
     return widget_html + '\r\n';
@@ -218,7 +218,7 @@ function processDeps(callback) {
 
 function installDependencies(thing) {
   if (thing.deps) {
-    _.each(Object.keys(retreive(thing.deps)), function(dep, index) {
+    _.each(Object.keys(retrieve(thing.deps)), function(dep, index) {
       if (dep != 'order' && !_.contains(allDeps, dep)) {
         allDeps.push(dep);
       }
@@ -276,14 +276,23 @@ function registerModule(directory, module, prefix, callback) {
     if (widget.init) {
       widget.init();
     }
-    if (instance.model) {
-      var type = instance.model;
-      if (!(type in cms.model_widgets)) {
-        cms.model_widgets[type] = {};
-      }
+    if (instance.settings) {
+      var settings = retrieve(instance.settings);
+      var type;
+      _.each(settings, function(field) {
+        if (field.name == 'data') {
+          type = field.type;
+        }
+      });
       cms.edit_widgets[type] = cms.edit_widgets[type] || [];
-      cms.model_widgets[type][name] = widget;
-      cms.edit_widgets[type].push(name);
+      cms.model_widgets[type] = cms.model_widgets[type] || [];
+      if (_.contains(instance.tags, 'field_edit')) {
+        cms.edit_widgets[type] = cms.edit_widgets[type] || [];
+        cms.edit_widgets[type].push(name);
+      }
+      if (_.contains(instance.tags, 'field_view')) {
+        cms.model_widgets[type][name] = widget;
+      }
     }
     if (instance.view) {
       var type = instance.view;

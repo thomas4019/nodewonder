@@ -94,7 +94,7 @@ widgets.alert = function(input) {
 
 widgets.message = function(input) {
   this.settings = [{"name":"message", "type":"Text"},
-    {"name": "type", "type": "Text", "widget": "field_text_select", "settings": {label:'Message Type', choices: ['info', 'success', 'warning', 'error']} }];
+    {"name": "type", "type": "Text", "widget": "select", "settings": {label:'Message Type', choices: ['info', 'success', 'warning', 'error']} }];
 
   this.deps = {'jquery': [],'toastr': ['toastr.min.js', 'toastr.min.css']};
 
