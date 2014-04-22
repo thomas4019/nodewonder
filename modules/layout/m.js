@@ -104,8 +104,16 @@ widgets.show_bootstrap_popup = function(settings) {
   }
 }
 
+widgets.hide_bootstrap_popup = function(settings) {
+  this.settings = [{"name": "selector", "type": "Text"}]
+
+  this.makeActionJS = function() {
+    return '$( "'+settings.selector+'" ).modal("hide");';
+  }
+}
+
 widgets.bootstrap_popup = function(settings) {
-  this.zones = ['container'];
+  this.zones = ['container', 'buttons'];
 
   this.settings = [{"name": "resizable", "type": "Boolean"},
     {"name": "title", "type": "Text"},
@@ -125,10 +133,9 @@ widgets.bootstrap_popup = function(settings) {
           <div class="modal-body">' + 
             zones.container.html() + 
           '</div>\
-          <div class="modal-footer">\
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
-            <button type="button" class="btn btn-primary">Save changes</button>\
-          </div>\
+          <div class="modal-footer">' +
+            (zones.buttons ? zones.buttons.html() : '') + 
+          '</div>\
         </div>\
       </div>\
     </div>';

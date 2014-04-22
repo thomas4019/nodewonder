@@ -15,29 +15,6 @@ module.exports = {
 };
 widgets = module.exports.widgets;
 
-widgets.login = function() {
-  this.children = function(callback) {
-    /*var state = {"start:htmlfile": {
-        "path": "login.html"
-    }};*/
-    var state = {
-        "start:form": {'widget': 'login','zones': {'form': ["username", "password", "save"]}},
-        "username:field_text" : {"label": "Username"},
-        "password:field_text" : {"label": "Password"},
-        "save:submit" : {"label": "Login"},
-    };
-    callback({'body': state});
-  }
-
-  this.save = function(values) {
-    console.log(values);
-  }
-
-  this.toHTML = function(zones) {
-    return zones['body'];
-  }
-}
-
 passport.use(new LocalStrategy(
   function(username, password, done) {
     /*User.findOne({ username: username }, function (err, user) {

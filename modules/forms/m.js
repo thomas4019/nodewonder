@@ -24,16 +24,17 @@ function htmlEscape(str) {
     .replace(/>/g, '&gt;');
 }
 
-widgets.field_boolean = function (input, id) {
+widgets.checkbox = function (input, id) {
   var name = input.name;
   var label = input.label;
   var value = input.value || false;
 
-  this.model = 'Boolean';
+  this.tags = ['field_edit'];
 
   this.settings = function() {
     return  [ {"name": "label", "type": "Text"},
-      {"name": "name", "type": "Text"} ];
+      {"name": "name", "type": "Text"},
+      {"name": "data", "type": "Boolean"} ];
   }
 
   this.processData = function(value) {
@@ -64,16 +65,17 @@ widgets.form = function (input, id) {
   }
 }
 
-widgets.field_text = function (input, id) {
+widgets.textbox = function (input, id) {
   var value = input.value || '';
 
-  this.model = 'Text';
+  this.tags = ['field_edit'];
 
   this.deps = {'jquery': [],'bootstrap':[]};
 
   this.settings = function() {
     return  [ {"name": "label", "type": "Text"},
-      {"name": "inline", "type": "Boolean"} ];
+      {"name": "inline", "type": "Boolean"},
+      {"name": "data", "type": "Text"} ];
   }
 
   this.toHTML = function(zones, value) {
@@ -99,11 +101,12 @@ widgets.textarea = function (input, id) {
   var label = input.label;
   var value = input.value || '';
 
-  this.model = 'Text';
+  this.tags = ['field_edit'];
 
   this.settings = function() {
     return  [ {"name": "label", "type": "Text"},
-      {"name": "name", "type": "Text"} ];
+      {"name": "name", "type": "Text"},
+      {"name": "data", "type": "Text"} ];
   }
 
   this.toHTML = function(zones, value) {
@@ -118,11 +121,12 @@ widgets.ckeditor = function (input, id) {
   var name = input.name || id;
   var label = input.label || input.name;
 
-  this.model = 'Text';
+  this.model = ['field_edit'];
 
   this.settings = function() {
     return  [ {"name": "label", "type": "Text"},
-      {"name": "toolbar", "type": "Text", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['Basic', 'Advanced']} } ];
+      {"name": "toolbar", "type": "Text", "widget": "field_text_select", "settings": {label:'Button Type', choices: ['Basic', 'Advanced']} },
+      {"name": "data", "type": "Text"} ];
   }
 
   this.toHTML = function(zones, value) {
@@ -146,13 +150,16 @@ widgets.iframe = function(input, id) {
   }
 }
 
-widgets.field_text_select = function (input, id) {
+widgets.select = function (input, id) {
   var name = input.name;
-  var choices = input.choices || ['a', 'b', 'c'];
+  var choices = input.choices;
 
   if (Array.isArray(choices)) {
     choices = _.object(choices, choices);
   }
+
+  this.tags = ['field_edit'];
+  this.settings = [{"name": "data", "type": "Text"}];
 
   this.toHTML = function(zones, value) {
     var label = '<label for="' + name + '" >' + input.label + '</label>';
@@ -173,10 +180,6 @@ widgets.button = function (input, id) {
   var label = input.label;
   var type = input.type || 'primary';
 
-  this.zones = ['onclick', 'on_dblclick', 'enter'];
-
-  this.zone_tags = {"onclick": ["action"], "on_dblclick": ["action"], "enter": ["action"]};
-
   this.wrapper = 'span';
 
   this.settings = function() {
@@ -187,7 +190,6 @@ widgets.button = function (input, id) {
   this.script = function() {
     var slots = this.all_children;
     var code = '';
-    console.log(slots);
     if (slots.onclick) {
       code += '$("#' + id + '").on( "click", function() {' + cms.functions.concatActions(slots.onclick) + '});';
     }
@@ -222,27 +224,25 @@ widgets.submit = function (input) {
   }
 }
 
-widgets.field_date = function (input, id) {
+widgets.date = function (input, id) {
   var name = input.name;
 
-  this.model = 'Date';
-
-  //this.head = ['<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/" rel="stylesheet">'];
-
   this.deps = {'jquery-ui': ['themes/smoothness/jquery-ui.min.css'] };
+
+  this.tags = ['field_edit'];
+  this.settings = [{"name": "data", "type": "Date"}];
 
   this.toHTML = function() {
     var label = '';
     if (input.label != '<none>')
-      label = '<label for="' + name + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
-
-    var element;
+      label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
 
     var value = input.data ? moment(input.data).format('MM/DD/YYYY') : '';
 
     if (!value || _.isEmpty(value))
       value = '';
-    
+
+    var element;    
     if (value) {
       element = '<input class="form-control input-small" type="text" name="' + id + '" value="' + value + '" />';
     } else {
@@ -262,21 +262,6 @@ widgets.field_date = function (input, id) {
 
   this.script = function(container_id) {
     return '$("#' + container_id + ' input").datepicker();';
-  }
-}
-
-
-widgets.itext = function (input, id) {
-  this.form = function() {
-    return  {
-      "value" : {"type": "field_text", "label" : "Text", "value" : input.value}
-    };
-  }
-
-  this.wrapper = 'none';
-
-  this.toHTML = function(zones, value) {
-    return input.value;
   }
 }
 
@@ -301,7 +286,7 @@ widgets.field_multi = function(input, id) {
     }
 
     if (can_add) {
-      state["body"]["add"] = {"type": "button"}
+      state["body"]["add"] = {"type": "button", "slots": {"events": ["onclick"]}}
       state["body"]["add"]["settings"] = {"button_type": "primary", "label": "Add more items"}
     }
 
@@ -322,22 +307,14 @@ widgets.field_multi = function(input, id) {
         state["body"]["" + i]['settings']['data'] = input.data[i];
     }
 
-    state["body"]["click"] = {
-      "type": "clicked",
-      "settings": {"sel": "#" + id + "-add input"},
+    state["body"]["onclick"] = {
+      "type": "onclick",
+      "slots": {"actions": ["add_action"]}
     }
     state["body"]["add_action"] = {
       "type": "execute",
       "settings": {"js": "nw.insertWidgetBefore('" + w_type + "','" + id + "-'+(nw.counter['"+id+"']++), '"+ JSON.stringify(w_input) + "', '#" + id + "-add')"},
     }
-    state["body"]["rule"] = {
-      "type": "rule",
-      "slots": {
-        "events": ["click"],
-        "conditions": [],
-        "actions": ["add_action"]
-      }
-    };
     callback(state);
   }
 

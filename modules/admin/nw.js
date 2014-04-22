@@ -140,13 +140,17 @@ var nw = function() {
 	  });
 	}
 
-	function doProcess(token) {
+	function doProcess(token, success, error) {
 		console.log(token);
 		var data = {};
 		data['token'] = token;
 		data['widget'] = 'process';
 		$.ajax('/post', {type: 'POST', data: data, success: function(result) {
 			console.log(result);
+			success(result)
+		}, error: function(result) {
+			console.log(result);
+			error(result)
 		} });
 	}
 

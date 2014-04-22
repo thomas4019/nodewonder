@@ -17,206 +17,174 @@
                 "type": "header",
                 "slots": {},
                 "settings": {
-                    "data": "<a href=\"/admin/list/model\">Models</a> : <a href=\"/admin/list//\"></a> : "
+                    "data": "<a href=\"/admin/list/model\">Models</a> : <a href=\"/admin/list/{{ args.model }}/\">{{ args.model }}</a> : {{ args.record }}"
                 }
             },
-            "LTQLJQLU": {
+            "temp": {
+                "type": "submit_form"
+            },
+            "itYLXx13": {
                 "type": "button",
-                "slots": {},
-                "zone_tags": [],
+                "slots": {
+                    "events": [
+                        "bZTNEhMs"
+                    ]
+                },
+                "settings": {
+                    "label": "Save and Return",
+                    "button_type": "success"
+                }
+            },
+            "RQWTNc59": {
+                "type": "button",
+                "slots": {
+                    "events": [
+                        "Obo9aJmx"
+                    ]
+                },
                 "settings": {
                     "label": "Save",
                     "button_type": "success"
                 }
             },
-            "pLV1GjLh": {
-                "type": "button",
-                "slots": {},
-                "zone_tags": [],
-                "settings": {
-                    "label": "Delete",
-                    "button_type": "danger"
-                }
-            },
-            "MfcKdSdQ": {
-                "type": "button",
-                "slots": {},
-                "zone_tags": [],
-                "settings": {
-                    "label": "Cancel",
-                    "button_type": "warning"
-                }
-            },
-            "ltGoaYnB": {
-                "type": "rule",
+            "Obo9aJmx": {
+                "type": "onclick",
                 "slots": {
-                    "events": [
-                        "YQsLMhyR"
-                    ],
-                    "conditions": [],
                     "actions": [
-                        "P0mL9zHp"
-                    ]
-                },
-                "zone_tags": {
-                    "events": [
-                        "event"
-                    ],
-                    "conditions": [
-                        "condition"
-                    ],
-                    "actions": [
-                        "action"
+                        "QnQ1aNci"
                     ]
                 }
             },
-            "YQsLMhyR": {
-                "type": "clicked",
-                "slots": {},
-                "zone_tags": [],
-                "settings": {
-                    "sel": "#LTQLJQLU"
-                }
-            },
-            "P0mL9zHp": {
+            "QnQ1aNci": {
                 "type": "submit_form",
                 "slots": {
                     "success": [
-                        "wnQoygT4",
-                        "3dule9Au"
+                        "ACqorjKU"
                     ],
                     "failure": [
-                        "sW3JyLUo"
-                    ]
-                },
-                "zone_tags": {
-                    "success": [
-                        "action"
-                    ],
-                    "failure": [
-                        "action"
+                        "Clo3RorE"
                     ]
                 }
             },
-            "sW3JyLUo": {
+            "ACqorjKU": {
                 "type": "message",
                 "slots": {},
-                "zone_tags": [],
+                "settings": {
+                    "message": "Saved Successfully.",
+                    "type": "success"
+                }
+            },
+            "Clo3RorE": {
+                "type": "message",
+                "slots": {},
                 "settings": {
                     "message": "Save failed. Please copy important data to avoid data loss.",
                     "type": "error"
                 }
             },
-            "wnQoygT4": {
+            "bZTNEhMs": {
+                "type": "onclick",
+                "slots": {
+                    "actions": [
+                        "vja17991"
+                    ]
+                }
+            },
+            "vja17991": {
+                "type": "submit_form",
+                "slots": {
+                    "success": [
+                        "j5vt7Awt"
+                    ],
+                    "failure": [
+                        "AcMHlSnl"
+                    ]
+                }
+            },
+            "AcMHlSnl": {
                 "type": "message",
                 "slots": {},
-                "zone_tags": [],
                 "settings": {
-                    "message": "Saved successfully",
-                    "type": "success"
+                    "message": "Save failed. Please copy important data to avoid data loss.",
+                    "type": "error"
                 }
             },
-            "3dule9Au": {
+            "j5vt7Awt": {
+                "type": "go_back",
+                "slots": {}
+            },
+            "tMsJcZIG": {
+                "type": "button",
+                "slots": {
+                    "events": [
+                        "AkSI1UBk"
+                    ]
+                },
+                "settings": {
+                    "label": "Delete",
+                    "button_type": "danger"
+                }
+            },
+            "AkSI1UBk": {
+                "type": "onclick",
+                "slots": {
+                    "actions": [
+                        "NeLMCSUE"
+                    ]
+                }
+            },
+            "3aU1BiZH": {
+                "type": "button",
+                "slots": {
+                    "events": [
+                        "yUxifCu0"
+                    ]
+                },
+                "settings": {
+                    "label": "Cancel",
+                    "button_type": "warning"
+                }
+            },
+            "yUxifCu0": {
+                "type": "onclick",
+                "slots": {
+                    "actions": [
+                        "L0nyeK66"
+                    ]
+                }
+            },
+            "L0nyeK66": {
+                "type": "go_back",
+                "slots": {}
+            },
+            "NeLMCSUE": {
+                "type": "delete_record",
+                "slots": {
+                    "success": [
+                        "eAVQMlk8"
+                    ],
+                    "failure": [
+                        "KqnP5NVB"
+                    ]
+                },
+                "settings": {
+                    "model": "{{args.model}}",
+                    "record": "{{args.record}}"
+                }
+            },
+            "KqnP5NVB": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "Failed to delete.",
+                    "type": "error"
+                }
+            },
+            "eAVQMlk8": {
                 "type": "goto_page",
                 "slots": {},
-                "zone_tags": [],
                 "settings": {
                     "URL": "admin/list/{{args.model}}"
-                }
-            },
-            "OZmPxypj": {
-                "type": "rule",
-                "slots": {
-                    "events": [
-                        "c8TyCU3a"
-                    ],
-                    "conditions": [],
-                    "actions": [
-                        "xiEZPoX5"
-                    ]
-                },
-                "zone_tags": {
-                    "events": [
-                        "event"
-                    ],
-                    "conditions": [
-                        "condition"
-                    ],
-                    "actions": [
-                        "action"
-                    ]
-                }
-            },
-            "c8TyCU3a": {
-                "type": "clicked",
-                "slots": {},
-                "zone_tags": [],
-                "settings": {
-                    "sel": "#MfcKdSdQ"
-                }
-            },
-            "xiEZPoX5": {
-                "type": "go_back",
-                "slots": {},
-                "zone_tags": []
-            },
-            "fXCIsLc3": {
-                "type": "bootstrap_popup",
-                "slots": {
-                    "container": [
-                        "rttac46i"
-                    ]
-                },
-                "zone_tags": [],
-                "settings": {
-                    "title": "Are you sure?"
-                }
-            },
-            "9OAwet6T": {
-                "type": "rule",
-                "slots": {
-                    "events": [
-                        "C7YPrg9j"
-                    ],
-                    "conditions": [],
-                    "actions": [
-                        "1zzSdHSt"
-                    ]
-                },
-                "zone_tags": {
-                    "events": [
-                        "event"
-                    ],
-                    "conditions": [
-                        "condition"
-                    ],
-                    "actions": [
-                        "action"
-                    ]
-                }
-            },
-            "C7YPrg9j": {
-                "type": "clicked",
-                "slots": {},
-                "zone_tags": [],
-                "settings": {
-                    "sel": "#pLV1GjLh input"
-                }
-            },
-            "1zzSdHSt": {
-                "type": "show_bootstrap_popup",
-                "slots": {},
-                "zone_tags": [],
-                "settings": {
-                    "selector": "#fXCIsLc3 .modal"
-                }
-            },
-            "rttac46i": {
-                "type": "plaintext",
-                "slots": {},
-                "zone_tags": [],
-                "settings": {
-                    "data": "Do you really want to delete this record?"
                 }
             }
         },
@@ -224,13 +192,10 @@
             "body": [
                 "ZA56joXJ",
                 "wyobn3bP",
-                "LTQLJQLU",
-                "pLV1GjLh",
-                "MfcKdSdQ",
-                "ltGoaYnB",
-                "OZmPxypj",
-                "fXCIsLc3",
-                "9OAwet6T"
+                "itYLXx13",
+                "RQWTNc59",
+                "tMsJcZIG",
+                "3aU1BiZH"
             ]
         }
     }

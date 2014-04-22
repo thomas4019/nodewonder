@@ -18,7 +18,8 @@
             "settings": {
                 "label": "",
                 "model": "custom_page",
-                "name": "parent"
+                "name": "parent",
+                "data": ""
             },
             "required": false
         },
@@ -45,11 +46,73 @@
             "widget": "widget_code_editor",
             "settings": {
                 "label": "Widget Code",
-                "name": "code"
+                "name": "code",
+                "data": {
+                    "widgets": {
+                        "1": {
+                            "type": "setting",
+                            "settings": {
+                                "file": "info"
+                            }
+                        },
+                        "2": {
+                            "type": "htmlfile",
+                            "settings": {
+                                "path": "menu.html"
+                            }
+                        },
+                        "start": {
+                            "type": "template",
+                            "slots": {
+                                "body": [
+                                    "1"
+                                ],
+                                "top": [
+                                    "2"
+                                ]
+                            },
+                            "settings": {
+                                "path": "admin.html"
+                            }
+                        },
+                        "NYfR460F": {
+                            "type": "widget_code_editor",
+                            "slots": {},
+                            "field": "code",
+                            "model_type": "Text",
+                            "model": "custom_page",
+                            "widget": "plaintext"
+                        }
+                    },
+                    "slotAssignments": {
+                        "body": [
+                            "start",
+                            "NYfR460F"
+                        ]
+                    }
+                }
             },
+            "required": false
+        },
+        {
+            "name": "Title",
+            "type": "Text",
+            "quantity": "",
+            "widget": "field_text",
+            "settings": "",
             "required": false
         }
     ],
-    "key": "URL",
-    "views": []
+    "key": "custom_page",
+    "views": [
+        {
+            "Name": "",
+            "Code": {
+                "widgets": {},
+                "slotAssignments": {
+                    "body": []
+                }
+            }
+        }
+    ]
 }

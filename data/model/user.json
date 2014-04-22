@@ -51,7 +51,7 @@
             "required": false
         }
     ],
-    "key": "user",
+    "key": "username",
     "views": [
         {
             "Name": "default",
@@ -66,8 +66,7 @@
                                 "NyXkb3S3",
                                 "QeVjAF8p"
                             ]
-                        },
-                        "zone_tags": []
+                        }
                     },
                     "rPxssndd": {
                         "type": "formatted_date",
@@ -75,7 +74,6 @@
                         "field": "created",
                         "model_type": "Date",
                         "model": "Model",
-                        "zone_tags": [],
                         "settings": {
                             "format": "DD/MM/YYYY"
                         }
@@ -86,7 +84,6 @@
                         "field": "active",
                         "model_type": "Boolean",
                         "model": "Model",
-                        "zone_tags": [],
                         "settings": {
                             "true_text": "Active",
                             "false_text": "Inactive"
@@ -97,16 +94,14 @@
                         "slots": {},
                         "field": "username",
                         "model_type": "Text",
-                        "model": "Model",
-                        "zone_tags": []
+                        "model": "Model"
                     },
                     "QeVjAF8p": {
                         "type": "plaintext",
                         "slots": {},
                         "field": "password",
                         "model_type": "Text",
-                        "model": "Model",
-                        "zone_tags": []
+                        "model": "Model"
                     }
                 },
                 "slotAssignments": {

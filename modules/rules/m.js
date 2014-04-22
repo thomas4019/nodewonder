@@ -23,6 +23,13 @@ functions.concatActions = function(actions) {
   return code;
 }
 
+functions.eventScript = function() {
+    var slots = this.all_children;
+    var selector = '#'+this.parent.id;
+    var code = cms.functions.concatActions(slots.actions);
+    return this.makeEventJS(selector, code);
+  }
+
 widgets.onload = function (input) {
   this.zones = ['actions'];
 
@@ -36,13 +43,32 @@ widgets.onload = function (input) {
   this.toHTML = function() {return '';}
 }
 
-widgets.clicked = function(input) {
-  this.settings = [{"name": "sel", "label": "CSS Selector", "type": "Text"}];
+widgets.on_leaving = function (input) {
+  this.zones = ['actions'];
 
-  this.makeEventJS = function(code) {
-    return '$("' + input.sel + '").on( "click", function() {' + code + '});'
-  } 
+  this.zone_tags = {actions: ['action']};
+
+  this.script = function() {
+    var slots = this.all_children;
+    return '$( window ).unload(function() {' + cms.functions.concatActions(slots.actions) + '});';
+  }
+
+  this.toHTML = function() {return '';}
 }
+
+var jquery_actions = ['click', 'dblclick', 'focusout', 'hover', 'mousedown', 'mouseenter', 'mouseleave', 'mousemove', 'mouseout', 'mouseover', 'mouseup'];
+
+_.each(jquery_actions, function(name) {
+
+  widgets['on'+name] = function(input, id) {
+    this.makeEventJS = function(sel, code) {
+      return '$("' + sel + '").on( "'+name+'", function() {' + code + '});'
+    }
+
+    this.script = cms.functions.eventScript;
+  }
+
+});
 
 widgets.refresh = function(input) {
   this.makeActionJS = function() {
@@ -83,28 +109,20 @@ widgets.submit_form = function(input) {
   this.deps = {'jquery': [], 'jquery-form': []};
 
   this.zones = ['success', 'failure'];
- 
   this.zone_tags = {success: ['action'], failure: ['action']};
 
   this.makeActionJS = function() {
     var slots = this.all_children;
 
-    var success = '';
-    _.each(slots['success'], function(sub) {
-      success += sub.makeActionJS()+'\n';
-    });
-    var failure = '';
-    _.each(slots['failure'], function(sub) {
-      failure += sub.makeActionJS()+'\n';
-    });
-
-    return '$("form").ajaxSubmit({ success: function() {'+success+'}, error: function() {'+failure+'} }); ';
+    var success = cms.functions.concatActions(slots.success);
+    var failure = cms.functions.concatActions(slots.failure);
+    return '$("form").ajaxSubmit({ success: function() {'+success+'}, error: function(responseText, statusText, xhr, $form) {console.log(responseText); console.log(statusText); '+failure+'} }); ';
   }
 }
 
 widgets.go_back = function() {
   this.makeActionJS = function() {
-    return 'window.history.back();';
+    return 'history.go(-1);';
   }
 }
 
@@ -118,7 +136,7 @@ widgets.goto_page = function(settings, id, scope) {
 }
 
 widgets.process = function() {
-  this.save = function(values) {
+  this.save = function(values, callback) {
     var token = values['token'];
     var related = cms.pending_processes[token];
     console.log(cms.pending_processes);
@@ -127,20 +145,28 @@ widgets.process = function() {
     var process = new cms.widgets[related.process](related.settings);
     console.log(process);
 
-    process.doProcess(function() {
-
+    process.doProcess(function(err, result) {
+      callback(err, result);
     });
   }
 }
 
-widgets.delete_record = function(settings) {
+widgets.delete_record = function(settings, id, scope) {
   this.settings = [{"name": "model", "type": "Text"},
     {"name": "record", "type": "Text"}];
+
+  this.zones = ['success', 'failure'];
+  this.zone_tags = {success: ['action'], failure: ['action']};
 
   var token;
 
   this.makeActionJS = function() {
     var token = cms.functions.makeid(36);
+
+    var model = Handlebars.compile(settings.model);
+    var record = Handlebars.compile(settings.record);
+    settings.model = model(scope);
+    settings.record = record(scope);
 
     cms.pending_processes[token] = {
       process: 'delete_record',
@@ -148,34 +174,16 @@ widgets.delete_record = function(settings) {
       token: token
     };
 
-    return 'nw.doProcess("'+token+'");';
+    var slots = this.all_children;
+    var success = cms.functions.concatActions(slots.success);
+    var failure = cms.functions.concatActions(slots.failure);
+
+    return 'nw.doProcess("'+token+'", function() { '+ success +' }, function() { '+ failure +' });';
   }
 
   this.doProcess = function(callback) {
-    cms.functions.deleteRecord(settings.model, settings.record);
-  }
-}
-
-widgets.rule = function() {
-  this.zones = ['events', 'conditions', 'actions'];
-
-  this.zone_tags = {events: ['event'], conditions: ['condition'], actions: ['action']};
-
-  this.script = function(id, slots) {
-    var actionCode = '';
-
-    _.each(slots['actions'], function(action) {
-      actionCode += action.makeActionJS()+'\n';
+    cms.functions.deleteRecord(settings.model, settings.record, function(err) {
+      callback(err, {});
     });
-
-    var code = '';
-
-    _.each(slots['events'], function(eve) {
-      code += eve.makeEventJS(actionCode)+'\n';
-    });
-
-    return code;
   }
-  
-  this.toHTML = function() {return '';}
 }

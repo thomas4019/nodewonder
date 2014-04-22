@@ -53,12 +53,6 @@ Widget.prototype.html = function () {
       }
     });
   }
-  if (this.script) {
-    if (typeof this.script == 'function')
-      results.script += this.script(this.id, zone_object);
-    else
-      results.script += this.script;
-  }
   if (this.values) {
     _.extend(results.values, this.values());
   }
@@ -275,6 +269,7 @@ function registerModule(directory, module, prefix, callback) {
   _.each(m.widgets, function(widget, name) {
     widget.prototype = new Widget();
     widget.prototype.name = prefix+name;
+    widget.prototype.module = module;
     cms.widgets[prefix+name] = widget;
     var instance = new widget({});
     installDependencies(instance);
@@ -348,20 +343,31 @@ function processPost(request, response, callback) {
 var save = function() {
   console.log('POST');
   console.log(this.res.post);
-
   var that = this;
+
+  var saveResponse = function(err, data) {
+    if (err) {
+      that.res.writeHead(500, {'Content-Type': 'application/json'});
+      var toSend = JSON.stringify(err, 0, 2);
+      that.res.write(toSend);
+    } else {
+      that.res.writeHead(200, {'Content-Type': 'application/json'});
+      var toSend = JSON.stringify(data, 0, 2);
+      that.res.write(toSend);
+    }
+    that.res.end();
+  }
+
   var widget_name = this.res.post['widget'];
   delete this.res.post['widget'];
   var widget = new cms.widgets[widget_name](this.res.post);
   if (widget.load) {
     widget.load(function () {
-      widget.save(that.res.post);
+      results = widget.save(that.res.post, saveResponse);
     });
   } else {
-    widget.save(that.res.post);
+    results = widget.save(that.res.post, saveResponse);
   }
-  this.res.writeHead(204);
-  this.res.end();
 }
 
 function stateMiddleware(req, res, next) {
@@ -422,4 +428,39 @@ _.each(cms.model_data['model'], function(model, name) {
     });
     cms.functions.saveRecord('model', name, model);
   });
+}
+
+cms.renameWidget = function(old_name, new_name) {
+  _.each(cms.model_data['model'], function(model, model_name) {
+    _.each(model.fields, function(field) {
+      if (field.type == 'Widgets') {
+        console.log('modifying: ' + model_name + ':' + field.name);
+        _.each(cms.model_data[model_name], function(data, record) {
+          var changed = false;
+          _.each(data[field.name].widgets, function(widget, id) {
+            if (widget.type == old_name) {
+              widget.type = new_name;
+              changed = true;
+            }
+          });
+          //cms.functions.saveRecord(model_name, record, data);
+        });
+      }
+      /*if (field.type == 'Field') {
+        _.each(cms.model_data[model_name], function(data, key) {
+          var changed = false;
+          _.each(field.code.widgets, function(widget, id) {
+            if (widget.type == old_name) {
+              widget.type = new_name;
+              changed = true;
+            }
+          });
+        });
+      }*/
+    });
+  });
+}
+
+cms.migrate3 = function() {
+  cms.renameWidget('field_text', 'textbox');
 }

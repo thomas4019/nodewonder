@@ -47,7 +47,12 @@
     "views": [
         {
             "Name": "default",
-            "Code": {}
+            "Code": {
+                "widgets": {},
+                "slotAssignments": {
+                    "body": []
+                }
+            }
         }
     ]
 }

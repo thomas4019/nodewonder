@@ -1,5 +1,5 @@
 {
-    "name": "form",
+    "name": "setting",
     "description": "",
     "fields": [
         {
@@ -11,32 +11,22 @@
             "required": false
         },
         {
-            "name": "Form",
+            "name": "fields",
             "type": "field",
-            "quantity": "2+",
+            "quantity": "1+",
             "widget": "model_form",
             "settings": "",
             "required": false
         }
     ],
-    "key": "form",
+    "key": "setting",
     "views": [
         {
             "Name": "",
             "Code": {
-                "widgets": {
-                    "8RlClimI": {
-                        "type": "header",
-                        "slots": {},
-                        "field": "name2",
-                        "model_type": "Text",
-                        "model": "Model"
-                    }
-                },
+                "widgets": {},
                 "slotAssignments": {
-                    "body": [
-                        "8RlClimI"
-                    ]
+                    "body": []
                 }
             }
         }

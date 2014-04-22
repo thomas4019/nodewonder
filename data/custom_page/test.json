@@ -1,91 +1,109 @@
 {
-    "URL": "",
+    "URL": "test3",
     "parent": "",
     "contentType": "",
     "controller": "",
     "code": {
         "widgets": {
-            "0u3FeYgS": {
+            "qxN3zViq": {
                 "type": "button",
                 "slots": {
-                    "onclick": [
-                        "a0edD4bc"
-                    ],
-                    "on_dblclick": [
-                        "bWXtJOYU"
-                    ],
-                    "enter": [
-                        "AyTsRDEG"
+                    "events": [
+                        "p9Mm00eR",
+                        "8IRjQp6p",
+                        "1T7lRCcx",
+                        "l4udCQLc",
+                        "FpJ7GKO3"
                     ]
                 },
                 "settings": {
-                    "label": "",
-                    "button_type": "default"
+                    "label": "Test",
+                    "button_type": "primary"
                 }
             },
-            "4dKE3ntC": {
-                "type": "clicked",
-                "slots": {},
-                "settings": {
-                    "sel": "#0u3FeYgS"
+            "p9Mm00eR": {
+                "type": "onclick",
+                "slots": {
+                    "actions": [
+                        "kwr2EQmN"
+                    ]
                 }
             },
-            "AQ00ZaHO": {
+            "kwr2EQmN": {
                 "type": "message",
                 "slots": {},
                 "settings": {
-                    "message": "123",
+                    "message": "Hello",
                     "type": "info"
                 }
             },
-            "6b7E0RmU": {
-                "type": "delete_record",
-                "slots": {},
-                "settings": {
-                    "model": "custom_page",
-                    "record": "57gfq67NHJFsCQ72"
+            "8IRjQp6p": {
+                "type": "onhover",
+                "slots": {
+                    "actions": [
+                        "wclCEcHK"
+                    ]
                 }
             },
-            "XaBg5tGK": {
-                "type": "hello_world",
-                "slots": {}
+            "wclCEcHK": {
+                "type": "alert",
+                "slots": {},
+                "settings": {
+                    "message": "123"
+                }
             },
-            "6PpFnmZO": {
+            "1T7lRCcx": {
+                "type": "onmouseenter",
+                "slots": {
+                    "actions": [
+                        "8CJDlVOG"
+                    ]
+                }
+            },
+            "8CJDlVOG": {
                 "type": "message",
                 "slots": {},
                 "settings": {
-                    "message": "hello",
-                    "type": "info"
+                    "message": "entered",
+                    "type": "warning"
                 }
             },
-            "a0edD4bc": {
+            "l4udCQLc": {
+                "type": "onmouseleave",
+                "slots": {
+                    "actions": [
+                        "NKJFu7ab"
+                    ]
+                }
+            },
+            "NKJFu7ab": {
                 "type": "message",
                 "slots": {},
                 "settings": {
-                    "message": "hello",
-                    "type": "info"
+                    "message": "leave",
+                    "type": "error"
                 }
             },
-            "bWXtJOYU": {
+            "FpJ7GKO3": {
+                "type": "onmousedown",
+                "slots": {
+                    "actions": [
+                        "cRTPzSrM"
+                    ]
+                }
+            },
+            "cRTPzSrM": {
                 "type": "message",
                 "slots": {},
                 "settings": {
-                    "message": "The secret",
-                    "type": "info"
-                }
-            },
-            "AyTsRDEG": {
-                "type": "message",
-                "slots": {},
-                "settings": {
-                    "message": "click me",
-                    "type": "info"
+                    "message": "WHoah",
+                    "type": "success"
                 }
             }
         },
         "slotAssignments": {
             "body": [
-                "0u3FeYgS"
+                "qxN3zViq"
             ]
         }
     }

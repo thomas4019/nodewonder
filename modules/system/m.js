@@ -22,45 +22,6 @@ functions.makeid = function(length) {
     return text;
 }
 
-widgets.header = function(input, id, scope) {
-  this.wrapper = input.type || 'h1';
-
-  this.view = 'Text';
-
-  this.settings = function() {
-    return [{"name": "data", "type": "Text"}];
-  }
-
-  this.toHTML = function(slots) {
-    var text = Handlebars.compile(input.data);
-    return text(scope);
-  }
-}
-
-widgets.plaintext =  function(input, id) {
-  this.wrapper = 'p';
-
-  this.view = 'Text';
-
-  this.settings = [{"name": "data", "type": "Text"}];
-
-  this.toHTML = function(slots) {
-    return input.data;
-  }
-}
-
-widgets.filtered_html =  function(input, id) {
-  this.wrapper = 'p';
-
-  this.view = 'Text';
-
-  this.settings = [{"name": "data", "type": "Text"}];
-
-  this.toHTML = function(slots) {
-    return input.data;
-  }
-}
-
 widgets.render_widget = function(input) {
   var values = {};
 
@@ -83,10 +44,51 @@ widgets.render_widget = function(input) {
   }
 }
 
-widgets.formatted_date = function(settings) {
-  this.view = 'Date';
+widgets.header = function(input, id, scope) {
+  this.wrapper = input.type || 'h1';
 
-  this.settings = [{"name": "format", "type": "Text"}];
+  this.tags = ['field_view'];
+
+  this.settings = function() {
+    return [{"name": "data", "type": "Text"},
+      {"name": "type", "type": "Text"}];
+  }
+
+  this.toHTML = function(slots) {
+    var text = Handlebars.compile(input.data);
+    return text(scope);
+  }
+}
+
+widgets.plaintext =  function(input, id) {
+  this.wrapper = 'p';
+
+  this.tags = ['field_view'];
+
+  this.settings = [{"name": "data", "type": "Text"}];
+
+  this.toHTML = function(slots) {
+    return input.data;
+  }
+}
+
+widgets.filtered_html =  function(input, id) {
+  this.wrapper = 'p';
+
+  this.tags = ['field_view'];
+
+  this.settings = [{"name": "data", "type": "Text"}];
+
+  this.toHTML = function(slots) {
+    return input.data;
+  }
+}
+
+widgets.formatted_date = function(settings) {
+  this.tags = ['field_view'];
+
+  this.settings = [{"name": "format", "type": "Text"},
+    {"name": "data", "type": "Date"}];
 
   this.toHTML = function() {
     return moment(settings.data).format(settings.format || 'MMMM Do YYYY');
@@ -94,10 +96,11 @@ widgets.formatted_date = function(settings) {
 }
 
 widgets.yes_no = function(settings) {
-  this.view = 'Boolean';
+  this.tags = ['field_view'];
 
   this.settings = [{"name": "true_text", "type": "Text"},
-    {"name": "false_text", "type": "Text"}];
+    {"name": "false_text", "type": "Text"},
+    {"name": "data", "type": "Boolean"}];
 
   this.toHTML = function() {
     return settings.data ? settings.true_text || 'Yes' : settings.false_text || 'No';

@@ -1,10 +1,4 @@
-
-
-/*function stateChanged() {
-	setTimeout("$('#submit input').trigger('click');", 100);
-}*/
-
-zone_tag_targets = ['view'];
+	zone_tag_targets = ['view'];
 
 function setupWidgetSelector(id) {
 	$(id).select2({
@@ -122,14 +116,35 @@ function stateController($scope) {
 		$scope.$apply();
 	});
 
-	$scope.deleteWidget = function(id) {
-		delete $scope.widgets[id];
-		_.each($scope.widgets, function(widget) {
-			_.each(widget.slots, function(slot, slot_name) {
-				widget.slots[slot_name] = _.without(slot, id);
-			})
+	$scope.deleteWidgetRecur = function(id) {
+		_.each($scope.widgets[id].slots, function(slot, slot_name) {
+			_.each(slot, function(id) {
+				$scope.deleteWidgetRecur(id);
+			});
 		});
-		$scope.slotAssignments['body'] = _.without($scope.slotAssignments['body'], id);
+		if ($scope.widgets[id]) {
+			delete $scope.widgets[id];
+			_.each($scope.widgets, function(widget) {
+				_.each(widget.slots, function(slot, slot_name) {
+					widget.slots[slot_name] = _.without(slot, id);
+				})
+			});
+			$scope.slotAssignments['body'] = _.without($scope.slotAssignments['body'], id);
+		}
+		//stateChanged();
+		$scope.exportState();
+	}	
+
+	$scope.deleteWidget = function(id) {
+		if ($scope.widgets[id]) {
+			delete $scope.widgets[id];
+			_.each($scope.widgets, function(widget) {
+				_.each(widget.slots, function(slot, slot_name) {
+					widget.slots[slot_name] = _.without(slot, id);
+				})
+			});
+			$scope.slotAssignments['body'] = _.without($scope.slotAssignments['body'], id);
+		}
 		//stateChanged();
 		$scope.exportState();
 	}	
@@ -152,10 +167,13 @@ function stateController($scope) {
 		y = $('#'+id+'-'+slot+' .add').offset().top;
 		var select = $('#' + $scope.field_id + ' .widget-selector')
 		if ($scope.widgets[id] && widgets[$scope.widgets[id].type]) {
+			console.log(slot);
+			console.log(widgets[$scope.widgets[id].type]);
 			zone_tag_targets = widgets[$scope.widgets[id].type].zone_tags[slot] || ['view'];
 		} else {
 			zone_tag_targets = ['view'];
 		}
+		console.log(zone_tag_targets);
 		select.css({position: 'absolute', left: x, top: y })
 		select.select2("container").show();
 		select.select2("open");
@@ -179,6 +197,7 @@ function stateController($scope) {
 	}
 
 	$scope.exportState = function() {
+		console.log('exporting');
 		var cstate = {
 			widgets: $scope.widgets,
 			slotAssignments: $scope.slotAssignments
@@ -196,9 +215,10 @@ function stateController($scope) {
 	$scope.deleteSelected = function() {
 		_.each($scope.widgets, function(widget, index) {
 			if(widget.selected) {
-				$scope.deleteWidget(index);
+				$scope.deleteWidgetRecur(index);
 			}
 		});
+		console.log($scope);
 		$scope.check();
 	}
 
@@ -238,4 +258,6 @@ function stateController($scope) {
 		});
 		$scope.menu = count ? true : false;
 	}
+
+	$scope.exportState();
 }

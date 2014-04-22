@@ -1,0 +1,21 @@
+{
+    "name": "",
+    "Form": [
+        {
+            "name": "Username",
+            "type": "Text",
+            "quantity": "",
+            "widget": "field_text",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "Password",
+            "type": "Text",
+            "quantity": "",
+            "widget": "field_text",
+            "settings": "",
+            "required": false
+        }
+    ]
+}

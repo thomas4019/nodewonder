@@ -78,15 +78,22 @@ functions.getRecord = function(model_name, record_id, callback) {
 	callback(undefined, deep.clone(cms.model_data[model_name][record_id]));
 }
 
-functions.saveRecord = function(model_name, record_id, value) {
+functions.saveRecord = function(model_name, record_id, value, callback) {
 	mkdirp('data/' + model_name + '/');
 	fs.writeFile('data/' + model_name + '/' + record_id  + '.json', JSON.stringify(value, null, 4));
+	if (!cms.model_data[model_name])
+		cms.model_data[model_name] = {};
 	cms.model_data[model_name][record_id] = value;
+	callback(undefined,value);
 }
 
-functions.deleteRecord = function(model_name, record_id) {
-	fs.unlink('data/' + model_name + '/' + record_id  + '.json');
-	delete cms.model_data[model_name][record_id];
+functions.deleteRecord = function(model_name, record_id, callback) {
+	exists = cms.model_data[model_name] && cms.model_data[model_name][record_id] ? true : false;
+	if (exists) {
+		delete cms.model_data[model_name][record_id];
+		fs.unlink('data/' + model_name + '/' + record_id  + '.json');
+	}
+	callback(!exists);
 }
 
 functions.getDefaultWidget = function(type) {
@@ -264,7 +271,7 @@ widgets.model_form = function(input, id) {
 		return out;
 	}
 
-	this.save = function (values) {
+	this.save = function (values, callback) {
 
 		var data = cms.functions.expandPostValues(values);
 		var related = cms.pending_forms[data.form_token];
@@ -279,7 +286,10 @@ widgets.model_form = function(input, id) {
 			else
 				record = cms.functions.generateRecordID();
 		}
-		cms.functions.saveRecord(related.collection, record, processed);
+		console.log(processed);
+		cms.functions.saveRecord(related.collection, record, processed, function(err, records) {
+			callback(err, records);
+		});
 	}
 
 	this.wrapper_class = function() {

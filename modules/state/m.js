@@ -23,7 +23,7 @@ function retreive(val) {
 functions.initializeState = function(state, scope, callback) {
   var widgets_buffer = {};
   var count = 1;
-  var results = {deps: {}};
+  var results = {deps: {}, script: ''};
 
   var initializeWidget = function(w, id) {
     var name = w.type;
@@ -32,6 +32,7 @@ functions.initializeState = function(state, scope, callback) {
       widget.id = id;
     } else {
       console.error('Missing widget:' + name);
+      var widget = new cms.widgets['echo'](w.settings || {}, id, scope);
     }
     widget.all_children = {};
 
@@ -73,9 +74,6 @@ functions.initializeState = function(state, scope, callback) {
         part2();
       });
     }
-    if (widget.deps) {
-      dextend(results.deps, retreive(widget.deps));
-    }
 
     widgets_buffer[id] = widget;
     return widget;
@@ -101,6 +99,23 @@ functions.initializeState = function(state, scope, callback) {
 
       if (w.slots) {
         addChildrenToWidget(w.slots, widget);
+      }
+    });
+
+    _.each(widgets_buffer, function(widget, id) {
+      if (widget.deps) {
+        dextend(results.deps, retreive(widget.deps));
+      }
+      if (widget.script) {
+        if (typeof widget.script == 'function') {
+          var script = widget.script(widget.id);
+          if (typeof script == 'undefined') {
+            console.error('error with script in ' + name);
+          }
+          results.script += script;
+        }
+        else
+          results.script += widget.script;
       }
     });
 
@@ -175,7 +190,7 @@ functions.renderStateParts = function(state, slotAssignments, callback, values) 
     var render_results = {
       'head': [],
       'head_map': {},
-      'script': '',
+      'script': results.script,
       'values': (values || {}),
       'deps': results.deps
     };
