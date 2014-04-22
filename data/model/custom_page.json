@@ -6,7 +6,7 @@
             "name": "URL",
             "type": "Text",
             "quantity": "",
-            "widget": "field_text",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },
@@ -27,7 +27,7 @@
             "name": "contentType",
             "type": "Text",
             "quantity": "",
-            "widget": "field_text",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },
@@ -35,7 +35,7 @@
             "name": "controller",
             "type": "Text",
             "quantity": "",
-            "widget": "field_text",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },
@@ -98,7 +98,7 @@
             "name": "Title",
             "type": "Text",
             "quantity": "",
-            "widget": "field_text",
+            "widget": "textbox",
             "settings": "",
             "required": false
         }

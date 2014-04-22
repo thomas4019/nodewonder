@@ -6,7 +6,7 @@
             "name": "Name",
             "type": "Text",
             "quantity": "",
-            "widget": "field_text",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },

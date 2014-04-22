@@ -5,7 +5,10 @@
         "widgets": {
             "start": {
                 "type": "model_form",
-                "settings": {"fields": "[ {\"name\": \"path\", \"type\": \"String\"}]", "submit": false}
+                "settings": {
+                    "fields": "[ {\"name\": \"path\", \"type\": \"String\"}]",
+                    "submit": false
+                }
             }
         },
         "slotAssignments": {

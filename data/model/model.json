@@ -6,7 +6,7 @@
             "name": "name",
             "type": "Text",
             "quantity": "",
-            "widget": "field_text",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },
@@ -14,7 +14,7 @@
             "name": "description",
             "type": "Text",
             "quantity": "",
-            "widget": "field_text",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },
@@ -30,7 +30,7 @@
             "name": "key",
             "type": "Text",
             "quantity": "",
-            "widget": "field_text",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },

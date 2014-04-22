@@ -6,7 +6,7 @@
             "name": "username",
             "type": "Text",
             "quantity": "",
-            "widget": "field_text",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },
@@ -14,7 +14,7 @@
             "name": "password",
             "type": "Text",
             "quantity": "",
-            "widget": "field_text",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },
@@ -38,7 +38,7 @@
             "name": "active",
             "type": "Boolean",
             "quantity": "",
-            "widget": "field_boolean",
+            "widget": "checkbox",
             "settings": "",
             "required": false
         },
@@ -112,4 +112,5 @@
             }
         }
     ]
+}  ]
 }

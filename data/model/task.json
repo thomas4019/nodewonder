@@ -14,7 +14,7 @@
             "name": "description",
             "type": "Text",
             "quantity": "",
-            "widget": "field_text",
+            "widget": "textbox",
             "input": {
                 "label": "Desc"
             },

@@ -6,7 +6,7 @@
             "name": "a",
             "type": "Text",
             "quantity": "6+",
-            "widget": "field_text",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },
@@ -14,7 +14,7 @@
             "name": "b",
             "type": "Text",
             "quantity": "",
-            "widget": "field_text",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },

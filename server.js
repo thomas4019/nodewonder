@@ -431,36 +431,47 @@ _.each(cms.model_data['model'], function(model, name) {
 }
 
 cms.renameWidget = function(old_name, new_name) {
+  console.log('renaming ' + old_name + ' to ' + new_name);
   _.each(cms.model_data['model'], function(model, model_name) {
     _.each(model.fields, function(field) {
       if (field.type == 'Widgets') {
-        console.log('modifying: ' + model_name + ':' + field.name);
+        var count = 0;
         _.each(cms.model_data[model_name], function(data, record) {
           var changed = false;
           _.each(data[field.name].widgets, function(widget, id) {
             if (widget.type == old_name) {
               widget.type = new_name;
               changed = true;
+              count++;
             }
           });
-          //cms.functions.saveRecord(model_name, record, data);
+          if (changed)
+            cms.functions.saveRecord(model_name, record, data);
         });
+        console.log('modifying: ' + model_name + ':' + field.name + ' ' + count + ' changes');
       }
-      /*if (field.type == 'Field') {
-        _.each(cms.model_data[model_name], function(data, key) {
+      if (field.type == 'field') {
+        var count = 0;
+        _.each(cms.model_data[model_name], function(data, record) {
           var changed = false;
-          _.each(field.code.widgets, function(widget, id) {
-            if (widget.type == old_name) {
-              widget.type = new_name;
+          _.each(data[field.name], function(field, index) {
+            if (field.widget == old_name) {
+              field.widget = new_name;
               changed = true;
+              count++;
             }
           });
+          if (changed)
+            cms.functions.saveRecord(model_name, record, data);
         });
-      }*/
+        console.log('modifying: ' + model_name + ':' + field.name + ' ' + count + ' changes');
+      }
     });
   });
 }
 
 cms.migrate3 = function() {
   cms.renameWidget('field_text', 'textbox');
+  cms.renameWidget('field_text_select', 'select');
+  cms.renameWidget('field_boolean', 'checkbox');
 }

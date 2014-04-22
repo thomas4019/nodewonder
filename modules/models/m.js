@@ -84,7 +84,8 @@ functions.saveRecord = function(model_name, record_id, value, callback) {
 	if (!cms.model_data[model_name])
 		cms.model_data[model_name] = {};
 	cms.model_data[model_name][record_id] = value;
-	callback(undefined,value);
+	if (callback)
+		callback(undefined,value);
 }
 
 functions.deleteRecord = function(model_name, record_id, callback) {
@@ -93,7 +94,8 @@ functions.deleteRecord = function(model_name, record_id, callback) {
 		delete cms.model_data[model_name][record_id];
 		fs.unlink('data/' + model_name + '/' + record_id  + '.json');
 	}
-	callback(!exists);
+	if (callback)
+		callback(!exists);
 }
 
 functions.getDefaultWidget = function(type) {
