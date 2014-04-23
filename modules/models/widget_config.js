@@ -8,7 +8,11 @@ function configureModelWidget(id) {
 
 		nw.configureWidget(id, settings_model, settings, function(new_settings) {
 			console.log(new_settings);
-			$("#" + id + " textarea").text(JSON.stringify(new_settings));
+			nw.processModel(settings_model, new_settings, function(results) {
+				var processed_settings = JSON.parse(results.html);
+				console.log(processed_settings);
+				$("#" + id + " textarea").text(JSON.stringify(processed_settings));
+			});
 		});
 	});
 }

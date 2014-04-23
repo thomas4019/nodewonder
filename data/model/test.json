@@ -5,8 +5,8 @@
         {
             "name": "a",
             "type": "Text",
-            "quantity": "6+",
-            "widget": "textbox",
+            "quantity": "",
+            "widget": "textarea",
             "settings": "",
             "required": false
         },
@@ -20,13 +20,27 @@
         },
         {
             "name": "c",
-            "type": "Widgets",
-            "quantity": "2+",
-            "widget": "widget_code_editor",
-            "settings": "",
+            "type": "Number",
+            "quantity": "",
+            "widget": "slider",
+            "settings": {
+                "data": null,
+                "min": 1,
+                "max": 10
+            },
             "required": false
         }
     ],
-    "key": "test",
-    "views": []
+    "index": "",
+    "views": [
+        {
+            "Name": "",
+            "Code": {
+                "widgets": {},
+                "slotAssignments": {
+                    "body": []
+                }
+            }
+        }
+    ]
 }

@@ -12,7 +12,7 @@
         },
         {
             "name": "parent",
-            "type": "RecordRef",
+            "type": "Record",
             "quantity": "",
             "widget": "model_record_reference",
             "settings": {
@@ -103,7 +103,7 @@
             "required": false
         }
     ],
-    "key": "custom_page",
+    "index": "URL",
     "views": [
         {
             "Name": "",

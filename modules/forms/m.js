@@ -66,24 +66,21 @@ widgets.form = function (input, id) {
 }
 
 widgets.textbox = function (input, id) {
-  var value = input.value || '';
-
   this.tags = ['field_edit'];
 
   this.deps = {'jquery': [],'bootstrap':[]};
 
   this.settings = function() {
-    return  [ {"name": "label", "type": "Text"},
-      {"name": "inline", "type": "Boolean"},
+    return  [ {"name": "inline", "type": "Boolean"},
       {"name": "data", "type": "Text"} ];
   }
 
-  this.toHTML = function(zones, value) {
-    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
+  this.toHTML = function(zones) {
+    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : '') + ':' + '</label>';
     var element;
     
-    if (input.data || value) {
-      element = '<input class="form-control input-small" type="text" name="' + id + '" value="' + htmlEscape(input.data || value || input.value) + '" />';
+    if (input.data) {
+      element = '<input class="form-control input-small" type="text" name="' + id + '" value="' + htmlEscape(input.data) + '" />';
     } else {
       element = '<input class="form-control input-small" type="text" name="' + id + '" />';
     }
@@ -93,6 +90,130 @@ widgets.textbox = function (input, id) {
     } else {
       return label + element;
     }
+  }
+}
+
+widgets.password = function (input, id) {
+  this.tags = ['field_edit'];
+
+  this.deps = {'jquery': [],'bootstrap':[]};
+
+  this.settings = function() {
+    return  [ {"name": "inline", "type": "Boolean"},
+      {"name": "data", "type": "Text"} ];
+  }
+
+  this.toHTML = function(zones) {
+    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : '') + ':' + '</label>';
+    var element;
+    
+    if (input.data) {
+      element = '<input class="form-control input-small" type="password" name="' + id + '" value="' + htmlEscape(input.data) + '" />';
+    } else {
+      element = '<input class="form-control input-small" type="password" name="' + id + '" />';
+    }
+
+    if (input.inline) {
+      return '<div class="controls form-inline">' + label + element + '</div>';
+    } else {
+      return label + element;
+    }
+  }
+}
+
+
+widgets.email_textbox = function (input, id) {
+  this.tags = ['field_edit'];
+
+  this.deps = {'jquery': [],'bootstrap':[]};
+
+  this.settings = function() {
+    return  [ {"name": "inline", "type": "Boolean"},
+      {"name": "data", "type": "Email"} ];
+  }
+
+  this.toHTML = function(zones) {
+    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : '') + ':' + '</label>';
+    var element;
+    
+    if (input.data) {
+      element = '<input class="form-control input-small" type="email" name="' + id + '" value="' + htmlEscape(input.data) + '" />';
+    } else {
+      element = '<input class="form-control input-small" type="email" name="' + id + '" />';
+    }
+
+    if (input.inline) {
+      return '<div class="controls form-inline">' + label + element + '</div>';
+    } else {
+      return label + element;
+    }
+  }
+}
+
+widgets.numeric_textbox = function (input, id) {
+  this.tags = ['field_edit'];
+
+  this.deps = {'jquery': [],'bootstrap':[]};
+
+  this.settings = function() {
+    return  [ {"name": "inline", "type": "Boolean"},
+      {"name": "data", "type": "Number"},
+      {"name": "min", "type": "Number"},
+      {"name": "max", "type": "Number"} ];
+  }
+
+  this.processData = function(data) {
+    console.log('processing');
+    return parseInt(data);
+  }
+
+  this.toHTML = function(zones) {
+    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : '') + ':' + '</label>';
+    var element;
+    
+    if (input.data) {
+      element = '<input class="form-control input-small" type="number" name="' + id + '" value="' + htmlEscape(input.data) + '" />';
+    } else {
+      element = '<input class="form-control input-small" type="number" name="' + id + '" />';
+    }
+
+    if (input.inline) {
+      return '<div class="controls form-inline">' + label + element + '</div>';
+    } else {
+      return label + element;
+    }
+  }
+}
+
+widgets.slider = function (settings, id) {
+  this.tags = ['field_edit'];
+
+  this.deps = {'jquery': [],'jquery-ui':['themes/smoothness/jquery-ui.css']};
+
+  this.settings = function() {
+    return  [ {"name": "data", "type": "Number"},
+      {"name": "min", "type": "Number"},
+      {"name": "max", "type": "Number"} ];
+  }
+
+  this.script = function() {
+    var options = {range: 'max', min: settings.min || 1, max: settings.max || 10};
+    if (settings.data)
+      options.value = settings.data;
+    options.slide = "REPLACE";
+    var code = 'function( event, ui ) { $( "#'+id+' input" ).val( $( "#'+id+' .slider" ).slider( "value" ) );  }';
+    options = JSON.stringify(options);
+    options = options.replace('"REPLACE"',code);
+    return '$( "#'+id+' .slider" ).slider(' + options + '); ';
+  }
+
+  this.toHTML = function(zones) {
+    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (settings.label ? settings.label : '') + ':' + '</label><input name="'+id+'" type="textbox" style="border:0; color:#f6931f; font-weight:bold;" ' + (settings.data ? 'value="'+settings.data : '') +'" />';
+    var element;
+    
+    element = '<div class="slider" />';
+    
+    return label + element;
   }
 }
 
@@ -323,7 +444,7 @@ widgets.field_multi = function(input, id) {
   }
 
   this.toHTML = function(slots) {
-    var label = '<label style="padding-right: 5px;">' + input.name + ':' + '</label>';
+    var label = '<label style="padding-right: 5px;">' + input.label + ':' + '</label>';
     var arr = '<input type="hidden" name="'+id+'" value="new Array" />';
     return label + arr + slots.body.html();
   }

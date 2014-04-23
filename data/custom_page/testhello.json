@@ -1,0 +1,22 @@
+{
+    "URL": "testhello",
+    "parent": "",
+    "contentType": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "ciGABDuU": {
+                "type": "hello_world",
+                "slots": {
+                    "events": []
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "ciGABDuU"
+            ]
+        }
+    },
+    "Title": ""
+}

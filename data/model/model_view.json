@@ -16,15 +16,29 @@
             "quantity": "",
             "widget": "widget_code_editor",
             "settings": {
-                "label": "",
+                "label": "Code",
                 "model": "menu",
-                "name": "Model"
+                "name": "Model",
+                "data": {
+                    "widgets": {},
+                    "slotAssignments": {
+                        "body": []
+                    }
+                }
             },
             "required": false
         }
     ],
-    "key": "model_view",
+    "index": "Name",
     "views": [
-        []
+        {
+            "Name": "",
+            "Code": {
+                "widgets": {},
+                "slotAssignments": {
+                    "body": []
+                }
+            }
+        }
     ]
 }

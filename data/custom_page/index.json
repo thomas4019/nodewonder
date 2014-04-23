@@ -8,9 +8,9 @@
         },
         "widgets": {
             "1": {
-                "type": "itext",
+                "type": "plaintext",
                 "settings": {
-                    "value": "Hello World!"
+                    "data": "Hello World!"
                 }
             },
             "2": {

@@ -109,8 +109,7 @@ widgets.bootstrap_popup = function(settings) {
   this.zones = ['container', 'buttons'];
 
   this.settings = [{"name": "resizable", "type": "Boolean"},
-    {"name": "title", "type": "Text"},
-    {"name": "options", "type": "Text", "quantity": "2+"}];
+    {"name": "title", "type": "Text"}];
 
   this.deps = {'jquery': [], 'bootstrap': [], 'font-awesome': ['css/font-awesome.min.css'] };
 

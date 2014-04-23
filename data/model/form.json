@@ -19,7 +19,7 @@
             "required": false
         }
     ],
-    "key": "form",
+    "index": "name",
     "views": [
         {
             "Name": "",

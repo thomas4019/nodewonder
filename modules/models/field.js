@@ -10,9 +10,10 @@ function model_field_type_setup(type_id) {
 	}
 
 	var select = $('#'+widget_id+ ' select');
+	var val = select.val();
 	var optionsAsString = "";
 	for(var i = 0; i < options.length; i++) {
-		optionsAsString += "<option value='" + options[i] + "'>" + options[i] + "</option>";
+		optionsAsString += "<option value='" + options[i] + "'" + (val == options[i] ? ' selected="selected" ': '') + ">" + options[i] + "</option>";
 	}
 	select.html(optionsAsString);
 }

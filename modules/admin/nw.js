@@ -141,7 +141,6 @@ var nw = function() {
 	}
 
 	function doProcess(token, success, error) {
-		console.log(token);
 		var data = {};
 		data['token'] = token;
 		data['widget'] = 'process';
@@ -154,6 +153,18 @@ var nw = function() {
 		} });
 	}
 
+	function processModel(fields, model_data, callback) {
+		console.log('processModel');
+		var data = {};
+		data['fields'] = JSON.stringify(fields);
+		data['data'] = JSON.stringify(model_data);
+		console.log(data);
+		$.getJSON('/internal/process_model?raw', data, function(result) {
+			console.log(result);
+			callback(result);
+		});
+	}
+
 	return {
 		counter: {},
 		makeid: makeid,
@@ -164,6 +175,7 @@ var nw = function() {
 		serializedArrayToValues: serializedArrayToValues,
 		expandPostValues: expandPostValues,
 		getWidgetSettingsModel: getWidgetSettingsModel,
-		doProcess: doProcess
+		doProcess: doProcess,
+		processModel: processModel
 	};
 }();

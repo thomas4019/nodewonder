@@ -1,0 +1,25 @@
+{
+    "URL": "internal/process_model",
+    "parent": "",
+    "contentType": "text/javascript",
+    "controller": "widgets.xgJEctKf.settings.data = JSON.parse(args.data); widgets.xgJEctKf.settings.fields = args.fields; callback();",
+    "code": {
+        "widgets": {
+            "xgJEctKf": {
+                "type": "process_model",
+                "slots": {
+                    "events": []
+                },
+                "settings": {
+                    "model": ""
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "xgJEctKf"
+            ]
+        }
+    },
+    "Title": ""
+}

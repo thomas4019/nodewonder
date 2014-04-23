@@ -1,4 +1,8 @@
 {
+    "URL": "",
+    "parent": "",
+    "contentType": "",
+    "controller": "",
     "code": {
         "widgets": {
             "7rLFXuot": {
@@ -44,45 +48,75 @@
                     "has_form": false
                 }
             },
-            "KiXduprz": {
-                "type": "tabs",
+            "cj5BtEKb": {
+                "type": "button",
                 "slots": {
-                    "tabs": [
-                        "IjBt8zWW",
-                        "wWtG2heL",
-                        "ToTlMINf"
+                    "events": [
+                        "np83Aq8Q",
+                        "LduaiOwr",
+                        "9kAfkFis"
                     ]
-                },
-                "settings": {
-                    "has_form": true
                 }
             },
-            "IjBt8zWW": {
+            "ul5kdPUv": {
+                "type": "bootstrap_popup",
+                "slots": {
+                    "container": [
+                        "GTINlKbL"
+                    ],
+                    "buttons": [],
+                    "events": []
+                }
+            },
+            "GTINlKbL": {
                 "type": "calendar",
-                "slots": {},
-                "settings": {
-                    "has_form": false
+                "slots": {
+                    "events": []
                 }
             },
-            "wWtG2heL": {
-                "type": "youtube_video",
-                "slots": {},
-                "settings": {
-                    "has_form": true
+            "np83Aq8Q": {
+                "type": "onmouseenter",
+                "slots": {
+                    "actions": []
                 }
             },
-            "ToTlMINf": {
-                "type": "textarea",
+            "LduaiOwr": {
+                "type": "onmouseover",
+                "slots": {
+                    "actions": []
+                }
+            },
+            "9kAfkFis": {
+                "type": "onclick",
+                "slots": {
+                    "actions": [
+                        "BZAWRATu",
+                        "EiViPoys"
+                    ]
+                }
+            },
+            "BZAWRATu": {
+                "type": "show_bootstrap_popup",
                 "slots": {},
                 "settings": {
-                    "has_form": false
+                    "selector": "#ul5kdPUv .modal"
+                }
+            },
+            "EiViPoys": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "test",
+                    "type": "info"
                 }
             }
         },
         "slotAssignments": {
             "body": [
-                "KiXduprz"
+                "cj5BtEKb",
+                "ul5kdPUv"
             ]
         }
-    }
+    },
+    "Title": ""
 }

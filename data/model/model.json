@@ -27,7 +27,7 @@
             "required": false
         },
         {
-            "name": "key",
+            "name": "index",
             "type": "Text",
             "quantity": "",
             "widget": "textbox",
@@ -43,7 +43,7 @@
             "required": false
         }
     ],
-    "key": "name",
+    "index": "name",
     "views": [
         {
             "Name": "default",

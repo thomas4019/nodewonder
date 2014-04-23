@@ -1,11 +1,15 @@
 {
+    "URL": "",
+    "parent": "",
+    "contentType": "",
+    "controller": "widgets.ykQkNrK2.settings.fields = load('setting','site').fields; callback();",
     "code": {
         "widgets": {
             "hiIn4zSc": {
                 "type": "bartik/home",
                 "slots": {
                     "header": [
-                        "qdAHbz7J"
+                        "2ipe1ISs"
                     ],
                     "featured": [],
                     "sidebar_first": [],
@@ -15,7 +19,7 @@
                     "help": [],
                     "action_links": [],
                     "content": [
-                        "sD2kToWt"
+                        "ykQkNrK2"
                     ],
                     "sidebar_second": [],
                     "triptych": [],
@@ -28,25 +32,27 @@
                     "has_form": false
                 }
             },
-            "sD2kToWt": {
-                "type": "calendar",
-                "slots": {},
-                "settings": {
-                    "has_form": false
-                }
-            },
-            "qdAHbz7J": {
-                "type": "ckeditor",
-                "slots": {},
-                "settings": {
-                    "has_form": true
-                }
-            },
             "9Hmb0Mcn": {
                 "type": "ckeditor",
                 "slots": {},
                 "settings": {
                     "has_form": true
+                }
+            },
+            "2ipe1ISs": {
+                "type": "hello_world",
+                "slots": {
+                    "events": []
+                }
+            },
+            "ykQkNrK2": {
+                "type": "model_form",
+                "slots": {
+                    "events": []
+                },
+                "settings": {
+                    "model": "",
+                    "record": ""
                 }
             }
         },
@@ -55,5 +61,6 @@
                 "hiIn4zSc"
             ]
         }
-    }
+    },
+    "Title": ""
 }

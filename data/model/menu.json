@@ -19,6 +19,16 @@
             "required": false
         }
     ],
-    "key": "menu",
-    "views": []
+    "index": "name",
+    "views": [
+        {
+            "Name": "",
+            "Code": {
+                "widgets": {},
+                "slotAssignments": {
+                    "body": []
+                }
+            }
+        }
+    ]
 }

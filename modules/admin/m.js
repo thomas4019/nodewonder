@@ -23,6 +23,7 @@ widgets.widget_code_editor = function (input, id) {
   this.head = ['<script src="/modules/admin/state-utils.js" type="text/javascript"></script>',
     '<link rel="stylesheet" href="/modules/admin/state-editor.css" />'];
 
+  this.tags = ['field_edit']
   this.settings = [{'name': 'label', 'type': 'Text'},
     {"name": "data", "type": "Widgets"}];
 

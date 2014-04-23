@@ -19,7 +19,7 @@
             "required": false
         }
     ],
-    "key": "setting",
+    "index": "name",
     "views": [
         {
             "Name": "",

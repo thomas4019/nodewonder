@@ -178,7 +178,10 @@ widgets.model_form = function(input, id) {
 			console.error('Unknown model type: '+ input.model);
 		}
 	} else if (input.fields) {
-	 	model = {"fields": JSON.parse(input.fields) };
+		if (typeof input.fields === 'string')
+	 		model = {"fields": JSON.parse(input.fields) };
+	 	else
+	 		model = {"fields": input.fields };
 	}
 
 	if (input.values) {
@@ -210,6 +213,10 @@ widgets.model_form = function(input, id) {
 			});
 		} else {
 			model_values_obj = input.data;
+			if (!model.fields) {
+				console.error('model missing fields');
+				console.error(model);
+			}
 			model_values = flatten({}, id, model_values_obj, model.fields);
 			process();
 		}
@@ -226,7 +233,7 @@ widgets.model_form = function(input, id) {
 		  	var subdata = (model_values_obj) ? model_values_obj[field.name] : undefined;
 		  	var default_widget = cms.functions.getDefaultWidget(field.type);
 
-	  		var input = _.extend(field.settings || {}, {name: field.name, data: subdata});
+	  		var input = _.extend(field.settings || {}, {label: field.name, data: subdata});
 	  		var type = field.widget ? field.widget : default_widget;
 
 		  	if (type == 'model_form') {
@@ -250,12 +257,14 @@ widgets.model_form = function(input, id) {
 	this.head = ['<link rel="stylesheet" href="/modules/models/models.css" />'];
 
 	this.processData = function(data) {
-
+		console.log('model processing data');
 		var out = {};
 
 		_.each(model.fields, function(field) {
 			var field_data = data[field.name];
+			console.log(field);
 			var widget_name = field.widget ? field.widget : cms.functions.getDefaultWidget(field.type);
+			console.log(widget_name);
 			var input = {};
 			if (widget_name == 'model_form') {
 				input['model'] = field.type;
@@ -283,8 +292,8 @@ widgets.model_form = function(input, id) {
 
 		var record = related.record;
 		if (related.record == 'create') {
-			if (related.model.key && processed[related.model.key])
-				record = processed[related.model.key];
+			if (related.model.index && processed[related.model.index])
+				record = processed[related.model.index];
 			else
 				record = cms.functions.generateRecordID();
 		}
@@ -437,14 +446,14 @@ widgets.model_type_selector = function(input, id) {
 
 widgets.model_widget_selector = function(input, id) {
 	this.toHTML = function(slots, value) {
-		var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
+		var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : '') + ':' + '</label>';
 
 	 	var html = label + '<select class="form-control" name="'+id+'">';
 	 	html += '<option value=""> - Select - </option>';
 	 	_.each(cms.widgets, function(widget) {
       w = new widget({});
       //children.push({title : w.name, copy: 'listing'});
-      html += '<option value="' + w.name + '" '+ (input.data == w.name ? 'selected': '') + '>' + w.name + '</option>'
+      html += '<option value="' + w.name + '" '+ (input.data == w.name ? ' selected="selected" ': '') + '>' + w.name + '</option>'
     });
 	 	html += '</select>';
 	 	return html;
@@ -457,11 +466,12 @@ widgets.model_record_reference = function(input, id) {
 
   this.deps = {'jquery': [],'select2': []};
 
-  this.model = 'RecordRef';
+  this.tags = ['field_edit'];
 
   this.settings = function() {
   	return [ {"name": "label", "type": "Text"},
-  		{"name": "model", "type": "RecordRef", "settings": {"model": "model"} } ]
+  		{"name": "model", "type": "Record", "settings": {"model": "model"} },
+  		{"name": "data", "type": "Record"} ]
   }
 
 	this.toHTML = function(slots, value) {
@@ -518,5 +528,21 @@ widgets.widget_settings_model = function(settings, id) {
 		var settings_model = w.settings ? retreive(w.settings) : [];
 
 		return JSON.stringify(settings_model);
+	}
+}
+
+widgets.process_model = function(settings, id) {
+	this.settings = [{"name":"model", "type": "Text"},
+		{"name":"data", "type":"JSON"}];
+
+	this.wrapper = 'none';
+
+	this.toHTML = function() {
+		var model_widget = new cms.widgets['model_form']({'fields': settings.fields});
+		console.log(settings.data);
+		console.log(settings.fields);
+		var processed = model_widget.processData(settings.data);
+		console.log(processed);
+		return JSON.stringify(processed);
 	}
 }

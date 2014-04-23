@@ -1,11 +1,11 @@
 {
-    "name": "",
+    "name": "register",
     "Form": [
         {
-            "name": "Username",
-            "type": "Text",
+            "name": "Email",
+            "type": "Email",
             "quantity": "",
-            "widget": "textbox",
+            "widget": "email_textbox",
             "settings": "",
             "required": false
         },
@@ -13,7 +13,7 @@
             "name": "Password",
             "type": "Text",
             "quantity": "",
-            "widget": "textbox",
+            "widget": "password",
             "settings": "",
             "required": false
         }

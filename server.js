@@ -58,7 +58,11 @@ Widget.prototype.html = function () {
   }
 
   var rel_value = (results.values && this.id in results.values) ? results.values[this.id] : undefined;
-  widget_html = (this.toHTML) ? this.toHTML(zone_object, rel_value) : '';
+  try {
+    widget_html = (this.toHTML) ? this.toHTML(zone_object, rel_value) : '';
+  } catch(err) {
+    console.error(err);
+  }
 
   var wrapper = this.wrapper ? this.wrapper : 'div';
 
@@ -284,22 +288,18 @@ function registerModule(directory, module, prefix, callback) {
           type = field.type;
         }
       });
-      cms.edit_widgets[type] = cms.edit_widgets[type] || [];
-      cms.model_widgets[type] = cms.model_widgets[type] || [];
-      if (_.contains(instance.tags, 'field_edit')) {
+      if (type) {
         cms.edit_widgets[type] = cms.edit_widgets[type] || [];
-        cms.edit_widgets[type].push(name);
+        cms.model_widgets[type] = cms.model_widgets[type] || [];
+        cms.view_widgets[type] = cms.view_widgets[type] || [];
+        if (_.contains(instance.tags, 'field_edit')) {
+          cms.edit_widgets[type].push(name);
+          cms.model_widgets[type][name] = widget;
+        }
+        if (_.contains(instance.tags, 'field_view')) {
+          cms.view_widgets[type].push(name);
+        }
       }
-      if (_.contains(instance.tags, 'field_view')) {
-        cms.model_widgets[type][name] = widget;
-      }
-    }
-    if (instance.view) {
-      var type = instance.view;
-      if (!(type in cms.view_widgets)) {
-        cms.view_widgets[type] = [];
-      }
-      cms.view_widgets[type].push(name);
     }
     setTags(widget, instance);
   });
