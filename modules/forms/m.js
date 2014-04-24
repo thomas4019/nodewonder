@@ -432,7 +432,7 @@ widgets.field_multi = function(input, id) {
     }
     state["body"]["add_action"] = {
       "type": "execute",
-      "settings": {"js": "nw.insertWidgetBefore('" + w_type + "','" + id + "-'+(nw.counter['"+id+"']++), '"+ JSON.stringify(w_input) + "', '#" + id + "-add')"},
+      "settings": {"js": "nw.functions.insertWidgetBefore('" + w_type + "','" + id + "-'+(nw.counter['"+id+"']++), '"+ JSON.stringify(w_input) + "', '#" + id + "-add')"},
     }
     callback(state);
   }

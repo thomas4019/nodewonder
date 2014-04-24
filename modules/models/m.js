@@ -419,7 +419,7 @@ widgets.model_data_listing = function(input) {
 }
 
 widgets.model_type_selector = function(input, id) {
-	this.head = ['<script type="text/javascript">edit_widgets='+JSON.stringify(cms.edit_widgets)+';</script>', 
+	this.head = ['<script type="text/javascript">nw.edit_widgets='+JSON.stringify(cms.edit_widgets)+';</script>', 
 	'<script type="text/javascript" src="/modules/models/field.js"></script>'];
 
 	this.script = function() {

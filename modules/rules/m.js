@@ -62,7 +62,7 @@ _.each(jquery_actions, function(name) {
 
   widgets['on'+name] = function(input, id) {
     this.makeEventJS = function(sel, code) {
-      return '$("' + sel + '").on( "'+name+'", function() {' + code + '});'
+      return '$("' + sel + '").on( "'+name+'",\n function() {' + code + '});\n'
     }
 
     this.script = cms.functions.eventScript;

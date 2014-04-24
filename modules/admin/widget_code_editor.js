@@ -1,4 +1,4 @@
-	zone_tag_targets = ['view'];
+zone_tag_targets = ['view'];
 
 function setupWidgetSelector(id) {
 	$(id).select2({
@@ -10,10 +10,10 @@ function setupWidgetSelector(id) {
 			if ( $('#wyobn3bP-fields') ) {
 				var model = {text: 'Model', children: []};
 				data.results.push(model);
-				var fields = nw.expandPostValues(nw.serializedArrayToValues($('#wyobn3bP-fields :input').serializeArray())).fields;
+				var fields = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#wyobn3bP-fields :input').serializeArray())).fields;
 				_.each(fields, function(field) {
 					if(!query.term || field.name.indexOf(query.term) !== -1) {
-						var w = JSON.parse(JSON.stringify(widgets[field.widget]));
+						var w = JSON.parse(JSON.stringify(nw.widgets[field.widget]));
 						w.field = field.type;
 						w.text = field.name;
 						w.name = field.name;
@@ -23,7 +23,7 @@ function setupWidgetSelector(id) {
 				});
 			}
 
-			_.each(widgets, function(widget) {
+			_.each(nw.widgets, function(widget) {
 				_.each(widget.tags, function(tag) {
 					if (_.contains(zone_tag_targets, tag)) {
 						if (!groups[tag]) {
@@ -66,14 +66,13 @@ function stateController($scope) {
 	select.on('change', function (argument) {
 		select.select2("container").hide();
 		var selected = select.select2('data');
-		console.log(selected);
 		select.select2('val', '');
 		var zones = {};
 		_.each(selected.zones, function(zone_name, index) {
 			zones[zone_name] = [];
 		});
 		//var zones = JSON.parse()
-		var new_id = nw.makeid();
+		var new_id = nw.functions.makeid();
 		if (selected.model)
 			$scope.widgets[new_id] = {type: selected.widget, slots: zones, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, zone_tags: selected.zone_tags};
 		else
@@ -96,7 +95,6 @@ function stateController($scope) {
 		width: 300,
 		query: function (query) {
 			var data = {more: false, results: []};
-			console.log($scope.widgets[_id]);
 			_.each(widgets[$scope.widgets[_id].type].zones, function(zone) {
 				data.results.push({"id":zone, "text": zone});	
 			});
@@ -154,7 +152,7 @@ function stateController($scope) {
 		var settings = $scope.widgets[id].settings;
 		var settings_model = widgets[type].settings;
 
-		nw.configureWidget(id, settings_model, settings, function(new_settings) {
+		nw.functions.configureWidget(id, settings_model, settings, function(new_settings) {
 			$scope.widgets[id].settings = new_settings;
 		  $scope.exportState();
 		});
@@ -167,13 +165,10 @@ function stateController($scope) {
 		y = $('#'+id+'-'+slot+' .add').offset().top;
 		var select = $('#' + $scope.field_id + ' .widget-selector')
 		if ($scope.widgets[id] && widgets[$scope.widgets[id].type]) {
-			console.log(slot);
-			console.log(widgets[$scope.widgets[id].type]);
 			zone_tag_targets = widgets[$scope.widgets[id].type].zone_tags[slot] || ['view'];
 		} else {
 			zone_tag_targets = ['view'];
 		}
-		console.log(zone_tag_targets);
 		select.css({position: 'absolute', left: x, top: y })
 		select.select2("container").show();
 		select.select2("open");
@@ -185,7 +180,6 @@ function stateController($scope) {
 		x = $('#'+id+' .addSlot').offset().left;
 		y = $('#'+id+' .addSlot').offset().top;
 		var select = $('#' + $scope.field_id + ' .slot-selector')
-		console.log(select);
 		if ($scope.widgets[id] && widgets[$scope.widgets[id].type]) {
 			zone_tag_targets = widgets[$scope.widgets[id].type].zone_tags[slot] || ['view'];
 		} else {
@@ -197,7 +191,6 @@ function stateController($scope) {
 	}
 
 	$scope.exportState = function() {
-		console.log('exporting');
 		var cstate = {
 			widgets: $scope.widgets,
 			slotAssignments: $scope.slotAssignments
@@ -218,7 +211,6 @@ function stateController($scope) {
 				$scope.deleteWidgetRecur(index);
 			}
 		});
-		console.log($scope);
 		$scope.check();
 	}
 
@@ -240,7 +232,6 @@ function stateController($scope) {
 					$scope.slotAssignments['body'].push(id);
 				} else {
 					$scope.widgets[_id].slots[_slot].push(id);
-					console.log($scope.widgets[_id]);
 				}
 				$scope.widgets[id] = widget;
 				widget.cut = false;

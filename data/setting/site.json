@@ -24,6 +24,14 @@
             "widget": "password",
             "settings": "",
             "required": false
+        },
+        {
+            "name": "bio",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textarea",
+            "settings": "",
+            "required": false
         }
     ]
 }

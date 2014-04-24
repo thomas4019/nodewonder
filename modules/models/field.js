@@ -1,7 +1,7 @@
 function model_field_type_setup(type_id) {
 	var widget_id = type_id.replace('-type', '-widget');
 	var type = $('#'+type_id+ ' select').val();
-	var options = edit_widgets[type];
+	var options = nw.edit_widgets[type];
 
 	if (!type) {
 		options = [];

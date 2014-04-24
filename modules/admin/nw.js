@@ -129,9 +129,9 @@ var nw = function() {
 		    });
 		    $("#widgetForm .save").click(function() {
 					var settings_raw = $( '#start form').serializeArray();
-					var settings_post = nw.serializedArrayToValues(settings_raw);
+					var settings_post = nw.functions.serializedArrayToValues(settings_raw);
 					delete settings_post['start-form_token'];
-					var settings = nw.expandPostValues(settings_post);
+					var settings = nw.functions.expandPostValues(settings_post);
 					console.log(settings);
 		    	callback(settings);
 		    	$("#widgetForm").hide();
@@ -167,15 +167,17 @@ var nw = function() {
 
 	return {
 		counter: {},
-		makeid: makeid,
-		loadWidgetForm: loadWidgetForm,
-		renderWidget: renderWidget,
-		insertWidgetBefore: insertWidgetBefore,
-		configureWidget: configureWidget,
-		serializedArrayToValues: serializedArrayToValues,
-		expandPostValues: expandPostValues,
-		getWidgetSettingsModel: getWidgetSettingsModel,
-		doProcess: doProcess,
-		processModel: processModel
+		functions: {
+			makeid: makeid,
+			loadWidgetForm: loadWidgetForm,
+			renderWidget: renderWidget,
+			insertWidgetBefore: insertWidgetBefore,
+			configureWidget: configureWidget,
+			serializedArrayToValues: serializedArrayToValues,
+			expandPostValues: expandPostValues,
+			getWidgetSettingsModel: getWidgetSettingsModel,
+			doProcess: doProcess,
+			processModel: processModel
+		}
 	};
 }();

@@ -19,7 +19,8 @@
                     "help": [],
                     "action_links": [],
                     "content": [
-                        "ykQkNrK2"
+                        "ykQkNrK2",
+                        "UImHb3Sd"
                     ],
                     "sidebar_second": [],
                     "triptych": [],
@@ -53,6 +54,16 @@
                 "settings": {
                     "model": "",
                     "record": ""
+                }
+            },
+            "UImHb3Sd": {
+                "type": "button",
+                "slots": {
+                    "events": []
+                },
+                "settings": {
+                    "label": "Save",
+                    "button_type": "primary"
                 }
             }
         },
