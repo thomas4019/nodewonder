@@ -5,122 +5,36 @@
     "controller": "",
     "code": {
         "widgets": {
-            "7zjz0mfL": {
-                "type": "popup",
-                "slots": {
-                    "container": [
-                        "SE83aadc"
-                    ]
-                },
-                "settings": {
-                    "has_form": true
-                }
-            },
-            "SE83aadc": {
-                "type": "ckeditor",
-                "slots": {},
-                "settings": {
-                    "has_form": true
-                }
-            },
-            "jHtdjRQt": {
+            "gD3Hmuwm": {
                 "type": "button",
-                "settings": {
-                    "label": "Show",
-                    "button_type": "primary",
-                    "has_form": true
+                "slots": {
+                    "events": [
+                        "RamV9DCc"
+                    ]
                 }
             },
-            "Mvsp4cqT": {
-                "type": "hello_world",
-                "slots": {},
-                "settings": {
-                    "has_form": false
+            "RamV9DCc": {
+                "type": "onclick",
+                "slots": {
+                    "actions": [
+                        "GRtRvZIP"
+                    ]
                 }
             },
-            "oMd3dDle": {
-                "type": "calendar",
+            "GRtRvZIP": {
+                "type": "message",
                 "slots": {},
                 "settings": {
-                    "has_form": false
-                }
-            },
-            "H8sGsYgH": {
-                "type": "youtube_video",
-                "slots": {},
-                "settings": {
-                    "has_form": true
-                }
-            },
-            "Zp158Da1": {
-                "type": "textarea",
-                "slots": {},
-                "settings": {
-                    "has_form": false
-                }
-            },
-            "RZNxqNJ3": {
-                "type": "ckeditor",
-                "slots": {},
-                "settings": {
-                    "has_form": true
-                }
-            },
-            "hmyCkIKh": {
-                "type": "hello_world",
-                "slots": {},
-                "settings": {
-                    "has_form": false
-                }
-            },
-            "08xBzSHP": {
-                "type": "calendar",
-                "slots": {},
-                "settings": {
-                    "has_form": false
-                }
-            },
-            "DKMrxt7g": {
-                "type": "youtube_video",
-                "slots": {},
-                "settings": {
-                    "has_form": true
-                }
-            },
-            "LzoFa4Dx": {
-                "type": "hello_world",
-                "slots": {},
-                "settings": {
-                    "has_form": false
-                }
-            },
-            "pRzA5u72": {
-                "type": "youtube_video",
-                "slots": {},
-                "settings": {
-                    "has_form": true
-                }
-            },
-            "cmODl8Nf": {
-                "type": "calendar",
-                "slots": {},
-                "settings": {
-                    "has_form": false
-                }
-            },
-            "ImZmcgL1": {
-                "type": "ckeditor",
-                "slots": {},
-                "settings": {
-                    "has_form": true
+                    "message": "Hello",
+                    "type": "info"
                 }
             }
         },
         "slotAssignments": {
             "body": [
-                "7zjz0mfL",
-                "jHtdjRQt"
+                "gD3Hmuwm"
             ]
         }
-    }
+    },
+    "Title": ""
 }

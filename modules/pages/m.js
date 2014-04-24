@@ -191,7 +191,7 @@ functions.renderPage = function(page, vars, callback) {
       if (content_type == 'text/html') {
         var encoded_head = JSON.stringify(head);
         encoded_head = encoded_head.replace(/<\/script/g, '</scr"+"ipt');
-        var head_meta = '<script type="text/javascript">var head = ' + encoded_head + ';</script>';
+        var head_meta = '<script type="text/javascript">nw.head = ' + encoded_head + ';</script>';
         head.push(head_meta);
         var html = page_template({
           'head': head.join('\n'),

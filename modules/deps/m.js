@@ -52,9 +52,9 @@ functions.fileToHTML = function(folder, file) {
   var ext = file.split('.').pop();
   var full = folder + file;
   if (ext == 'js') {
-    return '<script type="text/javascript" src="' + full + '"></script>';
+    return '<script type="text/javascript" src="' + full + '"></script>\n';
   } else if (ext == 'css') {
-    return '<link rel="stylesheet" href="' + full + '" />';
+    return '<link rel="stylesheet" href="' + full + '" />\n';
   } else {
     return '';
   }

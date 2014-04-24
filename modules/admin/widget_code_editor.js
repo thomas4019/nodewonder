@@ -51,7 +51,7 @@ function stateController($scope) {
 	}
 
 	_.each($scope.widgets, function(w) {
-		w.has_form = widgets[w.type].settings;
+		w.has_form = nw.widgets[w.type].settings;
 	});
 	
 
@@ -72,7 +72,7 @@ function stateController($scope) {
 			zones[zone_name] = [];
 		});
 		//var zones = JSON.parse()
-		var new_id = nw.functions.makeid();
+		var new_id = nw.functions.makeid(8);
 		if (selected.model)
 			$scope.widgets[new_id] = {type: selected.widget, slots: zones, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, zone_tags: selected.zone_tags};
 		else
@@ -150,7 +150,7 @@ function stateController($scope) {
 	$scope.configureWidget = function(id) {
 		var type = $scope.widgets[id].type;
 		var settings = $scope.widgets[id].settings;
-		var settings_model = widgets[type].settings;
+		var settings_model = nw.widgets[type].settings;
 
 		nw.functions.configureWidget(id, settings_model, settings, function(new_settings) {
 			$scope.widgets[id].settings = new_settings;
@@ -164,8 +164,8 @@ function stateController($scope) {
 		x = $('#'+id+'-'+slot+' .add').offset().left;
 		y = $('#'+id+'-'+slot+' .add').offset().top;
 		var select = $('#' + $scope.field_id + ' .widget-selector')
-		if ($scope.widgets[id] && widgets[$scope.widgets[id].type]) {
-			zone_tag_targets = widgets[$scope.widgets[id].type].zone_tags[slot] || ['view'];
+		if ($scope.widgets[id] && nw.widgets[$scope.widgets[id].type]) {
+			zone_tag_targets = nw.widgets[$scope.widgets[id].type].zone_tags[slot] || ['view'];
 		} else {
 			zone_tag_targets = ['view'];
 		}

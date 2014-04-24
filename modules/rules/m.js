@@ -96,7 +96,7 @@ widgets.message = function(input) {
   this.settings = [{"name":"message", "type":"Text"},
     {"name": "type", "type": "Text", "widget": "select", "settings": {label:'Message Type', choices: ['info', 'success', 'warning', 'error']} }];
 
-  this.deps = {'jquery': [],'toastr': ['toastr.min.js', 'toastr.min.css']};
+  this.deps = {'jquery': [],'toastr': []};
 
   this.makeActionJS = function() {
     return 'toastr.'+input.type+'("' + input.message + '");';
