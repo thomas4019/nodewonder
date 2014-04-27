@@ -153,6 +153,20 @@ functions.viewPage = function(path, vars, callback, error_callback) {
   });
 }
 
+functions.expandHead = function(head) {
+  _.each(head, function(element, index) {
+    if (element.charAt(0) != '<') {
+      var ext = path.extname(element);
+      if (ext == '.js') {
+        head[index] = '<script type="text/javascript" src="'+element+'"></script>';
+      }
+      if (ext == '.css') {
+        head[index] = '<link rel="stylesheet" href="'+element+'" />';
+      }
+    }
+  });
+}
+
 functions.renderPage = function(page, vars, callback) {
   page.widgets = cms.functions.splitAndFill(page.widgets, vars);
 
@@ -187,6 +201,7 @@ functions.renderPage = function(page, vars, callback) {
   } else {
     cms.functions.renderState(page.code.widgets, page.code.slotAssignments, function(html, head) {
       var content_type = page.contentType ? page.contentType : 'text/html';
+      cms.functions.expandHead(head);
       head.unshift('<script type="text/javascript" src="/modules/admin/nw.js"></script><link rel="stylesheet" href="/modules/admin/nw.css"></link>')
       if (content_type == 'text/html') {
         var encoded_head = JSON.stringify(head);

@@ -20,8 +20,8 @@ function retrieve(val) {
 
 widgets.widget_code_editor = function (input, id) {
 
-  this.head = ['<script src="/modules/admin/widget_code_editor.js" type="text/javascript"></script>',
-    '<link rel="stylesheet" href="/modules/admin/widget_code_editor.css" />'];
+  this.head = ['/modules/admin/widget_code_editor.js',
+    '/modules/admin/widget_code_editor.css'];
 
   this.tags = ['field_edit']
   this.settings = [{'name': 'label', 'type': 'Text'},

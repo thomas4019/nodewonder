@@ -254,7 +254,7 @@ widgets.model_form = function(input, id) {
 		}
 	}
 
-	this.head = ['<link rel="stylesheet" href="/modules/models/models.css" />'];
+	this.head = ['/modules/models/models.css'];
 
 	this.processData = function(data) {
 		console.log('model processing data');
@@ -448,7 +448,7 @@ widgets.model_data_listing = function(input) {
 
 widgets.model_type_selector = function(input, id) {
 	this.head = ['<script type="text/javascript">nw.edit_widgets='+JSON.stringify(cms.edit_widgets)+';</script>', 
-	'<script type="text/javascript" src="/modules/models/field.js"></script>'];
+	'/modules/models/field.js'];
 
 	this.script = function() {
 		return 'model_field_type_setup("'+id+'"); $("#' + id + ' select").on("change", function() {model_field_type_setup("'+id+'"); });';
@@ -525,12 +525,12 @@ widgets.model_record_reference = function(input, id) {
 }
 
 widgets.widget_input_config = function(input, id) {
-  this.head = ['<script src="/modules/admin/state-utils.js" type="text/javascript"></script>',
-    '<link rel="stylesheet" href="/modules/admin/state-editor.css" />'];
+  this.head = ['/modules/admin/state-utils.js',
+    '/modules/admin/state-editor.css'];
 
   this.deps = {'jquery': [],'bootstrap': [], 'font-awesome': ['css/font-awesome.css'], 'underscore': []};
 
-	this.head = ['<script src="/modules/models/widget_config.js" type="text/javascript"></script>'];
+	this.head = ['/modules/models/widget_config.js'];
 
 	this.processData = function(data) {
 		if (!data)
