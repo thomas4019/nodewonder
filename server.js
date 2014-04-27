@@ -61,7 +61,8 @@ Widget.prototype.html = function () {
   try {
     widget_html = (this.toHTML) ? this.toHTML(zone_object, rel_value) : '';
   } catch(err) {
-    console.error(err);
+    console.error("PROBLEM DURING RENDERING");
+    console.error(err.stack);
   }
 
   var wrapper = this.wrapper ? this.wrapper : 'div';
@@ -101,6 +102,9 @@ Widget.prototype.getZoneObject = function() {
 
 Widget.prototype.processData = function(value) {
   return value;
+}
+Widget.prototype.validateData = function(value) {
+  return false;
 }
 
 var router = new director.http.Router();

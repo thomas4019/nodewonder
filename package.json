@@ -23,7 +23,8 @@
     "passport": "~0.2.0",
     "passport-local": "~0.1.6",
     "diveSync": "~0.2.0",
-    "moment": "~2.6.0"
+    "moment": "~2.6.0",
+    "nw-example": "git://github.com/thomas4019/nw-example.git"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3"

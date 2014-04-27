@@ -195,7 +195,6 @@ var nw = function() {
 					var settings = nw.functions.expandPostValues(settings_post);
 					console.log(settings);
 		    	callback(settings);
-		    	$("#widgetForm").hide();
 		    });
 	    }
 	  });
@@ -220,7 +219,7 @@ var nw = function() {
 		data['fields'] = JSON.stringify(fields);
 		data['data'] = JSON.stringify(model_data);
 		console.log(data);
-		$.getJSON('/internal/process_model?raw', data, function(result) {
+		$.getJSON('/internal/process_model', data, function(result) {
 			console.log(result);
 			callback(result);
 		});
@@ -234,8 +233,22 @@ var nw = function() {
 		return docCookies.getItem('clientID');
 	}
 
+	function cleanErrors(base_id) {
+		$('#'+base_id+' .has-error').removeClass('has-error');
+		$('#'+base_id+' .error-message').remove();
+	}
+	
+	function showErrors(base_id, validationErrors) {
+		_.each(validationErrors, function(message, field) {
+			var id = base_id+'-'+field;
+			$('#'+id).addClass('has-error');
+			$('#'+id+' label').append('<span class="error-message"> ('+message+') </span>');
+		});	
+	}
+
 	return {
 		counter: {},
+		model: {},
 		functions: {
 			makeid: makeid,
 			loadWidgetForm: loadWidgetForm,
@@ -246,7 +259,9 @@ var nw = function() {
 			expandPostValues: expandPostValues,
 			getWidgetSettingsModel: getWidgetSettingsModel,
 			doProcess: doProcess,
-			processModel: processModel
+			processModel: processModel,
+			cleanErrors: cleanErrors,
+			showErrors: showErrors
 		},
 		clientID: getID()
 	};

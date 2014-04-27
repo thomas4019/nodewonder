@@ -23,9 +23,18 @@ functions.concatActions = function(actions) {
   return code;
 }
 
+functions.createActionCode = function(actions) {
+  var code = '';
+  _.each(actions, function(action) {
+    code += 'nw.widgets["'+action.name+'"].action('+JSON.stringify(action.w_settings)+', "'+action.id+'", scope);\n';
+  });
+  return code;
+}
+
 functions.eventScript = function() {
     var slots = this.all_children;
     var selector = '#'+this.parent.id;
+    //var code = cms.functions.createActionCode(slots.actions);
     var code = cms.functions.concatActions(slots.actions);
     return this.makeEventJS(selector, code);
   }
@@ -178,7 +187,7 @@ widgets.delete_record = function(settings, id, scope) {
     var success = cms.functions.concatActions(slots.success);
     var failure = cms.functions.concatActions(slots.failure);
 
-    return 'nw.doProcess("'+token+'", function() { '+ success +' }, function() { '+ failure +' });';
+    return 'nw.functions.doProcess("'+token+'", function() { '+ success +' }, function() { '+ failure +' });';
   }
 
   this.doProcess = function(callback) {

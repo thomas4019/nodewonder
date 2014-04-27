@@ -22,12 +22,20 @@
             "name": "c",
             "type": "Number",
             "quantity": "",
-            "widget": "slider",
+            "widget": "numeric_textbox",
             "settings": {
-                "data": null,
                 "min": 1,
-                "max": 5
+                "max": 5,
+                "label": "c"
             },
+            "required": false
+        },
+        {
+            "name": "captcha",
+            "type": "Captcha",
+            "quantity": "",
+            "widget": "recaptcha",
+            "settings": "",
             "required": false
         }
     ],

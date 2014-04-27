@@ -1,12 +1,5 @@
 {
+    "clientID": "1235uoae",
     "username": "thomas",
-    "password": "334123",
-    "created": 1434780000000,
-    "last_login": null,
-    "active": false,
-    "sites": {
-        "url": "google.com",
-        "title": "Search Engine",
-        "alt": ""
-    }
+    "password": "334123"
 }

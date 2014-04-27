@@ -158,7 +158,7 @@ widgets.numeric_textbox = function (input, id) {
   this.settings = function() {
     return  [ {"name": "inline", "type": "Boolean"},
       {"name": "data", "type": "Number"},
-      {"name": "min", "type": "Number"},
+      {"name": "min", "type": "Number", "settings" : {"min": 2}},
       {"name": "max", "type": "Number"} ];
   }
 
@@ -167,14 +167,23 @@ widgets.numeric_textbox = function (input, id) {
     return parseInt(data);
   }
 
+  this.validateData = function(data) {
+    console.log(data);
+    console.log(input);
+    if (input.max && data > input.max)
+      return 'Number is too large';
+    if (input.min && data < input.min)
+      return 'Number is too small';
+  }
+
   this.toHTML = function(zones) {
-    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : '') + ':' + '</label>';
+    var label = '<label class="control-label" for="' + id + '-textbox" style="padding-right: 5px;">' + (input.label ? input.label : '') + ':' + '</label>';
     var element;
     
     if (input.data) {
-      element = '<input class="form-control input-small" type="number" name="' + id + '" value="' + htmlEscape(input.data) + '" />';
+      element = '<input id="'+id+'-textbox" class="form-control input-small" type="number" name="' + id + '" value="' + htmlEscape(input.data) + '" />';
     } else {
-      element = '<input class="form-control input-small" type="number" name="' + id + '" />';
+      element = '<input id="'+id+'-textbox" class="form-control input-small" type="number" name="' + id + '" />';
     }
 
     if (input.inline) {

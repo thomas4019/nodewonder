@@ -262,10 +262,8 @@ widgets.model_form = function(input, id) {
 
 		_.each(model.fields, function(field) {
 			var field_data = data[field.name];
-			console.log(field);
 			var widget_name = field.widget ? field.widget : cms.functions.getDefaultWidget(field.type);
-			console.log(widget_name);
-			var input = {};
+			var input = field.settings || {};
 			if (widget_name == 'model_form') {
 				input['model'] = field.type;
 				input['inline'] = 'model';
@@ -281,6 +279,32 @@ widgets.model_form = function(input, id) {
 
 		return out;
 	}
+
+	this.validateData = function(data) {
+		console.log('model processing data');
+		var errors = {};
+
+		_.each(model.fields, function(field) {
+			var field_data = data[field.name];
+			var widget_name = field.widget ? field.widget : cms.functions.getDefaultWidget(field.type);
+			var input = field.settings || {};
+			console.log(field);
+			if (widget_name == 'model_form') {
+				input['model'] = field.type;
+				input['inline'] = 'model';
+			}
+			if (field.quantity) {
+				input['widget'] = widget_name;
+				widget_name = 'field_multi';
+			}
+			var widget = new cms.widgets[widget_name](input);
+			var error = widget.validateData(field_data);
+			if (error)
+			errors[field.name] = error;
+		});
+
+		return errors;
+  }
 
 	this.save = function (values, callback) {
 
@@ -308,6 +332,10 @@ widgets.model_form = function(input, id) {
 			return 'inline-model-form';
 		else
 			return '';
+	}
+
+	this.script = function() {
+		return 'nw.model["'+id+'"] = '+JSON.stringify(model)+';';
 	}
 
 	this.toHTML = function(slots) {
@@ -542,7 +570,8 @@ widgets.process_model = function(settings, id) {
 		console.log(settings.data);
 		console.log(settings.fields);
 		var processed = model_widget.processData(settings.data);
+		var errors = model_widget.validateData(processed);
 		console.log(processed);
-		return JSON.stringify(processed);
+		return JSON.stringify({validationErrors: errors, data: processed});
 	}
 }

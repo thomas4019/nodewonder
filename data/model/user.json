@@ -1,7 +1,15 @@
 {
-    "name": "User",
-    "description": "A registered user on this site",
+    "name": "user",
+    "description": "",
     "fields": [
+        {
+            "name": "clientID",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
         {
             "name": "username",
             "type": "Text",
@@ -14,103 +22,29 @@
             "name": "password",
             "type": "Text",
             "quantity": "",
-            "widget": "textbox",
+            "widget": "password",
             "settings": "",
             "required": false
         },
         {
-            "name": "created",
-            "type": "Date",
+            "name": "captcha",
+            "type": "Captcha",
             "quantity": "",
-            "widget": "field_date",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "last_login",
-            "type": "Date",
-            "quantity": "",
-            "widget": "field_date",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "active",
-            "type": "Boolean",
-            "quantity": "",
-            "widget": "checkbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "sites",
-            "type": "link",
-            "quantity": "",
-            "widget": "model_form",
+            "widget": "recaptcha",
             "settings": "",
             "required": false
         }
     ],
-    "key": "username",
+    "index": "clientID",
     "views": [
         {
-            "Name": "default",
+            "Name": "",
             "Code": {
-                "widgets": {
-                    "PtcghRnJ": {
-                        "type": "tabs",
-                        "slots": {
-                            "tabs": [
-                                "rPxssndd",
-                                "fCcwJARi",
-                                "NyXkb3S3",
-                                "QeVjAF8p"
-                            ]
-                        }
-                    },
-                    "rPxssndd": {
-                        "type": "formatted_date",
-                        "slots": {},
-                        "field": "created",
-                        "model_type": "Date",
-                        "model": "Model",
-                        "settings": {
-                            "format": "DD/MM/YYYY"
-                        }
-                    },
-                    "fCcwJARi": {
-                        "type": "yes_no",
-                        "slots": {},
-                        "field": "active",
-                        "model_type": "Boolean",
-                        "model": "Model",
-                        "settings": {
-                            "true_text": "Active",
-                            "false_text": "Inactive"
-                        }
-                    },
-                    "NyXkb3S3": {
-                        "type": "plaintext",
-                        "slots": {},
-                        "field": "username",
-                        "model_type": "Text",
-                        "model": "Model"
-                    },
-                    "QeVjAF8p": {
-                        "type": "plaintext",
-                        "slots": {},
-                        "field": "password",
-                        "model_type": "Text",
-                        "model": "Model"
-                    }
-                },
+                "widgets": {},
                 "slotAssignments": {
-                    "body": [
-                        "PtcghRnJ"
-                    ]
+                    "body": []
                 }
             }
         }
     ]
-}  ]
 }

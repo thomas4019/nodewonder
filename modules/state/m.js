@@ -29,6 +29,7 @@ functions.initializeState = function(state, scope, callback) {
     var name = w.type;
     if (cms.widgets[name]) {
       var widget = new cms.widgets[name](w.settings || {}, id, scope);
+      widget.w_settings = w.settings;
       widget.id = id;
     } else {
       console.error('Missing widget:' + name);

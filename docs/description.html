@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <title>Node Wonder Technical Description</title>
+    <style>
+        .async {color: blue;}
+        .field {color: green;}
+        li.active > a {color: black; font-weight: bold;}
+        h2 {text-decoration: underline; width: 100%;}
+    </style>
+
+    <script type="text/javascript">
+    //$('body').scrollspy({ target: '.navbar' })
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#affix-nav" class="container">
+
+<div class="row">
+
+<div class="col-md-3">
+    <nav class="navbar bs-docs-sidenav" role="navigation" data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+        <div id="affix-nav">
+            <ul class="nav bs-docs-sidenav">
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#how">How</a></li>
+                <li><a href="#widgets">Widgets</a>
+                    <ul>
+                        <li><a href="#what_w">What is a widget?</a></li>
+                        <li><a href="#what_slot">What is a slot?</a></li>
+                        <li><a href="#examples_wt">Widget Types</a></li>
+                        <li><a href="#properties">Creating a new widget type</a></li>
+                        <li><a href="#widget_tags">Common Widget Tags</a></li>
+                    </ul>
+                <li><a href="#pages">Pages</a>
+                    <ul>
+                        <li><a href="#what_p">What is a page?</a></li>
+                        <li><a href="#pages_how">How to create a page?</a></li>
+                        <li><a href="#steps">How is a page rendered to HTML?</a></li>
+                    </ul>
+                </li>
+                <li><a href="#examples1">Example</a>
+                    <ul>
+                        <li><a href="#examples1_ui">Node Wonder - User Interface</a></li>
+                        <li><a href="#examples1_nw">Node Wonder - Page</a></li>
+                        <li><a href="#examples1_html">HTML Produced</a></li>
+                        <li><a href="#examples1_web">Webpage Produced</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="col-md-9">
+
+<h1>Node Wonder Technical Description</h1>
+
+<h4>by Thomas Hansen</h4>
+<br>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Node Wonder is a content management system that will allow people to create powerful websites without programming experience. The fundamental idea is that a webpage is not unique but rather a concatenation of many smaller components. Within Node Wonder these components are called "widgets". With powerful, configurable, and reusable widgets, a user can create pages quickly by building directly on the works of others rather than "reinventing the wheel".</p>
+
+<h2 id="how">How</h2>
+
+<p>Node Wonder comes with many predefined widgets that can be combined to create pages (see next section for some examples). Software developers wanting additional features not available through these widgets can create their own and then share their widgets with others. HTML is alreadly hierarchical by nature. Shown below is the site <a href="http://wordpress.com">WordPress.com</a> with the nesting shown through a 3rd dimension. Node Wonder separates each of these parts of a webpage into their own widget so that it can be reused easily.</p>
+
+<p><img src="3d.png" /></p>
+
+<h2 id="widgets">Widgets</h2>
+
+<h3 id="what_w">What is a widget?</h3>
+
+<p>A widget is something which shows content on the screen or affects the layout. Every widget has the following properties:</p>
+<table class="table" style="margin-left: 15px; margin-top: 10px;">
+<tr><th>Property<th>Example<th>Description
+<tr><td>identifier<td>dL6rnuBk<td>An 8-digit identifier for the widget. This must be unique across the site, thus these ids are randomly generated.
+<tr><td>type<td>video<td>The type of widget
+<tr><td>slots*<td><code>{
+                    "left": [
+                        "IjBt8zWW",
+                        "wWtG2heL"
+                    ],<br>
+                    "right": [
+                        "ToTlMINf"
+                    ]
+                }</code><td>A javascript object where the keys are names of a slot and the values are arrays of widget identifiers that are within that slot. See <a href="#what_slot">"What is a slot?"</a> for more info about slots.
+<tr><td>settings*<td><code>{
+            "text": "Hello World"
+        }</code><td>A javascript object of configuration specified by the user. The keys used in this object are specific to the widget type.
+</table>
+<div style="text-align: center; font-style: italic;">* = optional</div>
+
+<h3 id="what_slot">What is a slot?</h3>
+A slot is a container to which a user can add widgets. Widget types can define slots which allow users to add child widgets. As an example, the two_col widget type defines the slots "left" and "right". Each widget type decides what it wants to do with the widgets added to its slots. The two_column widget generates a two column layout with the widgets in the left slot and the widgets in the right slot as the left and right column respectively. Another example is the grid widget which displays its childern widgets in a grid layout.
+<!-- For example, all pages have the "body" slot which contains the list of identifiers of widgets to be added to the html body. !-->
+
+    <!--<ul>
+        <li>identifier - a randomly generated id so that this widget instance can be uniquely identifed.</li>
+        <li>type - the widget type</li>
+        <li>slots (optional)</li>
+        <li>settings (optional)</li>
+    </ul>!-->
+
+<h3 id="examples_wt">Widget Types</h3>
+
+<ul>
+<li>Basic Widgets: Text, Header</li>
+<li>Multimedia Widgets: Image (with caption), Video, Map</li>
+<li>Form Widgets: Textfield, Textarea, Select List, Button</li>
+<li>Layout Widgets: Two Columns, Three Columns, Grid, Popup, Tabs</li>
+<li>Feature Widgets: Calendar, Filepicker</li>
+<em>Note: These are just some of the built-in widgets but developers can create and share their own types.</em>
+</ul>
+
+<h3 id="properties">Creating a new widget type (for developers)</h3>
+Programmers can create new widget types by defining a javascript constructor function. A widget type has following properties (all are optional):
+<table class="table" style="margin-left: 15px; margin-top: 10px;">
+<tr><th>Property Name<th>Description
+<tr><td>init<td>Code to be run on server startup. This will only be called once and then each time the server is restarted.
+<tr><td>Constructor(settings,id)<td>Perform simple tasks. Note: Must accept an empty settings object without crashing.
+<tr><td>settings<td>Specify model describing data accepted as input by the widget
+<tr><td>slots<td>Declare slots in which the user can insert child widgets
+<tr><td>slot_tags<td>Specify which types of widgets can be assigned to each slot. Return an object with keys of zone names and values of arrays of tag names. 
+<tr><td class="async">load(callback)<td>Perform any time consuming operations required to display the widget.
+<tr><td class="async">children(callback)<td>Declare any sub-widgets and which slots to insert them into.
+<tr><td class="field">processData(raw_data)<td>Given the raw_data from a form post operation convert to a friendly value.
+<tr><td class="field">validateData(processed_data)<td>Return false if the data is vaild. Otherwise return true or a string describing the error.
+<tr><td>wrapper<td>Specify the html element to be used to contain the widget. Default: "div". The value "none" has the special meaning that no container element will be used.
+<tr><td>wrapper_class<td>Additional classes to be added to the wrapper element.
+<tr><td>head<td>Returns an array of HTML elements to be inserted into the head of the document. Each element is checked to avoid inserting duplicates into a page.
+<tr><td>script<td>Custom javascipt code to be executed. The code will run on page load.
+<tr><td>deps<td>External dependencies requiered. Specified in a javascript object where the keys are bower repositories and the
+    values is an array of files to include.
+<tr><td>toHTML(slots, value)<td>Produce the HTML to be inserted into the page.
+<tr><td>save(values)<td>Process the values from a form.
+<!--<tr><td>makeActionJS<td>
+<tr><td>makeRuleJS<td>!-->
+</table>
+
+<h3 id="widget_tags">Common Widget Tags</h3>
+<table class="table" style="margin-left: 15px; margin-top: 10px;">
+<tr><td>action
+<tr><td>event
+<tr><td>field_edit
+<tr><td>field_view
+<tr><td>view
+</table>
+
+<h2 id="pages">Pages</h2>
+
+<h3 id="what_p">What is a page?</h3>
+
+<p>A page is the conceptual representation of a specific page of a website. A page is generally associated with a specific URL and the content of the pages should be shown to the user when they navigate to that URL.</p>
+
+<p>A page in Node Wonder has the following two components</p>
+<ol>
+<li>A list of widget definitions.
+<li>A list of identifiers of the top-level widgets
+</ol>
+
+<h3 id="pages_how">How to create a page?</h3>
+Node Wonder provides a user interface which allows a user to create and configure a page without any coding. The user clicks one of the "+" icons which provides a dropdown of all the widget types. These "+" icons are shown to the right of all slots. The user then selects the type of widget desired.
+<br>
+<center><h4>Example: Creating a page</h4><img src="creating.gif" style="border: 1px solid black;" /></center>
+
+<h3 id="steps">How is a page rendered to HTML?</h3>
+These are the steps to the rendering process that NodeWonder follows.<br>
+
+<ol>
+<li>The constructor of each widget is called</li>
+<li>If the widget defines any dynamic children, they are loaded</li>
+<li>The load function of every widget is called</li>
+<li>The head, script, and deps functions of every widget are called and then the results are aggregated</li>
+<li>The toHTML function is called for all widgets assigned to the body.<br>
+    <em>Note: Although not all widgets may be in the body, the toHTML function of other widgets may be called if they are assigned to 
+        a slot of a different widget which is in the body.</em></li>
+</ol>
+
+
+<h2 id="examples1">Example</h2>
+Finally, here we present an example which first shows what the user interface looks like in Node Wonder, it's corresponding page, then the html produced and lastly the output seen in the browser.
+
+<h3 id="examples1_ui">Node Wonder - User Interface</h3>
+
+<div class="widget-container widget-widget_code_editor " id="wyobn3bP-code">
+  <div class="widget-container widget-widget_selector " id="wyobn3bP-code-sel">
+<!--<label>Widget Code:</label>!-->
+
+<div ng-app="" class="ng-scope"><ul id="state-ctrl" ng-controller="stateController" class="ng-scope"><!-- ngInclude: '/modules/admin/slot.html' --><li ng-init="id = 'body'; slot_name = 'body';" id="body-body" ng-include="'/modules/admin/slot.html'" class="ng-scope"><i class="ng-scope ng-binding">body</i> <a class="add ng-scope" ng-click="addWidget(id, slot_name)"><i class="fa fa-plus fa-lg"></i></a>
+<ul class="ng-scope">
+<!-- ngRepeat: id in slot -->
+</ul></li><!-- ngRepeat: id in slotAssignments['body'] --><!-- ngInclude: '/modules/admin/widget.html' --><li ng-repeat="id in slotAssignments['body']" id="uZWXfDhd" ng-include="'/modules/admin/widget.html'" class="ng-scope"><span class="ng-scope ng-binding">header
+</span><a href="" ng-click="deleteWidget(id)" class="ng-scope"><i class="fa fa-trash-o fa-lg"></i></a>
+<!-- ngIf: widgets[id]['has_form'] -->
+
+<!-- ngRepeat: (slot_name, slot) in widgets[id].slots --></li><!-- end ngRepeat: id in slotAssignments['body'] --><!-- ngInclude: '/modules/admin/widget.html' --><li ng-repeat="id in slotAssignments['body']" id="dL6rnuBk" ng-include="'/modules/admin/widget.html'" class="ng-scope"><span class="ng-scope ng-binding">text
+</span><a href="" ng-click="deleteWidget(id)" class="ng-scope"><i class="fa fa-trash-o fa-lg"></i></a>
+<!-- ngIf: widgets[id]['has_form'] -->
+
+<!-- ngRepeat: (slot_name, slot) in widgets[id].slots --></li><!-- end ngRepeat: id in slotAssignments['body'] --><!-- ngInclude: '/modules/admin/widget.html' --><li ng-repeat="id in slotAssignments['body']" id="m2hXUttc" ng-include="'/modules/admin/widget.html'" class="ng-scope"><span class="ng-scope ng-binding">youtube_video
+</span><a href="" ng-click="deleteWidget(id)" class="ng-scope"><i class="fa fa-trash-o fa-lg"></i></a>
+<!-- ngIf: widgets[id]['has_form'] --><a href="" ng-if="widgets[id]['has_form']" ng-click="configureWidget(id)" class="ng-scope"><i class="fa fa-cog fa-lg configure"></i></a><!-- end ngIf: widgets[id]['has_form'] -->
+
+<!-- ngRepeat: (slot_name, slot) in widgets[id].slots --></li><!-- end ngRepeat: id in slotAssignments['body'] --></ul></div>
+</div>
+
+<h3 id="examples1_nw">Node Wonder - Page (in JSON format)</h3>
+
+<pre><code>"widgets": {
+    "uZWXfDhd": {
+        "type": <b>"header",</b>
+        "settings": {
+            "text": "Hello World"
+        }
+    },
+    "dL6rnuBk": {
+        "type": <b>"text"</b>,
+        "settings": {
+            "text": "Lorem ipsum quis volutpat primis duis sed scelerisque fames felis porttitor pharetra blandit feugiat, nam malesuada fusce netus ac bibendum mollis maecenas ornare etiam dolor. Tempus faucibus interdum aenean vel eros torquent vel donec et hac semper pulvinar quam suspendisse, sollicitudin aliquam semper sociosqu torquent quis varius quam aptent ligula purus vivamus nisi."
+        }
+    },
+    "m2hXUttc": {
+        "type": <b>"youtube_video"</b>,
+        "settings": {
+            "id": "dQiNVk_u0po"
+        }
+    }
+},
+"slotAssignments": {
+    "body": [
+        "uZWXfDhd",
+        "dL6rnuBk",
+        "m2hXUttc"
+    ]
+}
+</code></pre>
+
+<h3 id="examples1_html">HTML Produced</h3>
+
+<pre><code>    &lt;h1 class="widget-container widget-header " id="uZWXfDhd"&gt;
+      hello
+    &lt;/h1&gt;
+    &lt;p class="widget-container widget-text " id="dL6rnuBk"&gt;
+      Lorem ipsum quis volutpat primis duis sed scelerisque fames felis porttitor pharetra blandit feugiat, nam malesuada fusce netus ac bibendum mollis maecenas ornare etiam dolor. Tempus faucibus interdum aenean vel eros torquent vel donec et hac semper pulvinar quam suspendisse, sollicitudin aliquam semper sociosqu torquent quis varius quam aptent ligula purus vivamus nisi.
+    &lt;/p&gt;
+    &lt;div class="widget-container widget-youtube_video " id="m2hXUttc"&gt;
+      &lt;iframe width="560" height="315" src="//www.youtube.com/embed/dQiNVk_u0po" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+    &lt;/div&gt;
+</code></pre>
+
+<h3 id="examples1_web">Webpage Produced</h3>
+
+<div class="well">
+    <h1 class="widget-container widget-header " id="uZWXfDhd">
+      Hello World
+    </h1>
+    <p class="widget-container widget-text " id="dL6rnuBk">
+      Lorem ipsum quis volutpat primis duis sed scelerisque fames felis porttitor pharetra blandit feugiat, nam malesuada fusce netus ac bibendum mollis maecenas ornare etiam dolor. Tempus faucibus interdum aenean vel eros torquent vel donec et hac semper pulvinar quam suspendisse, sollicitudin aliquam semper sociosqu torquent quis varius quam aptent ligula purus vivamus nisi.
+    </p>
+    <div class="widget-container widget-youtube_video " id="m2hXUttc">
+      <iframe width="560" height="315" src="http://www.youtube.com/embed/dQiNVk_u0po" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
+
+<!--<p>a = new widget1();
+b = new widget2();
+c = new widget3();</p>
+
+<p>a.children | b.children | c.children</p>
+
+<p>a.load | b.load | c.load</p>
+
+<p>a.head
+a.script
+a.deps
+b.head
+c.head</p>
+
+<p>Called on an as need basis
+a.toHTML</p> !-->
+
+</div>
+
+</div>
+
+</body>
