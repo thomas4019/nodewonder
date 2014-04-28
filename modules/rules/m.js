@@ -23,10 +23,32 @@ functions.concatActions = function(actions) {
   return code;
 }
 
+functions.createHandlersCode = function(action) {
+  var code = '{';
+  var first = true;
+  _.each(action.zone_tags, function(tags, slot_name) {
+    if (_.contains(tags, 'action')) {
+      console.log(slot_name);
+      if (!first)
+        code += ',';
+      code += slot_name + ': function() {\n' + 
+      cms.functions.createActionCode(action.all_children[slot_name]) +
+      '}';
+      first = false;
+    }
+  });
+  code += '}';
+  return code;
+}
+
 functions.createActionCode = function(actions) {
   var code = '';
   _.each(actions, function(action) {
-    code += 'nw.widgets["'+action.name+'"].action('+JSON.stringify(action.w_settings)+', "'+action.id+'", scope);\n';
+    if (action.action) {
+      code += '('+action.action+')('+JSON.stringify(action.w_settings)+', "'+action.id+'", scope,'+cms.functions.createHandlersCode(action)+');\n';  
+    } else if (action.makeActionJS) {
+      code += action.makeActionJS()+'\n';
+    }
   });
   return code;
 }
@@ -34,8 +56,8 @@ functions.createActionCode = function(actions) {
 functions.eventScript = function() {
     var slots = this.all_children;
     var selector = '#'+this.parent.id;
-    //var code = cms.functions.createActionCode(slots.actions);
-    var code = cms.functions.concatActions(slots.actions);
+    var code = cms.functions.createActionCode(slots.actions);
+    //var code = cms.functions.concatActions(slots.actions);
     return this.makeEventJS(selector, code);
   }
 
@@ -46,7 +68,7 @@ widgets.onload = function (input) {
 
   this.script = function() {
     var slots = this.all_children;
-    return cms.functions.concatActions(slots.actions);
+    return cms.functions.createActionCode(slots.actions);
   }
 
   this.toHTML = function() {return '';}
@@ -59,7 +81,7 @@ widgets.on_leaving = function (input) {
 
   this.script = function() {
     var slots = this.all_children;
-    return '$( window ).unload(function() {' + cms.functions.concatActions(slots.actions) + '});';
+    return '$( window ).unload(function() {' + cms.functions.createActionCode(slots.actions) + '});';
   }
 
   this.toHTML = function() {return '';}
@@ -107,31 +129,48 @@ widgets.message = function(input) {
 
   this.deps = {'jquery': [],'toastr': []};
 
-  this.makeActionJS = function() {
-    return 'toastr.'+input.type+'("' + input.message + '");';
+  this.action = function(settings, id, scope, handlers) {
+    toastr[settings.type](settings.message);
   }
 }
 
-widgets.submit_form = function(input) {
+widgets.submit_form = function(settings) {
   this.settings = [{"name":"selector", "type":"Text"}];
 
   this.deps = {'jquery': [], 'jquery-form': []};
 
   this.zones = ['success', 'failure'];
   this.zone_tags = {success: ['action'], failure: ['action']};
+  
+  this.action = function(settings, id, scope, handlers) {
+    var id = settings.selector ? settings.selector.substr(1) : '';
+    var model = nw.model[id];
+    console.log(model);
+    console.log(nw.functions.serializedArrayToValues($('#'+id+' :input').serializeArray()));
+    var data = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#'+id+' :input').serializeArray()));
+    console.log(data);
 
-  this.makeActionJS = function() {
-    var slots = this.all_children;
-
-    var success = cms.functions.concatActions(slots.success);
-    var failure = cms.functions.concatActions(slots.failure);
-    return '$("form").ajaxSubmit({ success: function() {'+success+'}, error: function(responseText, statusText, xhr, $form) {console.log(responseText); console.log(statusText); '+failure+'} }); ';
+    nw.functions.cleanErrors(id);
+    nw.functions.processModel(model.fields, data, function(results) {
+      console.log(results); 
+      if (results.validationErrors && Object.keys(results.validationErrors).length) {
+        console.log('model has errors');
+        nw.functions.showErrors(id, results.validationErrors);
+      } else {
+        console.log('model success');
+        $("form").ajaxSubmit({
+        success: function() {handlers.success(); },
+        error: function(responseText, statusText, xhr, $form) {
+          console.log(responseText); console.log(statusText); handlers.failure();}
+        });
+      }
+    });
   }
 }
 
 widgets.go_back = function() {
-  this.makeActionJS = function() {
-    return 'history.go(-1);';
+  this.action = function(settings, id, scope, handlers) {
+    history.go(-1);
   }
 }
 
@@ -184,8 +223,8 @@ widgets.delete_record = function(settings, id, scope) {
     };
 
     var slots = this.all_children;
-    var success = cms.functions.concatActions(slots.success);
-    var failure = cms.functions.concatActions(slots.failure);
+    var success = cms.functions.createActionCode(slots.success);
+    var failure = cms.functions.createActionCode(slots.failure);
 
     return 'nw.functions.doProcess("'+token+'", function() { '+ success +' }, function() { '+ failure +' });';
   }

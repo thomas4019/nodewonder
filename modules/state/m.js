@@ -180,7 +180,7 @@ functions.renderState = function(state, slotAssignments, callback, values) {
     var all_head = [];
     all_head = all_head.concat(results.head);
     all_head = all_head.concat(cms.functions.processDeps(results.deps));
-    all_head.push('<script>$(function() {' + results.script + '});</script>');
+    all_head.push('<script>$(function() {var scope = ' + JSON.stringify(values) + ';' + results.script + '});</script>');
     callback(html, all_head);
   }, values);
 }

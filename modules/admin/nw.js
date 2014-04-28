@@ -72,7 +72,7 @@ var nw = function() {
 
 	function serializedArrayToValues(values) {
 		var settings_post = {};
-		_.map(values, function(value) {
+		values.map(function(value) {
 			settings_post[value.name] = value.value;
 		});
 		return settings_post;
@@ -82,7 +82,8 @@ var nw = function() {
 		var data = {};
 		var tocheck = [];
 
-		_.each(values, function(value, key) {
+		for (var key in values) {
+			value = values[key];
 			var parts = key.split('-');
 			if (parts.length >= 2) {
 				var current = data;
@@ -97,7 +98,7 @@ var nw = function() {
 				}
 				current[last] = value;
 			}
-		});
+		}
 
 		function hasValues(value) {
 			if (typeof value == 'object') {
@@ -111,11 +112,12 @@ var nw = function() {
 			return value;
 		}
 
-		_.each(tocheck, function(key, index) {
+		for (var key in tocheck) {
+			index = tocheck[key];
 			data[key] = _.filter(data[key], function(value) {
 				return hasValues(value);
 			});
-		});
+		}
 
 		return data;
 	}
@@ -172,7 +174,8 @@ var nw = function() {
 		x = $('#'+id+' .configure').offset().left;
 		y = $('#'+id+' .configure').offset().top;
 
-		var ne = $( '<div id="widgetForm" style="left:'+x+'px; top:'+y+'px;" />' )
+		var ne = $( '<div id="widgetForm" style="left:'+x+'px; top:'+y+'px;" />' );
+		console.log('launching widget configuration popup');
 		$('body').append(ne);
 
 		var data = {};
@@ -214,11 +217,9 @@ var nw = function() {
 	}
 
 	function processModel(fields, model_data, callback) {
-		console.log('processModel');
 		var data = {};
 		data['fields'] = JSON.stringify(fields);
 		data['data'] = JSON.stringify(model_data);
-		console.log(data);
 		$.getJSON('/internal/process_model', data, function(result) {
 			console.log(result);
 			callback(result);
@@ -239,11 +240,12 @@ var nw = function() {
 	}
 	
 	function showErrors(base_id, validationErrors) {
-		_.each(validationErrors, function(message, field) {
+		for (var field in validationErrors) {
+			message = validationErrors[field];
 			var id = base_id+'-'+field;
 			$('#'+id).addClass('has-error');
 			$('#'+id+' label').append('<span class="error-message"> ('+message+') </span>');
-		});	
+		}
 	}
 
 	return {

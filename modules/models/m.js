@@ -280,15 +280,27 @@ widgets.model_form = function(input, id) {
 		return out;
 	}
 
-	this.validateData = function(data) {
+	this.validateData = function(data, callback) {
 		console.log('model processing data');
 		var errors = {};
+
+		var total = Object.keys(model.fields).length;
+		var count = 0;
 
 		_.each(model.fields, function(field) {
 			var field_data = data[field.name];
 			var widget_name = field.widget ? field.widget : cms.functions.getDefaultWidget(field.type);
 			var input = field.settings || {};
 			console.log(field);
+
+			function handle(error) {
+				count++;
+				if (error)
+					errors[field.name] = error;
+				if (count == total)
+					callback(errors);
+			}
+
 			if (widget_name == 'model_form') {
 				input['model'] = field.type;
 				input['inline'] = 'model';
@@ -298,12 +310,13 @@ widgets.model_form = function(input, id) {
 				widget_name = 'field_multi';
 			}
 			var widget = new cms.widgets[widget_name](input);
-			var error = widget.validateData(field_data);
-			if (error)
-			errors[field.name] = error;
+			if (widget.validateData.length == 2) { //async
+				widget.validateData(field_data, handle);
+			} else { //sync
+				var error = widget.validateData(field_data);
+				handle(error);
+			}
 		});
-
-		return errors;
   }
 
 	this.save = function (values, callback) {
@@ -565,13 +578,21 @@ widgets.process_model = function(settings, id) {
 
 	this.wrapper = 'none';
 
-	this.toHTML = function() {
+	var errors;
+	var processed;
+
+	this.load = function(callback) {
 		var model_widget = new cms.widgets['model_form']({'fields': settings.fields});
 		console.log(settings.data);
 		console.log(settings.fields);
-		var processed = model_widget.processData(settings.data);
-		var errors = model_widget.validateData(processed);
-		console.log(processed);
+		processed = model_widget.processData(settings.data);
+		model_widget.validateData(processed, function(c_errors) {
+			errors = c_errors;
+			callback();
+		});
+	}
+
+	this.toHTML = function() {
 		return JSON.stringify({validationErrors: errors, data: processed});
 	}
 }

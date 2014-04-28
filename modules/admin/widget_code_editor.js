@@ -155,6 +155,7 @@ function stateController($scope) {
 		nw.functions.configureWidget(id, settings_model, settings, function(new_settings) {
 			$scope.widgets[id].settings = new_settings;
 		  $scope.exportState();
+		  $("#widgetForm").hide();
 		});
 	}	
 
