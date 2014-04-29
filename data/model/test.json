@@ -22,20 +22,33 @@
             "name": "c",
             "type": "Number",
             "quantity": "",
-            "widget": "numeric_textbox",
+            "widget": "range",
             "settings": {
                 "min": 1,
                 "max": 5,
-                "label": "c"
+                "label": "c",
+                "data": "4"
             },
             "required": false
         },
         {
-            "name": "captcha",
-            "type": "Captcha",
+            "name": "rating",
+            "type": "Rating",
             "quantity": "",
-            "widget": "recaptcha",
-            "settings": "",
+            "widget": "fivestar",
+            "settings": {
+                "data": {
+                    "ratings": {
+                        "LrYVT9BpgJoo": 3.203125,
+                        "SwfaObS0h50j": 3
+                    },
+                    "total": 6.203125,
+                    "count": 2,
+                    "average": 3.1015625
+                },
+                "star_count": 10,
+                "label": "rating"
+            },
             "required": false
         }
     ],

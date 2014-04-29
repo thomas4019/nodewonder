@@ -256,12 +256,13 @@ widgets.model_form = function(input, id) {
 
 	this.head = ['/modules/models/models.css'];
 
-	this.processData = function(data) {
+	this.processData = function(data, old, user) {
 		console.log('model processing data');
 		var out = {};
 
 		_.each(model.fields, function(field) {
 			var field_data = data[field.name];
+			var field_old = old ? old[field.name] : undefined;
 			var widget_name = field.widget ? field.widget : cms.functions.getDefaultWidget(field.type);
 			var input = field.settings || {};
 			if (widget_name == 'model_form') {
@@ -273,7 +274,7 @@ widgets.model_form = function(input, id) {
 				widget_name = 'field_multi';
 			}
 			var widget = new cms.widgets[widget_name](input);
-			var processed = widget.processData(field_data);
+			var processed = widget.processData(field_data, field_old, user);
 			out[field.name] = processed;
 		});
 
@@ -319,13 +320,13 @@ widgets.model_form = function(input, id) {
 		});
   }
 
-	this.save = function (values, callback) {
+	this.save = function (values, user, callback) {
+		var widget = this;
 
 		var data = cms.functions.expandPostValues(values);
 		var related = cms.pending_forms[data.form_token];
 		delete data['form_token'];
 		model = related.model;
-		var processed = this.processData(data);
 
 		var record = related.record;
 		if (related.record == 'create') {
@@ -334,9 +335,17 @@ widgets.model_form = function(input, id) {
 			else
 				record = cms.functions.generateRecordID();
 		}
-		console.log(processed);
-		cms.functions.saveRecord(related.collection, record, processed, function(err, records) {
-			callback(err, records);
+		
+		cms.functions.getRecord(related.collection, record, function(err, 	old_data) {
+			console.log('old');
+			console.log(related.collection);
+			console.log(record);
+			console.log(old_data);
+			var processed = widget.processData(data, old_data, user);
+
+			cms.functions.saveRecord(related.collection, record, processed, function(err, records) {
+				callback(err, records);
+			});
 		});
 	}
 
@@ -585,8 +594,14 @@ widgets.process_model = function(settings, id) {
 		var model_widget = new cms.widgets['model_form']({'fields': settings.fields});
 		console.log(settings.data);
 		console.log(settings.fields);
-		processed = model_widget.processData(settings.data);
+		var old = {};
+	  var user = {};
+	  user.clientID = 'unknownID';
+	  user.ip = '0.0.0.0';
+
+		processed = model_widget.processData(settings.data, old, user);
 		model_widget.validateData(processed, function(c_errors) {
+			console.log('validation finished');
 			errors = c_errors;
 			callback();
 		});

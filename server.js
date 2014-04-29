@@ -13,7 +13,8 @@ var fs = require('fs'),
     repl = require("repl"),
     bower = require('bower'),
     bowerJson = require('bower-json'),
-    dextend = require('dextend');
+    dextend = require('dextend'),
+    Cookies = require('cookies');
 
 cms = {};
 cms.m = {};
@@ -132,11 +133,23 @@ async.series(
   processDeps],
   function() {
     console.log('the server is ready - running at http://127.0.0.1:3000/');
+    console.log('-------------------------------------------------------');
   });
 
 setTimeout(loadPaths, 100);
 
 var app = connect()
+  .use(function (req, res, next) {
+    var cookies = new Cookies( req, res, ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
+'af15db41-ef32-4a3f-bb15-7edce2e3744c',
+'fd075a38-a4dd-4c98-a552-239c11f6f5f7']);
+    req.clientID = cookies.get('clientID')
+    if (!req.clientID) {
+      req.clientID = cms.functions.makeid(12);
+      cookies.set('clientID', req.clientID, {signed: true, overwrite: true});
+    }
+    next();
+  })
   .use(connect.static('themes/html5up-tessellate/'))
   .use('/files', connect.static('files'))
   .use('/modules', connect.static('modules'))
@@ -356,6 +369,7 @@ function processPost(request, response, callback) {
 var save = function() {
   console.log('POST');
   console.log(this.res.post);
+
   var that = this;
 
   var saveResponse = function(err, data) {
@@ -374,12 +388,17 @@ var save = function() {
   var widget_name = this.res.post['widget'];
   delete this.res.post['widget'];
   var widget = new cms.widgets[widget_name](this.res.post);
+  
+  var user = {};
+  user.clientID = this.req.clientID;
+  user.ip = this.req.connection.remoteAddress;
+
   if (widget.load) {
     widget.load(function () {
-      results = widget.save(that.res.post, saveResponse);
+      results = widget.save(that.res.post, user, saveResponse);
     });
   } else {
-    results = widget.save(that.res.post, saveResponse);
+    results = widget.save(that.res.post, user, saveResponse);
   }
 }
 

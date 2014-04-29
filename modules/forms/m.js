@@ -194,6 +194,23 @@ widgets.numeric_textbox = function (input, id) {
   }
 }
 
+widgets.range = function (settings, id) {
+  this.tags = ['field_edit'];
+
+  this.settings = function() {
+    return  [ {"name": "data", "type": "Number"},
+      {"name": "min", "type": "Number"},
+      {"name": "max", "type": "Number"} ];
+  }
+
+  this.toHTML = function(zones) {
+    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (settings.label ? settings.label : '') + ':' + '</label>';
+    var element = settings.min+'<input type="range" style="width: 300px; display: inline;" name="'+id+'" value="'+settings.data+'" min="'+settings.min+'" max="'+settings.max+'">'+settings.max;
+
+    return label + element;
+  }
+}
+
 widgets.slider = function (settings, id) {
   this.tags = ['field_edit'];
 
@@ -467,5 +484,62 @@ widgets.field_multi = function(input, id) {
     });
 
     return out;
+  }
+}
+
+widgets.rating = function(settings, id) {
+  this.tags = ['field_edit'];
+  this.settings = [{"name": "data", "type": "Rating"}];
+
+  this.processData = function(data) {
+    return parseFloat(data);
+  }
+
+  this.toHTML = function() {
+    var label = '<label class="control-label" for="' + id + '-textbox" style="padding-right: 5px;">' + settings.label + ':' + '</label>';    
+    var element = '<input id="'+id+'-textbox" class="form-control input-small" type="number" name="' + id + '" ' + (settings.data ? 'value="' + htmlEscape(settings.data) + '"' : '') + '/>';
+
+    return (settings.label ? label : '') + element;
+  }
+}
+
+widgets.fivestar = function(settings, id) {
+  this.tags = ['field_edit'];
+  this.settings = [{"name": "data", "type": "Rating"},
+    {"name": "star_count", "type": "Number"}];
+
+  this.deps = {'raty': ['lib/jquery.raty.js']};
+
+  this.processData = function(data, old, user) {
+    old = old || {};
+    old.ratings = old.ratings || {};
+    old.total = old.total || 0;
+    old.count = old.count || 0;
+
+    var amount = parseFloat(data);
+    if (old.ratings[user.clientID]) { //changing rating
+      var diff = amount - old.ratings[user.clientID];
+      old.total += diff;
+    } else {
+      old.total += amount;
+      old.count++;
+    }
+
+    old.average = old.total / old.count;
+    old.ratings[user.clientID] = amount;
+    return old;
+  }
+
+  this.toHTML = function() {
+    return '<label class="control-label">'+settings.label+':</label><div id="'+id+'-stars"></div>' +
+    '<input id="'+id+'-score" class="form-control input-small" type="hidden" name="' + id + '" ' + (settings.data ? 'value="' + settings.data.average + '"' : '') + ' />' +
+    'Average: ' + settings.data.average + ' (' + settings.data.count + ' vote)';
+  }
+
+  this.script = function() {
+    return '$("#'+id+'-stars").raty({ click: function(score) { $("#'+id+'-score").val(score); }, ' +
+     (settings.data ? ' score: '+settings.data.average +',' : '') + 
+     (settings.star_count ? ' number: '+settings.star_count +',' : '') + 
+     ' path: "/bower_components/raty/lib/img", half: true });';
   }
 }

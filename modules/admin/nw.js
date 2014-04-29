@@ -229,7 +229,7 @@ var nw = function() {
 	function getID() {
 		if (!(docCookies.hasItem('clientID'))) {
 			var id = makeid(16);
-			docCookies.setItem('clientID', id);
+			docCookies.setItem('clientID', id, 60*60*24, '/', 'localhost:3000');
 		}
 		return docCookies.getItem('clientID');
 	}

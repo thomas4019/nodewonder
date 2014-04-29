@@ -28,7 +28,6 @@ functions.createHandlersCode = function(action) {
   var first = true;
   _.each(action.zone_tags, function(tags, slot_name) {
     if (_.contains(tags, 'action')) {
-      console.log(slot_name);
       if (!first)
         code += ',';
       code += slot_name + ': function() {\n' + 
@@ -145,10 +144,7 @@ widgets.submit_form = function(settings) {
   this.action = function(settings, id, scope, handlers) {
     var id = settings.selector ? settings.selector.substr(1) : '';
     var model = nw.model[id];
-    console.log(model);
-    console.log(nw.functions.serializedArrayToValues($('#'+id+' :input').serializeArray()));
     var data = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#'+id+' :input').serializeArray()));
-    console.log(data);
 
     nw.functions.cleanErrors(id);
     nw.functions.processModel(model.fields, data, function(results) {
