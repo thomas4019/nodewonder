@@ -4,11 +4,20 @@
     "c": "4",
     "rating": {
         "ratings": {
-            "LrYVT9BpgJoo": 3.203125,
+            "LrYVT9BpgJoo": 3.0126953125,
             "SwfaObS0h50j": 3
         },
-        "total": 6.203125,
+        "total": 6.0126953125,
         "count": 2,
-        "average": 3.1015625
+        "average": 3.00634765625
+    },
+    "score": {
+        "ratings": {
+            "LrYVT9BpgJoo": 1,
+            "SwfaObS0h50j": -1
+        },
+        "total": 0,
+        "count": 2,
+        "average": 0
     }
 }

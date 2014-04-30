@@ -70,25 +70,21 @@ widgets.textbox = function (input, id) {
 
   this.deps = {'jquery': [],'bootstrap':[]};
 
+  this.head = ['/modules/forms/forms.css'];
+
   this.settings = function() {
     return  [ {"name": "inline", "type": "Boolean"},
       {"name": "data", "type": "Text"} ];
   }
 
   this.toHTML = function(zones) {
-    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : '') + ':' + '</label>';
-    var element;
-    
-    if (input.data) {
-      element = '<input class="form-control input-small" type="text" name="' + id + '" value="' + htmlEscape(input.data) + '" />';
-    } else {
-      element = '<input class="form-control input-small" type="text" name="' + id + '" />';
-    }
+    var label = '<label for="' + id + '" style="padding-right: 5px;">' + input.label + ':' + '</label>';
+    var element = '<input class="form-control input-small" type="text" name="' + id + '"' + (input.data ? ' value="' + htmlEscape(input.data) + '"' : '')+' />';
 
     if (input.inline) {
-      return '<div class="controls form-inline">' + label + element + '</div>';
+      return '<div class="controls form-inline">' + (input.label ? label : '') + element + '</div>';
     } else {
-      return label + element;
+      return (input.label ? label : '') + element;
     }
   }
 }
@@ -413,22 +409,38 @@ widgets.date = function (input, id) {
 }
 
 widgets.field_multi = function(input, id) {
-  var w_type = input.widget;
-  var w_input = input;
+  var w_input = deep.clone(input);
   var count;
+  var w_type;
 
-  delete w_input['widget'];
+  var can_add = false;
+  var map = false;
+
+  if (input.quantity && input.quantity.indexOf(':') !== -1) {
+    input.quantity = input.quantity.substr(input.quantity.indexOf(':') + 1, input.quantity.length)
+    w_type = 'key_value';
+    map = true;
+    var ndata = [];
+    _.each(input.data, function(value, key) {
+      ndata.push({key: key, value: value});
+    });
+    input.data = ndata;
+    console.log(input.data);
+  } else {
+    w_type = input.widget;
+    delete w_input['widget'];
+  }
+
+  if (input.quantity && input.quantity.slice(-1) == '+') {
+    can_add = true;
+    input.quantity = input.quantity.substring(0, input.quantity.length - 1)
+  }
+
+  delete w_input['label'];
   w_input['inline'] = 'multi';
 
   this.children = function(callback) {
     var state = {"body": {}};
-
-    var can_add = false;
-
-    if (input.quantity && input.quantity.slice(-1) == '+') {
-      can_add = true;
-      input.quantity = input.quantity.substring(0, input.quantity.length - 1)
-    }
 
     if (can_add) {
       state["body"]["add"] = {"type": "button", "slots": {"events": ["onclick"]}}
@@ -444,10 +456,10 @@ widgets.field_multi = function(input, id) {
       count = 3;
     }
 
-    for (var i = 0; i < count; i++) {
-      state["body"]["" + i] = {};
-      state["body"]["" + i]['type'] = w_type;
-      state["body"]["" + i]['settings'] = deep.clone(w_input);
+    for (var i = 0; i < count; i ++) {
+      state["body"]["" + (i)] = {};
+      state["body"]["" + (i)]['type'] = w_type;
+      state["body"]["" + (i)]['settings'] = deep.clone(w_input);
       if (input.data && input.data[i])
         state["body"]["" + i]['settings']['data'] = input.data[i];
     }
@@ -471,17 +483,73 @@ widgets.field_multi = function(input, id) {
 
   this.toHTML = function(slots) {
     var label = '<label style="padding-right: 5px;">' + input.label + ':' + '</label>';
-    var arr = '<input type="hidden" name="'+id+'" value="new Array" />';
+    var arr = '<input type="hidden" name="'+id+'" value="' + (map ? 'new Object' : 'new Array') + '" />';
     return label + arr + slots.body.html();
   }
 
   this.processData = function(value) {
-    var out = [];
+    if (map) {
+      var out = {};
+      var widget = new cms.widgets[w_type](input);
+
+      _.each(value, function(ivalue) {
+        var processed = widget.processData(ivalue);
+        if (processed.key) {
+          out[processed.key] = processed.value;
+          delete processed['key'];
+        }
+      });
+
+      return out;
+    } else {
+      var out = [];
+      var widget = new cms.widgets[w_type](input);
+
+      _.each(value, function(ivalue) {
+        out.push(widget.processData(ivalue));
+      });
+
+      return out;
+    }
+  }
+}
+
+widgets.key_value = function(input, id) {
+  var w_type = input.widget;
+  var w_input = input;
+
+  delete w_input['widget'];
+  delete w_input['label'];
+
+  this.children = function(callback) {
+    var state = {"body": {}};
+
+    state["body"]["key"] = {
+      type: 'textbox',
+      settings: {data: (input.data ? input.data.key : undefined) }
+    };
+
+    state["body"]["value"] = {
+      type: w_type,
+      settings: deep.clone(w_input),
+    };
+    state["body"]["value"]["settings"]["data"] = input.data ? input.data.value : undefined;
+
+    callback(state);
+  }
+
+  this.wrapper_style = "padding-left: 5px;";  
+
+  this.toHTML = function(slots) {
+    return slots.body.html();
+  }
+
+  this.processData = function(value) {
+    var key = value.key;
     var widget = new cms.widgets[w_type](input);
 
-    _.each(value, function(ivalue) {
-      out.push(widget.processData(ivalue));
-    });
+    var out = widget.processData(value);
+    out['key'] = key;
 
     return out;
   }
@@ -489,7 +557,7 @@ widgets.field_multi = function(input, id) {
 
 widgets.rating = function(settings, id) {
   this.tags = ['field_edit'];
-  this.settings = [{"name": "data", "type": "Rating"}];
+  this.settings = [{"name": "data", "type": "vote"}];
 
   this.processData = function(data) {
     return parseFloat(data);
@@ -505,7 +573,7 @@ widgets.rating = function(settings, id) {
 
 widgets.fivestar = function(settings, id) {
   this.tags = ['field_edit'];
-  this.settings = [{"name": "data", "type": "Rating"},
+  this.settings = [{"name": "data", "type": "vote"},
     {"name": "star_count", "type": "Number"}];
 
   this.deps = {'raty': ['lib/jquery.raty.js']};
@@ -531,9 +599,10 @@ widgets.fivestar = function(settings, id) {
   }
 
   this.toHTML = function() {
+    settings.data = settings.data || {average: 0, count: 0};
     return '<label class="control-label">'+settings.label+':</label><div id="'+id+'-stars"></div>' +
     '<input id="'+id+'-score" class="form-control input-small" type="hidden" name="' + id + '" ' + (settings.data ? 'value="' + settings.data.average + '"' : '') + ' />' +
-    'Average: ' + settings.data.average + ' (' + settings.data.count + ' vote)';
+    'Average: ' + Math.round(settings.data.average*100)/100 + ' (' + settings.data.count + ' vote)';
   }
 
   this.script = function() {
@@ -541,5 +610,60 @@ widgets.fivestar = function(settings, id) {
      (settings.data ? ' score: '+settings.data.average +',' : '') + 
      (settings.star_count ? ' number: '+settings.star_count +',' : '') + 
      ' path: "/bower_components/raty/lib/img", half: true });';
+  }
+}
+
+widgets.up_down = function(settings, id) {
+  this.tags = ['field_edit'];
+  this.settings = [{"name": "data", "type": "vote"}];
+
+  this.deps = {'font-awesome': ['css/font-awesome.css']};
+
+  this.head = ['/modules/forms/up_down.css']
+
+  this.processData = function(data, old, user) {
+    old = old || {};
+    old.ratings = old.ratings || {};
+    old.total = old.total || 0;
+    old.count = old.count || 0;
+
+    var amount = parseFloat(data);
+    if (old.ratings[user.clientID]) { //changing rating
+      var diff = amount - old.ratings[user.clientID];
+      old.total += diff;
+    } else {
+      old.total += amount;
+      old.count++;
+    }
+
+    old.average = old.total / old.count;
+    old.ratings[user.clientID] = amount;
+    return old;
+  }
+
+  this.script = function() {
+    return '$("#'+id+' .up-vote").on("click", function() { \
+      $("#'+id+' .up-vote").addClass("selected"); $("#'+id+' .down-vote").removeClass("selected"); $("#'+id+' input").val(1); \
+    });' +
+    '$("#'+id+' .down-vote").on("click", function() { \
+      $("#'+id+' .down-vote").addClass("selected"); $("#'+id+' .up-vote").removeClass("selected"); $("#'+id+' input").val(-1); \
+    });';
+  }
+
+  this.toHTML = function() {
+    var label = '<label class="control-label">'+settings.label+':</label>';
+    return '<i class="up-vote fa fa-caret-up fa-3x"></i>' +
+    '<div style="width: 30px; text-align: center;">'+(settings.data ? settings.data.total : '')+'</div>' +
+    '<i class="down-vote fa fa-caret-down fa-3x"></i>' + 
+    '<input type="hidden" name="'+id+'" >';
+  }
+}
+
+widgets.upload = function(settings, id) {
+  this.tags = ['field_edit'];
+  this.settings = [{"name": "data", "type": "File"}];
+
+  this.toHTML = function() {
+    return '<input type="file" name="'+id+'" />'
   }
 }

@@ -15,6 +15,21 @@ module.exports = {
 };
 widgets = module.exports.widgets;
 
+widgets.user_login = function() {
+  this.settings = [{"name": "username", "type": "Text"},
+    {"name": "password", "type": "Text"}];
+
+  this.doProcess = function() {
+
+  }
+}
+
+widgets.user_logout = function() {
+  this.doProcess = function() {
+
+  }
+}
+
 passport.use(new LocalStrategy(
   function(username, password, done) {
     /*User.findOne({ username: username }, function (err, user) {

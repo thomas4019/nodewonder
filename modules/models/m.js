@@ -123,6 +123,10 @@ functions.expandPostValues = function(values) {
 				value = [];
 				tocheck.push(last);
 			}
+			if (value == 'new Object') {
+				value = {};
+				//tocheck.push(last);
+			}
 			current[last] = value;
 		}
 	});
@@ -187,6 +191,8 @@ widgets.model_form = function(input, id) {
 	if (input.values) {
 		input.data = JSON.parse(input.values);
 	}
+
+	this.deps = {'underscore': []};
 
   this.settings = function() {
     return  [ {"name": "model", "type": "Text"},
@@ -272,6 +278,7 @@ widgets.model_form = function(input, id) {
 			if (field.quantity) {
 				input['widget'] = widget_name;
 				widget_name = 'field_multi';
+				input['quantity'] = field.quantity;
 			}
 			var widget = new cms.widgets[widget_name](input);
 			var processed = widget.processData(field_data, field_old, user);
@@ -329,19 +336,16 @@ widgets.model_form = function(input, id) {
 		model = related.model;
 
 		var record = related.record;
-		if (related.record == 'create') {
-			if (related.model.index && processed[related.model.index])
-				record = processed[related.model.index];
-			else
-				record = cms.functions.generateRecordID();
-		}
 		
 		cms.functions.getRecord(related.collection, record, function(err, 	old_data) {
-			console.log('old');
-			console.log(related.collection);
-			console.log(record);
-			console.log(old_data);
 			var processed = widget.processData(data, old_data, user);
+
+			if (related.record == 'create') {
+				if (related.model.index && processed[related.model.index])
+					record = processed[related.model.index];
+				else
+					record = cms.functions.generateRecordID();
+			}
 
 			cms.functions.saveRecord(related.collection, record, processed, function(err, records) {
 				callback(err, records);
@@ -592,12 +596,10 @@ widgets.process_model = function(settings, id) {
 
 	this.load = function(callback) {
 		var model_widget = new cms.widgets['model_form']({'fields': settings.fields});
-		console.log(settings.data);
-		console.log(settings.fields);
 		var old = {};
-	  var user = {};
-	  user.clientID = 'unknownID';
-	  user.ip = '0.0.0.0';
+		var user = {};
+		user.clientID = 'unknownID';
+		user.ip = '0.0.0.0';
 
 		processed = model_widget.processData(settings.data, old, user);
 		model_widget.validateData(processed, function(c_errors) {

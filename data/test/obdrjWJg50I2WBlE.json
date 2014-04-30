@@ -1,0 +1,27 @@
+{
+    "a": "123",
+    "b": {
+        "ab": "12",
+        "cd": "345",
+        "ef": "1",
+        "aoeu": "123"
+    },
+    "c": "3",
+    "rating": {
+        "ratings": {
+            "LrYVT9BpgJoo": 0.0010797969981643507
+        },
+        "total": 0.0010797969981644652,
+        "count": 21,
+        "average": 0.00005141890467449834
+    },
+    "score": {
+        "ratings": {
+            "LrYVT9BpgJoo": null
+        },
+        "total": null,
+        "count": 26,
+        "average": null
+    },
+    "files": ""
+}

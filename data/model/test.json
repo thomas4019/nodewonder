@@ -13,7 +13,7 @@
         {
             "name": "b",
             "type": "Text",
-            "quantity": "",
+            "quantity": "key:+",
             "widget": "textbox",
             "settings": "",
             "required": false
@@ -27,28 +27,56 @@
                 "min": 1,
                 "max": 5,
                 "label": "c",
-                "data": "4"
+                "data": "3"
             },
             "required": false
         },
         {
             "name": "rating",
-            "type": "Rating",
+            "type": "vote",
             "quantity": "",
             "widget": "fivestar",
             "settings": {
                 "data": {
                     "ratings": {
-                        "LrYVT9BpgJoo": 3.203125,
-                        "SwfaObS0h50j": 3
+                        "LrYVT9BpgJoo": 0.0010797969981643507
                     },
-                    "total": 6.203125,
-                    "count": 2,
-                    "average": 3.1015625
+                    "total": 0.0010797969981644652,
+                    "count": 21,
+                    "average": 0.00005141890467449834
                 },
                 "star_count": 10,
-                "label": "rating"
+                "label": "rating",
+                "model": "vote",
+                "inline": "model"
             },
+            "required": false
+        },
+        {
+            "name": "score",
+            "type": "vote",
+            "quantity": "",
+            "widget": "up_down",
+            "settings": {
+                "data": {
+                    "ratings": {
+                        "LrYVT9BpgJoo": null
+                    },
+                    "total": null,
+                    "count": 26,
+                    "average": null
+                },
+                "star_count": null,
+                "label": "score"
+            },
+            "required": false
+        },
+        {
+            "name": "files",
+            "type": "File",
+            "quantity": "",
+            "widget": "upload",
+            "settings": "",
             "required": false
         }
     ],

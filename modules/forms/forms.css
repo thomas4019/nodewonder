@@ -1,0 +1,9 @@
+.widget-key_value {
+	display: table;
+}
+
+.widget-key_value > div {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 5px;
+}

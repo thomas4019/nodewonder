@@ -16,6 +16,14 @@
             "widget": "password",
             "settings": "",
             "required": false
+        },
+        {
+            "name": "Captcha",
+            "type": "Captcha",
+            "quantity": "",
+            "widget": "recaptcha",
+            "settings": "",
+            "required": false
         }
     ]
 }

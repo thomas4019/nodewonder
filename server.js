@@ -129,6 +129,7 @@ var allDeps = [];
 async.series(
   [registerAllModules,
   registerAllThemes,
+  registerModels,
   installAllDeps,
   processDeps],
   function() {
@@ -215,6 +216,14 @@ function registerAllThemes(callback) {
   async.parallel(funcs, function() {
     callback();
   });
+}
+
+function registerModels(callback) {
+  _.each(cms.model_data['model'], function(model, type) {
+    cms.edit_widgets[type] = cms.edit_widgets[type] || [];
+    cms.edit_widgets[type].push('model_form');
+  });
+  callback();
 }
 
 function installAllDeps(callback) {

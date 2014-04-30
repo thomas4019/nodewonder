@@ -1,0 +1,50 @@
+{
+    "name": "vote",
+    "description": "",
+    "fields": [
+        {
+            "name": "total",
+            "type": "Number",
+            "quantity": "",
+            "widget": "numeric_textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "count",
+            "type": "Number",
+            "quantity": "",
+            "widget": "numeric_textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "average",
+            "type": "Number",
+            "quantity": "",
+            "widget": "numeric_textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "ratings",
+            "type": "Number",
+            "quantity": "key:+",
+            "widget": "numeric_textbox",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "index": "",
+    "views": [
+        {
+            "Name": "",
+            "Code": {
+                "widgets": {},
+                "slotAssignments": {
+                    "body": []
+                }
+            }
+        }
+    ]
+}
