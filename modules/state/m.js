@@ -27,14 +27,18 @@ functions.initializeState = function(state, scope, callback) {
 
   var initializeWidget = function(w, id) {
     var name = w.type;
-    if (cms.widgets[name]) {
-      var widget = new cms.widgets[name](w.settings || {}, id, scope);
-      widget.w_settings = w.settings;
-      widget.id = id;
-    } else {
+
+    if (!cms.widgets[name]) {
       console.error('Missing widget:' + name);
-      var widget = new cms.widgets['echo'](w.settings || {}, id, scope);
+      name = 'echo';
     }
+
+    cms.functions.fillSettings(w.settings, scope, cms.widgets[name].settings_unfiltered);
+    w.settings = w.settings || {};
+    var widget = new cms.widgets[name](w.settings, id, scope);
+    widget.w_settings = w.settings;
+    widget.id = id;
+
     widget.all_children = {};
 
     if (widget.children) {

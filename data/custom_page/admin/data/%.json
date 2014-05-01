@@ -1,8 +1,7 @@
 {
     "URL": "",
     "parent": "admin",
-    "contentType": "",
-    "controller": "widgets.wyobn3bP.settings.model = args.model; widgets.wyobn3bP.settings.record = args.record; callback();",
+    "controller": "widgets.wyobn3bP.settings.data = load(args.model, args.record); callback();",
     "code": {
         "widgets": {
             "wyobn3bP": {
@@ -10,7 +9,8 @@
                 "slots": {},
                 "settings": {
                     "model": "model",
-                    "record": "link"
+                    "record": "{{args.model}}",
+                    "field": "fields"
                 }
             },
             "ZA56joXJ": {
@@ -19,9 +19,6 @@
                 "settings": {
                     "data": "<a href=\"/admin/list/model\">Models</a> : <a href=\"/admin/list/{{ args.model }}/\">{{ args.model }}</a> : {{ args.record }}"
                 }
-            },
-            "temp": {
-                "type": "submit_form"
             },
             "itYLXx13": {
                 "type": "button",
@@ -51,70 +48,17 @@
                 "type": "onclick",
                 "slots": {
                     "actions": [
-                        "QnQ1aNci"
+                        "yD4LXiuv"
                     ]
-                }
-            },
-            "QnQ1aNci": {
-                "type": "submit_form",
-                "slots": {
-                    "success": [
-                        "ACqorjKU"
-                    ],
-                    "failure": [
-                        "Clo3RorE"
-                    ]
-                },
-                "settings": {
-                    "selector": "#wyobn3bP"
-                }
-            },
-            "ACqorjKU": {
-                "type": "message",
-                "slots": {},
-                "settings": {
-                    "message": "Saved Successfully.",
-                    "type": "success"
-                }
-            },
-            "Clo3RorE": {
-                "type": "message",
-                "slots": {},
-                "settings": {
-                    "message": "Save failed. Please copy important data to avoid data loss.",
-                    "type": "error"
                 }
             },
             "bZTNEhMs": {
                 "type": "onclick",
                 "slots": {
                     "actions": [
-                        "vja17991"
+                        "kyKLGO7q"
                     ]
                 }
-            },
-            "vja17991": {
-                "type": "submit_form",
-                "slots": {
-                    "success": [
-                        "j5vt7Awt"
-                    ],
-                    "failure": [
-                        "AcMHlSnl"
-                    ]
-                }
-            },
-            "AcMHlSnl": {
-                "type": "message",
-                "slots": {},
-                "settings": {
-                    "message": "Save failed. Please copy important data to avoid data loss.",
-                    "type": "error"
-                }
-            },
-            "j5vt7Awt": {
-                "type": "go_back",
-                "slots": {}
             },
             "tMsJcZIG": {
                 "type": "button",
@@ -189,6 +133,87 @@
                 "settings": {
                     "URL": "admin/list/{{args.model}}"
                 }
+            },
+            "kyKLGO7q": {
+                "type": "save_record",
+                "slots": {
+                    "success": [
+                        "ARm2WD2e"
+                    ],
+                    "failure": [
+                        "HFuYWHvO"
+                    ]
+                },
+                "settings": {
+                    "selector": "#wyobn3bP",
+                    "model": "{{args.model}}",
+                    "record": "{{args.record}}"
+                }
+            },
+            "HFuYWHvO": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "Save failed! Please copy important data to avoid data loss.",
+                    "type": "error"
+                }
+            },
+            "ARm2WD2e": {
+                "type": "go_back",
+                "slots": {}
+            },
+            "yD4LXiuv": {
+                "type": "save_record",
+                "slots": {
+                    "success": [
+                        "ACqorjKU",
+                        "zVJ1oSfo"
+                    ],
+                    "failure": [
+                        "Clo3RorE"
+                    ]
+                },
+                "settings": {
+                    "model": "{{args.model}}",
+                    "record": "{{args.record}}",
+                    "selector": "#wyobn3bP",
+                    "record_id_dest": "new_record"
+                }
+            },
+            "Clo3RorE": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "Save failed. Please copy important data to avoid data loss.",
+                    "type": "error"
+                }
+            },
+            "ACqorjKU": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "Saved Successfully.",
+                    "type": "success"
+                }
+            },
+            "zVJ1oSfo": {
+                "type": "if",
+                "slots": {
+                    "then": [],
+                    "else": [
+                        "gQ2HqByO"
+                    ]
+                },
+                "settings": {
+                    "condition": "scope.new_record == scope.args.record"
+                }
+            },
+            "gQ2HqByO": {
+                "type": "goto_page",
+                "slots": {},
+                "settings": {
+                    "URL": "admin/data/?model={{args.model}}&record={{new_record}}"
+                }
             }
         },
         "slotAssignments": {
@@ -202,5 +227,6 @@
             ]
         }
     },
-    "Title": ""
+    "Title": "",
+    "contentType": ""
 }

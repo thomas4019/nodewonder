@@ -15,16 +15,30 @@ module.exports = {
 };
 widgets = module.exports.widgets;
 
-widgets.user_login = function() {
-  this.settings = [{"name": "username", "type": "Text"},
+widgets.user_login = function(settings, id) {
+  this.input = [{"name": "username", "type": "Text"},
     {"name": "password", "type": "Text"}];
 
+  this.doProcess = function(input, callback) {
+    console.log(input);
+    cms.functions.getRecord('user', input.username, function(err, data) {
+      if (err) {
+        callback('invalid');
+        return
+      }
+      callback(undefined, data);
+      return;
+    });
+  }
+}
+
+widgets.user_logout = function() {
   this.doProcess = function() {
 
   }
 }
 
-widgets.user_logout = function() {
+widgets.get_record = function() {
   this.doProcess = function() {
 
   }

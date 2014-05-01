@@ -111,7 +111,7 @@ widgets.widget_listing = function (input, id) {
 
   this.load = function(callback) {
     html = '<table class="tablesorter-blue">';
-    html += '<thead> <tr><th>Module</th> <th>Widget Name</th> <th>Deps</th> <th>Tags</th> <th>Data</th> <th>Zones</th> <th>Zone Tags</th></tr> </thead>'
+    html += '<thead> <tr><th>Module</th> <th>Widget Name</th> <th>Settings</th> <th>Deps</th> <th>Tags</th> <th>Data</th> <th>Zones</th> <th>Zone Tags</th></tr> </thead>'
 
     html += '<tbody>';
     _.each(cms.widgets, function(widget) {
@@ -123,7 +123,7 @@ widgets.widget_listing = function (input, id) {
           data = field;
         }
       });
-      html += '<tr><td>' + w.module + '</td> <td>' + w.name + '</td> <td>' + (w.deps ? JSON.stringify(w.deps) : '') + '</td> <td>' + (w.tags ? JSON.stringify(w.tags) : '') + '</td>  <td>' + (data ? data.type : '') + '</td> <td>' + (w.zones ? JSON.stringify(retrieve(w.zones)) : '') + '</td> <td>' + (w.zone_tags ? JSON.stringify(w.zone_tags) : '') + '</td>  </tr>';
+      html += '<tr><td>' + w.module + '</td> <td>' + w.name + '</td> <td>' + (w.settings ? JSON.stringify(w.settings) : '') + '</td> <td>' + (w.deps ? JSON.stringify(w.deps) : '') + '</td> <td>' + (w.tags ? JSON.stringify(w.tags) : '') + '</td>  <td>' + (data ? data.type : '') + '</td> <td>' + (w.zones ? JSON.stringify(retrieve(w.zones)) : '') + '</td> <td>' + (w.zone_tags ? JSON.stringify(w.zone_tags) : '') + '</td>  </tr>';
     });
     html += '</tbody>';
 

@@ -87,7 +87,7 @@ functions.loadPageState = function(path, callback) {
   });
 }
 
-functions.viewPage = function(path, vars, callback, error_callback) {
+functions.viewPage = function(path, vars, scope, callback, error_callback) {
   if (path == '') {
     path = 'index'
   }
@@ -111,7 +111,7 @@ functions.viewPage = function(path, vars, callback, error_callback) {
         //console.log(vars);
         //console.log(last);
         //console.log('searching: ' + path);
-        cms.functions.viewPage(path, vars, callback, error_callback);
+        cms.functions.viewPage(path, vars, scope, callback, error_callback);
       }
       return;
     }
@@ -125,7 +125,7 @@ functions.viewPage = function(path, vars, callback, error_callback) {
       });
     }
 
-    page.scope = {};
+    page.scope = scope;
 
     if (page.controller && page.controller.length > 0) {
       //eval(page.controller);

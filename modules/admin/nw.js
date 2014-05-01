@@ -187,12 +187,12 @@ var nw = function() {
 	    if (result.error) {
 	    	$("#widgetForm").remove();
 	    } else {
-	    	var form_begin = '<form>' + $("#widgetForm").html('<div>' + id + '</div>' + result.html + '<input type="submit" class="save" value="Save"> </form>' + '<div class="close">X</div>');
+	    	var form_begin = $("#widgetForm").html('<div>' + id + '</div>' + result.html + '<input type="button" class="save" value="Save">' + '<div class="close">X</div>');
 		    $("#widgetForm .close").click(function() {
 		    	$("#widgetForm").remove();
 		    });
 		    $("#widgetForm .save").click(function() {
-					var settings_raw = $( '#start form').serializeArray();
+					var settings_raw = $( '#start :input').serializeArray();
 					var settings_post = nw.functions.serializedArrayToValues(settings_raw);
 					delete settings_post['start-form_token'];
 					var settings = nw.functions.expandPostValues(settings_post);
@@ -203,10 +203,11 @@ var nw = function() {
 	  });
 	}
 
-	function doProcess(token, success, error) {
+	function doProcess(token, input, success, error) {
 		var data = {};
 		data['token'] = token;
 		data['widget'] = 'process';
+		data['input'] = JSON.stringify(input);
 		$.ajax('/post', {type: 'POST', data: data, success: function(result) {
 			console.log(result);
 			success(result)
@@ -248,6 +249,16 @@ var nw = function() {
 		}
 	}
 
+	function fillSettings(settings, scope, exclude) {
+	  exclude = exclude || ['data'];
+	  _.each(settings, function(value, key) {
+	    if (value && (typeof value === 'string') && value.indexOf("{{") != -1 && (!_.contains(exclude, key))) {
+	      var template = Handlebars.compile(value);
+	      settings[key] = template(scope);
+	    }
+	  })
+	}
+
 	return {
 		counter: {},
 		model: {},
@@ -263,7 +274,8 @@ var nw = function() {
 			doProcess: doProcess,
 			processModel: processModel,
 			cleanErrors: cleanErrors,
-			showErrors: showErrors
+			showErrors: showErrors,
+			fillSettings: fillSettings
 		},
 		clientID: getID()
 	};

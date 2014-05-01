@@ -1,0 +1,36 @@
+{
+    "URL": "admin/settings/%",
+    "parent": "admin",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "ajGGMkV3": {
+                "type": "header",
+                "slots": {},
+                "settings": {
+                    "data": "Setting",
+                    "type": ""
+                }
+            },
+            "UpmLvlaI": {
+                "type": "model_form",
+                "slots": {
+                    "events": []
+                },
+                "settings": {
+                    "model": "setting",
+                    "record": "{{args.arg2}}",
+                    "field": "fields"
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "ajGGMkV3",
+                "UpmLvlaI"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": ""
+}

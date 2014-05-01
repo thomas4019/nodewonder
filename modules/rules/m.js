@@ -58,7 +58,18 @@ functions.eventScript = function() {
     var code = cms.functions.createActionCode(slots.actions);
     //var code = cms.functions.concatActions(slots.actions);
     return this.makeEventJS(selector, code);
-  }
+}
+
+functions.setupProcess = function(widget, settings) {
+  var token = cms.functions.makeid(36);
+  settings.token = token;
+
+  cms.pending_processes[token] = {
+    process: widget,
+    settings: settings,
+    token: settings.token
+  };
+}
 
 widgets.onload = function (input) {
   this.zones = ['actions'];
@@ -172,62 +183,47 @@ widgets.go_back = function() {
 
 widgets.goto_page = function(settings, id, scope) {
   this.settings = [{"name": "URL", "type": "Text"}];
+  this.deps = {'handlebars': []}
 
-  this.makeActionJS = function() {
+  this.action = function(settings, id, scope, handlers) {
     var url = Handlebars.compile(settings.URL);
-    return 'window.location="/' + url(scope) + '";';
+    window.location='/' + url(scope);
   }
 }
+widgets.goto_page.settings_unfiltered = ['URL'];
 
 widgets.process = function() {
-  this.save = function(values, callback) {
+  this.save = function(values, user, callback) {
     var token = values['token'];
+    var input = JSON.parse(values['input']);
     var related = cms.pending_processes[token];
-    console.log(cms.pending_processes);
-    console.log(token);
-    console.log(related);
-    var process = new cms.widgets[related.process](related.settings);
-    console.log(process);
+    if (related) {
+      if (cms.widgets[related.process]) {
+        var process = new cms.widgets[related.process](related.settings, '', user);
 
-    process.doProcess(function(err, result) {
-      callback(err, result);
-    });
+        process.doProcess(input, function(err, result) {
+          callback(err, result);
+        }); 
+      } else {
+        callback('missing widget: ' + related.process);
+      }
+    } else {
+      callback('process token not found');
+    }
   }
 }
 
-widgets.delete_record = function(settings, id, scope) {
-  this.settings = [{"name": "model", "type": "Text"},
-    {"name": "record", "type": "Text"}];
+widgets.if = function(settings, id) {
+  this.settings = [{"name": "condition", "type": "Text"}];
 
-  this.zones = ['success', 'failure'];
-  this.zone_tags = {success: ['action'], failure: ['action']};
-
-  var token;
-
-  this.makeActionJS = function() {
-    var token = cms.functions.makeid(36);
-
-    var model = Handlebars.compile(settings.model);
-    var record = Handlebars.compile(settings.record);
-    settings.model = model(scope);
-    settings.record = record(scope);
-
-    cms.pending_processes[token] = {
-      process: 'delete_record',
-      settings: settings,
-      token: token
-    };
-
-    var slots = this.all_children;
-    var success = cms.functions.createActionCode(slots.success);
-    var failure = cms.functions.createActionCode(slots.failure);
-
-    return 'nw.functions.doProcess("'+token+'", function() { '+ success +' }, function() { '+ failure +' });';
-  }
-
-  this.doProcess = function(callback) {
-    cms.functions.deleteRecord(settings.model, settings.record, function(err) {
-      callback(err, {});
-    });
+  this.zones = ['then', 'else'];
+  this.zone_tags = {"then": ['action'], "else": ['action']};
+  
+  this.action = function(settings, id, scope, handlers) {
+    if (eval(settings.condition)) {
+      handlers.then();
+    } else {
+      handlers.else();
+    }
   }
 }

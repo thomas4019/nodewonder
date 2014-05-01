@@ -24,10 +24,6 @@ widgets.recaptcha = function(settings, id) {
     recaptcha.toHTML();
   }
 
-  this.processData = function(data, oldData, user) {
-
-  }
-
   this.validateData = function(data, callback) {
     var raw_data = {
         remoteip:  '24.49.170.112',

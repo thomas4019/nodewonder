@@ -9,7 +9,7 @@
                 "type": "model_data_listing",
                 "slots": {},
                 "settings": {
-                    "row_template": "<li class=\"list-group-item\" ><a href=\"/admin/data/?model=model&record={{ key }}\"><span class=\"glyphicon glyphicon-edit\"></span> {{ key }}</a></li>",
+                    "row_template": "<a href=\"/admin/data/?model=model&record={{ key }}\"><span class=\"glyphicon glyphicon-edit\"></span> {{ key }}</a>",
                     "model": "model",
                     "add_button": "on"
                 }

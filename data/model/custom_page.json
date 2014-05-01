@@ -16,19 +16,10 @@
             "quantity": "",
             "widget": "model_record_reference",
             "settings": {
-                "label": "",
+                "label": "parent",
                 "model": "custom_page",
-                "name": "parent",
-                "data": ""
+                "name": "parent"
             },
-            "required": false
-        },
-        {
-            "name": "contentType",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
             "required": false
         },
         {
@@ -45,49 +36,21 @@
             "quantity": "",
             "widget": "widget_code_editor",
             "settings": {
-                "label": "Widget Code",
+                "label": "code",
                 "name": "code",
                 "data": {
                     "widgets": {
-                        "1": {
-                            "type": "setting",
-                            "settings": {
-                                "file": "info"
-                            }
-                        },
-                        "2": {
-                            "type": "htmlfile",
-                            "settings": {
-                                "path": "menu.html"
-                            }
-                        },
-                        "start": {
+                        "menu": {
                             "type": "template",
-                            "slots": {
-                                "body": [
-                                    "1"
-                                ],
-                                "top": [
-                                    "2"
-                                ]
-                            },
                             "settings": {
-                                "path": "admin.html"
+                                "path": "modules/admin/menu.html",
+                                "username": "{{user.username}}"
                             }
-                        },
-                        "NYfR460F": {
-                            "type": "widget_code_editor",
-                            "slots": {},
-                            "field": "code",
-                            "model_type": "Text",
-                            "model": "custom_page",
-                            "widget": "plaintext"
                         }
                     },
                     "slotAssignments": {
                         "body": [
-                            "start",
-                            "NYfR460F"
+                            "menu"
                         ]
                     }
                 }
@@ -96,6 +59,14 @@
         },
         {
             "name": "Title",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "contentType",
             "type": "Text",
             "quantity": "",
             "widget": "textbox",

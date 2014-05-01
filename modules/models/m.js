@@ -79,8 +79,8 @@ functions.getRecord = function(model_name, record_id, callback) {
 }
 
 functions.saveRecord = function(model_name, record_id, value, callback) {
-	mkdirp('data/' + model_name + '/');
-	fs.writeFile('data/' + model_name + '/' + record_id  + '.json', JSON.stringify(value, null, 4));
+	mkdirp('data/' + model_name + '/' + path.dirname(record_id));
+	fs.writeFile('data/' + model_name + '/' + record_id  + '.json', JSON.stringify(value, null, 4))	;
 	if (!cms.model_data[model_name])
 		cms.model_data[model_name] = {};
 	cms.model_data[model_name][record_id] = value;
@@ -169,27 +169,32 @@ function flatten(out, prefix, value, fields) {
 	return out;
 }
 
-widgets.model_form = function(input, id) {
-	var model;
-	var model_values;
-	var model_values_obj;
+widgets.model_form = function(settings, id, user) {
+	var fields;
 
-	var inline = input.inline;
+	var inline = settings.inline;
 
-	if (input.model) {
-		model = cms.model_data['model'][input.model];
-		if (!model) {
-			console.error('Unknown model type: '+ input.model);
-		}
-	} else if (input.fields) {
-		if (typeof input.fields === 'string')
-	 		model = {"fields": JSON.parse(input.fields) };
-	 	else
-	 		model = {"fields": input.fields };
+	if (!settings.field) {
+		settings.field = 'fields';
 	}
 
-	if (input.values) {
-		input.data = JSON.parse(input.values);
+	if (settings.fields) {
+		if (typeof settings.fields === 'string')
+	 		fields = JSON.parse(settings.fields);
+	 	else
+	 		fields = settings.fields;
+	} else if (settings.model) {
+		if (!cms.model_data[settings.model]) {
+			console.trace('Unknown model type: '+ settings.model);
+		}
+		if (!cms.model_data[settings.model][settings.record]) {
+			console.trace('Unknown record: '+ settings.record);
+		}
+		fields = cms.model_data[settings.model][settings.record][settings.field];
+	}
+
+	if (typeof settings.data == 'string') {
+		settings.data = JSON.parse(settings.data);
 	}
 
 	this.deps = {'underscore': []};
@@ -197,76 +202,52 @@ widgets.model_form = function(input, id) {
   this.settings = function() {
     return  [ {"name": "model", "type": "Text"},
     	//{"name": "fields", "type": "field", "quantity": "1+"},
-    	{"name": "inline", "type": "Boolean"},
-    	{"name": "record", "type": "Text"} ];
+    	{"name": "record", "type": "Text"},
+    	{"name": "field", "type": "Text"},
+    	{"name": "inline", "type": "Boolean"} ];
   }
 
 	this.children = function(callback) {
-		if (!inline && input.record && input.record != 'create') {
-			//console.log('loadingi data: ' + input.model + '/' + input.record);
-			cms.functions.getRecord(input.model, input.record, function(err, data2) {
-				if (err) {
-					console.error(err);
-					model_values_obj = {};
-					model_values = {};
-					process();
-				} else {
-					model_values_obj = data2;
-					//console.log(model.fields);
-					model_values = flatten({}, id, model_values_obj, model.fields);
-					process();
-				}
-			});
-		} else {
-			model_values_obj = input.data;
-			if (!model.fields) {
-				console.error('model missing fields');
-				console.error(model);
-			}
-			model_values = flatten({}, id, model_values_obj, model.fields);
-			process();
+		var model_values_obj = settings.data;
+		if (!fields) {
+			console.trace('missing fields');
+			console.error(fields);
 		}
 
-		function process() {
-		  var state = {"body": {}};
-		  var index = 0;
-		  
-		  if (!model) {
-		  	console.error("model error");
-		  	console.error(input);
-		  }
-		  _.each(model.fields, function(field, index) {
-		  	var subdata = (model_values_obj) ? model_values_obj[field.name] : undefined;
-		  	var default_widget = cms.functions.getDefaultWidget(field.type);
+	  var state = {"body": {}};
+	  
+	  _.each(fields, function(field, index) {
+	  	var subdata = (model_values_obj) ? model_values_obj[field.name] : undefined;
+	  	var default_widget = cms.functions.getDefaultWidget(field.type);
 
-	  		var input = _.extend(field.settings || {}, {label: field.name, data: subdata});
-	  		var type = field.widget ? field.widget : default_widget;
+  		var input = _.extend(field.settings || {}, {label: field.name, data: subdata});
+  		var type = field.widget ? field.widget : default_widget;
 
-		  	if (type == 'model_form') {
-		  		input['model'] = field.type;
-		  		input['inline'] = 'model';
-		  	}
+	  	if (type == 'model_form') {
+	  		input['model'] = 'model';
+	  		input['record'] = field.type;
+	  		input['inline'] = 'model';
+	  	}
 
-		  	if (field.quantity) {
-		  		input['widget'] = type;
-		  		type = 'field_multi';
-		  		input['quantity'] = field.quantity;
-		  	}
+	  	if (field.quantity) {
+	  		input['widget'] = type;
+	  		type = 'field_multi';
+	  		input['quantity'] = field.quantity;
+	  	}
 
-		  	state["body"][field.name] = {type: type, settings: input};
-		  });
+	  	state["body"][field.name] = {type: type, settings: input};
+	  });
 
-		  callback(state);
-		}
+	  callback(state);
 	}
 
 	this.head = ['/modules/models/models.css'];
 
-	this.processData = function(data, old, user) {
+	this.processData = function(data, old) {
 		console.log('model processing data');
 		var out = {};
 
-		_.each(model.fields, function(field) {
+		_.each(fields, function(field) {
 			var field_data = data[field.name];
 			var field_old = old ? old[field.name] : undefined;
 			var widget_name = field.widget ? field.widget : cms.functions.getDefaultWidget(field.type);
@@ -292,14 +273,13 @@ widgets.model_form = function(input, id) {
 		console.log('model processing data');
 		var errors = {};
 
-		var total = Object.keys(model.fields).length;
+		var total = Object.keys(fields).length;
 		var count = 0;
 
-		_.each(model.fields, function(field) {
+		_.each(fields, function(field) {
 			var field_data = data[field.name];
 			var widget_name = field.widget ? field.widget : cms.functions.getDefaultWidget(field.type);
 			var input = field.settings || {};
-			console.log(field);
 
 			function handle(error) {
 				count++;
@@ -327,32 +307,6 @@ widgets.model_form = function(input, id) {
 		});
   }
 
-	this.save = function (values, user, callback) {
-		var widget = this;
-
-		var data = cms.functions.expandPostValues(values);
-		var related = cms.pending_forms[data.form_token];
-		delete data['form_token'];
-		model = related.model;
-
-		var record = related.record;
-		
-		cms.functions.getRecord(related.collection, record, function(err, 	old_data) {
-			var processed = widget.processData(data, old_data, user);
-
-			if (related.record == 'create') {
-				if (related.model.index && processed[related.model.index])
-					record = processed[related.model.index];
-				else
-					record = cms.functions.generateRecordID();
-			}
-
-			cms.functions.saveRecord(related.collection, record, processed, function(err, records) {
-				callback(err, records);
-			});
-		});
-	}
-
 	this.wrapper_class = function() {
 		if (inline)
 			return 'inline-model-form';
@@ -361,25 +315,11 @@ widgets.model_form = function(input, id) {
 	}
 
 	this.script = function() {
-		return 'nw.model["'+id+'"] = '+JSON.stringify(model)+';';
+		return 'nw.model["'+id+'"] = '+JSON.stringify({"fields": fields})+';';
 	}
 
 	this.toHTML = function(slots) {
-		if (inline)
-			return slots.body.html();
-		else {
-			var form_token = cms.functions.makeid(36);
-			cms.pending_forms[form_token] = {
-				model: model,
-				collection: input.model,
-				record: input.record
-			};
-			token = id + '-form_token';
-			var values = {};
-			values[token] = form_token;
-			return cms.functions.wrapInForm( slots.body.html(), 'model_form',  values);
-			//return cms.functions.wrapInForm( slots.body.html(), 'model_form', {model: input.model, record: input.record} );
-		}
+		return slots.body.html();
 	}
 }
 widgets.model_form.init = function() {
@@ -428,42 +368,53 @@ widgets.model_record_view = function(settings, id) {
 	}
 }
 
-widgets.model_data_listing = function(input) {
+widgets.model_data_listing = function(settings) {
 	this.settings = function() {
 		return [{"name": "row_template", "type": "Text", "widget": "textarea"}, 
 			{"name": "model", "type": "Text"},
+			{"name": "manual_list", "type": "Boolean"},
 			{"name": "add_button", "type": "Boolean"}]
 	}
 
 	this.toHTML = function() {
 
 		var row_template;
-		if (input.row_template) {
-			row_template = Handlebars.compile(input.row_template);
+		if (settings.row_template) {
+			row_template = Handlebars.compile(settings.row_template);
 		}
 
 		var html = '';
 
 		html += '<h1>'
-		+ (input.title ? input.title : ('<a href="/admin/list/model">Models</a> : ' + input.model))
+		+ (settings.title ? settings.title : ('<a href="/admin/list/model">Models</a> : ' + settings.model))
 		+ '</h1>';
 
-		html  += '<ul class="list-group">'
-		var data = cms.model_data[input.model];
+		if (!settings.manual_list) {
+			html  += '<ul class="list-group">'
+		}
+
+		var data = cms.model_data[settings.model];
 		_.each(data, function(list, key) {
-			if (!input.row_template) {
+			if (!settings.manual_list) {
 				html += '<li class="list-group-item" >';
-				html += '<a href="/admin/data/?model=' + input.model + '&record=' + key + '">' + key + '</a></li>';
+			}
+			if (!settings.row_template) {
+				html += '<a href="/admin/data/?model=' + settings.model + '&record=' + key + '">' + key + '</a>';
 			} else {
 				list['key'] = key;
 				html += row_template(list);
 			}
+			if (!settings.manual_list) {
+				html += '</li>';
+			}
 		});
 
-		html += '</ul>';
+		if (!settings.manual_list) {
+			html += '</ul>';
+		}
 
-		if (input.add_button) {
-			html += '<a class="btn btn-primary" href="/admin/data/?model=' + input.model + '&record=create">Create new</a></li>';
+		if (settings.add_button) {
+			html += '<a class="btn btn-primary" href="/admin/data/?model=' + settings.model + '&record=create">Create new</a></li>';
 		}
 
 		return html;
@@ -471,6 +422,7 @@ widgets.model_data_listing = function(input) {
 
 	this.deps = {'jquery': [],'bootstrap': []};
 }
+widgets.model_data_listing.settings_unfiltered = ['row_template'];
 
 widgets.model_type_selector = function(input, id) {
 	this.head = ['<script type="text/javascript">nw.edit_widgets='+JSON.stringify(cms.edit_widgets)+';</script>', 
@@ -611,5 +563,96 @@ widgets.process_model = function(settings, id) {
 
 	this.toHTML = function() {
 		return JSON.stringify({validationErrors: errors, data: processed});
+	}
+}
+
+widgets.delete_record = function(settings, id, scope) {
+  this.settings = [{"name": "model", "type": "Text"},
+    {"name": "record", "type": "Text"}];
+
+  this.zones = ['success', 'failure'];
+  this.zone_tags = {success: ['action'], failure: ['action']};
+
+  /*this.makeActionJS = function() {
+    var token = cms.functions.makeid(36);
+
+    cms.pending_processes[token] = {
+      process: 'delete_record',
+      settings: settings,
+      token: token
+    };
+
+    var slots = this.all_children;
+    var success = cms.functions.createActionCode(slots.success);
+    var failure = cms.functions.createActionCode(slots.failure);
+
+    return 'nw.functions.doProcess("'+token+'", function() { '+ success +' }, function() { '+ failure +' });';
+  }*/
+
+  if (id) {
+    cms.functions.setupProcess('delete_record', settings);
+  }
+
+  this.action = function(settings, id, scope, handlers) {
+    nw.functions.doProcess(settings.token, {}, handlers.success, handlers.failure);
+  }
+
+  this.doProcess = function(input, callback) {
+    cms.functions.deleteRecord(settings.model, settings.record, function(err) {
+      callback(err, {});
+    });
+  }
+}
+
+widgets.save_record = function(settings, id, user) {
+  this.settings = [{"name": "model", "type": "Text"},
+    {"name": "record", "type": "Text"},
+    {"name": "selector", "type": "Text"},
+    {"name": "data", "type": "JSON"},
+    {"name": "record_id_dest", "type": "Text"}];
+
+  this.zones = ['success', 'failure'];
+  this.zone_tags = {success: ['action'], failure: ['action']};
+
+  if (id) {
+    cms.functions.setupProcess('save_record', settings);
+  }
+
+  this.action = function(settings, id, scope, handlers) {
+    var id = settings.selector ? settings.selector.substr(1) : '';
+    var model = nw.model[id];
+    var data = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#'+id+' :input').serializeArray()));
+    nw.functions.doProcess(settings.token, {data: data}, function(result) {
+    	if (settings.record_id_dest) {
+    		scope[settings.record_id_dest] = result.record;
+    	}
+    	handlers.success();
+    }, handlers.failure);
+  }
+
+	this.doProcess = function (input, callback) {
+		var widget = this;
+		console.log(settings);
+		console.log(input.data);
+
+		cms.functions.getRecord('model', settings.model, function(err, model) {
+			var record = settings.record;
+			
+			cms.functions.getRecord(settings.model, record, function(err, 	old_data) {
+				var model_widget = new cms.widgets['model_form']({model: 'model', record: settings.model}, '', user);
+				var processed = model_widget.processData(input.data, old_data);
+
+				if (settings.record == 'create') {
+					if (model.index && processed[model.index])
+						record = processed[model.index];
+					else
+						record = cms.functions.generateRecordID();
+				}
+
+				cms.functions.saveRecord(settings.model, record, processed, function(err, records) {
+					callback(err, {record: record});
+				});
+			});
+		});
 	}
 }

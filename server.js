@@ -114,16 +114,6 @@ function loadPaths() {
   router.on('post', '/post', save);
 }
 
-function loadPages() {
-  dive('pages', {}, function(err, file) {
-    var pa = path.relative('pages',file).slice(0, -5);
-    var ext = path.extname(file);
-    if (ext == '.json') {
-      router.on('get', pa, view);
-    }
-  });
-}
-
 var allDeps = [];
 
 async.series(
@@ -149,14 +139,17 @@ var app = connect()
       req.clientID = cms.functions.makeid(12);
       cookies.set('clientID', req.clientID, {signed: true, overwrite: true});
     }
-    next();
+    cms.functions.getRecord('user', req.clientID, function(err, user) {
+      req.user = user || {};
+      next();
+    });
   })
   .use(connect.static('themes/html5up-tessellate/'))
   .use('/files', connect.static('files'))
   .use('/modules', connect.static('modules'))
   .use('/themes', connect.static('themes'))
   .use('/bower_components', connect.static('bower_components'))
-  .use(stateMiddleware)
+  .use(customPageMiddleware)
   .use(function (req, res) {
     if (req.method == 'POST') {
       processPost(req, res, function() {
@@ -342,7 +335,7 @@ function setTags(widget, instance) {
   if (instance.makeEventJS) {
     widget.prototype.tags.push('event');
   }
-  if (instance.makeActionJS) {
+  if (instance.makeActionJS || instance.action || instance.doProcess) {
     widget.prototype.tags.push('action');
   }
   if (instance.execute) {
@@ -411,12 +404,15 @@ var save = function() {
   }
 }
 
-function stateMiddleware(req, res, next) {
+function customPageMiddleware(req, res, next) {
   var url_parts = url.parse(req.url, true);
   var query = url_parts.query;
   var path = url_parts.pathname.substring(1);
 
-  cms.functions.viewPage(path, query, function(html, content_type) {
+  var scope = {};
+  scope.user = req.user;
+
+  cms.functions.viewPage(path, query, scope, function(html, content_type) {
     res.writeHead(200, {'Content-Type': content_type});
     res.end(html);
   }, next);
@@ -516,3 +512,5 @@ cms.migrate3 = function() {
   cms.renameWidget('field_text_select', 'select');
   cms.renameWidget('field_boolean', 'checkbox');
 }
+
+cms.pending_processes['a'] = {process: 'user_login'};

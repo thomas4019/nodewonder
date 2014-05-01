@@ -1,5 +1,6 @@
 var Handlebars = require('handlebars'),
-  moment = require('moment');
+  moment = require('moment'),
+  _ = require('underscore');
 
 var cms;
 module.exports = {
@@ -20,6 +21,16 @@ functions.makeid = function(length) {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
+}
+
+functions.fillSettings = function(settings, scope, exclude) {
+  exclude = exclude || ['data'];
+  _.each(settings, function(value, key) {
+    if (value && (typeof value === 'string') && value.indexOf("{{") != -1 && (!_.contains(exclude, key))) {
+      var template = Handlebars.compile(value);
+      settings[key] = template(scope);
+    }
+  })
 }
 
 widgets.render_widget = function(input) {

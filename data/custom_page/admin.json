@@ -10,7 +10,8 @@
             "menu": {
                 "type": "template",
                 "settings": {
-                    "path": "modules/admin/menu.html"
+                    "path": "modules/admin/menu.html",
+                    "username": "{{user.username}}"
                 }
             }
         },

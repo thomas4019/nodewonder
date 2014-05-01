@@ -153,6 +153,7 @@ function stateController($scope) {
 		var settings_model = nw.widgets[type].settings;
 
 		nw.functions.configureWidget(id, settings_model, settings, function(new_settings) {
+			console.log(new_settings);
 			$scope.widgets[id].settings = new_settings;
 		  $scope.exportState();
 		  $("#widgetForm").hide();
@@ -166,9 +167,9 @@ function stateController($scope) {
 		y = $('#'+id+'-'+slot+' .add').offset().top;
 		var select = $('#' + $scope.field_id + ' .widget-selector')
 		if ($scope.widgets[id] && nw.widgets[$scope.widgets[id].type]) {
-			zone_tag_targets = nw.widgets[$scope.widgets[id].type].zone_tags[slot] || ['view'];
+			zone_tag_targets = nw.widgets[$scope.widgets[id].type].zone_tags[slot] || ['view', 'field_view'];
 		} else {
-			zone_tag_targets = ['view'];
+			zone_tag_targets = ['view', 'field_view'];
 		}
 		select.css({position: 'absolute', left: x, top: y })
 		select.select2("container").show();

@@ -1,0 +1,26 @@
+{
+    "URL": "admin/settings",
+    "parent": "admin",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "rWYLXNcz": {
+                "type": "model_data_listing",
+                "slots": {
+                    "events": []
+                },
+                "settings": {
+                    "row_template": "<a href=\"/admin/settings/{{name}}\">{{name}}</a>",
+                    "model": "setting"
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "rWYLXNcz"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": ""
+}

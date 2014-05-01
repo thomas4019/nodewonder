@@ -7,7 +7,7 @@
                 "slots": {},
                 "settings": {
                     "model": "model",
-                    "row_template": "<li class=\"list-group-item\" ><a href=\"/admin/list/{{ key }}/\"><span class=\"glyphicon glyphicon-list\"></span> {{ key }}</a></li>",
+                    "row_template": "<a href=\"/admin/list/{{ key }}/\"><span class=\"glyphicon glyphicon-list\"></span> {{ key }}</a>",
                     "title": "Site Data"
                 }
             }
