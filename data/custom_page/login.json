@@ -1,0 +1,40 @@
+{
+    "URL": "login",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "y0QrXtu7": {
+                "type": "model_form",
+                "slots": {
+                    "events": []
+                },
+                "settings": {
+                    "model": "form",
+                    "record": "login",
+                    "field": "Form"
+                }
+            },
+            "yygfSs0y": {
+                "type": "widgets_view",
+                "slots": {
+                    "events": []
+                },
+                "settings": {
+                    "model": "form",
+                    "record": "login",
+                    "field": "Actions",
+                    "view": ""
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "y0QrXtu7",
+                "yygfSs0y"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": ""
+}

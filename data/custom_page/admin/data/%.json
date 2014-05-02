@@ -48,6 +48,7 @@
                 "type": "onclick",
                 "slots": {
                     "actions": [
+                        "kyKLGO72",
                         "yD4LXiuv"
                     ]
                 }
@@ -134,6 +135,13 @@
                     "URL": "admin/list/{{args.model}}"
                 }
             },
+            "kyKLGO72": {
+                "type": "get_form_data",
+                "settings": {
+                    "selector": "#wyobn3bP",
+                    "dest": "record"
+                }
+            },
             "kyKLGO7q": {
                 "type": "save_record",
                 "slots": {
@@ -145,7 +153,7 @@
                     ]
                 },
                 "settings": {
-                    "selector": "#wyobn3bP",
+                    "data_name": "record",
                     "model": "{{args.model}}",
                     "record": "{{args.record}}"
                 }
@@ -174,9 +182,9 @@
                     ]
                 },
                 "settings": {
+                    "data_name": "record",
                     "model": "{{args.model}}",
                     "record": "{{args.record}}",
-                    "selector": "#wyobn3bP",
                     "record_id_dest": "new_record"
                 }
             },
@@ -227,6 +235,6 @@
             ]
         }
     },
-    "Title": "",
+    "Title": "{{args.model}} - {{args.record}}",
     "contentType": ""
 }

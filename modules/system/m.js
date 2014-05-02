@@ -55,6 +55,35 @@ widgets.render_widget = function(input) {
   }
 }
 
+widgets.widgets_view = function(settings, id) {
+  this.settings = function() {
+    return [{"name": "model", "type": "Record", "settings": {"model": "model"}},
+    {"name": "record", "type": "Text"},
+    {"name": "field", "type": "Text"}];
+  }
+
+  var record;
+  var model;
+  var model_view;
+
+  this.children = function(callback) {
+    cms.functions.getRecord(settings.model, settings.record, function(err, data) {
+      var code = data[settings.field];
+      console.log(code);
+      _.each(code.widgets, function(widget) {
+        if (widget.model && widget.field) {
+          widget.settings = widget.settings || {};
+        }
+      });
+      callback({'body': code.widgets}, code.slotAssignments);
+    });
+  }
+
+  this.toHTML = function(slots) {
+    return slots.body.html();
+  }
+}
+
 widgets.header = function(input, id, scope) {
   this.wrapper = input.type || 'h1';
 

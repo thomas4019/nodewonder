@@ -201,6 +201,7 @@ functions.renderPage = function(page, vars, callback) {
   } else {
     cms.functions.renderState(page.code.widgets, page.code.slotAssignments, function(html, head) {
       var content_type = page.contentType ? page.contentType : 'text/html';
+      var title = page.Title ? Handlebars.compile(page.Title)(page.scope) : 'default name';
       cms.functions.expandHead(head);
       head.unshift('<script type="text/javascript" src="/modules/admin/nw.js"></script><link rel="stylesheet" href="/modules/admin/nw.css"></link>')
       if (content_type == 'text/html') {
@@ -210,6 +211,7 @@ functions.renderPage = function(page, vars, callback) {
         head.push(head_meta);
         var html = page_template({
           'head': head.join('\n'),
+          'title': title,
           'body': html
         });
       }

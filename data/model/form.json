@@ -17,6 +17,14 @@
             "widget": "model_form",
             "settings": "",
             "required": false
+        },
+        {
+            "name": "Actions",
+            "type": "Widgets",
+            "quantity": "",
+            "widget": "widget_code_editor",
+            "settings": "",
+            "required": false
         }
     ],
     "index": "name",

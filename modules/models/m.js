@@ -207,35 +207,42 @@ widgets.model_form = function(settings, id, user) {
     	{"name": "inline", "type": "Boolean"} ];
   }
 
+  function getWidget(field, input) {
+  	var default_widget = cms.functions.getDefaultWidget(field.type);
+
+		var type = field.widget ? field.widget : default_widget;
+
+  	if (type == 'model_form') {
+  		input[	'model'] = 'model';
+  		input['record'] = field.type;
+  		input['inline'] = 'model';
+  	}
+
+  	if (field.quantity) {
+  		input['widget'] = type;
+  		type = 'field_multi';
+  		input['quantity'] = field.quantity;
+  	}
+
+  	return type;
+  }
+
 	this.children = function(callback) {
 		var model_values_obj = settings.data;
 		if (!fields) {
 			console.trace('missing fields');
-			console.error(fields);
+			console.error(settings);
 		}
 
 	  var state = {"body": {}};
 	  
 	  _.each(fields, function(field, index) {
 	  	var subdata = (model_values_obj) ? model_values_obj[field.name] : undefined;
-	  	var default_widget = cms.functions.getDefaultWidget(field.type);
+	  	var input = _.extend(field.settings || {}, {label: field.name, data: subdata});
 
-  		var input = _.extend(field.settings || {}, {label: field.name, data: subdata});
-  		var type = field.widget ? field.widget : default_widget;
+	  	var widget_type = getWidget(field, input);
 
-	  	if (type == 'model_form') {
-	  		input['model'] = 'model';
-	  		input['record'] = field.type;
-	  		input['inline'] = 'model';
-	  	}
-
-	  	if (field.quantity) {
-	  		input['widget'] = type;
-	  		type = 'field_multi';
-	  		input['quantity'] = field.quantity;
-	  	}
-
-	  	state["body"][field.name] = {type: type, settings: input};
+	  	state["body"][field.name] = {type: widget_type, settings: input};
 	  });
 
 	  callback(state);
@@ -250,18 +257,11 @@ widgets.model_form = function(settings, id, user) {
 		_.each(fields, function(field) {
 			var field_data = data[field.name];
 			var field_old = old ? old[field.name] : undefined;
-			var widget_name = field.widget ? field.widget : cms.functions.getDefaultWidget(field.type);
+
 			var input = field.settings || {};
-			if (widget_name == 'model_form') {
-				input['model'] = field.type;
-				input['inline'] = 'model';
-			}
-			if (field.quantity) {
-				input['widget'] = widget_name;
-				widget_name = 'field_multi';
-				input['quantity'] = field.quantity;
-			}
-			var widget = new cms.widgets[widget_name](input);
+			var widget_type = getWidget(field, input);
+
+			var widget = new cms.widgets[widget_type](input);
 			var processed = widget.processData(field_data, field_old, user);
 			out[field.name] = processed;
 		});
@@ -278,8 +278,8 @@ widgets.model_form = function(settings, id, user) {
 
 		_.each(fields, function(field) {
 			var field_data = data[field.name];
-			var widget_name = field.widget ? field.widget : cms.functions.getDefaultWidget(field.type);
 			var input = field.settings || {};
+			var widget_type = getWidget(field, input);
 
 			function handle(error) {
 				count++;
@@ -289,15 +289,7 @@ widgets.model_form = function(settings, id, user) {
 					callback(errors);
 			}
 
-			if (widget_name == 'model_form') {
-				input['model'] = field.type;
-				input['inline'] = 'model';
-			}
-			if (field.quantity) {
-				input['widget'] = widget_name;
-				widget_name = 'field_multi';
-			}
-			var widget = new cms.widgets[widget_name](input);
+			var widget = new cms.widgets[widget_type](input);
 			if (widget.validateData.length == 2) { //async
 				widget.validateData(field_data, handle);
 			} else { //sync
@@ -604,10 +596,23 @@ widgets.delete_record = function(settings, id, scope) {
   }
 }
 
+widgets.get_form_data = function(settings, id) {
+  this.settings = [{"name": "selector", "type": "Text"},
+    {"name": "dest", "type": "Text"}];
+
+  this.action = function(settings, id, scope, handlers) {
+    var id = settings.selector ? settings.selector.substr(1) : '';
+    var model = nw.model[id];
+    var data = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#'+id+' :input').serializeArray()));
+    scope[settings.dest] = data;
+    console.log(scope);
+  }
+}
+
 widgets.save_record = function(settings, id, user) {
   this.settings = [{"name": "model", "type": "Text"},
     {"name": "record", "type": "Text"},
-    {"name": "selector", "type": "Text"},
+    {"name": "data_name", "type": "Text"},
     {"name": "data", "type": "JSON"},
     {"name": "record_id_dest", "type": "Text"}];
 
@@ -619,9 +624,7 @@ widgets.save_record = function(settings, id, user) {
   }
 
   this.action = function(settings, id, scope, handlers) {
-    var id = settings.selector ? settings.selector.substr(1) : '';
-    var model = nw.model[id];
-    var data = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#'+id+' :input').serializeArray()));
+    var data = scope[settings.data_name];
     nw.functions.doProcess(settings.token, {data: data}, function(result) {
     	if (settings.record_id_dest) {
     		scope[settings.record_id_dest] = result.record;

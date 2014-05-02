@@ -32,6 +32,9 @@ cms.model_data = {};
 cms.pending_forms = {};
 cms.pending_processes = {};
 
+cms.settings = {};
+cms.settings_group = 'production';
+
 /*cms.functions.allPagesToStatic();
 cms.functions.staticThemeCopy();
 cms.functions.staticModulesCopy();*/

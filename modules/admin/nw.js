@@ -257,6 +257,7 @@ var nw = function() {
 	      settings[key] = template(scope);
 	    }
 	  })
+	  return settings;
 	}
 
 	return {

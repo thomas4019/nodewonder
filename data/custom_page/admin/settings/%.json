@@ -22,12 +22,50 @@
                     "record": "{{args.arg2}}",
                     "field": "fields"
                 }
+            },
+            "S0U0SO3r": {
+                "type": "button",
+                "slots": {
+                    "events": [
+                        "9M10es1L"
+                    ]
+                },
+                "settings": {
+                    "label": "Save",
+                    "button_type": "success"
+                }
+            },
+            "9M10es1L": {
+                "type": "onclick",
+                "slots": {
+                    "actions": [
+                        "XHgnsgpk",
+                        "kO77sQTr"
+                    ]
+                }
+            },
+            "XHgnsgpk": {
+                "type": "get_form_data",
+                "slots": {},
+                "settings": {
+                    "selector": "#UpmLvlaI",
+                    "dest": "form"
+                }
+            },
+            "kO77sQTr": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "Hello {{form.name}}",
+                    "type": "info"
+                }
             }
         },
         "slotAssignments": {
             "body": [
                 "ajGGMkV3",
-                "UpmLvlaI"
+                "UpmLvlaI",
+                "S0U0SO3r"
             ]
         }
     },

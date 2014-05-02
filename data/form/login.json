@@ -2,7 +2,7 @@
     "name": "login",
     "Form": [
         {
-            "name": "Username",
+            "name": "Email",
             "type": "Text",
             "quantity": "",
             "widget": "textbox",
@@ -17,5 +17,24 @@
             "settings": "",
             "required": false
         }
-    ]
+    ],
+    "Actions": {
+        "widgets": {
+            "rNk1T5WJ": {
+                "type": "button",
+                "slots": {
+                    "events": []
+                },
+                "settings": {
+                    "label": "Login",
+                    "button_type": "primary"
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "rNk1T5WJ"
+            ]
+        }
+    }
 }

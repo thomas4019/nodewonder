@@ -44,7 +44,8 @@ functions.createActionCode = function(actions) {
   var code = '';
   _.each(actions, function(action) {
     if (action.action) {
-      code += '('+action.action+')('+JSON.stringify(action.w_settings)+', "'+action.id+'", scope,'+cms.functions.createHandlersCode(action)+');\n';  
+      code += '('+action.action+')(nw.functions.fillSettings('+JSON.stringify(action.w_settings)+', scope, []), ' +
+        '"'+action.id+'", scope,'+cms.functions.createHandlersCode(action)+');\n';  
     } else if (action.makeActionJS) {
       code += action.makeActionJS()+'\n';
     }
@@ -137,12 +138,13 @@ widgets.message = function(input) {
   this.settings = [{"name":"message", "type":"Text"},
     {"name": "type", "type": "Text", "widget": "select", "settings": {label:'Message Type', choices: ['info', 'success', 'warning', 'error']} }];
 
-  this.deps = {'jquery': [],'toastr': []};
+  this.deps = {'jquery': [],'toastr': [], 'handlebars': []};
 
   this.action = function(settings, id, scope, handlers) {
     toastr[settings.type](settings.message);
   }
 }
+widgets.message.settings_unfiltered = ['message', 'type'];
 
 widgets.submit_form = function(settings) {
   this.settings = [{"name":"selector", "type":"Text"}];
@@ -186,8 +188,8 @@ widgets.goto_page = function(settings, id, scope) {
   this.deps = {'handlebars': []}
 
   this.action = function(settings, id, scope, handlers) {
-    var url = Handlebars.compile(settings.URL);
-    window.location='/' + url(scope);
+    //var url = Handlebars.compile(settings.URL);
+    window.location='/' + settings.URL;
   }
 }
 widgets.goto_page.settings_unfiltered = ['URL'];
