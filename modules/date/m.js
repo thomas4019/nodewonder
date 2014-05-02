@@ -14,15 +14,13 @@ module.exports = {
 functions = module.exports.functions;
 widgets = module.exports.widgets;
 
-widgets.calendar = function() {
-  this.deps = {'jquery': [], 'jquery-ui': [], 'fullcalendar': ['fullcalendar.min.js','fullcalendar.css']};
-
-  this.script = function() {
+widgets.calendar = {
+  deps: {'jquery': [], 'jquery-ui': [], 'fullcalendar': ['fullcalendar.min.js','fullcalendar.css']},
+  script: function() {
     return "$('#fcalendar').fullCalendar({ header: { left: 'prev,next today', center: 'title', " + 
       "right: 'month,agendaWeek,agendaDay' }, editable: true});";
-  }
-
-  this.toHTML = function() {
+  },
+  toHTML: function() {
     return '<div id="fcalendar"></div>';
   }
 }

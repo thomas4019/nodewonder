@@ -37,9 +37,10 @@ functions.initializeState = function(state, scope, callback) {
     w.settings = w.settings || {};
     var widget = new cms.widgets[name](w.settings, id, scope);
     widget.w_settings = w.settings;
+    widget.settings = w.settings;
     widget.id = id;
 
-    widget.all_children = {};
+    widget.slotAssignments = {};
 
     if (widget.children) {
       count++;
@@ -129,13 +130,13 @@ functions.initializeState = function(state, scope, callback) {
 
   function addChildrenToWidget(zones, widget) {
     _.each(zones, function(widgetList, slot) {
-      if (!widget.all_children[slot]) {
-        widget.all_children[slot] = [];
+      if (!widget.slotAssignments[slot]) {
+        widget.slotAssignments[slot] = [];
       }
       _.each(widgetList, function(sub_id, i) {
         var sub = widgets_buffer[sub_id];
         if (typeof sub !== 'undefined') {
-          widget.all_children[slot].push(sub);
+          widget.slotAssignments[slot].push(sub);
           sub.parent = widget;
         } else {
           console.error('Invalid widget reference:' + sub_id);

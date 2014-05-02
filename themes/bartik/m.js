@@ -13,33 +13,25 @@ module.exports = {
 widgets = module.exports.widgets;
 functions = module.exports.functions;
 
-widgets.home = function() {
-  var template;
-
-  this.zones = function() {
-    return ['header', 'featured', 'sidebar_first', 'highlighted', 'title', 'tabs', 'help', 'action_links',
+widgets.home = {
+  slots: ['header', 'featured', 'sidebar_first', 'highlighted', 'title', 'tabs', 'help', 'action_links',
     'content', 'sidebar_second', 'triptych',
-    'footer_above', 'footer'];
-  }
-
-  this.load = function(callback) {
+    'footer_above', 'footer'],
+  head: ['/themes/bartik/css/colors.css',
+    '/themes/bartik/css/layout.css',
+    '/themes/bartik/css/style.css',
+    '/themes/bartik/css/system.base.css'],
+  load: function(callback) {
+    var that = this;
     fs.readFile('themes/bartik/page.html', 'utf8', function(err, data) {
       if (err) {
         return console.log(err);
       }
-      template = Handlebars.compile(data);
+      that.template = Handlebars.compile(data);
       callback();
     });
-  }
-
-  this.head = function() {
-    return ['<link type="text/css" rel="stylesheet" href="themes/bartik/css/colors.css" />',
-    '<link type="text/css" rel="stylesheet" href="themes/bartik/css/layout.css" />',
-    '<link type="text/css" rel="stylesheet" href="themes/bartik/css/style.css" />',
-    '<link type="text/css" rel="stylesheet" href="themes/bartik/css/system.base.css" />'];
-  }
-
-  this.toHTML = function(zones) {
-    return template(zones);
+  },
+  toHTML: function() {
+    return this.template(this);
   }
 }

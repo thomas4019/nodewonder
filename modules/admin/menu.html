@@ -12,14 +12,14 @@
             </ul>
          </li>
       </ul>
-      {{#each input.links}}
+      {{#each settings.links}}
       <ul id="admin-menu-menu" class="dropdown">
          <li class="admin-menu-toolbar-category"><a href="{{ url }}">{{ title }}</a></li>
       </ul id="admin-menu-menu" class="dropdown">
       {{/each}}
       <ul id="admin-menu-account" class="dropdown">
          <li class="admin-menu-action"><a href="/user/logout">Log out</a></li>
-         <li class="admin-menu-action admin-menu-account"><a href="/user/1">Hello <strong>{{ input.username }}</strong></a></li>
+         <li class="admin-menu-action admin-menu-account"><a href="/user/1">Hello <strong>{{ settings.username }}</strong></a></li>
       </ul>
    </div>
 </div>

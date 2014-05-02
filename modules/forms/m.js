@@ -24,165 +24,90 @@ function htmlEscape(str) {
     .replace(/>/g, '&gt;');
 }
 
-widgets.checkbox = function (input, id) {
-  var name = input.name;
-  var label = input.label;
-  var value = input.value || false;
-
-  this.tags = ['field_edit'];
-
-  this.settings = function() {
-    return  [ {"name": "label", "type": "Text"},
+widgets.checkbox = {
+  tags: ['field_edit'],
+  settingsModel: [{"name": "label", "type": "Text"},
       {"name": "name", "type": "Text"},
-      {"name": "data", "type": "Boolean"} ];
-  }
-
-  this.processData = function(value) {
+      {"name": "data", "type": "Boolean"} ],
+  processData: function(value) {
     return value == "on";
-  }
-
-  this.toHTML = function(slots, value) {
-    var form_html = '<div class="checkbox"> <label for="' + name + '" style="margin-right: 5px;" >' + 
-    '<input type="checkbox" name="' + id + '" ' + (input.data || value ? 'checked="checked"': '' ) + ' >' + (label ? label : name)
-    + '</label></div>';
-    
-    return form_html;
+  },
+  toHTML: function(label) {
+    return '<input type="checkbox" name="' + this.id + '" ' + (this.settings.data ? 'checked="checked"': '' ) + ' >' +  label;
   }
 }
 
-//DELETE?
-widgets.form = function (input, id) {
-  this.toHTML = function(zones, value) {
-    var html = '<form action="/post" method="post">'
+widgets.textbox = {
+  settingsModel: [{"name": "inline", "type": "Boolean"},
+      {"name": "data", "type": "Text"}],
+  head: ['/modules/forms/forms.css'],
+  deps: {'jquery': [],'bootstrap':[]},
+  tags: ['field_edit'],
+  toHTML: function(label) {
+    var element = '<input class="form-control input-small" type="text" name="' + this.id + '"' + (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '')+' />';
 
-    if (input.widget) {
-      html += '<input type="hidden" name="widget" value="' + input.widget + '" />';
-    }
-
-    html += zones.form.html();
-    html += '</form>';
-    return html;
-  }
-}
-
-widgets.textbox = function (input, id) {
-  this.tags = ['field_edit'];
-
-  this.deps = {'jquery': [],'bootstrap':[]};
-
-  this.head = ['/modules/forms/forms.css'];
-
-  this.settings = function() {
-    return  [ {"name": "inline", "type": "Boolean"},
-      {"name": "data", "type": "Text"} ];
-  }
-
-  this.toHTML = function(zones) {
-    var label = '<label for="' + id + '" style="padding-right: 5px;">' + input.label + ':' + '</label>';
-    var element = '<input class="form-control input-small" type="text" name="' + id + '"' + (input.data ? ' value="' + htmlEscape(input.data) + '"' : '')+' />';
-
-    if (input.inline) {
-      return '<div class="controls form-inline">' + (input.label ? label : '') + element + '</div>';
+    if (this.settings.inline) {
+      return '<div class="controls form-inline">' + (this.settings.label ? label : '') + element + '</div>';
     } else {
-      return (input.label ? label : '') + element;
+      return (this.settings.label ? label : '') + element;
     }
   }
-}
+};
 
-widgets.password = function (input, id) {
-  this.tags = ['field_edit'];
+widgets.password = {
+  tags: ['field_edit'],
+  deps: {'jquery': [],'bootstrap':[]},
+  settingsModel: [ {"name": "inline", "type": "Boolean"},
+      {"name": "data", "type": "Text"} ],
+  toHTML: function(label) {
+    var element = '<input class="form-control input-small" type="password" name="' + this.id + '"' + (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '')+' />';
 
-  this.deps = {'jquery': [],'bootstrap':[]};
-
-  this.settings = function() {
-    return  [ {"name": "inline", "type": "Boolean"},
-      {"name": "data", "type": "Text"} ];
-  }
-
-  this.toHTML = function(zones) {
-    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : '') + ':' + '</label>';
-    var element;
-    
-    if (input.data) {
-      element = '<input class="form-control input-small" type="password" name="' + id + '" value="' + htmlEscape(input.data) + '" />';
+    if (this.settings.inline) {
+      return '<div class="controls form-inline">' + (this.settings.label ? label : '') + element + '</div>';
     } else {
-      element = '<input class="form-control input-small" type="password" name="' + id + '" />';
-    }
-
-    if (input.inline) {
-      return '<div class="controls form-inline">' + label + element + '</div>';
-    } else {
-      return label + element;
+      return (this.settings.label ? label : '') + element;
     }
   }
 }
 
 
-widgets.email_textbox = function (input, id) {
-  this.tags = ['field_edit'];
+widgets.email_textbox = {
+  tags: ['field_edit'],
+  deps: {'jquery': [],'bootstrap':[]},
+  settingsModel: [ {"name": "inline", "type": "Boolean"},
+      {"name": "data", "type": "Email"} ],
+  toHTML: function(label) {
+    var element = '<input class="form-control input-small" type="email" name="' + this.id + '"' + (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '')+' />';
 
-  this.deps = {'jquery': [],'bootstrap':[]};
-
-  this.settings = function() {
-    return  [ {"name": "inline", "type": "Boolean"},
-      {"name": "data", "type": "Email"} ];
-  }
-
-  this.toHTML = function(zones) {
-    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : '') + ':' + '</label>';
-    var element;
-    
-    if (input.data) {
-      element = '<input class="form-control input-small" type="email" name="' + id + '" value="' + htmlEscape(input.data) + '" />';
+    if (this.settings.inline) {
+      return '<div class="controls form-inline">' + (this.settings.label ? label : '') + element + '</div>';
     } else {
-      element = '<input class="form-control input-small" type="email" name="' + id + '" />';
-    }
-
-    if (input.inline) {
-      return '<div class="controls form-inline">' + label + element + '</div>';
-    } else {
-      return label + element;
+      return (this.settings.label ? label : '') + element;
     }
   }
 }
 
-widgets.numeric_textbox = function (input, id) {
-  this.tags = ['field_edit'];
-
-  this.deps = {'jquery': [],'bootstrap':[]};
-
-  this.settings = function() {
-    return  [ {"name": "inline", "type": "Boolean"},
+widgets.numeric_textbox = {
+  tags: ['field_edit'],
+  deps: {'jquery': [],'bootstrap':[]},
+  settingsModel: [ {"name": "inline", "type": "Boolean"},
       {"name": "data", "type": "Number"},
       {"name": "min", "type": "Number", "settings" : {"min": 2}},
-      {"name": "max", "type": "Number"} ];
-  }
-
-  this.processData = function(data) {
-    console.log('processing');
+      {"name": "max", "type": "Number"} ],
+  processData: function(data) {
     return parseInt(data);
-  }
-
-  this.validateData = function(data) {
-    console.log(data);
-    console.log(input);
-    if (input.max && data > input.max)
+  },
+  validateData: function(data) {
+    if (this.settings.max && data > this.settings.max)
       return 'Number is too large';
-    if (input.min && data < input.min)
+    if (this.settings.min && data < this.settings.min)
       return 'Number is too small';
-  }
+  },
+  toHTML: function(label) {
+    var label = '<label class="control-label" for="' + this.id + '-textbox" style="padding-right: 5px;">' + (this.settings.label ? this.settings.label : '') + ':' + '</label>';    
+    var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="number" name="' + this.id + '"'+ (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '') + ' />';
 
-  this.toHTML = function(zones) {
-    var label = '<label class="control-label" for="' + id + '-textbox" style="padding-right: 5px;">' + (input.label ? input.label : '') + ':' + '</label>';
-    var element;
-    
-    if (input.data) {
-      element = '<input id="'+id+'-textbox" class="form-control input-small" type="number" name="' + id + '" value="' + htmlEscape(input.data) + '" />';
-    } else {
-      element = '<input id="'+id+'-textbox" class="form-control input-small" type="number" name="' + id + '" />';
-    }
-
-    if (input.inline) {
+    if (this.settings.inline) {
       return '<div class="controls form-inline">' + label + element + '</div>';
     } else {
       return label + element;
@@ -190,127 +115,85 @@ widgets.numeric_textbox = function (input, id) {
   }
 }
 
-widgets.range = function (settings, id) {
-  this.tags = ['field_edit'];
-
-  this.settings = function() {
-    return  [ {"name": "data", "type": "Number"},
+widgets.range = {
+  tags: ['field_edit'],
+  settingsModel: [ {"name": "data", "type": "Number"},
       {"name": "min", "type": "Number"},
-      {"name": "max", "type": "Number"} ];
-  }
-
-  this.toHTML = function(zones) {
-    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (settings.label ? settings.label : '') + ':' + '</label>';
-    var element = settings.min+'<input type="range" style="width: 300px; display: inline;" name="'+id+'" value="'+settings.data+'" min="'+settings.min+'" max="'+settings.max+'">'+settings.max;
-
+      {"name": "max", "type": "Number"} ],
+  toHTML: function(label) {
+    var element = this.settings.min+'<input type="range" style="width: 300px; display: inline;" name="'+this.id+'" value="'+this.settings.data+'" min="'+this.settings.min+'" max="'+this.settings.max+'">'+this.settings.max;
     return label + element;
   }
 }
 
-widgets.slider = function (settings, id) {
-  this.tags = ['field_edit'];
-
-  this.deps = {'jquery': [],'jquery-ui':['themes/smoothness/jquery-ui.css']};
-
-  this.settings = function() {
-    return  [ {"name": "data", "type": "Number"},
+widgets.slider = {
+  tags: ['field_edit'],
+  deps: {'jquery': [],'jquery-ui':['themes/smoothness/jquery-ui.css']},
+  settingsModel: [ {"name": "data", "type": "Number"},
       {"name": "min", "type": "Number"},
-      {"name": "max", "type": "Number"} ];
-  }
-
-  this.script = function() {
-    var options = {range: 'max', min: settings.min || 1, max: settings.max || 10};
-    if (settings.data)
-      options.value = settings.data;
+      {"name": "max", "type": "Number"} ],
+  script: function() {
+    var options = {range: 'max', min: this.settings.min || 1, max: this.settings.max || 10};
+    if (this.settings.data)
+      options.value = this.settings.data;
     options.slide = "REPLACE";
-    var code = 'function( event, ui ) { $( "#'+id+' input" ).val( $( "#'+id+' .slider" ).slider( "value" ) );  }';
+    var code = 'function( event, ui ) { $( "#'+this.id+' input" ).val( $( "#'+this.id+' .slider" ).slider( "value" ) );  }';
     options = JSON.stringify(options);
     options = options.replace('"REPLACE"',code);
-    return '$( "#'+id+' .slider" ).slider(' + options + '); ';
-  }
-
-  this.toHTML = function(zones) {
-    var label = '<label for="' + id + '" style="padding-right: 5px;">' + (settings.label ? settings.label : '') + ':' + '</label><input name="'+id+'" type="textbox" style="border:0; color:#f6931f; font-weight:bold;" ' + (settings.data ? 'value="'+settings.data : '') +'" />';
-    var element;
-    
-    element = '<div class="slider" />';
-    
+    return '$( "#'+this.id+' .slider" ).slider(' + options + '); ';
+  },
+  toHTML: function() {
+    var label = '<label for="' + this.id + '" style="padding-right: 5px;">' + (this.settings.label ? this.settings.label : '') + ':' + '</label><input name="'+this.id+'" type="textbox" style="border:0; color:#f6931f; font-weight:bold;" ' + (this.settings.data ? 'value="'+this.settings.data : '') +'" />';
+    var element = '<div class="slider" />';
     return label + element;
   }
 }
 
-widgets.textarea = function (input, id) {
-  var name = input.name || id;
-  var label = input.label;
-  var value = input.value || '';
-
-  this.tags = ['field_edit'];
-
-  this.settings = function() {
-    return  [ {"name": "label", "type": "Text"},
+widgets.textarea = {
+  tags: ['field_edit'],
+  settingsModel: [ {"name": "label", "type": "Text"},
       {"name": "name", "type": "Text"},
-      {"name": "data", "type": "Text"} ];
-  }
-
-  this.toHTML = function(zones, value) {
-    var label = '<label for="' + name + '">' + (input.label ? input.label : input.name) + ':</label>'
-    var element = '<textarea class="form-control input-small"  name="' + id + '" >'+ (input.data || value || input.value || '')+'</textarea>';
-
+      {"name": "data", "type": "Text"} ],
+  toHTML: function(label) {
+    var element = '<textarea class="form-control input-small"  name="' + this.id + '" >'+ (this.settings.data || '')+'</textarea>';
     return label + element;
   }
 }
 
-widgets.ckeditor = function (input, id) {
-  var name = input.name || id;
-  var label = input.label || input.name;
-
-  this.tags = ['field_edit'];
-
-  this.settings = function() {
-    return  [ {"name": "label", "type": "Text"},
+widgets.ckeditor = {
+  tags: ['field_edit'],
+  deps: {'jquery': [], 'ckeditor': ['ckeditor.js']},
+  settingsModel: [ {"name": "label", "type": "Text"},
       {"name": "toolbar", "type": "Text", "widget": "select", "settings": {label:'Button Type', choices: ['Basic', 'Advanced']} },
-      {"name": "data", "type": "Text"} ];
-  }
-
-  this.toHTML = function(zones, value) {
-    return '<label for="' + name + '">' + label + '</label><textarea id="'+id+'-Editor" name="' + name + '">' + (value || input.value || '') + '</textarea>';
-  }
-
-  this.script = function() {
-    return 'CKEDITOR.replace("' + id + '-Editor",{toolbar:"Basic"});';
-  }
-
-  this.deps = {'jquery': [],'ckeditor': ['ckeditor.js']};
-}
-
-widgets.iframe = function(input, id) {
-  this.settings = function() {
-    return [ {"name": "url", 'type': 'Text'} ];
-  }
-
-  this.toHTML = function() {
-    return '<iframe src="' + input.url  + '" style="width: 100%; height: 800px;" ></iframe>';
+      {"name": "data", "type": "Text"} ],
+  script: function() {
+    return 'CKEDITOR.replace("' + this.id + '-Editor",{toolbar:"Basic"});';
+  },
+  toHTML: function(label) {
+    return label + '<textarea id="'+this.id+'-Editor" name="' + this.id + '">' + (this.settings.data || '') + '</textarea>';
   }
 }
 
-widgets.select = function (input, id) {
-  var name = input.name;
-  var choices = input.choices;
-
-  if (Array.isArray(choices)) {
-    choices = _.object(choices, choices);
+widgets.iframe = {
+  settingsModel: [ {"name": "url", 'type': 'Text'} ],
+  toHTML: function() {
+    return '<iframe src="' + this.settings.url  + '" style="width: 100%; height: 800px;" ></iframe>';
   }
+}
 
-  this.tags = ['field_edit'];
-  this.settings = [{"name": "data", "type": "Text"}];
-
-  this.toHTML = function(zones, value) {
-    var label = '<label for="' + name + '" >' + input.label + '</label>';
+widgets.select = {
+  tags: ['field_edit'],
+  settingsModel: [{"name": "data", "type": "Text"}],
+  toHTML: function(label) {
+    var choices = this.settings.choices;
+    if (Array.isArray(choices)) {
+      choices = _.object(choices, choices);
+    }
 
     var element = '<select name="' + id + '">';
 
     _.each(choices, function(choice) {
-      element += '<option value="' + choice + '" ' + (choice == input.data ? 'selected="selected"' : '') + ' >' + choice + '</option>';
+      element += '<option value="' + choice + '" ' + (choice == this.settings.data ? 'selected="selected"' : '') + ' >' + choice + '</option>';
     });
 
     element += '</select>';
@@ -319,149 +202,110 @@ widgets.select = function (input, id) {
   }
 }
 
-widgets.button = function (input, id) {
-  var label = input.label;
-  var type = input.type || 'primary';
+widgets.button = {
+  wrapper: 'span',
+  settingsModel: [ {"name": "label", "type": "Text"},
+      {"name": "button_type", "type": "Text", "widget": "select", "settings": {
+        label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']
+      } }],
+  deps: {'jquery': [], 'bootstrap': []},
+  toHTML: function() {
+    return '<input type="button" class="btn btn-' + this.settings.button_type + '" value="' + this.settings.label + '" >';
+  },
+}
 
-  this.wrapper = 'span';
-
-  this.settings = function() {
-    return  [ {"name": "label", "type": "Text"},
-      {"name": "button_type", "type": "Text", "widget": "select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ];
-  }
-
-  this.script = function() {
-    var slots = this.all_children;
-    var code = '';
-    if (slots.onclick) {
-      code += '$("#' + id + '").on( "click", function() {' + cms.functions.concatActions(slots.onclick) + '});';
-    }
-    if (slots.on_dblclick) {
-      code += '$("#' + id + '").on( "dblclick", function() {' + cms.functions.concatActions(slots.on_dblclick) + '});';
-    }
-    if (slots.enter) {
-      code += '$("#' + id + '").on( "mouseenter", function() {' + cms.functions.concatActions(slots.enter) + '});';
-    }
-    return code;
-  }
-
-  this.deps = {'jquery': [], 'bootstrap': []};
-
-  this.toHTML = function() {
-    return '<input type="button" class="btn btn-' + input.button_type + '" value="' + label + '" >';
+widgets.submit = {
+  settingsModel: [ {"name": "label", "type": "Text"},
+      {"name": "button_type", "type": "Text", "widget": "select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ],
+  deps: {'jquery': []},
+  toHTML: function() {
+    return '<input type="submit" class="btn btn-' + this.settings.button_type + '" value="' + this.settings.label + '" />'
   }
 }
 
-widgets.submit = function (input) {
-  var label = input.label;
-
-  this.settings = function() {
-    return  [ {"name": "label", "type": "Text"},
-      {"name": "button_type", "type": "Text", "widget": "select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ];
-  }
-
-  this.deps = {'jquery': []};
-
-  this.toHTML = function() {
-    return '<input type="submit" class="btn btn-' + input.button_type + '" value="' + label + '" />'
-  }
-}
-
-widgets.date = function (input, id) {
-  var name = input.name;
-
-  this.deps = {'jquery-ui': ['themes/smoothness/jquery-ui.min.css'] };
-
-  this.tags = ['field_edit'];
-  this.settings = [{"name": "data", "type": "Date"}];
-
-  this.toHTML = function() {
-    var label = '';
-    if (input.label != '<none>')
-      label = '<label for="' + id + '" style="padding-right: 5px;">' + (input.label ? input.label : input.name) + ':' + '</label>';
-
-    var value = input.data ? moment(input.data).format('MM/DD/YYYY') : '';
+widgets.date = {
+  deps: {'jquery-ui': ['themes/smoothness/jquery-ui.min.css'] },
+  tags: ['field_edit'],
+  settingsModel: [{"name": "data", "type": "Date"}],
+  script: function() {
+    return '$("#' + this.id + ' input").datepicker();';
+  },
+  toHTML: function(label) {
+    var value = this.settings.data ? moment(this.settings.data).format('MM/DD/YYYY') : '';
 
     if (!value || _.isEmpty(value))
       value = '';
 
-    var element;    
-    if (value) {
-      element = '<input class="form-control input-small" type="text" name="' + id + '" value="' + value + '" />';
-    } else {
-      element = '<input class="form-control input-small" type="text" name="' + id + '" />';
-    }
+    var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="number" name="' + this.id + '"'+ (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '') + ' />';
     
     if (input.inline) {
       return '<div class="controls form-inline">' + label + element + '</div>';
     } else {
       return label + element;
     }
-  }
-
-  this.processData = function(data) {
+  },
+  processData: function(data) {
     return new Date(data).getTime();
-  }
-
-  this.script = function(container_id) {
-    return '$("#' + container_id + ' input").datepicker();';
   }
 }
 
-widgets.field_multi = function(input, id) {
-  var w_input = deep.clone(input);
-  var count;
-  var w_type;
+widgets.field_multi = {
+  setup: function() {
+    this.isSetup = true;
+    this.w_input = deep.clone(this.settings);
 
-  var can_add = false;
-  var map = false;
+    this.can_add = false;
+    this.map = false;
 
-  if (input.quantity && input.quantity.indexOf(':') !== -1) {
-    input.quantity = input.quantity.substr(input.quantity.indexOf(':') + 1, input.quantity.length)
-    w_type = 'key_value';
-    map = true;
-    var ndata = [];
-    _.each(input.data, function(value, key) {
-      ndata.push({key: key, value: value});
-    });
-    input.data = ndata;
-    console.log(input.data);
-  } else {
-    w_type = input.widget;
-    delete w_input['widget'];
-  }
+    if (this.settings.quantity && this.settings.quantity.indexOf(':') !== -1) {
+      this.settings.quantity = this.settings.quantity.substr(this.settings.quantity.indexOf(':') + 1, this.settings.quantity.length)
+      this.w_type = 'key_value';
+      this.map = true;
+      var ndata = [];
+      _.each(this.settings.data, function(value, key) {
+        ndata.push({key: key, value: value});
+      });
+      this.settings.data = ndata;
+      console.log(this.settings.data);
+    } else {
+      this.w_type = this.settings.widget;
+      delete this.w_input['widget'];
+    }
 
-  if (input.quantity && input.quantity.slice(-1) == '+') {
-    can_add = true;
-    input.quantity = input.quantity.substring(0, input.quantity.length - 1)
-  }
+    if (this.settings.quantity && this.settings.quantity.slice(-1) == '+') {
+      this.can_add = true;
+      this.settings.quantity = this.settings.quantity.substring(0, this.settings.quantity.length - 1)
+    }
 
-  delete w_input['label'];
-  w_input['inline'] = 'multi';
+    delete this.w_input['label'];
+    this.w_input['inline'] = 'multi';
+  },
+  children: function(callback) {
+    if (!this.isSetup)
+      this.setup();
 
-  this.children = function(callback) {
     var state = {"body": {}};
 
-    if (can_add) {
+    if (this.can_add) {
       state["body"]["add"] = {"type": "button", "slots": {"events": ["onclick"]}}
       state["body"]["add"]["settings"] = {"button_type": "primary", "label": "Add more items"}
     }
 
-    count = (input.data && Array.isArray(input.data)) ? input.data.length : input.quantity;
+    this.count = (this.settings.data && Array.isArray(this.settings.data)) ? this.settings.data.length : this.settings.quantity;
 
-    if (count == 0) {
-      count = input.quantity;
+    if (this.count == 0) {
+      this.count = this.settings.quantity;
     }
-    if (count == '') {
-      count = 3;
+    if (this.count == '') {
+      this.count = 3;
     }
 
-    for (var i = 0; i < count; i ++) {
+    for (var i = 0; i < this.count; i ++) {
       state["body"]["" + (i)] = {};
-      state["body"]["" + (i)]['type'] = w_type;
-      state["body"]["" + (i)]['settings'] = deep.clone(w_input);
-      if (input.data && input.data[i])
-        state["body"]["" + i]['settings']['data'] = input.data[i];
+      state["body"]["" + (i)]['type'] = this.w_type;
+      state["body"]["" + (i)]['settings'] = deep.clone(this.w_input);
+      if (this.settings.data && this.settings.data[i])
+        state["body"]["" + i]['settings']['data'] = this.settings.data[i];
     }
 
     state["body"]["onclick"] = {
@@ -470,27 +314,25 @@ widgets.field_multi = function(input, id) {
     }
     state["body"]["add_action"] = {
       "type": "execute",
-      "settings": {"js": "nw.functions.insertWidgetBefore('" + w_type + "','" + id + "-'+(nw.counter['"+id+"']++), '"+ JSON.stringify(w_input) + "', '#" + id + "-add')"},
+      "settings": {"js": "nw.functions.insertWidgetBefore('" + this.w_type + "','" + this.id + "-'+(nw.counter['"+this.id+"']++), '"+ JSON.stringify(this.w_input) + "', '#" + this.id + "-add')"},
     }
     callback(state);
-  }
+  },
+  wrapper_style: "padding-left: 5px;",
+  script: function() {
+    return 'nw.counter["'+this.id+'"] = ' + (this.count) + ';';
+  },
+  toHTML: function(label) {
+    var arr = '<input type="hidden" name="'+this.id+'" value="' + (this.map ? 'new Object' : 'new Array') + '" />';
+    return label + arr + this.renderSlot('body');
+  },
+  processData: function(value) {
+    if (!this.isSetup)
+      this.setup();
 
-  this.wrapper_style = "padding-left: 5px;";  
-
-  this.script = function() {
-    return 'nw.counter["'+id+'"] = ' + (count) + ';';
-  }
-
-  this.toHTML = function(slots) {
-    var label = '<label style="padding-right: 5px;">' + input.label + ':' + '</label>';
-    var arr = '<input type="hidden" name="'+id+'" value="' + (map ? 'new Object' : 'new Array') + '" />';
-    return label + arr + slots.body.html();
-  }
-
-  this.processData = function(value) {
-    if (map) {
+    if (this.map) {
       var out = {};
-      var widget = new cms.widgets[w_type](input);
+      var widget = new cms.widgets[this.w_type](input);
 
       _.each(value, function(ivalue) {
         var processed = widget.processData(ivalue);
@@ -503,7 +345,7 @@ widgets.field_multi = function(input, id) {
       return out;
     } else {
       var out = [];
-      var widget = new cms.widgets[w_type](input);
+      var widget = new cms.widgets[this.w_type](input);
 
       _.each(value, function(ivalue) {
         out.push(widget.processData(ivalue));
@@ -514,39 +356,43 @@ widgets.field_multi = function(input, id) {
   }
 }
 
-widgets.key_value = function(input, id) {
-  var w_type = input.widget;
-  var w_input = input;
+widgets.key_value = {
+  setup: function() {
+    this.w_type = this.settings.widget;
+    this.w_input = this.settings;
 
-  delete w_input['widget'];
-  delete w_input['label'];
+    delete this.w_input['widget'];
+    delete this.w_input['label'];
+  },
+  children: function(callback) {
+    if (!this.isSetup)
+      this.setup();
 
-  this.children = function(callback) {
     var state = {"body": {}};
 
     state["body"]["key"] = {
       type: 'textbox',
-      settings: {data: (input.data ? input.data.key : undefined) }
+      settings: {data: (this.settings.data ? this.settings.data.key : undefined) }
     };
 
     state["body"]["value"] = {
-      type: w_type,
-      settings: deep.clone(w_input),
+      type: this.w_type,
+      settings: deep.clone(this.w_input),
     };
-    state["body"]["value"]["settings"]["data"] = input.data ? input.data.value : undefined;
+    state["body"]["value"]["settings"]["data"] = this.settings.data ? this.settings.data.value : undefined;
 
     callback(state);
-  }
+  },
+  wrapper_style: "padding-left: 5px;",
+  toHTML: function(slots) {
+    return this.renderSlot('body');
+  },
+  processData: function(value) {
+    if (!this.isSetup)
+      this.setup();
 
-  this.wrapper_style = "padding-left: 5px;";  
-
-  this.toHTML = function(slots) {
-    return slots.body.html();
-  }
-
-  this.processData = function(value) {
     var key = value.key;
-    var widget = new cms.widgets[w_type](input);
+    var widget = new cms.widgets[this.w_type](this.settings);
 
     var out = widget.processData(value);
     out['key'] = key;
@@ -555,30 +401,26 @@ widgets.key_value = function(input, id) {
   }
 }
 
-widgets.rating = function(settings, id) {
-  this.tags = ['field_edit'];
-  this.settings = [{"name": "data", "type": "vote"}];
-
-  this.processData = function(data) {
+widgets.rating = {
+  tags: ['field_edit'],
+  settingsModel: [{"name": "data", "type": "vote"}],
+  processData: function(data) {
     return parseFloat(data);
-  }
+  },
+  toHTML: function() {
+    var label = '<label class="control-label" for="' + this.id + '-textbox" style="padding-right: 5px;">' + this.settings.label + ':' + '</label>';    
+    var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="number" name="' + this.id + '" ' + (this.settings.data ? 'value="' + htmlEscape(this.settings.data) + '"' : '') + '/>';
 
-  this.toHTML = function() {
-    var label = '<label class="control-label" for="' + id + '-textbox" style="padding-right: 5px;">' + settings.label + ':' + '</label>';    
-    var element = '<input id="'+id+'-textbox" class="form-control input-small" type="number" name="' + id + '" ' + (settings.data ? 'value="' + htmlEscape(settings.data) + '"' : '') + '/>';
-
-    return (settings.label ? label : '') + element;
+    return (this.settings.label ? label : '') + element;
   }
 }
 
-widgets.fivestar = function(settings, id) {
-  this.tags = ['field_edit'];
-  this.settings = [{"name": "data", "type": "vote"},
-    {"name": "star_count", "type": "Number"}];
-
-  this.deps = {'raty': ['lib/jquery.raty.js']};
-
-  this.processData = function(data, old, user) {
+widgets.fivestar = {
+  tags: ['field_edit'],
+  settingsModel: [{"name": "data", "type": "vote"},
+    {"name": "star_count", "type": "Number"}],
+  deps: {'raty': ['lib/jquery.raty.js']},
+  processData: function(data, old, user) {
     old = old || {};
     old.ratings = old.ratings || {};
     old.total = old.total || 0;
@@ -596,32 +438,27 @@ widgets.fivestar = function(settings, id) {
     old.average = old.total / old.count;
     old.ratings[user.clientID] = amount;
     return old;
-  }
-
-  this.toHTML = function() {
-    settings.data = settings.data || {average: 0, count: 0};
-    return '<label class="control-label">'+settings.label+':</label><div id="'+id+'-stars"></div>' +
-    '<input id="'+id+'-score" class="form-control input-small" type="hidden" name="' + id + '" ' + (settings.data ? 'value="' + settings.data.average + '"' : '') + ' />' +
-    'Average: ' + Math.round(settings.data.average*100)/100 + ' (' + settings.data.count + ' vote)';
-  }
-
-  this.script = function() {
-    return '$("#'+id+'-stars").raty({ click: function(score) { $("#'+id+'-score").val(score); }, ' +
-     (settings.data ? ' score: '+settings.data.average +',' : '') + 
-     (settings.star_count ? ' number: '+settings.star_count +',' : '') + 
+  },
+  toHTML: function() {
+    this.settings.data = this.settings.data || {average: 0, count: 0};
+    return '<label class="control-label">'+this.settings.label+':</label><div id="'+this.id+'-stars"></div>' +
+    '<input id="'+this.id+'-score" class="form-control input-small" type="hidden" name="' + this.id + '" ' + (this.settings.data ? 'value="' + this.settings.data.average + '"' : '') + ' />' +
+    'Average: ' + Math.round(this.settings.data.average*100)/100 + ' (' + this.settings.data.count + ' vote)';
+  },
+  script: function() {
+    return '$("#'+this.id+'-stars").raty({ click: function(score) { $("#'+this.id+'-score").val(score); }, ' +
+     (this.settings.data ? ' score: '+this.settings.data.average +',' : '') + 
+     (this.settings.star_count ? ' number: '+this.settings.star_count +',' : '') + 
      ' path: "/bower_components/raty/lib/img", half: true });';
   }
 }
 
-widgets.up_down = function(settings, id) {
-  this.tags = ['field_edit'];
-  this.settings = [{"name": "data", "type": "vote"}];
-
-  this.deps = {'font-awesome': ['css/font-awesome.css']};
-
-  this.head = ['/modules/forms/up_down.css']
-
-  this.processData = function(data, old, user) {
+widgets.up_down = {
+  tags: ['field_edit'],
+  settingsModel: [{"name": "data", "type": "vote"}],
+  deps: {'font-awesome': ['css/font-awesome.css']},
+  head: ['/modules/forms/up_down.css'],
+  processData: function(data, old, user) {
     old = old || {};
     old.ratings = old.ratings || {};
     old.total = old.total || 0;
@@ -639,31 +476,28 @@ widgets.up_down = function(settings, id) {
     old.average = old.total / old.count;
     old.ratings[user.clientID] = amount;
     return old;
-  }
-
-  this.script = function() {
-    return '$("#'+id+' .up-vote").on("click", function() { \
-      $("#'+id+' .up-vote").addClass("selected"); $("#'+id+' .down-vote").removeClass("selected"); $("#'+id+' input").val(1); \
+  },
+  script: function() {
+    return '$("#'+this.id+' .up-vote").on("click", function() { \
+      $("#'+this.id+' .up-vote").addClass("selected"); $("#'+this.id+' .down-vote").removeClass("selected"); $("#'+this.id+' input").val(1); \
     });' +
-    '$("#'+id+' .down-vote").on("click", function() { \
-      $("#'+id+' .down-vote").addClass("selected"); $("#'+id+' .up-vote").removeClass("selected"); $("#'+id+' input").val(-1); \
+    '$("#'+this.id+' .down-vote").on("click", function() { \
+      $("#'+this.id+' .down-vote").addClass("selected"); $("#'+this.id+' .up-vote").removeClass("selected"); $("#'+this.id+' input").val(-1); \
     });';
-  }
-
-  this.toHTML = function() {
-    var label = '<label class="control-label">'+settings.label+':</label>';
+  },
+  toHTML: function() {
+    var label = '<label class="control-label">'+this.settings.label+':</label>';
     return '<i class="up-vote fa fa-caret-up fa-3x"></i>' +
-    '<div style="width: 30px; text-align: center;">'+(settings.data ? settings.data.total : '')+'</div>' +
+    '<div style="width: 30px; text-align: center;">'+(this.settings.data ? this.settings.data.total : '')+'</div>' +
     '<i class="down-vote fa fa-caret-down fa-3x"></i>' + 
-    '<input type="hidden" name="'+id+'" >';
+    '<input type="hidden" name="'+this.id+'" >';
   }
 }
 
-widgets.upload = function(settings, id) {
-  this.tags = ['field_edit'];
-  this.settings = [{"name": "data", "type": "File"}];
-
-  this.toHTML = function() {
-    return '<input type="file" name="'+id+'" />'
+widgets.upload = {
+  tags: ['field_edit'],
+  settingsModel: [{"name": "data", "type": "File"}],
+  toHTML: function() {
+    return '<input type="file" name="'+this.id+'" />'
   }
 }

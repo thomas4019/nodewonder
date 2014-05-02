@@ -6,32 +6,35 @@
             "type": "Text",
             "quantity": "",
             "widget": "textbox",
-            "settings": "",
-            "required": false
+            "settings": ""
         },
         {
             "name": "email",
             "type": "Email",
             "quantity": "",
             "widget": "email_textbox",
-            "settings": "",
-            "required": false
+            "settings": ""
         },
         {
             "name": "pass",
             "type": "Text",
             "quantity": "",
             "widget": "password",
-            "settings": "",
-            "required": false
+            "settings": ""
         },
         {
             "name": "bio",
             "type": "Text",
             "quantity": "",
-            "widget": "textarea",
-            "settings": "",
-            "required": false
+            "widget": "ckeditor",
+            "settings": ""
+        },
+        {
+            "name": "test",
+            "type": "Number",
+            "quantity": "",
+            "widget": "slider",
+            "settings": ""
         }
     ]
 }

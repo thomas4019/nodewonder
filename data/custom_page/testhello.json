@@ -1,12 +1,36 @@
 {
     "URL": "testhello",
     "parent": "",
-    "contentType": "",
     "controller": "",
     "code": {
         "widgets": {
-            "ciGABDuU": {
+            "AOdQ4sW3": {
+                "type": "two_col",
+                "slots": {
+                    "left": [
+                        "BgXPLo7O"
+                    ],
+                    "right": [
+                        "VmFad9OH",
+                        "jyvvKykT"
+                    ],
+                    "events": []
+                }
+            },
+            "BgXPLo7O": {
                 "type": "hello_world",
+                "slots": {
+                    "events": []
+                }
+            },
+            "VmFad9OH": {
+                "type": "hello_world",
+                "slots": {
+                    "events": []
+                }
+            },
+            "jyvvKykT": {
+                "type": "youtube_video",
                 "slots": {
                     "events": []
                 }
@@ -14,9 +38,10 @@
         },
         "slotAssignments": {
             "body": [
-                "ciGABDuU"
+                "AOdQ4sW3"
             ]
         }
     },
-    "Title": ""
+    "Title": "",
+    "contentType": ""
 }

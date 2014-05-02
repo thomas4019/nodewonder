@@ -8,48 +8,44 @@ var _ = require('underscore'),
 var cms;
 module.exports = {
   widgets : {},
+  functions : {},
   register : function(_cms) {
     cms = _cms;
   }
 };
 widgets = module.exports.widgets;
+functions = module.exports.functions;
 
-function retrieve(val) {
+function retrieve(val, otherwise) {
+  if (typeof val === 'undefined')
+    return otherwise;
   return (typeof val == 'function') ? val() : val;
 }
 
-widgets.widget_code_editor = function (input, id) {
-
-  this.head = ['/modules/admin/widget_code_editor.js',
-    '/modules/admin/widget_code_editor.css'];
-
-  this.tags = ['field_edit']
-  this.settings = [{'name': 'label', 'type': 'Text'},
-    {"name": "data", "type": "Widgets"}];
-
-  this.deps = {'jquery': [], 'bootstrap': [], 'angular': [], 'underscore': ['underscore.js'], 'font-awesome': ['css/font-awesome.css']};
-
-  this.children = function(callback) {
+widgets.widget_code_editor = {
+  head: ['/modules/admin/widget_code_editor.js', '/modules/admin/widget_code_editor.css'],
+  tags: ['field_edit'],
+  settingsModel: [{'name': 'label', 'type': 'Text'},
+    {"name": "data", "type": "Widgets"}],
+  deps: {'jquery': [], 'bootstrap': [], 'angular': [], 'underscore': ['underscore.js'], 'font-awesome': ['css/font-awesome.css']},
+  children: function(callback) {
     var body = {};
     body['sel'] = {'type': 'widget_selector'}
     callback({'body': body});
-  }
-
-  this.script = function() {
-    return 'angular.bootstrap("#' + id + '");';
-  }
-
-  this.processData = function(data) {
+  },
+  script: function() {
+    return 'angular.bootstrap("#' + this.id + '");';
+  },
+  processData: function(data) {
     return JSON.parse(data);
-  }
-
-  this.toHTML = function(slots, value) {
-    var v = JSON.stringify(input.data || value || {});
+  },
+  toHTML: function(label) {
+    var v = JSON.stringify(this.settings.data || {});
     v = v.replace(/'/g, "&#39;");
-    return slots['body'].html() +
-    '<textarea style="display: none;" class="widget-code-editor" name="'+id+'"></textarea>' +
-    (input.label ? '<label>'+input.label+':</label>' : '') +
-    '<div class="ng" ng-init=\'field_widgets = '+JSON.stringify(cms.view_widgets)+';state = ' + v + ';field_id="'+id+'";\' >' +
+    return this.renderSlot('body') +
+    '<textarea style="display: none;" class="widget-code-editor" name="'+this.id+'"></textarea>' +
+    label +
+    '<div class="ng" ng-init=\'field_widgets = '+JSON.stringify(cms.view_widgets)+';state = ' + v + ';field_id="'+this.id+'";\' >' +
     '<div ng-controller="stateController">' +
     '<div class="widget-menu" ng-if="menu || cut" ng-include="\'/modules/admin/widget-menu.html\'"></div>' +
     '<ul id="state-ctrl">' +
@@ -60,24 +56,20 @@ widgets.widget_code_editor = function (input, id) {
   }
 }
 
-widgets.widget_selector = function (input, id) {
-  var children = [];
-
-  this.deps = {'select2': []};
-
-  this.head = function() {
+widgets.widget_selector = {
+  deps: {'select2': []},
+  head: function() {
   	var widgets = {};
-  	_.each(cms.widgets, function(widget, name) {
-  		w = new widget({});
+  	_.each(cms.widgets, function(w, name) {
   		widgets[w.name] = {
   			id: w.name,
   			text: w.name,
   			name: w.name,
         widget: w.name,
   			tags: w.tags,
-  			settings: (w.settings ? retrieve(w.settings) : false),
-  			zones: (w.zones ? retrieve(w.zones) : []),
-        zone_tags: (w.zone_tags ? retrieve(w.zone_tags) : {}),
+  			settings: retrieve(w.settingsModel, false),
+  			zones: retrieve(w.zones, []),
+        zone_tags: retrieve(w.zone_tags, {})
   		};
       if (_.contains(w.tags,'view')) {
         widgets[w.name].zones.push('events');
@@ -90,58 +82,72 @@ widgets.widget_selector = function (input, id) {
     });
   
   	return ['<script type="text/javascript">nw.widgets=' + JSON.stringify(widgets) + ';</script>'];
-  }
-
-  this.script = function() {
-    return 'setupWidgetSelector("#' + id + ' .widget-selector");';
-  }
-
-  this.toHTML = function(zones, value) {
+  },
+  script: function() {
+    return 'setupWidgetSelector("#' + this.id + ' .widget-selector");';
+  },
+  toHTML: function(zones, value) {
     return '<input type="hidden" class="widget-selector">';
   }
 }
 
-widgets.widget_listing = function (input, id) {
-  var children = [];
-  var html;
+functions.getWidgetUsage = function() {
+  var usage = {};
+  _.each(cms.model_data['model'], function(model, model_name) {
+    _.each(model.fields, function(field) {
+      if (field.type == 'Widgets') {
+        _.each(cms.model_data[model_name], function(data, record) {
+          if (data[field.name]) {
+            _.each(data[field.name].widgets, function(widget, id) {
+              usage[widget.type] = usage[widget.type] || 0;
+              usage[widget.type]++;
+            });
+          }
+        });
+      }
+    });
+  });
+  return usage;
+}
 
-  this.deps = {jquery: [],bootstrap: [], 'jquery.tablesorter': ['css/theme.blue.css','css/theme.bootstrap.css', 'js/jquery.tablesorter.widgets.js']};
+widgets.widget_listing = {
+  deps: {jquery: [],bootstrap: [], 'jquery.tablesorter': ['css/theme.blue.css','css/theme.bootstrap.css', 'js/jquery.tablesorter.widgets.js']},
+  script: function () {
+    return '$("#'+this.id+' table").tablesorter({widgets:["zebra", "stickyHeaders"]});';
+  },
+  toHTML: function(zones, value) {
+    var usage = cms.functions.getWidgetUsage();
 
-  this.script = '$("#'+id+' table").tablesorter({widgets:["zebra", "stickyHeaders"]});';
-
-  this.load = function(callback) {
-    html = '<table class="tablesorter-blue">';
-    html += '<thead> <tr><th>Module</th> <th>Widget Name</th> <th>Settings</th> <th>Deps</th> <th>Tags</th> <th>Data</th> <th>Zones</th> <th>Zone Tags</th></tr> </thead>'
+    var html = '<table class="tablesorter-blue">';
+    html += '<thead> <tr><th>Module</th> <th>Widget Name</th> <th>Usage</th> <th>Settings</th> <th>Deps</th> <th>Tags</th> <th>Data</th> <th>Zones</th> <th>Zone Tags</th></tr> </thead>'
 
     html += '<tbody>';
     _.each(cms.widgets, function(widget) {
       w = new widget({});
-      var settings = retrieve(w.settings);
+      var settings = retrieve(w.settingsModel);
       var data;
       _.each(settings, function(field) {
         if (field.name == 'data') {
           data = field;
         }
       });
-      html += '<tr><td>' + w.module + '</td> <td>' + w.name + '</td> <td>' + (w.settings ? JSON.stringify(w.settings) : '') + '</td> <td>' + (w.deps ? JSON.stringify(w.deps) : '') + '</td> <td>' + (w.tags ? JSON.stringify(w.tags) : '') + '</td>  <td>' + (data ? data.type : '') + '</td> <td>' + (w.zones ? JSON.stringify(retrieve(w.zones)) : '') + '</td> <td>' + (w.zone_tags ? JSON.stringify(w.zone_tags) : '') + '</td>  </tr>';
+      html += '<tr> <td>' + w.module + '</td> <td>' + w.name + '</td> <td>' + usage[w.name] + '</td> ' +
+      '<td>' + (w.settings ? JSON.stringify(w.settings) : '') + '</td> <td>' + (w.deps ? JSON.stringify(w.deps) : '') + '</td> ' +
+      '<td>' + (w.tags ? JSON.stringify(w.tags) : '') + '</td>  <td>' + (data ? data.type : '') + '</td> ' +
+      '<td>' + (w.zones ? JSON.stringify(retrieve(w.zones)) : '') + '</td> <td>' + (w.zone_tags ? JSON.stringify(w.zone_tags) : '') + '</td>  </tr>';
     });
     html += '</tbody>';
 
     html += '</table>';
 
-    callback();
-  }
-
-  this.toHTML = function(zones, value) {
     return html;
   }
 }
 
-widgets.echo = function(input) {
-}
+widgets.echo = {}
 
-widgets.hello_world = function() {
-  this.toHTML = function() {
+widgets.hello_world =  {
+  toHTML: function() {
     return 'Hello World';
   }
 }

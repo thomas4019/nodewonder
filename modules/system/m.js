@@ -33,42 +33,32 @@ functions.fillSettings = function(settings, scope, exclude) {
   })
 }
 
-widgets.render_widget = function(input) {
-  var values = {};
+widgets.render_widget = {
+  wrapper: 'none',
+  children: function(callback) {
+    var widget_input = (this.settings.input) ? JSON.parse(this.settings.input) : {};
 
-  widget_input = (input.input) ? JSON.parse(input.input) : {};
+    var values = {};
+    if (input.values) {
+      values = JSON.parse(this.settings.values);
+    }
 
-  if (input.values) {
-    values = JSON.parse(input.values);
-  }
-
-  this.wrapper = 'none';
-
-  this.children = function(callback) {
     var body = {};
-    body['sel'] = {'type': input.widget_type, 'settings': widget_input}
+    body['sel'] = {'type': this.settings.widget_type, 'settings': widget_input}
     callback({'body': body});
-  }
-
-  this.toHTML = function(slots, value) {
-    return slots['body'].html();
+  },
+  toHTML: function() {
+    return this.renderSlot('body');
   }
 }
 
-widgets.widgets_view = function(settings, id) {
-  this.settings = function() {
-    return [{"name": "model", "type": "Record", "settings": {"model": "model"}},
+widgets.widgets_view = {
+  settingsModel: [{"name": "model", "type": "Record", "settings": {"model": "model"}},
     {"name": "record", "type": "Text"},
-    {"name": "field", "type": "Text"}];
-  }
-
-  var record;
-  var model;
-  var model_view;
-
-  this.children = function(callback) {
-    cms.functions.getRecord(settings.model, settings.record, function(err, data) {
-      var code = data[settings.field];
+    {"name": "field", "type": "Text"}],
+  children: function(callback) {
+    cms.functions.getRecord(this.settings.model, this.settings.record, function(err, data) {
+      var code = data[this.settings.field];
       console.log(code);
       _.each(code.widgets, function(widget) {
         if (widget.model && widget.field) {
@@ -77,72 +67,58 @@ widgets.widgets_view = function(settings, id) {
       });
       callback({'body': code.widgets}, code.slotAssignments);
     });
-  }
-
-  this.toHTML = function(slots) {
-    return slots.body.html();
+  },
+  toHTML: function() {
+    return this.renderSlot('body');
   }
 }
 
-widgets.header = function(input, id, scope) {
-  this.wrapper = input.type || 'h1';
-
-  this.tags = ['field_view'];
-
-  this.settings = function() {
-    return [{"name": "data", "type": "Text"},
-      {"name": "type", "type": "Text"}];
-  }
-
-  this.toHTML = function(slots) {
-    var text = Handlebars.compile(input.data);
+widgets.header = {
+  wrapper: function() {
+    return this.settings.type || 'h1';
+  },
+  tags: ['field_view'],
+  settingsModel: [{"name": "data", "type": "Text"},
+      {"name": "type", "type": "Text"}],
+  toHTML: function() {
+    var text = Handlebars.compile(this.settings.data);
     return text(scope);
   }
 }
 
-widgets.plaintext =  function(input, id) {
-  this.wrapper = 'p';
-
-  this.tags = ['field_view'];
-
-  this.settings = [{"name": "data", "type": "Text"}];
-
-  this.toHTML = function(slots) {
-    return input.data;
+widgets.plaintext =  {
+  wrapper: 'p',
+  tags: ['field_view'],
+  settingsModel: [{"name": "data", "type": "Text"}],
+  toHTML: function() {
+    return this.settings.data;
   }
 }
 
-widgets.filtered_html =  function(input, id) {
-  this.wrapper = 'p';
-
-  this.tags = ['field_view'];
-
-  this.settings = [{"name": "data", "type": "Text"}];
-
-  this.toHTML = function(slots) {
-    return input.data;
+widgets.filtered_html = {
+  wrapper: 'p',
+  tags: ['field_view'],
+  settingsModel: [{"name": "data", "type": "Text"}],
+  toHTML: function() {
+    return this.settings.data;
   }
 }
 
-widgets.formatted_date = function(settings) {
-  this.tags = ['field_view'];
-
-  this.settings = [{"name": "format", "type": "Text"},
-    {"name": "data", "type": "Date"}];
-
-  this.toHTML = function() {
-    return moment(settings.data).format(settings.format || 'MMMM Do YYYY');
+widgets.formatted_date = {
+  tags: ['field_view'],
+  settingsModel: [{"name": "format", "type": "Text"},
+    {"name": "data", "type": "Date"}],
+  toHTML: function() {
+    return moment(this.settings.data).format(this.settings.format || 'MMMM Do YYYY');
   }
 }
 
-widgets.yes_no = function(settings) {
-  this.tags = ['field_view'];
-
-  this.settings = [{"name": "true_text", "type": "Text"},
+widgets.yes_no = {
+  tags: ['field_view'],
+  settingsModel: [{"name": "true_text", "type": "Text"},
     {"name": "false_text", "type": "Text"},
-    {"name": "data", "type": "Boolean"}];
-
-  this.toHTML = function() {
-    return settings.data ? settings.true_text || 'Yes' : settings.false_text || 'No';
+    {"name": "data", "type": "Boolean"}],
+  toHTML: function() {
+    return this.settings.data ? (this.settings.true_text || 'Yes') : (this.settings.false_text || 'No');
   }
 }

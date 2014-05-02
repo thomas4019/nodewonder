@@ -14,17 +14,14 @@ module.exports = {
 functions = module.exports.functions;
 widgets = module.exports.widgets;
 
-widgets.recaptcha = function(settings, id) {
-  this.tags = ['field_edit'];
-  this.settings = [{"name": "data", "type": "Captcha"}];
-
-  this.toHTML = function(slots) {
+widgets.recaptcha = {
+  tags: ['field_edit'],
+  settingsModel: [{"name": "data", "type": "Captcha"}],
+  toHTML: function() {
   	var recaptcha = new Recaptcha(PUBLIC_KEY, PRIVATE_KEY);
-  	return '<label class="control-label">Captcha:</label>'+
-    recaptcha.toHTML();
-  }
-
-  this.validateData = function(data, callback) {
+  	return '<label class="control-label">Captcha:</label>' + recaptcha.toHTML();
+  },
+  validateData: function(data, callback) {
     var raw_data = {
         remoteip:  '24.49.170.112',
         challenge: data.recaptcha_challenge_field,
@@ -40,29 +37,25 @@ widgets.recaptcha = function(settings, id) {
         callback('invalid');
       }
     });
-  }
-
-  this.script = function() {
+  },
+  script: function() {
     return 'setTimeout(function() {'+
-    '$("input[name=\'recaptcha_response_field\']").attr("name", "'+id+'-recaptcha_response_field");' +
-    '$("input[name=\'recaptcha_challenge_field\']").attr("name", "'+id+'-recaptcha_challenge_field");' +
+    '$("input[name=\'recaptcha_response_field\']").attr("name", "'+this.id+'-recaptcha_response_field");' +
+    '$("input[name=\'recaptcha_challenge_field\']").attr("name", "'+this.id+'-recaptcha_challenge_field");' +
     '}, 500);';
   }
 }
 
-widgets.captchagen = function(settings, id) {
-  this.tags = ['field_edit'];
-  this.settings = [{"name": "data", "type": "Captcha"}];
+widgets.captchagen = {
+  tags: ['field_edit'],
+  settingsModel: [{"name": "data", "type": "Captcha"}],
+  toHTML: function() {
+    return ''  
+  },
+  validateData: function(data) {
 
-  this.toHTML = function(slots) {
-    
-  }
-
-  this.validateData = function(data) {
-
-  }
-
-  this.script = function() {
+  },
+  script: function() {
     return '';
   }
 }

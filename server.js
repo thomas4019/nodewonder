@@ -35,14 +35,72 @@ cms.pending_processes = {};
 cms.settings = {};
 cms.settings_group = 'production';
 
+cms.functions.addWidgetType = function(module, name, widgetType) {
+  var constructor = function() {};
+  constructor.prototype = widgetType;
+  _.extend(constructor.prototype, Widget.prototype);
+  constructor.prototype.module = module;
+  constructor.prototype.name = name;
+
+  constructor.prototype.tags = constructor.prototype.tags || [];
+  if (constructor.toHTML) {
+    constructor.prototype.tags.push('view');
+  }
+  if (constructor.makeEventJS) {
+    constructor.prototype.tags.push('event');
+  }
+  if (constructor.makeActionJS || constructor.action || constructor.doProcess) {
+    constructor.prototype.tags.push('action');
+  }
+  if (constructor.execute) {
+    constructor.prototype.tags.push('executable');
+  }
+
+  if (widgetType.settingsModel) {
+    var settings = cms.functions.ret(widgetType.settingsModel);
+    var type;
+    _.each(settings, function(field) {
+      if (field.name == 'data') {
+        type = field.type;
+      }
+    });
+    if (type) {
+      cms.edit_widgets[type] = cms.edit_widgets[type] || [];
+      cms.model_widgets[type] = cms.model_widgets[type] || [];
+      cms.view_widgets[type] = cms.view_widgets[type] || [];
+      if (_.contains(widgetType.tags, 'field_edit')) {
+        cms.edit_widgets[type].push(name);
+        cms.model_widgets[type][name] = widgetType;
+      }
+      if (_.contains(widgetType.tags, 'field_view')) {
+        cms.view_widgets[type].push(name);
+      }
+    }
+  }
+
+  cms.widgets[name] = constructor;
+  installDependencies(widgetType);
+  if (widgetType.init) {
+    widgetType.init();
+  }
+}
+
 /*cms.functions.allPagesToStatic();
 cms.functions.staticThemeCopy();
 cms.functions.staticModulesCopy();*/
 
 var Widget = function () {};
 
-function retrieve(val) {
+cms.functions.ret = function(val, otherwise) {
+  if (typeof val === 'undefined')
+    return otherwise;
   return (typeof val === 'function') ? val() : val;
+}
+
+Widget.prototype.ret = function(val, otherwise) {
+  if (typeof val === 'undefined')
+    return otherwise;
+  return (typeof val === 'function') ? val.call(this) : val;
 }
 
 Widget.prototype.html = function () {
@@ -50,7 +108,7 @@ Widget.prototype.html = function () {
   var zone_object = this.getZoneObject();
 
   if (this.head) {
-    _.each(retrieve(this.head), function(head_element) {
+    _.each(cms.functions.ret(this.head), function(head_element) {
       if (!(head_element in results.head_map)) {
         results.head_map[head_element] = true;
         results.head.push(head_element);
@@ -62,18 +120,23 @@ Widget.prototype.html = function () {
   }
 
   var rel_value = (results.values && this.id in results.values) ? results.values[this.id] : undefined;
+  if (this.settings.label && this.settings.label != '<none>') {
+    var label = '<label for="' + this.id + '" style="padding-right: 5px;">' + this.settings.label + ':' + '</label>';
+  } else {
+    var label = '';
+  }
   try {
-    widget_html = (this.toHTML) ? this.toHTML(zone_object, rel_value) : '';
+    widget_html = (this.toHTML) ? this.toHTML(label) : '';
   } catch(err) {
     console.error("PROBLEM DURING RENDERING");
     console.error(err.stack);
   }
 
-  var wrapper = this.wrapper ? this.wrapper : 'div';
+  var wrapper = this.ret(this.wrapper, 'div');
 
-  var style = this.wrapper_style ? ' style="' + retrieve(this.wrapper_style) + '" ' : '';
+  var style = this.wrapper_style ? ' style="' + cms.functions.ret(this.wrapper_style) + '" ' : '';
 
-  var wclass = this.wrapper_class ? retrieve(this.wrapper_class) : '';
+  var wclass = this.ret(this.wrapperClass, '');
 
   if (wrapper == 'none') {
     return widget_html + '\r\n';
@@ -86,7 +149,7 @@ Widget.prototype.html = function () {
 Widget.prototype.getZoneObject = function() {
   var zones = {};
 
-  _.each(this.all_children, function(widgetList, zoneName) {
+  _.each(this.slotAssignments, function(widgetList, zoneName) {
 
     var zone = widgetList;
 
@@ -102,6 +165,14 @@ Widget.prototype.getZoneObject = function() {
   });
 
   return zones;
+}
+
+Widget.prototype.renderSlot = function(slotName) {
+  var zone_html = '';
+  _.each(this.slotAssignments[slotName], function(w, i) {
+    zone_html += w.html(this.values);
+  });
+  return zone_html;
 }
 
 Widget.prototype.processData = function(value) {
@@ -244,7 +315,7 @@ function processDeps(callback) {
 
 function installDependencies(thing) {
   if (thing.deps) {
-    _.each(Object.keys(retrieve(thing.deps)), function(dep, index) {
+    _.each(Object.keys(cms.functions.ret(thing.deps)), function(dep, index) {
       if (dep != 'order' && !_.contains(allDeps, dep)) {
         allDeps.push(dep);
       }
@@ -293,44 +364,49 @@ function registerModule(directory, module, prefix, callback) {
   });
 
   _.each(m.widgets, function(widget, name) {
-    widget.prototype = new Widget();
-    widget.prototype.name = prefix+name;
-    widget.prototype.module = module;
-    cms.widgets[prefix+name] = widget;
-    var instance = new widget({});
-    installDependencies(instance);
-    if (widget.init) {
-      widget.init();
-    }
-    if (instance.settings) {
-      var settings = retrieve(instance.settings);
-      var type;
-      _.each(settings, function(field) {
-        if (field.name == 'data') {
-          type = field.type;
-        }
-      });
-      if (type) {
-        cms.edit_widgets[type] = cms.edit_widgets[type] || [];
-        cms.model_widgets[type] = cms.model_widgets[type] || [];
-        cms.view_widgets[type] = cms.view_widgets[type] || [];
-        if (_.contains(instance.tags, 'field_edit')) {
-          cms.edit_widgets[type].push(name);
-          cms.model_widgets[type][name] = widget;
-        }
-        if (_.contains(instance.tags, 'field_view')) {
-          cms.view_widgets[type].push(name);
+    if (typeof widget != 'function') {
+      cms.functions.addWidgetType(module, name, widget);
+    } else {
+      _.extend(widget.prototype, Widget.prototype);
+      widget.prototype.name = prefix+name;
+      widget.prototype.module = module;
+
+      cms.widgets[prefix+name] = widget;
+      var instance = new widget({});
+      installDependencies(instance);
+      if (widget.init) {
+        widget.init();
+      }
+      if (instance.settingsModel) {
+        var settings = cms.functions.ret(instance.settingsModel);
+        var type;
+        _.each(settings, function(field) {
+          if (field.name == 'data') {
+            type = field.type;
+          }
+        });
+        if (type) {
+          cms.edit_widgets[type] = cms.edit_widgets[type] || [];
+          cms.model_widgets[type] = cms.model_widgets[type] || [];
+          cms.view_widgets[type] = cms.view_widgets[type] || [];
+          if (_.contains(instance.tags, 'field_edit')) {
+            cms.edit_widgets[type].push(name);
+            cms.model_widgets[type][name] = widget;
+          }
+          if (_.contains(instance.tags, 'field_view')) {
+            cms.view_widgets[type].push(name);
+          }
         }
       }
+      setTags(widget, instance);
     }
-    setTags(widget, instance);
   });
 
   callback();
 }
 
 function setTags(widget, instance) {
-  widget.prototype.tags = widget.tags || [];
+  widget.prototype.tags = widget.prototype.tags || widget.tags || [];
 
   if (instance.toHTML) {
     widget.prototype.tags.push('view');

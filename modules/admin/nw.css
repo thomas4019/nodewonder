@@ -12,3 +12,8 @@
 	top: 5px;
 	right: 5px;
 }
+
+div.widget-checkbox label {
+	font-weight: normal;
+	margin-left: 5px;
+}

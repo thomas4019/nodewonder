@@ -31,7 +31,7 @@ functions.createHandlersCode = function(action) {
       if (!first)
         code += ',';
       code += slot_name + ': function() {\n' + 
-      cms.functions.createActionCode(action.all_children[slot_name]) +
+      cms.functions.createActionCode(action.slotAssignments[slot_name]) +
       '}';
       first = false;
     }
@@ -54,7 +54,7 @@ functions.createActionCode = function(actions) {
 }
 
 functions.eventScript = function() {
-    var slots = this.all_children;
+    var slots = this.slotAssignments;
     var selector = '#'+this.parent.id;
     var code = cms.functions.createActionCode(slots.actions);
     //var code = cms.functions.concatActions(slots.actions);
@@ -72,89 +72,75 @@ functions.setupProcess = function(widget, settings) {
   };
 }
 
-widgets.onload = function (input) {
-  this.zones = ['actions'];
-
-  this.zone_tags = {actions: ['action']};
-
-  this.script = function() {
-    var slots = this.all_children;
-    return cms.functions.createActionCode(slots.actions);
-  }
-
-  this.toHTML = function() {return '';}
+widgets.onload = {
+  slots: ['actions'],
+  zone_tags: {actions: ['action']},
+  script: function() {
+    return cms.functions.createActionCode(this.slotAssignments.actions);
+  },
+  toHTML: function() {return '';}
 }
 
-widgets.on_leaving = function (input) {
-  this.zones = ['actions'];
-
-  this.zone_tags = {actions: ['action']};
-
-  this.script = function() {
-    var slots = this.all_children;
-    return '$( window ).unload(function() {' + cms.functions.createActionCode(slots.actions) + '});';
-  }
-
-  this.toHTML = function() {return '';}
+widgets.on_leaving = {
+  zones: ['actions'],
+  zone_tags: {actions: ['action']},
+  script: function() {
+    return '$( window ).unload(function() {' + cms.functions.createActionCode(this.slotAssignments.actions) + '});';
+  },
+  toHTML: function() {return '';}
 }
 
 var jquery_actions = ['click', 'dblclick', 'focusout', 'hover', 'mousedown', 'mouseenter', 'mouseleave', 'mousemove', 'mouseout', 'mouseover', 'mouseup'];
 
 _.each(jquery_actions, function(name) {
 
-  widgets['on'+name] = function(input, id) {
-    this.makeEventJS = function(sel, code) {
+  widgets['on'+name] = {
+    makeEventJS: function(sel, code) {
       return '$("' + sel + '").on( "'+name+'",\n function() {' + code + '});\n'
-    }
-
-    this.script = cms.functions.eventScript;
+    },
+    script: functions.eventScript
   }
 
 });
 
-widgets.refresh = function(input) {
-  this.makeActionJS = function() {
+widgets.refresh = {
+  makeActionJS: function() {
     return 'location.reload();';
   }
 }
 
-widgets.execute = function(input) {
-  this.settings = [{"name":"js", "type": "Javascript", "widget": "textarea"}];
-
-  this.makeActionJS = function() {
-    return input.js;
+widgets.execute = {
+  settingsModel: [{"name":"js", "type": "Javascript", "widget": "textarea"}],
+  makeActionJS: function() {
+    return this.settings.js;
   }
 }
 
-widgets.alert = function(input) {
-  this.settings = [{"name":"message", "type":"Text"}];
-
-  this.makeActionJS = function() {
-    return 'alert("' + input.message + '");';
+widgets.alert = {
+  settingsModel: [{"name":"message", "type":"Text"}],
+  makeActionJS: function() {
+    return 'alert("' + this.settings.message + '");';
   }
 }
 
-widgets.message = function(input) {
-  this.settings = [{"name":"message", "type":"Text"},
-    {"name": "type", "type": "Text", "widget": "select", "settings": {label:'Message Type', choices: ['info', 'success', 'warning', 'error']} }];
-
-  this.deps = {'jquery': [],'toastr': [], 'handlebars': []};
-
-  this.action = function(settings, id, scope, handlers) {
+widgets.message = {
+  settingsModel: [{"name":"message", "type":"Text"},
+    {"name": "type", "type": "Text", "widget": "select", "settings": {
+      label:'Message Type', choices: ['info', 'success', 'warning', 'error']
+    } }],
+  settings_unfiltered: ['message', 'type'],
+  deps: {'jquery': [],'toastr': [], 'handlebars': []},
+  action: function(settings, id, scope, handlers) {
     toastr[settings.type](settings.message);
   }
 }
-widgets.message.settings_unfiltered = ['message', 'type'];
 
-widgets.submit_form = function(settings) {
-  this.settings = [{"name":"selector", "type":"Text"}];
-
-  this.deps = {'jquery': [], 'jquery-form': []};
-
-  this.zones = ['success', 'failure'];
-  this.zone_tags = {success: ['action'], failure: ['action']};
-  
-  this.action = function(settings, id, scope, handlers) {
+widgets.submit_form = {
+  settingsModel: [{"name":"selector", "type":"Text"}],
+  deps: {'jquery': [], 'jquery-form': []},
+  zones: ['success', 'failure'],
+  zone_tags: {success: ['action'], failure: ['action']},
+  action: function(settings, id, scope, handlers) {
     var id = settings.selector ? settings.selector.substr(1) : '';
     var model = nw.model[id];
     var data = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#'+id+' :input').serializeArray()));
@@ -177,27 +163,25 @@ widgets.submit_form = function(settings) {
   }
 }
 
-widgets.go_back = function() {
-  this.action = function(settings, id, scope, handlers) {
+widgets.go_back = {
+  action: function(settings, id, scope, handlers) {
     history.go(-1);
   }
 }
 
-widgets.goto_page = function(settings, id, scope) {
-  this.settings = [{"name": "URL", "type": "Text"}];
-  this.deps = {'handlebars': []}
-
-  this.action = function(settings, id, scope, handlers) {
-    //var url = Handlebars.compile(settings.URL);
+widgets.goto_page = {
+  settingsModel: [{"name": "URL", "type": "Text"}],
+  settings_unfiltered: ['URL'],
+  deps: {'handlebars': []},
+  action: function(settings, id, scope, handlers) {
     window.location='/' + settings.URL;
   }
 }
-widgets.goto_page.settings_unfiltered = ['URL'];
 
-widgets.process = function() {
-  this.save = function(values, user, callback) {
+widgets.process = {
+  save: function(values, user, callback) {
     var token = values['token'];
-    var input = JSON.parse(values['input']);
+    var input = JSON.parse(values[  'input']);
     var related = cms.pending_processes[token];
     if (related) {
       if (cms.widgets[related.process]) {
@@ -215,13 +199,11 @@ widgets.process = function() {
   }
 }
 
-widgets.if = function(settings, id) {
-  this.settings = [{"name": "condition", "type": "Text"}];
-
-  this.zones = ['then', 'else'];
-  this.zone_tags = {"then": ['action'], "else": ['action']};
-  
-  this.action = function(settings, id, scope, handlers) {
+widgets.if = {
+  settingsModel: [{"name": "condition", "type": "Text"}],
+  zones: ['then', 'else'],
+  zone_tags: {"then": ['action'], "else": ['action']},
+  action: function(settings, id, scope, handlers) {
     if (eval(settings.condition)) {
       handlers.then();
     } else {
