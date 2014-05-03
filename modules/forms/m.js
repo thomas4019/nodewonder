@@ -183,18 +183,19 @@ widgets.iframe = {
 
 widgets.select = {
   tags: ['field_edit'],
-  settingsModel: [{"name": "data", "type": "Text"}],
+  settingsModel: [{"name": "data", "type": "Text"},
+    {"name": "choices", "type": "Text", "quantity": "+"}],
   toHTML: function(label) {
     var choices = this.settings.choices;
     if (Array.isArray(choices)) {
       choices = _.object(choices, choices);
     }
 
-    var element = '<select name="' + id + '">';
+    var element = '<select class="form-control" name="' + this.id + '">';
 
-    _.each(choices, function(choice) {
+    for (choice in choices) {
       element += '<option value="' + choice + '" ' + (choice == this.settings.data ? 'selected="selected"' : '') + ' >' + choice + '</option>';
-    });
+    }
 
     element += '</select>';
 

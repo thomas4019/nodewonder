@@ -1,0 +1,52 @@
+{
+    "name": "group",
+    "description": "",
+    "fields": [
+        {
+            "name": "Name",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "Members",
+            "type": "Record",
+            "quantity": "+",
+            "widget": "model_record_reference",
+            "settings": {
+                "label": "",
+                "model": "user"
+            },
+            "required": false
+        },
+        {
+            "name": "Type",
+            "type": "Text",
+            "quantity": "",
+            "widget": "select",
+            "settings": {
+                "data": "",
+                "choices": [
+                    "Open",
+                    "Invite-Only",
+                    "Closed"
+                ]
+            },
+            "required": false
+        }
+    ],
+    "index": "",
+    "views": [
+        {
+            "Name": "",
+            "Code": {
+                "widgets": {},
+                "slotAssignments": {
+                    "body": []
+                }
+            }
+        }
+    ]
+}

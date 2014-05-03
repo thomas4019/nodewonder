@@ -182,7 +182,6 @@ widgets.model_form = {
 	},
 	head: ['/modules/models/models.css'],
 	processData: function(data, old) {
-		console.log('model processing data');
 		var that = this;
 		var out = {};
 
@@ -208,7 +207,7 @@ widgets.model_form = {
 		var that = this;
 		var errors = {};
 
-		var total = Object.keys(fields).length;
+		var total = Object.keys(this.fields).length;
 		var count = 0;
 
 		_.each(this.fields, function(field) {
@@ -416,7 +415,7 @@ widgets.widget_settings_model = {
 	wrapper: 'none',
 	toHTML: function() {
 		var type = cms.widgets[this.settings.widget_type];
-		var settings_model = w.settingsModel ? retreive(type.settingsModel) : [];
+		var settings_model = type.settingsModel ? retreive(type.settingsModel) : [];
 
 		return JSON.stringify(settings_model);
 	}
@@ -434,7 +433,7 @@ widgets.process_model = {
 		user.ip = '0.0.0.0';
 
 		this.processed = model_widget.processData(this.settings.data, old);
-		model_widget.validateData(processed, function(c_errors) {
+		model_widget.validateData(this.processed, function(c_errors) {
 			console.log('validation finished');
 			this.errors = c_errors;
 			callback();
@@ -504,9 +503,6 @@ widgets.save_record = {
 			
 			cms.functions.getRecord(settings.model, record, function(err, 	old_data) {
 				var model_widget = cms.functions.newWidget('model_form', {model: 'model', record: settings.model});
-				console.log('processing');
-				console.log(model_widget.name);
-				console.log(model_widget.processData.toString());
 				var processed = model_widget.processData(input.data, old_data);
 
 				if (settings.record == 'create') {
