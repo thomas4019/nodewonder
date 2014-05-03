@@ -32,6 +32,8 @@ cms.model_data = {};
 cms.pending_forms = {};
 cms.pending_processes = {};
 
+cms.middleware = [];
+
 cms.settings = {};
 cms.settings_group = 'production';
 
@@ -49,6 +51,12 @@ cms.functions.addWidgetType = function(module, name, widgetType) {
   }
   if (widgetType.makeActionJS || widgetType.action || widgetType.doProcess) {
     widgetType.tags.push('action');
+  }
+  if (widgetType.action) {
+    widgetType.tags.push('local-action'); 
+  }
+  if (widgetType.doProcess) {
+    widgetType.tags.push('process'); 
   }
   if (widgetType.execute) {
     widgetType.tags.push('executable');
@@ -89,6 +97,8 @@ cms.functions.newWidget = function(type, settings, id) {
   if (id) {
     w.id = id;
   }
+  if (w.setup)
+    w.setup();
   return w;
 }
 
@@ -96,13 +106,13 @@ cms.functions.newWidget = function(type, settings, id) {
 cms.functions.staticThemeCopy();
 cms.functions.staticModulesCopy();*/
 
-var Widget = function () {};
-
 cms.functions.ret = function(val, otherwise) {
   if (typeof val === 'undefined')
     return otherwise;
   return (typeof val === 'function') ? val() : val;
 }
+
+var Widget = function () {};
 
 Widget.prototype.ret = function(val, otherwise) {
   if (typeof val === 'undefined')
@@ -112,7 +122,6 @@ Widget.prototype.ret = function(val, otherwise) {
 
 Widget.prototype.html = function () {
   var results = this.results;
-  var zone_object = this.getZoneObject();
 
   if (this.head) {
     _.each(cms.functions.ret(this.head), function(head_element) {
@@ -154,27 +163,6 @@ Widget.prototype.html = function () {
   }
 }
 
-Widget.prototype.getZoneObject = function() {
-  var zones = {};
-
-  _.each(this.slotAssignments, function(widgetList, zoneName) {
-
-    var zone = widgetList;
-
-    zone.html = function() {
-      var zone_html = '';
-      _.each(widgetList, function(w, i) {
-        zone_html += w.html(this.values);
-      });
-      return zone_html;
-    }
-
-    zones[zoneName] = zone;
-  });
-
-  return zones;
-}
-
 Widget.prototype.renderSlot = function(slotName) {
   var zone_html = '';
   _.each(this.slotAssignments[slotName], function(w, i) {
@@ -203,7 +191,8 @@ async.series(
   registerAllThemes,
   registerModels,
   installAllDeps,
-  processDeps],
+  processDeps,
+  addMiddleware],
   function() {
     console.log('the server is ready - running at http://127.0.0.1:3000/');
     console.log('-------------------------------------------------------');
@@ -230,17 +219,7 @@ var app = connect()
   .use('/files', connect.static('files'))
   .use('/modules', connect.static('modules'))
   .use('/themes', connect.static('themes'))
-  .use('/bower_components', connect.static('bower_components'))
-  .use(customPageMiddleware)
-  .use(function (req, res) {
-    if (req.method == 'POST') {
-      processPost(req, res, function() {
-        router.dispatch(req, res, router_error);
-      });
-    } else {
-      router.dispatch(req, res, router_error);
-    }
-  });
+  .use('/bower_components', connect.static('bower_components'));
 
 var app2 = http.createServer(app);
 app2.listen(3000);
@@ -321,6 +300,22 @@ function processDeps(callback) {
   async.each(allDeps, registerDep, callback);
 }
 
+function addMiddleware(callback) {
+  _.each(cms.middleware, function(middleware, index) {
+    app.use(middleware.func);
+  });
+  app.use(function (req, res) {
+    if (req.method == 'POST') {
+      processPost(req, res, function() {
+        router.dispatch(req, res, router_error);
+      });
+    } else {
+      router.dispatch(req, res, router_error);
+    }
+  });
+  callback();
+}
+
 function installDependencies(thing) {
   if (thing.deps) {
     _.each(Object.keys(cms.functions.ret(thing.deps)), function(dep, index) {
@@ -379,6 +374,10 @@ function registerModule(directory, module, prefix, callback) {
     }
   });
 
+  _.each(m.middleware, function(middleware) {
+    cms.middleware.push(middleware);
+  });
+
   callback();
 }
 
@@ -432,6 +431,7 @@ var save = function() {
 
   var saveResponse = function(err, data) {
     if (err) {
+      console.error(err);
       that.res.writeHead(500, {'Content-Type': 'application/json'});
       var toSend = JSON.stringify(err, 0, 2);
       that.res.write(toSend);
@@ -458,20 +458,6 @@ var save = function() {
   } else {
     results = widget.save(that.res.post, user, saveResponse);
   }
-}
-
-function customPageMiddleware(req, res, next) {
-  var url_parts = url.parse(req.url, true);
-  var query = url_parts.query;
-  var path = url_parts.pathname.substring(1);
-
-  var scope = {};
-  scope.user = req.user;
-
-  cms.functions.viewPage(path, query, scope, function(html, content_type) {
-    res.writeHead(200, {'Content-Type': content_type});
-    res.end(html);
-  }, next);
 }
 
 var router_error = function(err) {

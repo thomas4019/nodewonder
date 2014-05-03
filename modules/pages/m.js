@@ -7,7 +7,8 @@ var _ = require('underscore'),
     deepExtend = require('deep-extend'),
     dextend = require('dextend'),
     Handlebars = require("handlebars"),
-    vm = require("vm");
+    vm = require("vm"),
+    url = require("url");
 
 var cms;
 var context;
@@ -15,6 +16,7 @@ var context;
 module.exports = {
   widgets : {},
   functions : {},
+  middleware: [{func: customPageMiddleware, priority: 0}],
   register : function(_cms) {
     cms = _cms;
 
@@ -39,8 +41,20 @@ fs.readFile('page.html', 'utf8', function(err, data) {
   page_template = Handlebars.compile(data);
 });
 
-/* This takes in a template and 
- */
+function customPageMiddleware(req, res, next) {
+  var url_parts = url.parse(req.url, true);
+  var query = url_parts.query;
+  var path = url_parts.pathname.substring(1);
+
+  var scope = {};
+  scope.user = req.user;
+
+  cms.functions.viewPage(path, query, scope, function(html, content_type) {
+    res.writeHead(200, {'Content-Type': content_type});
+    res.end(html);
+  }, next);
+}
+
 functions.loadPageState = function(path, callback) {
   cms.functions.getRecord('custom_page', path, function(err, page) {
     //console.log('l: ' + path + "=" + err);
@@ -184,6 +198,14 @@ functions.renderPage = function(page, vars, callback) {
   } else if ('vars' in vars) {
     var json = JSON.stringify(vars, null, 4);
     callback(json, 'text/javascript');
+  } else if ('perf' in vars) {
+    cms.functions.renderStateParts(page.code.widgets, page.code.slotAssignments, function(html, results) {
+      var out = {};
+      out = results.perf;
+      results.perf['end'] = process.hrtime(results.perf.start);
+      var json_out = JSON.stringify(out, 0, 4);
+      callback(json_out, 'text/javascript');
+    }, page.scope);
   } else if ('raw' in vars) {
     cms.functions.renderStateParts(page.code.widgets, page.code.slotAssignments, function(html, results) {
       var head = results.head;

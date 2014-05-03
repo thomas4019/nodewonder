@@ -224,7 +224,7 @@ widgets.submit = {
 }
 
 widgets.date = {
-  deps: {'jquery-ui': ['themes/smoothness/jquery-ui.min.css'] },
+  deps: {'jquery': {}, 'jquery-ui': ['themes/smoothness/jquery-ui.min.css'] },
   tags: ['field_edit'],
   settingsModel: [{"name": "data", "type": "Date"}],
   script: function() {
@@ -236,9 +236,9 @@ widgets.date = {
     if (!value || _.isEmpty(value))
       value = '';
 
-    var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="number" name="' + this.id + '"'+ (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '') + ' />';
+    var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="text" name="' + this.id + '"'+ (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '') + ' />';
     
-    if (input.inline) {
+    if (this.settings.inline) {
       return '<div class="controls form-inline">' + label + element + '</div>';
     } else {
       return label + element;

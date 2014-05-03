@@ -44,7 +44,7 @@ functions.createActionCode = function(actions) {
   var code = '';
   _.each(actions, function(action) {
     if (action.action) {
-      code += '('+action.action+')(nw.functions.fillSettings('+JSON.stringify(action.w_settings)+', scope, []), ' +
+      code += '('+action.action+')(nw.functions.fillSettings('+JSON.stringify(action.settings)+', scope, []), ' +
         '"'+action.id+'", scope,'+cms.functions.createHandlersCode(action)+');\n';  
     } else if (action.makeActionJS) {
       code += action.makeActionJS()+'\n';
@@ -128,7 +128,6 @@ widgets.message = {
     {"name": "type", "type": "Text", "widget": "select", "settings": {
       label:'Message Type', choices: ['info', 'success', 'warning', 'error']
     } }],
-  settings_unfiltered: ['message', 'type'],
   deps: {'jquery': [],'toastr': [], 'handlebars': []},
   action: function(settings, id, scope, handlers) {
     toastr[settings.type](settings.message);
@@ -171,7 +170,6 @@ widgets.go_back = {
 
 widgets.goto_page = {
   settingsModel: [{"name": "URL", "type": "Text"}],
-  settings_unfiltered: ['URL'],
   deps: {'handlebars': []},
   action: function(settings, id, scope, handlers) {
     window.location='/' + settings.URL;
@@ -185,7 +183,8 @@ widgets.process = {
     var related = cms.pending_processes[token];
     if (related) {
       if (cms.widgets[related.process]) {
-        var process = new cms.widgets[related.process](related.settings, '', user);
+        var process = cms.functions.newWidget(related.process,related.settings);
+        console.log(process.settings);
 
         process.doProcess(input, function(err, result) {
           callback(err, result);

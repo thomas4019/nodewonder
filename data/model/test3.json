@@ -1,0 +1,36 @@
+{
+    "0": [],
+    "1": [],
+    "name": "test3",
+    "description": "",
+    "fields": [
+        {
+            "name": "name",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": ""
+        },
+        {
+            "name": "check",
+            "type": "Boolean",
+            "quantity": "",
+            "widget": "checkbox",
+            "settings": ""
+        },
+        {
+            "name": "date",
+            "type": "Date",
+            "quantity": "",
+            "widget": "date",
+            "settings": ""
+        }
+    ],
+    "index": "",
+    "views": [
+        {
+            "Name": "",
+            "Code": "{\"widgets\":{},\"slotAssignments\":{\"body\":[]}}"
+        }
+    ]
+}

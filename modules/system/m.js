@@ -57,8 +57,9 @@ widgets.widgets_view = {
     {"name": "record", "type": "Text"},
     {"name": "field", "type": "Text"}],
   children: function(callback) {
-    cms.functions.getRecord(this.settings.model, this.settings.record, function(err, data) {
-      var code = data[this.settings.field];
+    var settings = this.settings;
+    cms.functions.getRecord(settings.model, settings.record, function(err, data) {
+      var code = data[settings.field];
       console.log(code);
       _.each(code.widgets, function(widget) {
         if (widget.model && widget.field) {

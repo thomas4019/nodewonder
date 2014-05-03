@@ -1,4 +1,6 @@
 {
     "Title": "Another Task",
-    "Completed": true
+    "description": "",
+    "Completed": "on",
+    "Due": "05/23/2014"
 }

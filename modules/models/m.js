@@ -526,7 +526,7 @@ widgets.delete_record = {
   zones: ['success', 'failure'],
   zone_tags: {success: ['action'], failure: ['action']},
   setup: function() {
-    cms.functions.setupProcess('delete_record', settings);
+    cms.functions.setupProcess('delete_record', this.settings);
   },
   action: function(settings, id, scope, handlers) {
     nw.functions.doProcess(settings.token, {}, handlers.success, handlers.failure);
@@ -559,7 +559,7 @@ widgets.save_record = {
   zones: ['success', 'failure'],
   zone_tags: {success: ['action'], failure: ['action']},
   setup: function() {
-    cms.functions.setupProcess('save_record', settings);
+    cms.functions.setupProcess('save_record', this.settings);
   },
   action: function(settings, id, scope, handlers) {
     var data = scope[settings.data_name];
@@ -572,22 +572,23 @@ widgets.save_record = {
   },
 	doProcess: function (input, callback) {
 		var widget = this;
+		var settings = this.settings;
 
-		cms.functions.getRecord('model', this.settings.model, function(err, model) {
-			var record = this.settings.record;
+		cms.functions.getRecord('model', settings.model, function(err, model) {
+			var record = settings.record;
 			
-			cms.functions.getRecord(this.settings.model, record, function(err, 	old_data) {
-				var model_widget = cms.functions.newWidget('model_form', {model: 'model', record: this.settings.model});
+			cms.functions.getRecord(settings.model, record, function(err, 	old_data) {
+				var model_widget = cms.functions.newWidget('model_form', {model: 'model', record: settings.model});
 				var processed = model_widget.processData(input.data, old_data);
 
-				if (this.settings.record == 'create') {
+				if (settings.record == 'create') {
 					if (model.index && processed[model.index])
 						record = processed[model.index];
 					else
 						record = cms.functions.generateRecordID();
 				}
 
-				cms.functions.saveRecord(this.settings.model, record, processed, function(err, records) {
+				cms.functions.saveRecord(settings.model, record, processed, function(err, records) {
 					callback(err, {record: record});
 				});
 			});

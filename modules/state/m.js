@@ -23,7 +23,13 @@ function retreive(val) {
 functions.initializeState = function(state, scope, callback) {
   var widgets_buffer = {};
   var count = 1;
-  var results = {deps: {}, script: ''};
+  var results = {
+    deps: {},
+    head: [],
+    head_map: {},
+    script: '',
+    perf: {start: process.hrtime(), load_start: {}, load_end: {}, children_start: {}, children_end: {}, init_start: {}, init_end: {}, render_start: {}, render_end: {}}
+  };
 
   var initializeWidget = function(w, id) {
     var name = w.type;
@@ -33,10 +39,13 @@ functions.initializeState = function(state, scope, callback) {
       name = 'echo';
     }
 
-    cms.functions.fillSettings(w.settings, scope, cms.widgets[name].settings_unfiltered);
+    if (!_.contains(cms.widgets[name].tags, 'local-action') || _.contains(cms.widgets[name].tags, 'process')) {
+      cms.functions.fillSettings(w.settings, scope, cms.widgets[name].settings_unfiltered);
+    }
     w.settings = w.settings || {};
+    results.perf.init_start[id] = process.hrtime(results.perf.start)[1];
     var widget = cms.functions.newWidget(name, w.settings, id);
-    widget.w_settings = w.settings;
+    results.perf.init_end[id] = process.hrtime(results.perf.start)[1];
     widget.settings = w.settings;
     widget.id = id;
 
@@ -44,7 +53,9 @@ functions.initializeState = function(state, scope, callback) {
 
     if (widget.children) {
       count++;
+      results.perf.children_start[id] = process.hrtime(results.perf.start)[1];
       widget.children(function(children, slotAssignments) {
+        results.perf.children_end[id] = process.hrtime(results.perf.start)[1];
         if (slotAssignments) {
           w.slots = {};
           _.each(slotAssignments, function(ids, slot) {
@@ -193,27 +204,29 @@ functions.renderState = function(state, slotAssignments, callback, values) {
 functions.renderStateParts = function(state, slotAssignments, callback, values) {
 
   cms.functions.initializeState(state, values, function(widgets_buffer, results, state) {
-    var render_results = {
-      'head': [],
-      'head_map': {},
-      'script': results.script,
-      'values': (values || {}),
-      'deps': results.deps
-    };
+    var render_results = results;
 
     async.each(Object.keys(widgets_buffer), function(id, callback) {
       var widget = widgets_buffer[id];
       widget.results = render_results;
 
-      if (widget.load)
-        widget.load(callback);
-      else
+      if (widget.load) {
+        results.perf.load_start[id] = process.hrtime(results.perf.start)[1];
+        widget.load(function() {
+          results.perf.load_end[id] = process.hrtime(results.perf.start)[1];
+          callback();
+        });
+      }
+      else {
         callback();
-    }, function(err, results) {
+      }
+    }, function(err, results2) {
       var html = '';
       _.each(slotAssignments['body'], function(id, index) {
         if (widgets_buffer[id]) {
+          results.perf.render_start[id] = process.hrtime(results.perf.start)[1];
           html += widgets_buffer[id].html();
+          results.perf.render_end[id] = process.hrtime(results.perf.start)[1];
         } else {
           console.error("Widget missing " + id);
         }
