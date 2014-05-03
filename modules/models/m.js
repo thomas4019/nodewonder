@@ -269,7 +269,7 @@ widgets.model_form = {
 			var input = field.settings || {};
 			var widget_type = getWidget(field, input);
 
-			var widget = new cms.widgets[widget_type](input);
+			var widget = cms.functions.newWidget(widget_type, input);
 			var processed = widget.processData(field_data, field_old, user);
 			out[field.name] = processed;
 		});
@@ -299,7 +299,7 @@ widgets.model_form = {
 					callback(errors);
 			}
 
-			var widget = new cms.widgets[widget_type](input);
+			var widget = cms.functions.newWidget(widget_type, input);
 			if (widget.validateData.length == 2) { //async
 				widget.validateData(field_data, handle);
 			} else { //sync
@@ -368,7 +368,7 @@ widgets.model_data_listing = {
 		var html = '';
 
 		html += '<h1>'
-		+ (this.settings.title ? this.settings.title : ('<a href="/admin/list/model">Models</a> : ' + settings.model))
+		+ (this.settings.title ? this.settings.title : ('<a href="/admin/list/model">Models</a> : ' + this.settings.model))
 		+ '</h1>';
 
 		if (!this.settings.manual_list) {
@@ -376,7 +376,8 @@ widgets.model_data_listing = {
 		}
 
 		var data = cms.model_data[this.settings.model];
-		_.each(data, function(list, key) {
+		for (key in data) {
+			var list = data[key];
 			if (!this.settings.manual_list) {
 				html += '<li class="list-group-item" >';
 			}
@@ -389,7 +390,7 @@ widgets.model_data_listing = {
 			if (!this.settings.manual_list) {
 				html += '</li>';
 			}
-		});
+		}
 
 		if (!this.settings.manual_list) {
 			html += '</ul>';
@@ -451,9 +452,9 @@ widgets.model_record_reference = {
 	toHTML: function(label) {
 		var data = this.settings.data;
 		var choices = [];
-		choices = choices.concat(Object.keys(cms.model_data[model]));
+		choices = choices.concat(Object.keys(cms.model_data[this.settings.model]));
 
-	 	var html = label + '<select class="sel" style="width: 100%;height: 34px;" name="'+id+'">';
+	 	var html = label + '<select class="sel" style="width: 100%;height: 34px;" name="'+this.id+'">';
 	 	html += '<option value=""> - Select - </option>';
 	 	_.each(choices, function(choice) {
 	 		html += '<option value="' +choice + '" '+ (data == choice ? 'selected': '') + '>' + choice + '</option>';
@@ -501,7 +502,7 @@ widgets.process_model = {
 		{"name":"data", "type":"JSON"}],
 	wrapper: 'none',
 	load: function(callback) {
-		var model_widget = new cms.widgets['model_form']({'fields': this.settings.fields});
+		var model_widget = cms.functions.newWidget('model_form', {'fields': this.settings.fields});
 		var old = {};
 		var user = {};
 		user.clientID = 'unknownID';
@@ -576,7 +577,7 @@ widgets.save_record = {
 			var record = this.settings.record;
 			
 			cms.functions.getRecord(this.settings.model, record, function(err, 	old_data) {
-				var model_widget = new cms.widgets['model_form']({model: 'model', record: this.settings.model}, '', user);
+				var model_widget = cms.functions.newWidget('model_form', {model: 'model', record: this.settings.model});
 				var processed = model_widget.processData(input.data, old_data);
 
 				if (this.settings.record == 'create') {

@@ -175,7 +175,7 @@ functions.renderPage = function(page, vars, callback) {
       callback(json, 'text/javascript');
   } else if ('processedjson' in vars) {
       cms.functions.initializeState(page.code.widgets, page.scope, function(widgets_buffer, results, state) {
-        var json = JSON.stringify(state, null, 4);
+        var json = JSON.stringify({widgets: state, slotAssignments: page.code.slotAssignments}, null, 4);
         callback(json, 'text/javascript');
       });
   } else if ('scope' in vars) {

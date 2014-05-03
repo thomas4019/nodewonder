@@ -35,7 +35,7 @@ functions.initializeState = function(state, scope, callback) {
 
     cms.functions.fillSettings(w.settings, scope, cms.widgets[name].settings_unfiltered);
     w.settings = w.settings || {};
-    var widget = new cms.widgets[name](w.settings, id, scope);
+    var widget = cms.functions.newWidget(name, w.settings, id);
     widget.w_settings = w.settings;
     widget.settings = w.settings;
     widget.id = id;

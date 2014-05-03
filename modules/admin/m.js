@@ -122,8 +122,7 @@ widgets.widget_listing = {
     html += '<thead> <tr><th>Module</th> <th>Widget Name</th> <th>Usage</th> <th>Settings</th> <th>Deps</th> <th>Tags</th> <th>Data</th> <th>Zones</th> <th>Zone Tags</th></tr> </thead>'
 
     html += '<tbody>';
-    _.each(cms.widgets, function(widget) {
-      w = new widget({});
+    _.each(cms.widgets, function(w) {
       var settings = retrieve(w.settingsModel);
       var data;
       _.each(settings, function(field) {

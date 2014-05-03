@@ -36,24 +36,22 @@ cms.settings = {};
 cms.settings_group = 'production';
 
 cms.functions.addWidgetType = function(module, name, widgetType) {
-  var constructor = function() {};
-  constructor.prototype = widgetType;
-  _.extend(constructor.prototype, Widget.prototype);
-  constructor.prototype.module = module;
-  constructor.prototype.name = name;
+  _.extend(widgetType, Widget.prototype);
+  widgetType.module = module;
+  widgetType.name = name;
 
-  constructor.prototype.tags = constructor.prototype.tags || [];
-  if (constructor.toHTML) {
-    constructor.prototype.tags.push('view');
+  widgetType.tags = widgetType.tags || [];
+  if (widgetType.toHTML) {
+    widgetType.tags.push('view');
   }
-  if (constructor.makeEventJS) {
-    constructor.prototype.tags.push('event');
+  if (widgetType.makeEventJS) {
+    widgetType.tags.push('event');
   }
-  if (constructor.makeActionJS || constructor.action || constructor.doProcess) {
-    constructor.prototype.tags.push('action');
+  if (widgetType.makeActionJS || widgetType.action || widgetType.doProcess) {
+    widgetType.tags.push('action');
   }
-  if (constructor.execute) {
-    constructor.prototype.tags.push('executable');
+  if (widgetType.execute) {
+    widgetType.tags.push('executable');
   }
 
   if (widgetType.settingsModel) {
@@ -78,11 +76,20 @@ cms.functions.addWidgetType = function(module, name, widgetType) {
     }
   }
 
-  cms.widgets[name] = constructor;
+  cms.widgets[name] = widgetType;
   installDependencies(widgetType);
   if (widgetType.init) {
     widgetType.init();
   }
+}
+
+cms.functions.newWidget = function(type, settings, id) {
+  var w = Object.create(cms.widgets[type]);
+  w.settings = settings || {};
+  if (id) {
+    w.id = id;
+  }
+  return w;
 }
 
 /*cms.functions.allPagesToStatic();
@@ -125,6 +132,7 @@ Widget.prototype.html = function () {
   } else {
     var label = '';
   }
+  var widget_html = '';
   try {
     widget_html = (this.toHTML) ? this.toHTML(label) : '';
   } catch(err) {
@@ -367,38 +375,7 @@ function registerModule(directory, module, prefix, callback) {
     if (typeof widget != 'function') {
       cms.functions.addWidgetType(module, name, widget);
     } else {
-      _.extend(widget.prototype, Widget.prototype);
-      widget.prototype.name = prefix+name;
-      widget.prototype.module = module;
-
-      cms.widgets[prefix+name] = widget;
-      var instance = new widget({});
-      installDependencies(instance);
-      if (widget.init) {
-        widget.init();
-      }
-      if (instance.settingsModel) {
-        var settings = cms.functions.ret(instance.settingsModel);
-        var type;
-        _.each(settings, function(field) {
-          if (field.name == 'data') {
-            type = field.type;
-          }
-        });
-        if (type) {
-          cms.edit_widgets[type] = cms.edit_widgets[type] || [];
-          cms.model_widgets[type] = cms.model_widgets[type] || [];
-          cms.view_widgets[type] = cms.view_widgets[type] || [];
-          if (_.contains(instance.tags, 'field_edit')) {
-            cms.edit_widgets[type].push(name);
-            cms.model_widgets[type][name] = widget;
-          }
-          if (_.contains(instance.tags, 'field_view')) {
-            cms.view_widgets[type].push(name);
-          }
-        }
-      }
-      setTags(widget, instance);
+      console.log('invalid widget: ' + name);
     }
   });
 
@@ -468,7 +445,7 @@ var save = function() {
 
   var widget_name = this.res.post['widget'];
   delete this.res.post['widget'];
-  var widget = new cms.widgets[widget_name](this.res.post);
+  var widget = cms.functions.newWidget(widget_name);
   
   var user = {};
   user.clientID = this.req.clientID;

@@ -332,7 +332,7 @@ widgets.field_multi = {
 
     if (this.map) {
       var out = {};
-      var widget = new cms.widgets[this.w_type](input);
+      var widget = cms.functions.newWidget(this.w_type, input);
 
       _.each(value, function(ivalue) {
         var processed = widget.processData(ivalue);
@@ -345,7 +345,7 @@ widgets.field_multi = {
       return out;
     } else {
       var out = [];
-      var widget = new cms.widgets[this.w_type](input);
+      var widget = cms.functions.newWidget(this.w_type, input);
 
       _.each(value, function(ivalue) {
         out.push(widget.processData(ivalue));
@@ -392,7 +392,7 @@ widgets.key_value = {
       this.setup();
 
     var key = value.key;
-    var widget = new cms.widgets[this.w_type](this.settings);
+    var widget = cms.functions.newWidget(this.w_type, this.settings);
 
     var out = widget.processData(value);
     out['key'] = key;

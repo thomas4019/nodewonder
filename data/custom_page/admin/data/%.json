@@ -1,7 +1,7 @@
 {
     "URL": "",
     "parent": "admin",
-    "controller": "widgets.wyobn3bP.settings.data = load(args.model, args.record); callback();",
+    "controller": "if (args.record != 'create') { widgets.wyobn3bP.settings.data = load(args.model, args.record); } callback();",
     "code": {
         "widgets": {
             "wyobn3bP": {

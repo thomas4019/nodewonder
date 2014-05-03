@@ -26,17 +26,17 @@
 		</noscript>
 		<!--[if lte IE 8]><link rel="stylesheet" href="{{theme_path}}css/ie/v8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="{{theme_path}}css/ie/v9.css" /><![endif]-->
-		{{{head.html}}}
+		{{{renderSlot "head"}}}
 	</head>
 	<body>
-		{{{top.html}}}
+		{{{renderSlot "top"}}}
 		<!-- Header -->
 			<section id="header" class="dark">
 				<header>
 					
-					<h1>{{title.html}}</h1>
-					<p>{{subtitle.html}}</p>
-					{{{header.html}}}
+					<h1>{{renderSlot "title"}}</h1>
+					<p>{{renderSlot "subtitle"}}</p>
+					{{{renderSlot "header"}}}
 				</header>
 				<footer>
 					<a href="#first" class="button scrolly">Proceed to second phase</a>
@@ -429,6 +429,6 @@
 					</ul>
 				</div>
 			</section>
-		{{{bottom.html}}}
+		{{{renderSlot "bottom"}}}
 	</body>
 </html>

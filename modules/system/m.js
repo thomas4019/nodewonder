@@ -81,8 +81,7 @@ widgets.header = {
   settingsModel: [{"name": "data", "type": "Text"},
       {"name": "type", "type": "Text"}],
   toHTML: function() {
-    var text = Handlebars.compile(this.settings.data);
-    return text(scope);
+    return this.settings.data;
   }
 }
 
