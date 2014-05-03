@@ -1,4 +1,4 @@
-var _ = require('underscore'),
+  var _ = require('underscore'),
     fs = require('fs'),
     async = require('async'),
     file = require('file'),
@@ -20,6 +20,28 @@ function retrieve(val, otherwise) {
   if (typeof val === 'undefined')
     return otherwise;
   return (typeof val == 'function') ? val() : val;
+}
+
+widgets.middleware_listing = {
+  deps: {jquery: [],bootstrap: [], 'jquery.tablesorter': ['css/theme.blue.css','css/theme.bootstrap.css', 'js/jquery.tablesorter.widgets.js']},
+  script: function () {
+    return '$("#'+this.id+' table").tablesorter({widgets:["zebra", "stickyHeaders"]});';
+  },
+  toHTML: function() {
+    var html = '<table class="tablesorter-blue">';
+    html += '<thead> <tr> <th>Module</th> <th>Name</th> <th>Priority</th> </tr> </thead>'
+
+    html += '<tbody>';
+    _.each(cms.middleware, function(w) {
+      html += '<tr> <td>' + w.module + '</td> <td>' + w.name + '</td> <td>' + w.priority + '</td> ';
+      html += '</tr>';
+    });
+    html += '</tbody>';
+
+    html += '</table>';
+
+    return html;
+  }
 }
 
 widgets.widget_code_editor = {
@@ -68,16 +90,16 @@ widgets.widget_selector = {
         widget: w.name,
   			tags: w.tags,
   			settings: retrieve(w.settingsModel, false),
-  			zones: retrieve(w.zones, []),
-        zone_tags: retrieve(w.zone_tags, {})
+  			slots: retrieve(w.slots, []),
+        slot_tags: retrieve(w.slot_tags, {})
   		};
       if (_.contains(w.tags,'view')) {
-        widgets[w.name].zones.push('events');
-        widgets[w.name].zone_tags['events'] = ['event'];
+        widgets[w.name].slots.push('events');
+        widgets[w.name].slot_tags['events'] = ['event'];
       }
       if (_.contains(w.tags,'event')) {
-        widgets[w.name].zones.push('actions');
-        widgets[w.name].zone_tags['actions'] = ['action'];
+        widgets[w.name].slots.push('actions');
+        widgets[w.name].slot_tags['actions'] = ['action'];
       }
     });
   
@@ -86,7 +108,7 @@ widgets.widget_selector = {
   script: function() {
     return 'setupWidgetSelector("#' + this.id + ' .widget-selector");';
   },
-  toHTML: function(zones, value) {
+  toHTML: function(value) {
     return '<input type="hidden" class="widget-selector">';
   }
 }
@@ -115,11 +137,11 @@ widgets.widget_listing = {
   script: function () {
     return '$("#'+this.id+' table").tablesorter({widgets:["zebra", "stickyHeaders"]});';
   },
-  toHTML: function(zones, value) {
+  toHTML: function() {
     var usage = cms.functions.getWidgetUsage();
 
     var html = '<table class="tablesorter-blue">';
-    html += '<thead> <tr><th>Module</th> <th>Widget Name</th> <th>Usage</th> <th>Settings</th> <th>Deps</th> <th>Tags</th> <th>Data</th> <th>Zones</th> <th>Zone Tags</th></tr> </thead>'
+    html += '<thead> <tr><th>Module</th> <th>Widget Name</th> <th>Usage</th> <th>Settings</th> <th>Deps</th> <th>Tags</th> <th>Data</th> <th>Slots</th> <th>Slot Tags</th></tr> </thead>'
 
     html += '<tbody>';
     _.each(cms.widgets, function(w) {
@@ -133,7 +155,7 @@ widgets.widget_listing = {
       html += '<tr> <td>' + w.module + '</td> <td>' + w.name + '</td> <td>' + usage[w.name] + '</td> ' +
       '<td>' + (w.settings ? JSON.stringify(w.settings) : '') + '</td> <td>' + (w.deps ? JSON.stringify(w.deps) : '') + '</td> ' +
       '<td>' + (w.tags ? JSON.stringify(w.tags) : '') + '</td>  <td>' + (data ? data.type : '') + '</td> ' +
-      '<td>' + (w.zones ? JSON.stringify(retrieve(w.zones)) : '') + '</td> <td>' + (w.zone_tags ? JSON.stringify(w.zone_tags) : '') + '</td>  </tr>';
+      '<td>' + (w.slots ? JSON.stringify(retrieve(w.slots)) : '') + '</td> <td>' + (w.slot_tags ? JSON.stringify(w.slot_tags) : '') + '</td>  </tr>';
     });
     html += '</tbody>';
 

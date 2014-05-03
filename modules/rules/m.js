@@ -26,7 +26,7 @@ functions.concatActions = function(actions) {
 functions.createHandlersCode = function(action) {
   var code = '{';
   var first = true;
-  _.each(action.zone_tags, function(tags, slot_name) {
+  _.each(action.slot_tags, function(tags, slot_name) {
     if (_.contains(tags, 'action')) {
       if (!first)
         code += ',';
@@ -74,7 +74,7 @@ functions.setupProcess = function(widget, settings) {
 
 widgets.onload = {
   slots: ['actions'],
-  zone_tags: {actions: ['action']},
+  slot_tags: {actions: ['action']},
   script: function() {
     return cms.functions.createActionCode(this.slotAssignments.actions);
   },
@@ -82,8 +82,8 @@ widgets.onload = {
 }
 
 widgets.on_leaving = {
-  zones: ['actions'],
-  zone_tags: {actions: ['action']},
+  slots: ['actions'],
+  slot_tags: {actions: ['action']},
   script: function() {
     return '$( window ).unload(function() {' + cms.functions.createActionCode(this.slotAssignments.actions) + '});';
   },
@@ -137,8 +137,8 @@ widgets.message = {
 widgets.submit_form = {
   settingsModel: [{"name":"selector", "type":"Text"}],
   deps: {'jquery': [], 'jquery-form': []},
-  zones: ['success', 'failure'],
-  zone_tags: {success: ['action'], failure: ['action']},
+  slots: ['success', 'failure'],
+  slot_tags: {success: ['action'], failure: ['action']},
   action: function(settings, id, scope, handlers) {
     var id = settings.selector ? settings.selector.substr(1) : '';
     var model = nw.model[id];
@@ -200,8 +200,8 @@ widgets.process = {
 
 widgets.if = {
   settingsModel: [{"name": "condition", "type": "Text"}],
-  zones: ['then', 'else'],
-  zone_tags: {"then": ['action'], "else": ['action']},
+  slots: ['then', 'else'],
+  slot_tags: {"then": ['action'], "else": ['action']},
   action: function(settings, id, scope, handlers) {
     if (eval(settings.condition)) {
       handlers.then();

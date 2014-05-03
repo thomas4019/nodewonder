@@ -19,13 +19,14 @@ module.exports = {
   middleware: [{func: customPageMiddleware, priority: 0}],
   register : function(_cms) {
     cms = _cms;
-
+  },
+  init: function() {
     initSandbox = {
       animal: 'cat',
       count: 2,
       load: cms.functions.loadRecord,
       loadPage: functions.loadPageState
-    },
+    };
     context = vm.createContext(initSandbox);
   }
 };

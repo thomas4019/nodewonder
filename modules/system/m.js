@@ -6,12 +6,74 @@ var cms;
 module.exports = {
   widgets : {},
   functions : {},
+  middleware : [{func: processPost, priority: -3}, {func: postMiddleware, priority: -2}],
   register : function(_cms) {
     cms = _cms;
   }
 };
 widgets = module.exports.widgets;
 functions = module.exports.functions;
+
+function postMiddleware(req, res, next) {
+  if (req.method == 'POST' && req.url == '/post') {
+    console.log('post2');
+    var saveResponse = function(err, data) {
+      if (err) {
+        console.error(err);
+        res.writeHead(500, {'Content-Type': 'application/json'});
+        var toSend = JSON.stringify(err, 0, 2);
+        res.write(toSend);
+      } else {
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        var toSend = JSON.stringify(data, 0, 2);
+        res.write(toSend);
+      }
+      res.end();
+    }
+
+    var widget_name = res.post['widget'];
+    delete res.post['widget'];
+    var widget = cms.functions.newWidget(widget_name);
+    
+    var user = {};
+    user.clientID = req.clientID;
+    user.ip = req.connection.remoteAddress;
+
+    if (widget.load) {
+      widget.load(function () {
+        results = widget.save(res.post, user, saveResponse);
+      });
+    } else {
+      results = widget.save(res.post, user, saveResponse);
+    }
+  } else {
+    next();
+  }
+}
+
+function processPost(request, response, next) {
+    var queryData = "";
+    if(typeof next !== 'function') return null;
+
+    if(request.method == 'POST') {
+        request.on('data', function(data) {
+            queryData += data;
+            if(queryData.length > 1e6) {
+                queryData = "";
+                response.writeHead(413, {'Content-Type': 'text/plain'}).end();
+                request.connection.destroy();
+            }
+        });
+
+        request.on('end', function() {
+            response.post = querystring.parse(queryData);
+            next();
+        });
+
+    } else {
+        next();
+    }
+}
 
 functions.makeid = function(length) {
     var text = "";

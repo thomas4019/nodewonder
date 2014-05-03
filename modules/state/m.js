@@ -64,7 +64,7 @@ functions.initializeState = function(state, scope, callback) {
             });
           })
         }
-        _.each(children, function(widgetStateList, zone) {
+        _.each(children, function(widgetStateList, slot) {
           var heirarchical = false;
           _.each(widgetStateList, function(widgetInput, idC) {
             var nameC = widgetInput.type;
@@ -72,8 +72,8 @@ functions.initializeState = function(state, scope, callback) {
 
             if (!slotAssignments) {
               w.slots = w.slots || {};
-              w.slots[zone] = w.slots[zone] || [];
-              w.slots[zone].push(idC);
+              w.slots[slot] = w.slots[slot] || [];
+              w.slots[slot].push(idC);
             }
 
             state[idC] = widgetInput;
@@ -139,8 +139,8 @@ functions.initializeState = function(state, scope, callback) {
     callback(widgets_buffer, results, state);
   }
 
-  function addChildrenToWidget(zones, widget) {
-    _.each(zones, function(widgetList, slot) {
+  function addChildrenToWidget(slots, widget) {
+    _.each(slots, function(widgetList, slot) {
       if (!widget.slotAssignments[slot]) {
         widget.slotAssignments[slot] = [];
       }

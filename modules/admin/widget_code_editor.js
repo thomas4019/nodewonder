@@ -1,4 +1,4 @@
-zone_tag_targets = ['view'];
+slot_tag_targets = ['view'];
 
 function setupWidgetSelector(id) {
 	$(id).select2({
@@ -25,7 +25,7 @@ function setupWidgetSelector(id) {
 
 			_.each(nw.widgets, function(widget) {
 				_.each(widget.tags, function(tag) {
-					if (_.contains(zone_tag_targets, tag)) {
+					if (_.contains(slot_tag_targets, tag)) {
 						if (!groups[tag]) {
 							groups[tag] = {text: tag, children: []}
 							data.results.push(groups[tag]);
@@ -67,16 +67,16 @@ function stateController($scope) {
 		select.select2("container").hide();
 		var selected = select.select2('data');
 		select.select2('val', '');
-		var zones = {};
-		_.each(selected.zones, function(zone_name, index) {
-			zones[zone_name] = [];
+		var slots = {};
+		_.each(selected.slots, function(slot_name, index) {
+			slots[slot_name] = [];
 		});
-		//var zones = JSON.parse()
+		//var slots = JSON.parse()
 		var new_id = nw.functions.makeid(8);
 		if (selected.model)
-			$scope.widgets[new_id] = {type: selected.widget, slots: zones, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, zone_tags: selected.zone_tags};
+			$scope.widgets[new_id] = {type: selected.widget, slots: slots, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, slot_tags: selected.slot_tags};
 		else
-			$scope.widgets[new_id] = {type: selected.widget, slots: zones, has_form: selected.settings, zone_tags: selected.zone_tags};
+			$scope.widgets[new_id] = {type: selected.widget, slots: slots, has_form: selected.settings, slot_tags: selected.slot_tags};
 		if (_id == 'body') {
 			$scope.slotAssignments['body'].push(new_id);
 		} else {
@@ -95,8 +95,8 @@ function stateController($scope) {
 		width: 300,
 		query: function (query) {
 			var data = {more: false, results: []};
-			_.each(widgets[$scope.widgets[_id].type].zones, function(zone) {
-				data.results.push({"id":zone, "text": zone});	
+			_.each(widgets[$scope.widgets[_id].type].slots, function(slot) {
+				data.results.push({"id":slot, "text": slot});	
 			});
 			query.callback(data);
 		}
@@ -167,9 +167,9 @@ function stateController($scope) {
 		y = $('#'+id+'-'+slot+' .add').offset().top;
 		var select = $('#' + $scope.field_id + ' .widget-selector')
 		if ($scope.widgets[id] && nw.widgets[$scope.widgets[id].type]) {
-			zone_tag_targets = nw.widgets[$scope.widgets[id].type].zone_tags[slot] || ['view', 'field_view'];
+			slot_tag_targets = nw.widgets[$scope.widgets[id].type].slot_tags[slot] || ['view', 'field_view'];
 		} else {
-			zone_tag_targets = ['view', 'field_view'];
+			slot_tag_targets = ['view', 'field_view'];
 		}
 		select.css({position: 'absolute', left: x, top: y })
 		select.select2("container").show();
@@ -183,9 +183,9 @@ function stateController($scope) {
 		y = $('#'+id+' .addSlot').offset().top;
 		var select = $('#' + $scope.field_id + ' .slot-selector')
 		if ($scope.widgets[id] && widgets[$scope.widgets[id].type]) {
-			zone_tag_targets = widgets[$scope.widgets[id].type].zone_tags[slot] || ['view'];
+			slot_tag_targets = widgets[$scope.widgets[id].type].slot_tags[slot] || ['view'];
 		} else {
-			zone_tag_targets = ['view'];
+			slot_tag_targets = ['view'];
 		}
 		select.css({position: 'absolute', left: x, top: y })
 		select.select2("container").show();
@@ -202,7 +202,7 @@ function stateController($scope) {
 			delete widget['has_form'];
 			delete widget['cut'];
 			delete widget['selected'];
-			delete widget['zone_tags'];
+			delete widget['slot_tags'];
 		});
 		$('#' + $scope.field_id + ' .widget-code-editor').html(JSON.stringify(cstate));
 	}

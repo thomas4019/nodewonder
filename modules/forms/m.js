@@ -332,7 +332,7 @@ widgets.field_multi = {
 
     if (this.map) {
       var out = {};
-      var widget = cms.functions.newWidget(this.w_type, input);
+      var widget = cms.functions.newWidget(this.w_type, this.settings);
 
       _.each(value, function(ivalue) {
         var processed = widget.processData(ivalue);
@@ -345,7 +345,7 @@ widgets.field_multi = {
       return out;
     } else {
       var out = [];
-      var widget = cms.functions.newWidget(this.w_type, input);
+      var widget = cms.functions.newWidget(this.w_type, this.settings);
 
       _.each(value, function(ivalue) {
         out.push(widget.processData(ivalue));

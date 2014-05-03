@@ -4,7 +4,6 @@ var fs = require('fs'),
     url = require('url'),
     connect = require('connect'),
     Handlebars = require("handlebars"),
-    director = require('director'),
     querystring = require('querystring'),
     _ = require('underscore'),
     async = require('async'),
@@ -13,8 +12,7 @@ var fs = require('fs'),
     repl = require("repl"),
     bower = require('bower'),
     bowerJson = require('bower-json'),
-    dextend = require('dextend'),
-    Cookies = require('cookies');
+    dextend = require('dextend');
 
 cms = {};
 cms.m = {};
@@ -38,7 +36,7 @@ cms.settings = {};
 cms.settings_group = 'production';
 
 cms.functions.addWidgetType = function(module, name, widgetType) {
-  _.extend(widgetType, Widget.prototype);
+  _.defaults(widgetType, Widget.prototype);
   widgetType.module = module;
   widgetType.name = name;
 
@@ -86,9 +84,6 @@ cms.functions.addWidgetType = function(module, name, widgetType) {
 
   cms.widgets[name] = widgetType;
   installDependencies(widgetType);
-  if (widgetType.init) {
-    widgetType.init();
-  }
 }
 
 cms.functions.newWidget = function(type, settings, id) {
@@ -178,12 +173,6 @@ Widget.prototype.validateData = function(value) {
   return false;
 }
 
-var router = new director.http.Router();
-
-function loadPaths() {
-  router.on('post', '/post', save);
-}
-
 var allDeps = [];
 
 async.series(
@@ -192,34 +181,18 @@ async.series(
   registerModels,
   installAllDeps,
   processDeps,
-  addMiddleware],
+  addMiddleware,
+  initWidgets],
   function() {
     console.log('the server is ready - running at http://127.0.0.1:3000/');
     console.log('-------------------------------------------------------');
   });
 
-setTimeout(loadPaths, 100);
-
 var app = connect()
-  .use(function (req, res, next) {
-    var cookies = new Cookies( req, res, ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
-'af15db41-ef32-4a3f-bb15-7edce2e3744c',
-'fd075a38-a4dd-4c98-a552-239c11f6f5f7']);
-    req.clientID = cookies.get('clientID')
-    if (!req.clientID) {
-      req.clientID = cms.functions.makeid(12);
-      cookies.set('clientID', req.clientID, {signed: true, overwrite: true});
-    }
-    cms.functions.getRecord('user', req.clientID, function(err, user) {
-      req.user = user || {};
-      next();
-    });
-  })
   .use(connect.static('themes/html5up-tessellate/'))
   .use('/files', connect.static('files'))
   .use('/modules', connect.static('modules'))
-  .use('/themes', connect.static('themes'))
-  .use('/bower_components', connect.static('bower_components'));
+  .use('/themes', connect.static('themes'));
 
 var app2 = http.createServer(app);
 app2.listen(3000);
@@ -300,17 +273,37 @@ function processDeps(callback) {
   async.each(allDeps, registerDep, callback);
 }
 
+function initWidgets(callback) {
+  for(type in cms.widgets) {
+    if (cms.widgets[type].init) {
+      cms.widgets[type].init();
+    } 
+  }
+  for(module in cms.m) {
+    if (cms.m[module].init) {
+      cms.m[module].init();
+    } 
+  }
+  callback();
+}
+
+function functionName(fun) {
+  var ret = fun.toString();
+  ret = ret.substr('function '.length);
+  ret = ret.substr(0, ret.indexOf('('));
+  return ret;
+}
+
 function addMiddleware(callback) {
-  _.each(cms.middleware, function(middleware, index) {
-    app.use(middleware.func);
+  cms.middleware.sort(function(a, b) {
+    return (a.priority || 0) - (b.priority || 0);
   });
-  app.use(function (req, res) {
-    if (req.method == 'POST') {
-      processPost(req, res, function() {
-        router.dispatch(req, res, router_error);
-      });
+  _.each(cms.middleware, function(middleware, index) {
+    middleware.name = functionName(middleware.func);
+    if (middleware.base) {
+      app.use(middleware.base, middleware.func);
     } else {
-      router.dispatch(req, res, router_error);
+      app.use(middleware.func);
     }
   });
   callback();
@@ -375,97 +368,11 @@ function registerModule(directory, module, prefix, callback) {
   });
 
   _.each(m.middleware, function(middleware) {
+    middleware.module = module;
     cms.middleware.push(middleware);
   });
 
   callback();
-}
-
-function setTags(widget, instance) {
-  widget.prototype.tags = widget.prototype.tags || widget.tags || [];
-
-  if (instance.toHTML) {
-    widget.prototype.tags.push('view');
-  }
-  if (instance.makeEventJS) {
-    widget.prototype.tags.push('event');
-  }
-  if (instance.makeActionJS || instance.action || instance.doProcess) {
-    widget.prototype.tags.push('action');
-  }
-  if (instance.execute) {
-    widget.prototype.tags.push('executable');
-  }
-}
-
-function processPost(request, response, callback) {
-    var queryData = "";
-    if(typeof callback !== 'function') return null;
-
-    if(request.method == 'POST') {
-        request.on('data', function(data) {
-            queryData += data;
-            if(queryData.length > 1e6) {
-                queryData = "";
-                response.writeHead(413, {'Content-Type': 'text/plain'}).end();
-                request.connection.destroy();
-            }
-        });
-
-        request.on('end', function() {
-            response.post = querystring.parse(queryData);
-            callback();
-        });
-
-    } else {
-        response.writeHead(405, {'Content-Type': 'text/plain'});
-        response.end();
-    }
-}
-
-var save = function() {
-  console.log('POST');
-  console.log(this.res.post);
-
-  var that = this;
-
-  var saveResponse = function(err, data) {
-    if (err) {
-      console.error(err);
-      that.res.writeHead(500, {'Content-Type': 'application/json'});
-      var toSend = JSON.stringify(err, 0, 2);
-      that.res.write(toSend);
-    } else {
-      that.res.writeHead(200, {'Content-Type': 'application/json'});
-      var toSend = JSON.stringify(data, 0, 2);
-      that.res.write(toSend);
-    }
-    that.res.end();
-  }
-
-  var widget_name = this.res.post['widget'];
-  delete this.res.post['widget'];
-  var widget = cms.functions.newWidget(widget_name);
-  
-  var user = {};
-  user.clientID = this.req.clientID;
-  user.ip = this.req.connection.remoteAddress;
-
-  if (widget.load) {
-    widget.load(function () {
-      results = widget.save(that.res.post, user, saveResponse);
-    });
-  } else {
-    results = widget.save(that.res.post, user, saveResponse);
-  }
-}
-
-var router_error = function(err) {
-  if (err) {
-    console.error(err);
-    this.res.writeHead(404);
-    this.res.end('404');
-  }
 }
 
 cms.migrate = function() {
