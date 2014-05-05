@@ -35,11 +35,11 @@ functions.initializeState = function(state, scope, callback) {
     var name = w.type;
 
     if (!cms.widgets[name]) {
-      console.error('Missing widget:' + name);
+      console.error('Missing widget:' + name + ' ' + id);
       name = 'echo';
     }
 
-    if (!_.contains(cms.widgets[name].tags, 'local-action') || _.contains(cms.widgets[name].tags, 'process')) {
+    if (!_.contains(cms.widgets[name].tags, 'local-action') || _.contains(cms.widgets[name].tags, 'filtered')) {
       cms.functions.fillSettings(w.settings, scope, cms.widgets[name].settings_unfiltered);
     }
     w.settings = w.settings || {};

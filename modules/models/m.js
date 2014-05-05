@@ -9,6 +9,10 @@ var cms;
 module.exports = {
   widgets : {},
   functions : {},
+  init: function() {
+  	cms.model_data['model'] = cms.model_data['model'] || {};
+  	cms.models = cms.model_data['model'];
+  },
   register : function(_cms) {
     cms = _cms;
   }
@@ -142,15 +146,19 @@ widgets.model_form = {
 		var type = field.widget ? field.widget : default_widget;
 
   	if (type == 'model_form') {
-  		input[	'model'] = 'model';
+  		input['model'] = 'model';
   		input['record'] = field.type;
   		input['inline'] = 'model';
   	}
 
   	if (field.quantity) {
-  		input['widget'] = type;
-  		type = 'field_multi';
   		input['quantity'] = field.quantity;
+  		if (_.contains(cms.widgets[type].tags, 'field_edit_multiple')) {
+  			//widget itself will do multiple
+  		} else {
+  			input['widget'] = type;
+  			type = 'field_multi';
+  		}
   	}
 
   	return type;
@@ -170,6 +178,11 @@ widgets.model_form = {
 	  var state = {"body": {}};
 	  
 	  _.each(this.fields, function(field, index) {
+	  	if (field.type == '') {
+	  		console.error('empty field');
+	  		return;
+	  	}
+
 	  	var subdata = (model_values_obj) ? model_values_obj[field.name] : undefined;
 	  	var input = _.extend(field.settings || {}, {label: field.name, data: subdata});
 
@@ -186,6 +199,11 @@ widgets.model_form = {
 		var out = {};
 
 		_.each(this.fields, function(field) {
+	  	if (field.type == '') {
+	  		console.error('empty field');
+	  		return;
+	  	}
+
 			var field_data = data[field.name];
 			var field_old = old ? old[field.name] : undefined;
 
@@ -211,6 +229,11 @@ widgets.model_form = {
 		var count = 0;
 
 		_.each(this.fields, function(field) {
+	  	if (field.type == '') {
+	  		console.error('empty field');
+	  		return;
+	  	}
+
 			var field_data = data[field.name];
 			var input = field.settings || {};
 			var widget_type = that.getWidget(field, input);
@@ -366,23 +389,41 @@ widgets.model_widget_selector = {
 	}
 }
 
-
 widgets.model_record_reference = {
   deps: {'jquery': [],'select2': []},
-  tags: ['field_edit'],
+  tags: ['field_edit', 'field_edit_multiple'],
   settingsModel: [ {"name": "label", "type": "Text"},
   		{"name": "model", "type": "Record", "settings": {"model": "model"} },
   		{"name": "data", "type": "Record"} ],
+  processData: function(data) {
+  	if ( this.settings.quantity) {
+  		if (!data) {
+  			return [];
+  		}
+  		if (typeof data == 'string')
+  			return [data];
+  		return data;
+  	}
+  	return data;
+  },
 	toHTML: function(label) {
 		var data = this.settings.data;
 		var choices = [];
 		choices = choices.concat(Object.keys(cms.model_data[this.settings.model]));
 
-	 	var html = label + '<select class="sel" style="width: 100%;height: 34px;" name="'+this.id+'">';
-	 	html += '<option value=""> - Select - </option>';
-	 	_.each(choices, function(choice) {
-	 		html += '<option value="' +choice + '" '+ (data == choice ? 'selected': '') + '>' + choice + '</option>';
-	 	});
+	 	var html = label + '<select class="sel" ' + (this.settings.quantity ? 'multiple' : '') + ' style="width: 100%;height: 34px;" name="'+this.id+'">';
+	 	if (!this.settings.quantity) {
+	 		html += '<option value=""> - Select - </option>';
+	 	}
+	 	if (this.settings.quantity) {	
+	 		_.each(choices, function(choice) {
+		 		html += '<option value="' +choice + '" '+ (_.contains(data, choice) ? 'selected': '') + '>' + choice + '</option>';
+		 	});
+	 	} else {
+		 	_.each(choices, function(choice) {
+		 		html += '<option value="' +choice + '" '+ (data == choice ? 'selected': '') + '>' + choice + '</option>';
+		 	});
+		 }
 	 	html += '</select>';
 	 	return html;
 	},
@@ -448,6 +489,7 @@ widgets.delete_record = {
   settingsModel: [{"name": "model", "type": "Text"},
     {"name": "record", "type": "Text"}],
   slots: ['success', 'failure'],
+  tags: ['filtered'],
   slot_tags: {success: ['action'], failure: ['action']},
   setup: function() {
     cms.functions.setupProcess('delete_record', this.settings);
@@ -482,6 +524,7 @@ widgets.save_record = {
     {"name": "record_id_dest", "type": "Text"}],
   slots: ['success', 'failure'],
   slot_tags: {success: ['action'], failure: ['action']},
+  tags: ['filtered'],
   setup: function() {
     cms.functions.setupProcess('save_record', this.settings);
   },

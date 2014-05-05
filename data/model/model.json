@@ -41,6 +41,21 @@
             "widget": "model_form",
             "settings": "",
             "required": false
+        },
+        {
+            "name": "storage",
+            "type": "Text",
+            "quantity": "",
+            "widget": "select",
+            "settings": {
+                "choices": [
+                    "disk+memory",
+                    "memory",
+                    ""
+                ],
+                "label": "storage"
+            },
+            "required": false
         }
     ],
     "index": "name",
@@ -54,5 +69,6 @@
                 }
             }
         }
-    ]
+    ],
+    "storage": "disk+memory"
 }

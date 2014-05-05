@@ -73,7 +73,14 @@ var nw = function() {
 	function serializedArrayToValues(values) {
 		var settings_post = {};
 		values.map(function(value) {
-			settings_post[value.name] = value.value;
+			if (settings_post[value.name]) {
+				if (typeof settings_post[value.name] == 'string') {
+					settings_post[value.name] = [ settings_post[value.name] ];
+				}
+				settings_post[value.name].push(value.value);
+			} else {
+				settings_post[value.name] = value.value;
+			}
 		});
 		return settings_post;
 	}
@@ -208,6 +215,8 @@ var nw = function() {
 		data['token'] = token;
 		data['widget'] = 'process';
 		data['input'] = JSON.stringify(input);
+		console.log('process called');
+		console.log(input);
 		$.ajax('/post', {type: 'POST', data: data, success: function(result) {
 			console.log(result);
 			success(result)
@@ -251,12 +260,13 @@ var nw = function() {
 
 	function fillSettings(settings, scope, exclude) {
 	  exclude = exclude || ['data'];
-	  _.each(settings, function(value, key) {
+	  for(key in settings) {
+	  	var value = settings[key];
 	    if (value && (typeof value === 'string') && value.indexOf("{{") != -1 && (!_.contains(exclude, key))) {
 	      var template = Handlebars.compile(value);
 	      settings[key] = template(scope);
 	    }
-	  })
+	  }
 	  return settings;
 	}
 

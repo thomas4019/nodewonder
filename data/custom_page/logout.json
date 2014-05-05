@@ -1,0 +1,52 @@
+{
+    "URL": "logout",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "X6To5YJ3": {
+                "type": "onload",
+                "slots": {
+                    "actions": [
+                        "czDwoYYS"
+                    ],
+                    "events": []
+                }
+            },
+            "czDwoYYS": {
+                "type": "user_logout",
+                "slots": {
+                    "success": [
+                        "jipilWfy"
+                    ],
+                    "failure": [
+                        "5OEGObxk"
+                    ]
+                }
+            },
+            "jipilWfy": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "You are now logged out",
+                    "type": "success"
+                }
+            },
+            "5OEGObxk": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "failed to logout.",
+                    "type": "error"
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "X6To5YJ3"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": ""
+}

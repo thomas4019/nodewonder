@@ -1,0 +1,9 @@
+{
+    "clientID": "",
+    "username": "doe",
+    "password": "123",
+    "captcha": {
+        "recaptcha_challenge_field": "03AHJ_VuvswgKYbtnSAja_kk2-7kWDUHlLOCUVxaMTQEfZg1fOpRuWxAs_7f97212cwzbrA8Sf53H9HWII62c-OPgyxWpKrPosj8PKCXFObsm-H_B8AC2djvdGDLXQsizjJKa86_wLqRAONebA9MXRqSp_zBaGAVkGTt4vcHlW047KVi1mSFXnhnTkbDkYhXApPXt8Z7kiYg42-ILc8i6UBElOIHrc-2fOPX4m9C5bOzTjiY0T7j0Onhg",
+        "recaptcha_response_field": ""
+    }
+}

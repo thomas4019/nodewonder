@@ -1,0 +1,22 @@
+{
+    "URL": "admin/internal/analytics",
+    "parent": "admin",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "cSCu9s8R": {
+                "type": "analytics_pageviews",
+                "slots": {
+                    "events": []
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "cSCu9s8R"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": ""
+}

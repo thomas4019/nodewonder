@@ -16,7 +16,8 @@ functions = module.exports.functions;
 
 function postMiddleware(req, res, next) {
   if (req.method == 'POST' && req.url == '/post') {
-    console.log('post2');
+    console.log('post');
+    console.log(res.post);
     var saveResponse = function(err, data) {
       if (err) {
         console.error(err);
@@ -41,10 +42,10 @@ function postMiddleware(req, res, next) {
 
     if (widget.load) {
       widget.load(function () {
-        results = widget.save(res.post, user, saveResponse);
+        results = widget.save(res.post, user, req, res, saveResponse);
       });
     } else {
-      results = widget.save(res.post, user, saveResponse);
+      results = widget.save(res.post, user, req, res, saveResponse);
     }
   } else {
     next();

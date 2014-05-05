@@ -16,8 +16,13 @@
             "quantity": "+",
             "widget": "model_record_reference",
             "settings": {
-                "label": "",
-                "model": "user"
+                "label": "Members",
+                "model": "user",
+                "data": [
+                    "abc",
+                    "pkbZuncyCbiaz5bl"
+                ],
+                "quantity": "+"
             },
             "required": false
         },
@@ -25,14 +30,15 @@
             "name": "Type",
             "type": "Text",
             "quantity": "",
-            "widget": "select",
+            "widget": "radio",
             "settings": {
-                "data": "",
+                "data": "Open",
                 "choices": [
                     "Open",
                     "Invite-Only",
                     "Closed"
-                ]
+                ],
+                "label": "Type"
             },
             "required": false
         }

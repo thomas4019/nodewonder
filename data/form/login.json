@@ -13,7 +13,7 @@
             "name": "Password",
             "type": "Text",
             "quantity": "",
-            "widget": "textbox",
+            "widget": "password",
             "settings": "",
             "required": false
         }
@@ -23,11 +23,60 @@
             "rNk1T5WJ": {
                 "type": "button",
                 "slots": {
-                    "events": []
+                    "events": [
+                        "hjk0hqWL"
+                    ]
                 },
                 "settings": {
                     "label": "Login",
                     "button_type": "primary"
+                }
+            },
+            "hjk0hqWL": {
+                "type": "onclick",
+                "slots": {
+                    "actions": [
+                        "MPzQg7Qe",
+                        "JDmgi6Xq"
+                    ]
+                }
+            },
+            "MPzQg7Qe": {
+                "type": "get_form_data",
+                "slots": {},
+                "settings": {
+                    "selector": "#y0QrXtu7",
+                    "dest": "form"
+                }
+            },
+            "JDmgi6Xq": {
+                "type": "user_login",
+                "slots": {
+                    "success": [
+                        "dyJQoUZW"
+                    ],
+                    "failure": [
+                        "OMNSLqTk"
+                    ]
+                },
+                "settings": {
+                    "email": "{{form.Email}}",
+                    "password": "{{form.Password}}"
+                }
+            },
+            "OMNSLqTk": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "Username or password is incorrect.",
+                    "type": "warning"
+                }
+            },
+            "dyJQoUZW": {
+                "type": "goto_page",
+                "slots": {},
+                "settings": {
+                    "URL": ""
                 }
             }
         },

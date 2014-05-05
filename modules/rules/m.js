@@ -8,12 +8,28 @@ var cms;
 module.exports = {
     functions : {},
     widgets : {},
+    init: function() {
+      _.each(cms.widgets, function(w, name) {
+        if (w.action) {
+          if (w.toHTML) {
+            w.script = actionScript;
+          } else {
+            w.makeActionJS = actionScript;
+          }
+        }
+      });
+    },
     register : function(_cms) {
       cms = _cms;
     }
 };
 functions = module.exports.functions;
 widgets = module.exports.widgets;
+
+function actionScript() {
+  return '('+this.action+')(nw.functions.fillSettings('+JSON.stringify(this.settings)+', scope, []), ' +
+        '"'+this.id+'", scope,'+cms.functions.createHandlersCode(this)+');\n';
+}
 
 functions.concatActions = function(actions) {
   var code = '';
@@ -43,10 +59,7 @@ functions.createHandlersCode = function(action) {
 functions.createActionCode = function(actions) {
   var code = '';
   _.each(actions, function(action) {
-    if (action.action) {
-      code += '('+action.action+')(nw.functions.fillSettings('+JSON.stringify(action.settings)+', scope, []), ' +
-        '"'+action.id+'", scope,'+cms.functions.createHandlersCode(action)+');\n';  
-    } else if (action.makeActionJS) {
+    if (action.makeActionJS) {
       code += action.makeActionJS()+'\n';
     }
   });
@@ -177,14 +190,15 @@ widgets.goto_page = {
 }
 
 widgets.process = {
-  save: function(values, user, callback) {
+  save: function(values, user, req, res, callback) {
     var token = values['token'];
     var input = JSON.parse(values[  'input']);
     var related = cms.pending_processes[token];
     if (related) {
       if (cms.widgets[related.process]) {
         var process = cms.functions.newWidget(related.process,related.settings);
-        console.log(process.settings);
+        process.req = req;
+        process.res = res;
 
         process.doProcess(input, function(err, result) {
           callback(err, result);

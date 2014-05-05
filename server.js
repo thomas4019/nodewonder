@@ -87,6 +87,7 @@ cms.functions.addWidgetType = function(module, name, widgetType) {
 }
 
 cms.functions.newWidget = function(type, settings, id) {
+  //console.log(type);
   var w = Object.create(cms.widgets[type]);
   w.settings = settings || {};
   if (id) {

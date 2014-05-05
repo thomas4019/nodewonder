@@ -1,0 +1,9 @@
+{
+    "clientID": "",
+    "username": "test",
+    "password": "",
+    "captcha": {
+        "recaptcha_challenge_field": "03AHJ_Vuue21OoGFMnoy68eZ_Ev8P2e2j73fOmz-wmHjAECeXG1mLsuktCZudlOcTtBo9xRbX64stH-qp_tI1tmWTCKl5VO1jpaKIFeQ_iYsxX8IvtePUszHYEpYXQjiKwE5rNF7HmVOs9njZl20yv-WVQhDlmKtJMmVAiYPuJVQhfXIWR1qUMotlgoAey5rsYY5n0rVZBa9JBkmL4CXRVrAQaQnBMKTCpUZnByA-QNSOfS2TsU3_moDA",
+        "recaptcha_response_field": ""
+    }
+}

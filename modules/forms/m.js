@@ -181,6 +181,30 @@ widgets.iframe = {
   }
 }
 
+widgets.radio = {
+  tags: ['field_edit'],
+  settingsModel: [{"name": "data", "type": "Text"},
+    {"name": "choices", "type": "Text", "quantity": "+"}],
+  toHTML: function(label) {
+    var choices = this.settings.choices;
+    if (Array.isArray(choices)) {
+      choices = _.object(choices, choices);
+    }
+
+    var element = '';
+    var count = 0;
+    for (choice in choices) {
+      element += '<div class="radio"><label>';
+      element += '<input type="radio" name="'+this.id+'" id="'+this.id+'-'+count+'" value="' + choice + '" ' + (choice == this.settings.data ? 'checked' : '') + ' >';
+      element += choice;
+      element += '</label></div>';
+      count++
+    }
+
+    return label + element;
+  }
+}
+
 widgets.select = {
   tags: ['field_edit'],
   settingsModel: [{"name": "data", "type": "Text"},

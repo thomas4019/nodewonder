@@ -1,0 +1,9 @@
+{
+    "clientID": "",
+    "username": "john",
+    "password": "123",
+    "captcha": {
+        "recaptcha_challenge_field": "03AHJ_VutwJzZVP0PJNLxTiRXmlOrQeFWAdnVOTyICUnh6wTEgznKWOFj1rWkZMRVqQjaYeac4jQTyojkHeRNaggotA3kk6ClDItShjZYkfIXpya7bCPMh1HZD8YAZOLKwlUfeXa4ZR3WRAhpmXaF71uBuwrMsIoQfChd3UWBXtUo9mO4i781nJLzPRY_j2bfWx8n_cT7RNTa-RBtjjHzuBxkcHumkIuLnDQ",
+        "recaptcha_response_field": "9444344 1405"
+    }
+}

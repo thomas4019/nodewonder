@@ -22,7 +22,7 @@ functions.loadModelIntoMemory = function(model, callback) {
   if (!fs.existsSync('data/' + model + '/'))
     return;
 
-  console.log('loading data for "' + model + '"');
+  //console.log('loading data for "' + model + '"');
 
   var models = fs.readdirSync('data/' + model + '/');
   cms.model_data = cms.model_data || {};
@@ -52,12 +52,15 @@ functions.loadModelIntoMemory = function(model, callback) {
   });
 }
 
-functions.findRecord = function(model_name, filter) {
-  return wlFilter(cms.model_data[model_name], {
-    where: {
-      name: { contains: 'lyr' }
+functions.findOneByField = function(model_name, field, value, callback) {
+  for(id in cms.model_data[model_name]) {
+    var data = cms.model_data[model_name][id];
+    if (data[field] == value) {
+      callback(undefined, data, id);
+      return;
     }
-  });
+  }
+  callback('not found', undefined);
 }
 
 functions.loadRecord = function(model_name, record_id) {
@@ -79,8 +82,11 @@ functions.getRecord = function(model_name, record_id, callback) {
 }
 
 functions.saveRecord = function(model_name, record_id, value, callback) {
-  mkdirp('data/' + model_name + '/' + path.dirname(record_id));
-  fs.writeFile('data/' + model_name + '/' + record_id  + '.json', JSON.stringify(value, null, 4)) ;
+  if (!cms.models[model_name].storage || cms.models[model_name].storage == 'disk+memory') {
+    mkdirp('data/' + model_name + '/' + path.dirname(record_id));
+    fs.writeFile('data/' + model_name + '/' + record_id  + '.json', JSON.stringify(value, null, 4)) ;
+  }
+
   if (!cms.model_data[model_name])
     cms.model_data[model_name] = {};
   cms.model_data[model_name][record_id] = value;

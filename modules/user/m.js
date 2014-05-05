@@ -17,10 +17,12 @@ module.exports = {
 };
 widgets = module.exports.widgets;
 
+var COOKIE_KEYS = ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
+  'af15db41-ef32-4a3f-bb15-7edce2e3744c',
+  'fd075a38-a4dd-4c98-a552-239c11f6f5f7'];
+
 function userMiddleware(req, res, next) {
-  var cookies = new Cookies( req, res, ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
-'af15db41-ef32-4a3f-bb15-7edce2e3744c',
-'fd075a38-a4dd-4c98-a552-239c11f6f5f7']);
+  var cookies = new Cookies( req, res, COOKIE_KEYS);
   req.clientID = cookies.get('clientID')
   if (!req.clientID) {
     req.clientID = cms.functions.makeid(12);
@@ -33,24 +35,53 @@ function userMiddleware(req, res, next) {
 }
 
 widgets.user_login = {
-  input: [{"name": "username", "type": "Text"},
+  settingsModel: [{"name": "email", "type": "Text"},
     {"name": "password", "type": "Text"}],
+  slots: ['success', 'failure'],
+  slot_tags: {success: ['action'], failure: ['action']},
+  action: function(settings, id, scope, handlers) {
+    var data = {email: settings.email, password: settings.password};
+    nw.functions.doProcess(settings.token, {data: data}, function(result) {
+      handlers.success();
+    }, handlers.failure);
+  },
+  setup: function() {
+    cms.functions.setupProcess('user_login', this.settings);
+  },
   doProcess: function(input, callback) {
-    console.log(input);
-    cms.functions.getRecord('user', input.username, function(err, data) {
+    var cookies = new Cookies( this.req, this.res, COOKIE_KEYS);
+    cms.functions.findOneByField('user', 'email', input.data.email, function(err, data) {
       if (err) {
         callback('invalid');
         return
       }
-      callback(undefined, data);
-      return;
+      if (data.password == input.data.password) {
+        cookies.set('clientID', data.clientID, {signed: true, overwrite: true});
+        callback(undefined, data);
+        return;
+      } else {
+        callback('invalid');
+      }
     });
   }
 }
 
 widgets.user_logout = {
-  doProcess: function() {
-
+  slots: ['success', 'failure'],
+  slot_tags: {success: ['action'], failure: ['action']},
+  action: function(settings, id, scope, handlers) {
+    nw.functions.doProcess(settings.token, {}, function(result) {
+      handlers.success();
+    }, handlers.failure);
+  },
+  setup: function() {
+    cms.functions.setupProcess('user_logout', this.settings);
+  },
+  doProcess: function(input, callback) {
+    var cookies = new Cookies( this.req, this.res, COOKIE_KEYS);
+    cookies.set('clientID', '', {signed: true, overwrite: true, expires: new Date(1) });
+    console.log('logged out');
+    callback(undefined, 'success');
   }
 }
 

@@ -141,6 +141,7 @@ functions.viewPage = function(path, vars, scope, callback, error_callback) {
     }
 
     page.scope = scope;
+    page.scope['args'] = vars;
 
     if (page.controller && page.controller.length > 0) {
       //eval(page.controller);
@@ -148,7 +149,6 @@ functions.viewPage = function(path, vars, scope, callback, error_callback) {
       context['widgets'] = page.code.widgets;
       context['slotAssignments'] = page.code.slotAssignments;
       context['scope'] = page.scope;
-      context['scope']['args'] = vars;
       context['args'] = vars;
       context['callback'] = function() {
         i++;
@@ -226,7 +226,7 @@ functions.renderPage = function(page, vars, callback) {
       var content_type = page.contentType ? page.contentType : 'text/html';
       var title = page.Title ? Handlebars.compile(page.Title)(page.scope) : 'default name';
       cms.functions.expandHead(head);
-      head.unshift('<script type="text/javascript" src="/modules/admin/nw.js"></script><link rel="stylesheet" href="/modules/admin/nw.css"></link>')
+      head.unshift('<script type="text/javascript" src="/bower_components/handlebars/handlebars.min.js"></script><script type="text/javascript" src="/modules/admin/nw.js"></script><link rel="stylesheet" href="/modules/admin/nw.css"></link>')
       if (content_type == 'text/html') {
         var encoded_head = JSON.stringify(head);
         encoded_head = encoded_head.replace(/<\/script/g, '</scr"+"ipt');

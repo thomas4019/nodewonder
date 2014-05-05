@@ -1,22 +1,13 @@
 {
-    "controller": "widgets[2].settings.links = load('menu','admin').link; callback(); ",
+    "URL": "",
+    "parent": "admin",
+    "controller": "callback(); ",
     "code": {
-        "slotAssignments": {
-            "body": [
-                "start"
-            ]
-        },
         "widgets": {
             "1": {
                 "type": "plaintext",
                 "settings": {
                     "data": "Hello World!"
-                }
-            },
-            "2": {
-                "type": "template",
-                "settings": {
-                    "path": "modules/admin/menu.html"
                 }
             },
             "start": {
@@ -25,14 +16,19 @@
                     "title": [
                         "1"
                     ],
-                    "top": [
-                        "2"
-                    ]
+                    "top": []
                 },
                 "settings": {
                     "path": "themes/html5up-tessellate/template.html"
                 }
             }
+        },
+        "slotAssignments": {
+            "body": [
+                "start"
+            ]
         }
-    }
+    },
+    "Title": "",
+    "contentType": ""
 }
