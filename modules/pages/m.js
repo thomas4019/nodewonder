@@ -50,9 +50,12 @@ function customPageMiddleware(req, res, next) {
   var scope = {};
   scope.user = req.user;
 
-  cms.functions.viewPage(path, query, scope, function(html, content_type) {
-    res.writeHead(200, {'Content-Type': content_type});
-    res.end(html);
+  cms.functions.viewPage(path, query, scope, function(page, vars) {
+
+    cms.functions.renderPage(page, vars, function(html, content_type, code) {
+      res.writeHead(code || 200, {'Content-Type': content_type});
+      res.end(html);
+    });
   }, next);
 }
 
@@ -153,7 +156,7 @@ functions.viewPage = function(path, vars, scope, callback, error_callback) {
       context['callback'] = function() {
         i++;
         if (i == page.controller.length) {
-          cms.functions.renderPage(page, vars, callback);
+          callback(page, vars);
         } else {
           vm.runInContext(page.controller[i], context);
         }
@@ -162,7 +165,7 @@ functions.viewPage = function(path, vars, scope, callback, error_callback) {
       //console.log(util.inspect(context));
       page.scope = context.scope;
     } else {
-      cms.functions.renderPage(page, vars, callback);  
+      callback(page, vars);
     }
 
   });
@@ -184,12 +187,18 @@ functions.expandHead = function(head) {
 
 functions.renderPage = function(page, vars, callback) {
   page.widgets = cms.functions.splitAndFill(page.widgets, vars);
+  var user = page.scope.user;
+
+  if (!cms.functions.isAllowed(page.permission, page.scope.user)) {
+    callback('permission denied', 'text/html', 403);
+    return;
+  }
 
   if ('json' in vars) {
       var json = JSON.stringify(page.code.widgets, null, 4);
       callback(json, 'text/javascript');
   } else if ('processedjson' in vars) {
-      cms.functions.initializeState(page.code.widgets, page.scope, function(widgets_buffer, results, state) {
+      cms.functions.initializeState(page.code.widgets, page.scope, user, function(widgets_buffer, results, state) {
         var json = JSON.stringify({widgets: state, slotAssignments: page.code.slotAssignments}, null, 4);
         callback(json, 'text/javascript');
       });
@@ -200,15 +209,18 @@ functions.renderPage = function(page, vars, callback) {
     var json = JSON.stringify(vars, null, 4);
     callback(json, 'text/javascript');
   } else if ('perf' in vars) {
-    cms.functions.renderStateParts(page.code.widgets, page.code.slotAssignments, function(html, results) {
+    cms.functions.renderStateParts(page.code.widgets, page.code.slotAssignments, user, function(html, results) {
       var out = {};
       out = results.perf;
       results.perf['end'] = process.hrtime(results.perf.start);
       var json_out = JSON.stringify(out, 0, 4);
       callback(json_out, 'text/javascript');
     }, page.scope);
+  } else if ('perm' in vars) {
+    var json = JSON.stringify(page.permission, null, 4);
+    callback(json, 'text/javascript');
   } else if ('raw' in vars) {
-    cms.functions.renderStateParts(page.code.widgets, page.code.slotAssignments, function(html, results) {
+    cms.functions.renderStateParts(page.code.widgets, page.code.slotAssignments, user, function(html, results) {
       var head = results.head;
       head = head.concat(cms.functions.processDeps(results.deps));
       /*encoded_head = _.map(encoded_head, function (element) {
@@ -222,7 +234,7 @@ functions.renderPage = function(page, vars, callback) {
       callback(json_out, 'text/javascript');
     }, page.scope);
   } else {
-    cms.functions.renderState(page.code.widgets, page.code.slotAssignments, function(html, head) {
+    cms.functions.renderState(page.code.widgets, page.code.slotAssignments, user, function(html, head) {
       var content_type = page.contentType ? page.contentType : 'text/html';
       var title = page.Title ? Handlebars.compile(page.Title)(page.scope) : 'default name';
       cms.functions.expandHead(head);

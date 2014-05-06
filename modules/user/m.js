@@ -15,6 +15,7 @@ module.exports = {
     cms = _cms;
   }
 };
+functions = module.exports.functions;
 widgets = module.exports.widgets;
 
 var COOKIE_KEYS = ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
@@ -32,6 +33,21 @@ function userMiddleware(req, res, next) {
     req.user = user || {};
     next();
   });
+}
+
+functions.isAllowed = function(permission, user) {
+  console.log(permission);
+  if (permission) {
+    if (permission.role && permission.role.length) {
+      if (user) {
+        return _.intersection(permission.role, user.roles).length;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  return true;
 }
 
 widgets.user_login = {
@@ -88,6 +104,21 @@ widgets.user_logout = {
 widgets.get_record = {
   doProcess: function() {
 
+  }
+}
+
+widgets.flash_set = {
+  slots: ['actions'],
+  slot_tags: {actions: ['action']},
+  script: function() {
+    return 'sessionStorage.setItem("flash", \'' + JSON.stringify(cms.functions.concatActions(this.slotAssignments.actions)) + '\');'
+  }
+}
+
+widgets.flash_get = {
+  tags: ['view'],
+  script: function() {
+    return 'eval(JSON.parse(sessionStorage.getItem("flash")))';
   }
 }
 

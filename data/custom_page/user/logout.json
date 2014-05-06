@@ -1,5 +1,5 @@
 {
-    "URL": "logout",
+    "URL": "user/logout",
     "parent": "",
     "controller": "",
     "code": {
@@ -17,7 +17,8 @@
                 "type": "user_logout",
                 "slots": {
                     "success": [
-                        "jipilWfy"
+                        "jipilWfy",
+                        "DC6Jag3F"
                     ],
                     "failure": [
                         "5OEGObxk"
@@ -39,6 +40,13 @@
                     "message": "failed to logout.",
                     "type": "error"
                 }
+            },
+            "DC6Jag3F": {
+                "type": "goto_page",
+                "slots": {},
+                "settings": {
+                    "URL": ""
+                }
             }
         },
         "slotAssignments": {
@@ -48,5 +56,8 @@
         }
     },
     "Title": "",
-    "contentType": ""
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
 }

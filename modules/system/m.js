@@ -221,3 +221,20 @@ widgets.custom_widget = {
     return this.renderSlot('body');
   }
 }
+
+widgets.if_display = {
+  settingsModel: [{"name": "condition", "type": "Text"}],
+  slots: ['then', 'else'],
+  load: function(callback) {
+    var user = this.user;
+    this.display = eval(this.settings.condition);
+    callback();
+  },
+  toHTML: function() {
+    if (this.display) {
+      return this.renderSlot('then');
+    } else {
+      return this.renderSlot('else');
+    }
+  }
+}

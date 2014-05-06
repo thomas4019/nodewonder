@@ -1,7 +1,7 @@
 {
     "URL": "",
-    "parent": "admin",
-    "controller": "callback(); ",
+    "parent": "base",
+    "controller": "",
     "code": {
         "widgets": {
             "1": {
@@ -30,5 +30,8 @@
         }
     },
     "Title": "",
-    "contentType": ""
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
 }

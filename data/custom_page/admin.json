@@ -1,24 +1,46 @@
 {
-    "exposedSlots": {
-        "start": [
-            "body"
-        ]
-    },
+    "URL": "admin",
+    "parent": "",
     "controller": "widgets['menu'].settings.links = load('menu','admin').link; callback(); ",
     "code": {
         "widgets": {
+            "YxOICjag": {
+                "type": "if_display",
+                "slots": {
+                    "then": [
+                        "menu"
+                    ],
+                    "else": [
+                        "8LcE4GTX"
+                    ]
+                },
+                "settings": {
+                    "condition": "user.roles.indexOf('super') != -1"
+                }
+            },
             "menu": {
                 "type": "template",
                 "settings": {
                     "path": "modules/admin/menu.html",
                     "username": "{{user.email}}"
                 }
+            },
+            "8LcE4GTX": {
+                "type": "hello_world",
+                "slots": {}
             }
         },
         "slotAssignments": {
             "body": [
-                "menu"
+                "YxOICjag"
             ]
         }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": [
+            "super"
+        ]
     }
 }

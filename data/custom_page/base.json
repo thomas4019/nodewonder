@@ -1,0 +1,40 @@
+{
+    "URL": "base",
+    "parent": "",
+    "controller": "widgets['Ox5dCAVT'].settings.links = load('menu','admin').link; callback(); ",
+    "code": {
+        "widgets": {
+            "P9YzJ0sx": {
+                "type": "if_display",
+                "slots": {
+                    "then": [
+                        "Ox5dCAVT"
+                    ],
+                    "else": []
+                },
+                "settings": {
+                    "condition": "user.roles && user.roles.indexOf('super') != -1"
+                }
+            },
+            "Ox5dCAVT": {
+                "type": "template",
+                "slots": {
+                    "body": []
+                },
+                "settings": {
+                    "path": "modules/admin/menu.html"
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "P9YzJ0sx"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

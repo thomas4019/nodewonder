@@ -20,7 +20,7 @@ function retreive(val) {
   return (typeof val === 'function') ? val() : val;
 }
 
-functions.initializeState = function(state, scope, callback) {
+functions.initializeState = function(state, scope, user, callback) {
   var widgets_buffer = {};
   var count = 1;
   var results = {
@@ -55,6 +55,7 @@ functions.initializeState = function(state, scope, callback) {
     var widget = cms.functions.newWidget(name, w.settings, id);
     widget.settings = w.settings;
     widget.id = id;
+    widget.user = user;
 
     results.perf.init_end[id] = process.hrtime(results.perf.start)[1];
 
@@ -201,8 +202,8 @@ functions.fillValues = function(state, values) {
   return state;
 }
 
-functions.renderState = function(state, slotAssignments, callback, values) {
-  cms.functions.renderStateParts(state, slotAssignments, function(html, results) {
+functions.renderState = function(state, slotAssignments, user, callback, values) {
+  cms.functions.renderStateParts(state, slotAssignments, user, function(html, results) {
     var all_head = [];
     all_head = all_head.concat(results.head);
     all_head = all_head.concat(cms.functions.processDeps(results.deps));
@@ -211,9 +212,9 @@ functions.renderState = function(state, slotAssignments, callback, values) {
   }, values);
 }
 
-functions.renderStateParts = function(state, slotAssignments, callback, values) {
+functions.renderStateParts = function(state, slotAssignments, user, callback, values) {
 
-  cms.functions.initializeState(state, values, function(widgets_buffer, results, state) {
+  cms.functions.initializeState(state, values, user, function(widgets_buffer, results, state) {
     var render_results = results;
 
     async.each(Object.keys(widgets_buffer), function(id, callback) {

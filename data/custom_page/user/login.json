@@ -1,5 +1,5 @@
 {
-    "URL": "login",
+    "URL": "user/login",
     "parent": "",
     "controller": "",
     "code": {
@@ -23,5 +23,8 @@
         }
     },
     "Title": "Login",
-    "contentType": ""
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
 }

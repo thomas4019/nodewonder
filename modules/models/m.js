@@ -200,7 +200,7 @@ widgets.model_form = {
 	  		return;
 	  	}
 
-			var field_data = data[field.name];
+			var field_data = data ? data[field.name] : undefined;
 			var field_old = old ? old[field.name] : undefined;
 
 			var input = field.settings || {};

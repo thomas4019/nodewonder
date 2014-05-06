@@ -236,5 +236,8 @@
         }
     },
     "Title": "{{args.record}}/{{args.model}}",
-    "contentType": ""
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
 }

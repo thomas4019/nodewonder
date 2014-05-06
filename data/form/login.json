@@ -28,13 +28,6 @@
                     "type": "warning"
                 }
             },
-            "dyJQoUZW": {
-                "type": "goto_page",
-                "slots": {},
-                "settings": {
-                    "URL": ""
-                }
-            },
             "RVrkuDTk": {
                 "type": "form_button",
                 "slots": {
@@ -52,6 +45,7 @@
                 "type": "user_login",
                 "slots": {
                     "success": [
+                        "vzNvbPnm",
                         "dyJQoUZW"
                     ],
                     "failure": [
@@ -61,6 +55,29 @@
                 "settings": {
                     "email": "{{form.Email}}",
                     "password": "{{form.Password}}"
+                }
+            },
+            "vzNvbPnm": {
+                "type": "flash_set",
+                "slots": {
+                    "actions": [
+                        "7SmPqdB6"
+                    ]
+                }
+            },
+            "7SmPqdB6": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "Logged in sucessfully!",
+                    "type": "success"
+                }
+            },
+            "dyJQoUZW": {
+                "type": "goto_page",
+                "slots": {},
+                "settings": {
+                    "URL": ""
                 }
             }
         },
