@@ -235,6 +235,6 @@
             ]
         }
     },
-    "Title": "{{args.model}} - {{args.record}}",
+    "Title": "{{args.record}}/{{args.model}}",
     "contentType": ""
 }

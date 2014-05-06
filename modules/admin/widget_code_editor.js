@@ -12,13 +12,15 @@ function setupWidgetSelector(id) {
 				data.results.push(model);
 				var fields = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#wyobn3bP-fields :input').serializeArray())).fields;
 				_.each(fields, function(field) {
-					if(!query.term || field.name.indexOf(query.term) !== -1) {
-						var w = JSON.parse(JSON.stringify(nw.widgets[field.widget]));
-						w.field = field.type;
-						w.text = field.name;
-						w.name = field.name;
-						w.model = 'Model';
-						model.children.push(w);
+					if (field.name) {
+						if(!query.term || field.name.toUpperCase().indexOf(query.term.toUpperCase()	) !== -1) {
+							var w = JSON.parse(JSON.stringify(nw.widgets[field.widget]));
+							w.field = field.type;
+							w.text = field.name;
+							w.name = field.name;
+							w.model = 'Model';
+							model.children.push(w);
+						}
 					}
 				});
 			}
@@ -30,7 +32,7 @@ function setupWidgetSelector(id) {
 							groups[tag] = {text: tag, children: []}
 							data.results.push(groups[tag]);
 						}
-						if(!query.term || widget.text.indexOf(query.term) !== -1) {
+						if(!query.term || widget.text.toUpperCase().indexOf(query.term.toUpperCase()) !== -1) {
 							groups[tag].children.push(widget);
 						}
 					}
@@ -51,9 +53,25 @@ function stateController($scope) {
 	}
 
 	_.each($scope.widgets, function(w) {
-		w.has_form = nw.widgets[w.type].settings;
+		w.has_form = nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.type].settings;
 	});
 	
+	$scope.field_widgets = {};
+
+	for (type in $scope.edit_widgets) {
+		$scope.field_widgets[type] = $scope.field_widgets[type] || [];
+		for (var i in $scope.edit_widgets[type]) {
+			var widget = $scope.edit_widgets[type][i];
+			$scope.field_widgets[type].push({widget: widget, group: 'edit'});
+		}
+	}
+	for (type in $scope.view_widgets) {
+		$scope.field_widgets[type] = $scope.field_widgets[type] || [];
+		for (var i in $scope.view_widgets[type]) {
+			var widget = $scope.view_widgets[type][i];
+			$scope.field_widgets[type].push({widget: widget, group: 'view'});
+		}
+	}
 
 	var _id, _slot;
 
@@ -77,6 +95,13 @@ function stateController($scope) {
 			$scope.widgets[new_id] = {type: selected.widget, slots: slots, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, slot_tags: selected.slot_tags};
 		else
 			$scope.widgets[new_id] = {type: selected.widget, slots: slots, has_form: selected.settings, slot_tags: selected.slot_tags};
+
+		if (selected.id != selected.widget) {
+			$scope.widgets[new_id]['pseudo_widget'] = selected.id;
+			$scope.widgets[new_id].settings = $scope.widgets[new_id].settings || {};
+			$scope.widgets[new_id].settings['pseudo_widget']= selected.id;
+		}
+
 		if (_id == 'body') {
 			$scope.slotAssignments['body'].push(new_id);
 		} else {
@@ -149,12 +174,18 @@ function stateController($scope) {
 
 	$scope.configureWidget = function(id) {
 		var type = $scope.widgets[id].type;
+		if (typeof type == 'object') {
+			type = type.widget;
+		}
+		console.log(type);
+		var pseudo_widget = $scope.widgets[id].pseudo_widget;
 		var settings = $scope.widgets[id].settings;
-		var settings_model = nw.widgets[type].settings;
+		var settings_model = nw.widgets[pseudo_widget ? pseudo_widget : type].settings;
 
 		nw.functions.configureWidget(id, settings_model, settings, function(new_settings) {
 			console.log(new_settings);
 			$scope.widgets[id].settings = new_settings;
+			$scope.widgets[id].settings['pseudo_widget'] = pseudo_widget;
 		  $scope.exportState();
 		  $("#widgetForm").hide();
 		});

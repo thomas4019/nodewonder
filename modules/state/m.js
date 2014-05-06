@@ -39,15 +39,24 @@ functions.initializeState = function(state, scope, callback) {
       name = 'echo';
     }
 
-    if (!_.contains(cms.widgets[name].tags, 'local-action') || _.contains(cms.widgets[name].tags, 'filtered')) {
+    cms.widgets[name].settings_unfiltered = cms.widgets[name].settings_unfiltered || [];
+    if (_.contains(cms.widgets[name].tags, 'field_edit')) {
+      cms.widgets[name].settings_unfiltered.push('data');
+    }
+
+    if ( !_.contains(cms.widgets[name].tags, 'local-action') ||
+     _.contains(cms.widgets[name].tags, 'filtered')) {
       cms.functions.fillSettings(w.settings, scope, cms.widgets[name].settings_unfiltered);
     }
-    w.settings = w.settings || {};
+
     results.perf.init_start[id] = process.hrtime(results.perf.start)[1];
+
+    w.settings = w.settings || {};
     var widget = cms.functions.newWidget(name, w.settings, id);
-    results.perf.init_end[id] = process.hrtime(results.perf.start)[1];
     widget.settings = w.settings;
     widget.id = id;
+
+    results.perf.init_end[id] = process.hrtime(results.perf.start)[1];
 
     widget.slotAssignments = {};
 
@@ -125,9 +134,10 @@ functions.initializeState = function(state, scope, callback) {
       }
       if (widget.script) {
         if (typeof widget.script == 'function') {
-          var script = widget.script(widget.id);
+          var script = widget.script();
           if (typeof script == 'undefined') {
-            console.error('error with script in ' + name);
+            console.error('widget :' + id + ' returned undefined script');
+            script = '';
           }
           results.script += script;
         }

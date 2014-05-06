@@ -1,7 +1,6 @@
 {
     "URL": "",
     "parent": "",
-    "contentType": "",
     "controller": "",
     "code": {
         "widgets": {
@@ -118,5 +117,11 @@
             ]
         }
     },
-    "Title": ""
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": [
+            "super"
+        ]
+    }
 }

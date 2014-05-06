@@ -3,7 +3,8 @@
     async = require('async'),
     file = require('file'),
     dive = require('dive'),
-    Handlebars = require("handlebars");
+    Handlebars = require("handlebars"),
+    deep = require('deep');
 
 var cms;
 module.exports = {
@@ -59,7 +60,8 @@ widgets.widget_code_editor = {
     return 'angular.bootstrap("#' + this.id + '");';
   },
   processData: function(data) {
-    return JSON.parse(data);
+    console.log(data);
+    return data ? JSON.parse(data) : undefined;
   },
   toHTML: function(label) {
     var v = JSON.stringify(this.settings.data || {});
@@ -67,7 +69,7 @@ widgets.widget_code_editor = {
     return this.renderSlot('body') +
     '<textarea style="display: none;" class="widget-code-editor" name="'+this.id+'"></textarea>' +
     label +
-    '<div class="ng" ng-init=\'field_widgets = '+JSON.stringify(cms.view_widgets)+';state = ' + v + ';field_id="'+this.id+'";\' >' +
+    '<div class="ng" ng-init=\'edit_widgets = '+JSON.stringify(cms.edit_widgets)+';view_widgets = '+JSON.stringify(cms.view_widgets)+';view_widgets = '+JSON.stringify(cms.view_widgets)+';state = ' + v + ';field_id="'+this.id+'";\' >' +
     '<div ng-controller="stateController">' +
     '<div class="widget-menu" ng-if="menu || cut" ng-include="\'/modules/admin/widget-menu.html\'"></div>' +
     '<ul id="state-ctrl">' +
@@ -93,13 +95,24 @@ widgets.widget_selector = {
   			slots: retrieve(w.slots, []),
         slot_tags: retrieve(w.slot_tags, {})
   		};
-      if (_.contains(w.tags,'view')) {
+      /*if (_.contains(w.tags,'view')) {
         widgets[w.name].slots.push('events');
         widgets[w.name].slot_tags['events'] = ['event'];
-      }
+      }*/
       if (_.contains(w.tags,'event')) {
         widgets[w.name].slots.push('actions');
         widgets[w.name].slot_tags['actions'] = ['action'];
+      }
+      if (w.pseudo_names) {
+        var widget = widgets[w.name];
+        _.each(retrieve(w.pseudo_names, []), function(pseudo_name) {
+          widgets[pseudo_name] = deep.clone(widget);
+          widgets[pseudo_name].text = pseudo_name;
+          widgets[pseudo_name].name = name;
+          widgets[pseudo_name].widget = name;
+          widgets[pseudo_name].id = pseudo_name;
+          widgets[pseudo_name].settings = w.settingsModel(pseudo_name);
+        });
       }
     });
   

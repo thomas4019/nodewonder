@@ -1,0 +1,10 @@
+{
+    "clientID": "123479",
+    "username": "jane",
+    "password": "123",
+    "captcha": {
+        "recaptcha_challenge_field": "03AHJ_Vuu_4A-lmSBNtAiTtunBrshFnWD9DG6-AawB8h3b5lnszlGRCpyVUDLG4IZaLydLiEikp9z4n9KQysOLdTCkX0hX6rYfXG5n8IoCcPy9hVZxa3ToJm5G4jXL3XiqtpsoyNRYtDViHMzSxpYFpQLkDpxrRG7Eym1t1fTerDFgk5RoZjcdvCGXu7kmrklQb4qf2RMtXxh4KoeGvtulhkAcOynwdEkuIayjsc-8dgarbFnOyARM9aU",
+        "recaptcha_response_field": ""
+    },
+    "email": "jane@example.com"
+}

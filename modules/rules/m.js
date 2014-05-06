@@ -10,7 +10,7 @@ module.exports = {
     widgets : {},
     init: function() {
       _.each(cms.widgets, function(w, name) {
-        if (w.action) {
+        if (w.action && !w.script) {
           if (w.toHTML) {
             w.script = actionScript;
           } else {
@@ -197,6 +197,7 @@ widgets.process = {
     if (related) {
       if (cms.widgets[related.process]) {
         var process = cms.functions.newWidget(related.process,related.settings);
+        process.user = user;
         process.req = req;
         process.res = res;
 

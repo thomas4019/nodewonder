@@ -20,33 +20,32 @@
     ],
     "Actions": {
         "widgets": {
-            "rNk1T5WJ": {
-                "type": "button",
+            "OMNSLqTk": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "Username or password is incorrect.",
+                    "type": "warning"
+                }
+            },
+            "dyJQoUZW": {
+                "type": "goto_page",
+                "slots": {},
+                "settings": {
+                    "URL": ""
+                }
+            },
+            "RVrkuDTk": {
+                "type": "form_button",
                 "slots": {
-                    "events": [
-                        "hjk0hqWL"
-                    ]
+                    "onclick": [
+                        "JDmgi6Xq"
+                    ],
+                    "events": []
                 },
                 "settings": {
                     "label": "Login",
                     "button_type": "primary"
-                }
-            },
-            "hjk0hqWL": {
-                "type": "onclick",
-                "slots": {
-                    "actions": [
-                        "MPzQg7Qe",
-                        "JDmgi6Xq"
-                    ]
-                }
-            },
-            "MPzQg7Qe": {
-                "type": "get_form_data",
-                "slots": {},
-                "settings": {
-                    "selector": "#y0QrXtu7",
-                    "dest": "form"
                 }
             },
             "JDmgi6Xq": {
@@ -63,26 +62,11 @@
                     "email": "{{form.Email}}",
                     "password": "{{form.Password}}"
                 }
-            },
-            "OMNSLqTk": {
-                "type": "message",
-                "slots": {},
-                "settings": {
-                    "message": "Username or password is incorrect.",
-                    "type": "warning"
-                }
-            },
-            "dyJQoUZW": {
-                "type": "goto_page",
-                "slots": {},
-                "settings": {
-                    "URL": ""
-                }
             }
         },
         "slotAssignments": {
             "body": [
-                "rNk1T5WJ"
+                "RVrkuDTk"
             ]
         }
     }

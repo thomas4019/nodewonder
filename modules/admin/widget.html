@@ -1,10 +1,13 @@
 <input type="checkbox" ng-model="widgets[id]['selected']" ng-change="check()" >
-<span  class="" ng-if="!(widgets[id]['field'])">
+<span  class="" ng-if="!(widgets[id]['field']) && !(widgets[id]['pseudo_widget'])">
 {{ widgets[id]['type'] }}
+</span>
+<span  class="" ng-if="!(widgets[id]['field']) && (widgets[id]['pseudo_widget'])">
+{{ widgets[id]['pseudo_widget'] }}
 </span>
 <span ng-class="{selected: widgets[id]['selected'], cut: widgets[id]['cut']}" ng-if="widgets[id]['field']">
 {{ widgets[id]['field'] }} [{{ widgets[id]['model'] }}] ({{ widgets[id]['model_type'] }}) <select ng-change="exportState()" ng-model="widgets[id]['type']"
-ng-options="w for w in field_widgets[widgets[id]['model_type']]"></select>
+ng-options="w.widget group by w.group for w in field_widgets[widgets[id]['model_type']]"></select>
 </span>
 <!--<a href="" ng-click="deleteWidgetRecur(id)"><i class="fa fa-trash-o fa-lg"></i></a>!-->
 <a href="" ng-if="widgets[id]['has_form']" ng-click="configureWidget(id)"><i class="fa fa-cog fa-lg configure"></i></a>

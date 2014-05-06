@@ -3,7 +3,11 @@
     "username": "john",
     "password": "123",
     "captcha": {
-        "recaptcha_challenge_field": "03AHJ_VutwJzZVP0PJNLxTiRXmlOrQeFWAdnVOTyICUnh6wTEgznKWOFj1rWkZMRVqQjaYeac4jQTyojkHeRNaggotA3kk6ClDItShjZYkfIXpya7bCPMh1HZD8YAZOLKwlUfeXa4ZR3WRAhpmXaF71uBuwrMsIoQfChd3UWBXtUo9mO4i781nJLzPRY_j2bfWx8n_cT7RNTa-RBtjjHzuBxkcHumkIuLnDQ",
-        "recaptcha_response_field": "9444344 1405"
-    }
+        "recaptcha_challenge_field": "03AHJ_VusJcGDRIBdyJGtWduNN91DvrWORzQclfMPaTiiTHHwKHY8xVL7aNKt_u6Sy4Z0-TObShGDOSW2-3ZEPFo8kT9nQPe0jkYx91JB1uIY_pWYKbyHx2xJV_gjusBS6HRurJa9V71cjd1UvcmHkDYTyM7e1YlvK5E3v5nrPIvHp1keK2XvuHV4C0qDY--pusgNPVY0dOAn9cVyHhXjaw7oy2-Jm23kQDgxfCKSbFaODHv0ci7hK8dY",
+        "recaptcha_response_field": ""
+    },
+    "email": "",
+    "roles": [
+        "super"
+    ]
 }

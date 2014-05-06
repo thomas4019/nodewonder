@@ -1,27 +1,27 @@
 {
-    "URL": "login",
+    "URL": "user/register",
     "parent": "",
     "controller": "",
     "code": {
         "widgets": {
-            "Zj1oqcgr": {
+            "x2UZwiTB": {
                 "type": "custom_widget",
                 "slots": {
                     "events": []
                 },
                 "pseudo_widget": "Form",
                 "settings": {
-                    "form": "login",
+                    "form": "register",
                     "pseudo_widget": "Form"
                 }
             }
         },
         "slotAssignments": {
             "body": [
-                "Zj1oqcgr"
+                "x2UZwiTB"
             ]
         }
     },
-    "Title": "Login",
+    "Title": "Register",
     "contentType": ""
 }

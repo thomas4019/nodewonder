@@ -3,8 +3,9 @@
     "username": "thomas",
     "password": "123",
     "captcha": {
-        "recaptcha_challenge_field": "03AHJ_Vuua8HQTPLjmH_FWDjuu2nZ2U3Q7SL72Y20ZuOMUd7kJjUTc5gBZ9ypoRgjgRALe9UW7R4sQbpbrPeJ19_jfLlhxH4iws1S7gWd7ywztJSXrWB6uiJctLAy99tuVSBalAJVB4LTdj41F6m14-aBSKEBkprqIc8G9UthjBAp-BYoqHJBJDd-8ougTqNNMl6qyi0I-57ciXtnfh2Bi8pfDkbl2joxhiw",
+        "recaptcha_challenge_field": "03AHJ_VutOaWDl_I4GKwCXLzcDoKrSJXPd2O0TWP17pzisbBgD7bqQGD2Jjb9g4M2qJppMqoLFOvxl_uHYIXoq7xI2zHuGv_tqmrurY3jS99u9glhZO99-YaVKT238rEGgFdafFeVjkltIM3qSqq5LNcbABozdPY-wxJ_AvyR0STvtGNNMAAwkK3O1iWSEMFOJZt9yjOK6YukWfWe2eSwKQ1XyHSja10aPURBkUnb4X_MaD5obQPbGKTc",
         "recaptcha_response_field": ""
     },
-    "email": "th4019@gmail.com"
+    "email": "th4019@gmail.com",
+    "roles": "super"
 }

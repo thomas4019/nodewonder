@@ -44,7 +44,7 @@
                             "type": "template",
                             "settings": {
                                 "path": "modules/admin/menu.html",
-                                "username": "{{user.username}}"
+                                "username": "{{user.email}}"
                             }
                         }
                     },
@@ -72,18 +72,17 @@
             "widget": "textbox",
             "settings": "",
             "required": false
+        },
+        {
+            "name": "permission",
+            "type": "permission",
+            "quantity": "",
+            "widget": "model_form",
+            "settings": "",
+            "required": false
         }
     ],
     "index": "URL",
-    "views": [
-        {
-            "Name": "",
-            "Code": {
-                "widgets": {},
-                "slotAssignments": {
-                    "body": []
-                }
-            }
-        }
-    ]
+    "views": {},
+    "storage": "disk+memory"
 }

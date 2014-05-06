@@ -2,15 +2,15 @@
     "name": "register",
     "Form": [
         {
-            "name": "Email",
-            "type": "Email",
+            "name": "email",
+            "type": "Text",
             "quantity": "",
-            "widget": "email_textbox",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },
         {
-            "name": "Password",
+            "name": "password",
             "type": "Text",
             "quantity": "",
             "widget": "password",
@@ -25,5 +25,83 @@
             "settings": "",
             "required": false
         }
-    ]
+    ],
+    "Actions": {
+        "widgets": {
+            "3wNX8plY": {
+                "type": "form_button",
+                "slots": {
+                    "onclick": [
+                        "1azcxtaH"
+                    ],
+                    "events": []
+                },
+                "settings": {
+                    "label": "Register",
+                    "button_type": "primary"
+                }
+            },
+            "1azcxtaH": {
+                "type": "if_record_exists",
+                "slots": {
+                    "then": [
+                        "v6fPki9T"
+                    ],
+                    "else": [
+                        "miER7wwT"
+                    ]
+                },
+                "settings": {
+                    "model": "user",
+                    "field": "email",
+                    "value": "{{form.email}}"
+                }
+            },
+            "v6fPki9T": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "There is already a user with this email registered.",
+                    "type": "error"
+                }
+            },
+            "miER7wwT": {
+                "type": "save_record",
+                "slots": {
+                    "success": [
+                        "WruqZida"
+                    ],
+                    "failure": [
+                        "Tf1nKGIg"
+                    ]
+                },
+                "settings": {
+                    "model": "user",
+                    "record": "create",
+                    "data_name": "form",
+                    "record_id_dest": "record"
+                }
+            },
+            "WruqZida": {
+                "type": "goto_page",
+                "slots": {},
+                "settings": {
+                    "URL": ""
+                }
+            },
+            "Tf1nKGIg": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "Failed to register user.",
+                    "type": "error"
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "3wNX8plY"
+            ]
+        }
+    }
 }

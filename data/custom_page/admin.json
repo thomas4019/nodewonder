@@ -11,7 +11,7 @@
                 "type": "template",
                 "settings": {
                     "path": "modules/admin/menu.html",
-                    "username": "{{user.username}}"
+                    "username": "{{user.email}}"
                 }
             }
         },

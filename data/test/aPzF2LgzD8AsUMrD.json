@@ -1,0 +1,25 @@
+{
+    "a": "1",
+    "b": {
+        "a": "1",
+        "b": "2",
+        "cnaoeu": "32"
+    },
+    "c": "3",
+    "rating": {
+        "ratings": {
+            "undefined": 0.625
+        },
+        "total": 0.625,
+        "count": 2,
+        "average": 0.3125
+    },
+    "score": {
+        "ratings": {
+            "undefined": null
+        },
+        "total": null,
+        "count": 8,
+        "average": null
+    }
+}

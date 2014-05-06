@@ -1,6 +1,7 @@
 var Handlebars = require('handlebars'),
   moment = require('moment'),
-  _ = require('underscore');
+  _ = require('underscore'),
+  deep = require('deep');
 
 var cms;
 module.exports = {
@@ -20,11 +21,14 @@ function postMiddleware(req, res, next) {
     console.log(res.post);
     var saveResponse = function(err, data) {
       if (err) {
+        console.error(500);
         console.error(err);
         res.writeHead(500, {'Content-Type': 'application/json'});
         var toSend = JSON.stringify(err, 0, 2);
         res.write(toSend);
       } else {
+        console.log(200);
+        console.log(data);
         res.writeHead(200, {'Content-Type': 'application/json'});
         var toSend = JSON.stringify(data, 0, 2);
         res.write(toSend);
@@ -87,7 +91,7 @@ functions.makeid = function(length) {
 }
 
 functions.fillSettings = function(settings, scope, exclude) {
-  exclude = exclude || ['data'];
+  exclude = exclude;// || ['data'];
   _.each(settings, function(value, key) {
     if (value && (typeof value === 'string') && value.indexOf("{{") != -1 && (!_.contains(exclude, key))) {
       var template = Handlebars.compile(value);
@@ -121,13 +125,15 @@ widgets.widgets_view = {
     {"name": "field", "type": "Text"}],
   children: function(callback) {
     var settings = this.settings;
+    var extra_settings = deep.clone(this.settings);
+    delete extra_settings['model'];
+    delete extra_settings['record'];
+    delete extra_settings['field'];
     cms.functions.getRecord(settings.model, settings.record, function(err, data) {
       var code = data[settings.field];
-      console.log(code);
       _.each(code.widgets, function(widget) {
-        if (widget.model && widget.field) {
-          widget.settings = widget.settings || {};
-        }
+        widget.settings = widget.settings || {};
+        _.defaults(widget.settings, extra_settings);
       });
       callback({'body': code.widgets}, code.slotAssignments);
     });
@@ -183,5 +189,35 @@ widgets.yes_no = {
     {"name": "data", "type": "Boolean"}],
   toHTML: function() {
     return this.settings.data ? (this.settings.true_text || 'Yes') : (this.settings.false_text || 'No');
+  }
+}
+
+widgets.custom_widget = {
+  pseudo_names: function() {
+    return Object.keys(cms.model_data['custom_widget']);
+  },
+  settingsModel: function(pseudo_name) {
+    if (pseudo_name)
+      return cms.model_data['custom_widget'][pseudo_name].Settings;
+    else
+      return [{"name": "pseudo_widget", "type": "Record", "settings": {"model": "custom_widget"}}];
+  },
+  setup: function() {
+    if (this.settings.pseudo_widget)
+      this.custom = deep.clone(cms.model_data['custom_widget'][this.settings.pseudo_widget]);
+  },
+  children: function(callback2) {
+    var widgets = this.custom.Code.widgets;
+    var slotAssignments = this.custom.Code.slotAssignments;
+    var settings = this.settings;
+    
+    var callback = function() {
+      callback2({'body': widgets}, slotAssignments);  
+    }
+
+    eval(this.custom.controller);
+  },
+  toHTML: function() {
+    return this.renderSlot('body');
   }
 }

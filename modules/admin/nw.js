@@ -19,6 +19,11 @@
 |*|
 \*/
 
+//Provide basic jQuery style functionality
+$ = function(fn) {
+	document.addEventListener('DOMContentLoaded', fn);
+}
+
 var docCookies = {
   getItem: function (sKey) {
     return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
@@ -102,6 +107,10 @@ var nw = function() {
 				if (value == 'new Array') {
 					value = [];
 					tocheck.push(last);
+				}
+				if (value == 'new Object') {
+					value = {};
+					//tocheck.push(last);
 				}
 				current[last] = value;
 			}

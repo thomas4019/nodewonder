@@ -36,9 +36,9 @@
         },
         {
             "name": "views",
-            "type": "model_view",
-            "quantity": "1+",
-            "widget": "model_form",
+            "type": "Widgets",
+            "quantity": "key:1+",
+            "widget": "widget_code_editor",
             "settings": "",
             "required": false
         },
@@ -53,22 +53,13 @@
                     "memory",
                     ""
                 ],
-                "label": "storage"
+                "label": "storage",
+                "data": "disk+memory"
             },
             "required": false
         }
     ],
     "index": "name",
-    "views": [
-        {
-            "Name": "default",
-            "Code": {
-                "widgets": {},
-                "slotAssignments": {
-                    "body": []
-                }
-            }
-        }
-    ],
+    "views": [],
     "storage": "disk+memory"
 }

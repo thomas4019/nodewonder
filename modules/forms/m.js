@@ -239,6 +239,32 @@ widgets.button = {
   },
 }
 
+widgets.form_button = {
+  wrapper: 'span',
+  slots: ['onclick'],
+  slot_tags: {'onclick': ['action']},
+  settingsModel: [ {"name": "label", "type": "Text"},
+      {"name": "button_type", "type": "Text", "widget": "select", "settings": {
+        label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']
+      } }],
+  deps: {'jquery': [], 'bootstrap': []},
+  action: function(settings, id, scope, handlers) {
+    $("#" + id).on( "click", function() {
+      var form_id = settings.form;
+      var form_values_id = form_id.split('-').pop();
+      var model = nw.model[id];
+      var data = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#'+form_id+' :input').serializeArray()));
+      scope['form'] = data[form_values_id];
+      console.log(scope);
+
+      handlers.onclick();
+    });
+  },
+  toHTML: function() {
+    return '<input type="button" class="btn btn-' + this.settings.button_type + '" value="' + this.settings.label + '" >';
+  },
+}
+
 widgets.submit = {
   settingsModel: [ {"name": "label", "type": "Text"},
       {"name": "button_type", "type": "Text", "widget": "select", "settings": {label:'Button Type', choices: ['default', 'primary', 'success', 'info', 'warning', 'danger']} } ],
@@ -276,12 +302,10 @@ widgets.date = {
 
 widgets.field_multi = {
   setup: function() {
-    this.isSetup = true;
     this.w_input = deep.clone(this.settings);
 
     this.can_add = false;
     this.map = false;
-
     if (this.settings.quantity && this.settings.quantity.indexOf(':') !== -1) {
       this.settings.quantity = this.settings.quantity.substr(this.settings.quantity.indexOf(':') + 1, this.settings.quantity.length)
       this.w_type = 'key_value';
@@ -290,8 +314,7 @@ widgets.field_multi = {
       _.each(this.settings.data, function(value, key) {
         ndata.push({key: key, value: value});
       });
-      this.settings.data = ndata;
-      console.log(this.settings.data);
+        this.settings.data = ndata;
     } else {
       this.w_type = this.settings.widget;
       delete this.w_input['widget'];
@@ -306,9 +329,6 @@ widgets.field_multi = {
     this.w_input['inline'] = 'multi';
   },
   children: function(callback) {
-    if (!this.isSetup)
-      this.setup();
-
     var state = {"body": {}};
 
     if (this.can_add) {
@@ -351,33 +371,30 @@ widgets.field_multi = {
     var arr = '<input type="hidden" name="'+this.id+'" value="' + (this.map ? 'new Object' : 'new Array') + '" />';
     return label + arr + this.renderSlot('body');
   },
-  processData: function(value) {
-    if (!this.isSetup)
-      this.setup();
+  processData: function(value, old, user) {
+    var widget = cms.functions.newWidget(this.w_type, this.settings);
+    old = old || {};
+    var out;
 
     if (this.map) {
-      var out = {};
-      var widget = cms.functions.newWidget(this.w_type, this.settings);
+      out = {};
 
-      _.each(value, function(ivalue) {
-        var processed = widget.processData(ivalue);
+      for (key in value) {
+        var processed = widget.processData(value[key], old[key], user);
         if (processed.key) {
           out[processed.key] = processed.value;
           delete processed['key'];
         }
-      });
-
-      return out;
+      }
     } else {
-      var out = [];
-      var widget = cms.functions.newWidget(this.w_type, this.settings);
+      out = [];
 
-      _.each(value, function(ivalue) {
-        out.push(widget.processData(ivalue));
-      });
-
-      return out;
+      for (key in value) {
+        out.push(widget.processData(value[key], old[key], user));
+      }
     }
+
+    return out;
   }
 }
 
@@ -390,9 +407,6 @@ widgets.key_value = {
     delete this.w_input['label'];
   },
   children: function(callback) {
-    if (!this.isSetup)
-      this.setup();
-
     var state = {"body": {}};
 
     state["body"]["key"] = {
@@ -413,13 +427,10 @@ widgets.key_value = {
     return this.renderSlot('body');
   },
   processData: function(value) {
-    if (!this.isSetup)
-      this.setup();
-
     var key = value.key;
     var widget = cms.functions.newWidget(this.w_type, this.settings);
 
-    var out = widget.processData(value);
+    var out = widget.processData(value.value);
     out['key'] = key;
 
     return out;

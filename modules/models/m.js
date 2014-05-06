@@ -100,6 +100,7 @@ function flatten(out, prefix, value, fields) {
 }
 
 widgets.model_form = {
+	tags: ['field_edit'],
 	init: function() {
 		cms.functions.loadModelIntoMemory('model');
 		_.each(cms.model_data.model, function(list, key) {
@@ -115,8 +116,6 @@ widgets.model_form = {
     	{"name": "inline", "type": "Boolean"} ],
 	deps: {'underscore': []},
 	setup: function() {
-		this.isSetup = true;
-
 		if (!this.settings.field) {
 			this.settings.field = 'fields';
 		}
@@ -164,9 +163,6 @@ widgets.model_form = {
   	return type;
   },
   children: function(callback) {
-		if (!this.isSetup)
-			this.setup();
-
 		var that = this;
 
 		var model_values_obj = this.settings.data;
@@ -194,7 +190,7 @@ widgets.model_form = {
 	  callback(state);
 	},
 	head: ['/modules/models/models.css'],
-	processData: function(data, old) {
+	processData: function(data, old, user) {
 		var that = this;
 		var out = {};
 
@@ -211,16 +207,13 @@ widgets.model_form = {
 			var widget_type = that.getWidget(field, input);
 
 			var widget = cms.functions.newWidget(widget_type, input);
-			var processed = widget.processData(field_data, field_old);
+			var processed = widget.processData(field_data, field_old, user);
 			out[field.name] = processed;
 		});
 
 		return out;
 	},
 	validateData: function(data, callback) {
-		if (!this.isSetup)
-			this.setup();
-
 		console.log('model processing data');
 		var that = this;
 		var errors = {};
@@ -485,25 +478,6 @@ widgets.process_model = {
 	}
 }
 
-widgets.delete_record = {
-  settingsModel: [{"name": "model", "type": "Text"},
-    {"name": "record", "type": "Text"}],
-  slots: ['success', 'failure'],
-  tags: ['filtered'],
-  slot_tags: {success: ['action'], failure: ['action']},
-  setup: function() {
-    cms.functions.setupProcess('delete_record', this.settings);
-  },
-  action: function(settings, id, scope, handlers) {
-    nw.functions.doProcess(settings.token, {}, handlers.success, handlers.failure);
-  },
-	doProcess: function(input, callback) {
-    cms.functions.deleteRecord(this.settings.model, this.settings.record, function(err) {
-      callback(err, {});
-    });
-  }
-}
-
 widgets.get_form_data = {
   settingsModel: [{"name": "selector", "type": "Text"},
     {"name": "dest", "type": "Text"}],
@@ -514,51 +488,4 @@ widgets.get_form_data = {
     scope[settings.dest] = data;
     console.log(scope);
   }
-}
-
-widgets.save_record = {
-  settingsModel: [{"name": "model", "type": "Text"},
-    {"name": "record", "type": "Text"},
-    {"name": "data_name", "type": "Text"},
-    {"name": "data", "type": "JSON"},
-    {"name": "record_id_dest", "type": "Text"}],
-  slots: ['success', 'failure'],
-  slot_tags: {success: ['action'], failure: ['action']},
-  tags: ['filtered'],
-  setup: function() {
-    cms.functions.setupProcess('save_record', this.settings);
-  },
-  action: function(settings, id, scope, handlers) {
-    var data = scope[settings.data_name];
-    nw.functions.doProcess(settings.token, {data: data}, function(result) {
-    	if (settings.record_id_dest) {
-    		scope[settings.record_id_dest] = result.record;
-    	}
-    	handlers.success();
-    }, handlers.failure);
-  },
-	doProcess: function (input, callback) {
-		var widget = this;
-		var settings = this.settings;
-
-		cms.functions.getRecord('model', settings.model, function(err, model) {
-			var record = settings.record;
-			
-			cms.functions.getRecord(settings.model, record, function(err, 	old_data) {
-				var model_widget = cms.functions.newWidget('model_form', {model: 'model', record: settings.model});
-				var processed = model_widget.processData(input.data, old_data);
-
-				if (settings.record == 'create') {
-					if (model.index && processed[model.index])
-						record = processed[model.index];
-					else
-						record = cms.functions.generateRecordID();
-				}
-
-				cms.functions.saveRecord(settings.model, record, processed, function(err, records) {
-					callback(err, {record: record});
-				});
-			});
-		});
-	}
 }

@@ -11,9 +11,9 @@
             "required": false
         },
         {
-            "name": "Fields",
-            "type": "setting",
-            "quantity": "",
+            "name": "Settings",
+            "type": "field",
+            "quantity": "+",
             "widget": "model_form",
             "settings": "",
             "required": false
@@ -27,14 +27,15 @@
             "required": false
         },
         {
-            "name": "",
-            "type": "",
+            "name": "controller",
+            "type": "Text",
             "quantity": "",
+            "widget": "textarea",
             "settings": "",
             "required": false
         }
     ],
-    "index": "",
+    "index": "Name",
     "views": [
         {
             "Name": "",
@@ -45,5 +46,6 @@
                 }
             }
         }
-    ]
+    ],
+    "storage": "disk+memory"
 }

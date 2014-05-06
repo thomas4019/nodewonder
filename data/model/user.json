@@ -41,19 +41,20 @@
             "widget": "email_textbox",
             "settings": "",
             "required": false
+        },
+        {
+            "name": "roles",
+            "type": "Record",
+            "quantity": "+",
+            "widget": "model_record_reference",
+            "settings": {
+                "label": "",
+                "model": "role"
+            },
+            "required": false
         }
     ],
     "index": "clientID",
-    "views": [
-        {
-            "Name": "",
-            "Code": {
-                "widgets": {},
-                "slotAssignments": {
-                    "body": []
-                }
-            }
-        }
-    ],
+    "views": {},
     "storage": "disk+memory"
 }
