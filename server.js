@@ -51,10 +51,10 @@ cms.functions.addWidgetType = function(module, name, widgetType) {
     widgetType.tags.push('action');
   }
   if (widgetType.action) {
-    widgetType.tags.push('local-action'); 
+    widgetType.tags.push('local-action');
   }
   if (widgetType.doProcess) {
-    widgetType.tags.push('process'); 
+    widgetType.tags.push('process');
   }
   if (widgetType.execute) {
     widgetType.tags.push('executable');
@@ -278,12 +278,12 @@ function initWidgets(callback) {
   for(type in cms.widgets) {
     if (cms.widgets[type].init) {
       cms.widgets[type].init();
-    } 
+    }
   }
   for(module in cms.m) {
     if (cms.m[module].init) {
       cms.m[module].init();
-    } 
+    }
   }
   callback();
 }
@@ -463,4 +463,8 @@ cms.migrate3 = function() {
   cms.renameWidget('field_boolean', 'checkbox');
 }
 
-cms.pending_processes['a'] = {process: 'user_login'};
+cms.migrate4 = function() {
+  _.forEach(cms.widgets, function(widget, name) {
+    console.log(widget.tags);
+  });
+}

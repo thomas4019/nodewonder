@@ -28,6 +28,7 @@ functions.initializeState = function(state, scope, user, callback) {
     head: [],
     head_map: {},
     script: '',
+    style: '',
     perf: {start: process.hrtime(), load_start: {}, load_end: {}, children_start: {}, children_end: {}, init_start: {}, init_end: {}, render_start: {}, render_end: {}}
   };
 
@@ -140,10 +141,22 @@ functions.initializeState = function(state, scope, user, callback) {
             console.error('widget :' + id + ' returned undefined script');
             script = '';
           }
-          results.script += script;
+          results.script += '\n' + script;
         }
         else
-          results.script += widget.script;
+          results.script += '\n' + widget.script;
+      }
+      if (widget.style) {
+        if (typeof widget.style == 'function') {
+          var style = widget.style();
+          if (typeof style == 'undefined') {
+            console.error('widget :' + id + ' returned undefined style');
+            style = '';
+          }
+          results.style += '\n' + style;
+        }
+        else
+          results.style += '\n' + widget.style;
       }
     });
 
@@ -208,6 +221,7 @@ functions.renderState = function(state, slotAssignments, user, callback, values)
     all_head = all_head.concat(results.head);
     all_head = all_head.concat(cms.functions.processDeps(results.deps));
     all_head.push('<script>$(function() {var scope = ' + JSON.stringify(values) + ';' + results.script + '});</script>');
+    all_head.push('<style type="text/css">'+results.style+'</style>');
     callback(html, all_head);
   }, values);
 }

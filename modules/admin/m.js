@@ -115,7 +115,7 @@ widgets.widget_selector = {
         });
       }
     });
-  
+
   	return ['<script type="text/javascript">nw.widgets=' + JSON.stringify(widgets) + ';</script>'];
   },
   script: function() {

@@ -27,8 +27,8 @@ functions = module.exports.functions;
 widgets = module.exports.widgets;
 
 function actionScript() {
-  return '('+this.action+')(nw.functions.fillSettings('+JSON.stringify(this.settings)+', scope, []), ' +
-        '"'+this.id+'", scope,'+cms.functions.createHandlersCode(this)+');\n';
+  return 'nw.functions.processActionResult("'+this.id+'", new '+this.action+'(nw.functions.fillSettings('+JSON.stringify(this.settings)+', scope, []), ' +
+        '"'+this.id+'", scope,'+cms.functions.createHandlersCode(this)+'));';
 }
 
 functions.concatActions = function(actions) {
@@ -46,7 +46,7 @@ functions.createHandlersCode = function(action) {
     if (_.contains(tags, 'action')) {
       if (!first)
         code += ',';
-      code += slot_name + ': function() {\n' + 
+      code += slot_name + ': function() {\n' +
       cms.functions.createActionCode(action.slotAssignments[slot_name]) +
       '}';
       first = false;
@@ -159,7 +159,7 @@ widgets.submit_form = {
 
     nw.functions.cleanErrors(id);
     nw.functions.processModel(model.fields, data, function(results) {
-      console.log(results); 
+      console.log(results);
       if (results.validationErrors && Object.keys(results.validationErrors).length) {
         console.log('model has errors');
         nw.functions.showErrors(id, results.validationErrors);
@@ -203,7 +203,7 @@ widgets.process = {
 
         process.doProcess(input, function(err, result) {
           callback(err, result);
-        }); 
+        });
       } else {
         callback('missing widget: ' + related.process);
       }

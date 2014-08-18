@@ -1,0 +1,31 @@
+{
+    "name": "comment",
+    "description": "",
+    "fields": [
+        {
+            "name": "body",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textarea",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "",
+            "type": "",
+            "quantity": "",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "",
+            "type": "",
+            "quantity": "",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "index": "",
+    "views": {},
+    "storage": "disk+memory"
+}

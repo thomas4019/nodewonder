@@ -1,0 +1,43 @@
+{
+    "name": "fieldSetting",
+    "description": "",
+    "fields": [
+        {
+            "name": "name",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "type",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "settings",
+            "type": "JSON",
+            "quantity": "",
+            "widget": "jsoneditor",
+            "settings": {
+                "height": 120,
+                "label": "settings"
+            },
+            "required": false
+        },
+        {
+            "name": "",
+            "type": "",
+            "quantity": "",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "index": "",
+    "views": {},
+    "storage": "disk+memory"
+}

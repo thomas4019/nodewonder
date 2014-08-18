@@ -172,7 +172,7 @@ widgets.model_form = {
 		}
 
 	  var state = {"body": {}};
-	  
+
 	  _.each(this.fields, function(field, index) {
 	  	if (field.type == '') {
 	  		console.error('empty field');
@@ -293,7 +293,7 @@ widgets.model_record_view = {
 }
 
 widgets.model_data_listing = {
-	settingsModel: [{"name": "row_template", "type": "Text", "widget": "textarea"}, 
+	settingsModel: [{"name": "row_template", "type": "Text", "widget": "textarea"},
 			{"name": "model", "type": "Text"},
 			{"name": "manual_list", "type": "Boolean"},
 			{"name": "add_button", "type": "Boolean"}],
@@ -346,7 +346,7 @@ widgets.model_data_listing = {
 
 widgets.model_type_selector = {
 	head: function() {
-		return ['<script type="text/javascript">nw.edit_widgets='+JSON.stringify(cms.edit_widgets)+';</script>', 
+		return ['<script type="text/javascript">nw.edit_widgets='+JSON.stringify(cms.edit_widgets)+';</script>',
 	'/modules/models/field.js']
 	},
 	script: function() {
@@ -408,7 +408,7 @@ widgets.model_record_reference = {
 	 	if (!this.settings.quantity) {
 	 		html += '<option value=""> - Select - </option>';
 	 	}
-	 	if (this.settings.quantity) {	
+    if (this.settings.quantity) {
 	 		_.each(choices, function(choice) {
 		 		html += '<option value="' +choice + '" '+ (_.contains(data, choice) ? 'selected': '') + '>' + choice + '</option>';
 		 	});
@@ -426,7 +426,6 @@ widgets.model_record_reference = {
 }
 
 widgets.widget_input_config = {
-  head: ['/modules/admin/state-utils.js', '/modules/admin/state-editor.css'],
   deps: {'jquery': [],'bootstrap': [], 'font-awesome': ['css/font-awesome.css'], 'underscore': []},
 	head: ['/modules/models/widget_config.js'],
 	processData: function(data) {
@@ -483,8 +482,18 @@ widgets.get_form_data = {
     {"name": "dest", "type": "Text"}],
   action: function(settings, id, scope, handlers) {
     var id = settings.selector ? settings.selector.substr(1) : '';
+    console.log(settings.selector);
     var model = nw.model[id];
-    var data = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#'+id+' :input').serializeArray()));
+
+    var values = nw.functions.serializedArrayToValues($('#'+id+' :input').serializeArray());
+
+    _.forEach(nw.fieldGetters, function(get, id) {
+      var value = get();
+      values[id] = value;
+    });
+
+    var data = nw.functions.expandPostValues(values);
+
     scope[settings.dest] = data;
     console.log(scope);
   }

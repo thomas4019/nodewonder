@@ -104,7 +104,7 @@ widgets.numeric_textbox = {
       return 'Number is too small';
   },
   toHTML: function(label) {
-    var label = '<label class="control-label" for="' + this.id + '-textbox" style="padding-right: 5px;">' + (this.settings.label ? this.settings.label : '') + ':' + '</label>';    
+    var label = '<label class="control-label" for="' + this.id + '-textbox" style="padding-right: 5px;">' + (this.settings.label ? this.settings.label : '') + ':' + '</label>';
     var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="number" name="' + this.id + '"'+ (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '') + ' />';
 
     if (this.settings.inline) {
@@ -288,7 +288,7 @@ widgets.date = {
       value = '';
 
     var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="text" name="' + this.id + '"'+ (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '') + ' />';
-    
+
     if (this.settings.inline) {
       return '<div class="controls form-inline">' + label + element + '</div>';
     } else {
@@ -444,7 +444,7 @@ widgets.rating = {
     return parseFloat(data);
   },
   toHTML: function() {
-    var label = '<label class="control-label" for="' + this.id + '-textbox" style="padding-right: 5px;">' + this.settings.label + ':' + '</label>';    
+    var label = '<label class="control-label" for="' + this.id + '-textbox" style="padding-right: 5px;">' + this.settings.label + ':' + '</label>';
     var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="number" name="' + this.id + '" ' + (this.settings.data ? 'value="' + htmlEscape(this.settings.data) + '"' : '') + '/>';
 
     return (this.settings.label ? label : '') + element;
@@ -483,8 +483,8 @@ widgets.fivestar = {
   },
   script: function() {
     return '$("#'+this.id+'-stars").raty({ click: function(score) { $("#'+this.id+'-score").val(score); }, ' +
-     (this.settings.data ? ' score: '+this.settings.data.average +',' : '') + 
-     (this.settings.star_count ? ' number: '+this.settings.star_count +',' : '') + 
+     (this.settings.data ? ' score: '+this.settings.data.average +',' : '') +
+     (this.settings.star_count ? ' number: '+this.settings.star_count +',' : '') +
      ' path: "/bower_components/raty/lib/img", half: true });';
   }
 }
@@ -525,7 +525,7 @@ widgets.up_down = {
     var label = '<label class="control-label">'+this.settings.label+':</label>';
     return '<i class="up-vote fa fa-caret-up fa-3x"></i>' +
     '<div style="width: 30px; text-align: center;">'+(this.settings.data ? this.settings.data.total : '')+'</div>' +
-    '<i class="down-vote fa fa-caret-down fa-3x"></i>' + 
+    '<i class="down-vote fa fa-caret-down fa-3x"></i>' +
     '<input type="hidden" name="'+this.id+'" >';
   }
 }
@@ -537,3 +537,69 @@ widgets.upload = {
     return '<input type="file" name="'+this.id+'" />'
   }
 }
+
+widgets.codemirror = {
+  settingsModel: [{"name": "lang", "type": "Text"},
+  {"name": "height", "type": "Number"},
+  {"name": "data", "type": "Code"}],
+  deps: {'codemirror':['mode/javascript/javascript.js', 'theme/eclipse.css', 'theme/neat.css']},
+  tags: ['field_edit'],
+  action: function(settings, id, scope, handlers) {
+    var wrapper = document.querySelector('#' + id + ' textarea');
+    var myCodeMirror = CodeMirror.fromTextArea(wrapper, {
+      mode: "javascript",
+      lineNumbers: true,
+      theme: 'neat'
+    });
+    return {
+      get: function() {
+        return myCodeMirror.getValue();
+      }
+    }
+  },
+  style: function () {
+    return '#'+this.id+' .CodeMirror {height: '+(this.settings.height || 125)+'px;}';
+  },
+  toHTML: function(label) {
+    var element = '<textarea name="' + this.id + '">'+htmlEscape(this.settings.data || '')+'</textarea>';
+
+    if (this.settings.inline) {
+      return '<div class="controls form-inline">' + (this.settings.label ? label : '') + element + '</div>';
+    } else {
+      return (this.settings.label ? label : '') + element;
+    }
+  }
+};
+
+widgets.jsoneditor = {
+  settingsModel: [{"name": "data", "type": "JSON"},
+  {"name": "height", "type": "Number"}],
+  deps: {'jsoneditor': ['jsoneditor.min.css', 'jsoneditor.min.js', 'asset/ace/ace.js', 'asset/jsonlint/jsonlint.js']},
+  tags: ['field_edit'],
+  action: function(settings, id, scope, handlers) {
+    console.log(scope);
+    var container = document.querySelector('#' + id + ' .json');
+    var options = {
+        mode: 'code',
+        modes: ['code', 'tree'], // allowed modes
+    };
+    console.log(settings.data);
+    var editor = new JSONEditor(container, options, JSON.parse(settings.data || '{}') );
+
+    return {
+      get: function() {
+        return JSON.stringify(editor.get());
+      }
+    }
+  },
+  toHTML: function(label) {
+    var element = '<div class="json" style="height: '+ (this.settings.height || 200) +'px;"></div>';
+
+    if (this.settings.inline) {
+      return '<div class="controls form-inline">' + (this.settings.label ? label : '') + element + '</div>';
+    } else {
+      return (this.settings.label ? label : '') + element;
+    }
+  },
+  style: '.poweredBy {display: none;}'
+};

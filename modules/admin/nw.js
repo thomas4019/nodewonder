@@ -166,9 +166,9 @@ var nw = function() {
 			//This scrolltop hack is here because some widgets use angular whose bootstrap method
 			//causes it to scroll to tho top for some reason.
 			var tempScrollTop = $(window).scrollTop();
-			eval(result.javascript);
+			eval('var scope = {}; ' + result.javascript);
 			$(window).scrollTop(tempScrollTop);
-		});	
+		});
 	}
 
 	function getWidgetSettingsModel(widget_type, callback) {
@@ -257,7 +257,7 @@ var nw = function() {
 		$('#'+base_id+' .has-error').removeClass('has-error');
 		$('#'+base_id+' .error-message').remove();
 	}
-	
+
 	function showErrors(base_id, validationErrors) {
 		for (var field in validationErrors) {
 			message = validationErrors[field];
@@ -279,9 +279,18 @@ var nw = function() {
 	  return settings;
 	}
 
+	function processActionResult(id, result) {
+    if (result) {
+		  if (result.get) {
+				nw.fieldGetters[id] = result.get;
+			}
+		}
+	}
+
 	return {
 		counter: {},
 		model: {},
+		fieldGetters: {},
 		functions: {
 			makeid: makeid,
 			loadWidgetForm: loadWidgetForm,
@@ -295,7 +304,8 @@ var nw = function() {
 			processModel: processModel,
 			cleanErrors: cleanErrors,
 			showErrors: showErrors,
-			fillSettings: fillSettings
+			fillSettings: fillSettings,
+			processActionResult: processActionResult
 		},
 		clientID: getID()
 	};

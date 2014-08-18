@@ -4,18 +4,10 @@
     "controller": "",
     "code": {
         "widgets": {
-            "1": {
-                "type": "plaintext",
-                "settings": {
-                    "data": "Hello World!"
-                }
-            },
             "start": {
                 "type": "template",
                 "slots": {
-                    "title": [
-                        "1"
-                    ],
+                    "title": [],
                     "top": []
                 },
                 "settings": {

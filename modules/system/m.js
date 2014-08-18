@@ -39,7 +39,7 @@ function postMiddleware(req, res, next) {
     var widget_name = res.post['widget'];
     delete res.post['widget'];
     var widget = cms.functions.newWidget(widget_name);
-    
+
     var user = {};
     user.clientID = req.clientID;
     user.ip = req.connection.remoteAddress;
@@ -210,9 +210,9 @@ widgets.custom_widget = {
     var widgets = this.custom.Code.widgets;
     var slotAssignments = this.custom.Code.slotAssignments;
     var settings = this.settings;
-    
+
     var callback = function() {
-      callback2({'body': widgets}, slotAssignments);  
+      callback2({'body': widgets}, slotAssignments);
     }
 
     eval(this.custom.controller);

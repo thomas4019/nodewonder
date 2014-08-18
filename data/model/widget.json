@@ -1,0 +1,169 @@
+{
+    "name": "widget",
+    "description": "",
+    "fields": [
+        {
+            "name": "name",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "settingsModel",
+            "type": "fieldSetting",
+            "quantity": "1+",
+            "widget": "model_form",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "deps",
+            "type": "JSON",
+            "quantity": "",
+            "widget": "jsoneditor",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "tags",
+            "type": "Text",
+            "quantity": "2+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "slots",
+            "type": "Text",
+            "quantity": "2+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "slot_tags",
+            "type": "Text",
+            "quantity": "key:2+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "head",
+            "type": "Text",
+            "quantity": "1+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "setup",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "getWidget",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "children",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "processData",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "validateData",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "wrapperClass",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "script",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "toHTML",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "settings_unfiltered",
+            "type": "Text",
+            "quantity": "1+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "wrapper",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "action",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "makeActionJS",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "save",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "index": "",
+    "views": {},
+    "storage": "disk+memory"
+}

@@ -1,0 +1,33 @@
+{
+    "name": "blog_post",
+    "description": "",
+    "fields": [
+        {
+            "name": "Title",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "Body",
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "Comments",
+            "type": "comment",
+            "quantity": "+",
+            "widget": "model_form",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "index": "",
+    "views": {},
+    "storage": "disk+memory"
+}
