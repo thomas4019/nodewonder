@@ -58,27 +58,33 @@ cms.settings_group = 'production';
 cms.functions.addWidgetType = function(module, name, widgetType) {
   widgetType.name = name;
 
+  function ensureTag(tag) {
+    if (widgetType.tags.indexOf(tag) == -1) {
+      widgetType.tags.push(tag);
+    }
+  }
+
   /*_.defaults(widgetType, Widget.prototype);
   widgetType.module = module;*/
 
   widgetType.tags = widgetType.tags || [];
   if (widgetType.toHTML) {
-    widgetType.tags.push('view');
+    ensureTag('view');
   }
   if (widgetType.makeEventJS) {
-    widgetType.tags.push('event');
+    ensureTag('event');
   }
   if (widgetType.makeActionJS || widgetType.action || widgetType.doProcess) {
-    widgetType.tags.push('action');
+    ensureTag('action');
   }
   if (widgetType.action) {
-    widgetType.tags.push('local-action');
+    ensureTag('local-action');
   }
   if (widgetType.doProcess) {
-    widgetType.tags.push('process');
+    ensureTag('process');
   }
   if (widgetType.execute) {
-    widgetType.tags.push('executable');
+    ensureTag('executable');
   }
 
   if (widgetType.settingsModel) {
@@ -112,18 +118,21 @@ cms.functions.loadWidget = function(widget) {
   return cms.functions.evalFunctions(widget, widget);
 }
 
-cms.functions.evalFunctions = function(widget, object) {
+cms.functions.evalFunctions = function(widget, object, key) {
   if (object instanceof Array) {
     return object;
   }
   if (typeof object == 'object') {
     if ('_is_func' in object) {
+      if (!object.args) {
+        console.log(widget.name + ' ' + key + ' missing args');
+      }
       var func = new Function(object.args.join(','), object.javascript);//.bind(widget);
       return func;
     } else {
       var object2 = _.clone(object);
       for (var key in object) {
-        object2[key] = cms.functions.evalFunctions(widget, object[key]);
+        object2[key] = cms.functions.evalFunctions(widget, object[key], key);
       }
       return object2;
     }

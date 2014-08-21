@@ -1,10 +1,10 @@
 {
-    "name": "",
+    "name": "test",
     "settingsModel": [
         {
             "name": "",
             "type": "",
-            "settings": "{}",
+            "settings": {},
             "widget": ""
         }
     ],
@@ -18,9 +18,11 @@
     },
     "deps": {},
     "head": [],
-    "tags": [],
+    "tags": [
+        "view"
+    ],
     "slots": [],
     "slot_tags": {},
-    "wrapper": "",
+    "wrapper": "div",
     "wrapperClass": ""
 }

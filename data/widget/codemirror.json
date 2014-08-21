@@ -4,29 +4,31 @@
         {
             "name": "lang",
             "type": "Text",
-            "settings": "{}",
+            "settings": {},
             "widget": ""
         },
         {
             "name": "height",
             "type": "Number",
-            "settings": "{}",
+            "settings": {},
             "widget": ""
         },
         {
             "name": "data",
             "type": "Code",
-            "settings": "{}",
+            "settings": {},
             "widget": ""
         },
         {
             "name": "args",
             "type": "Text",
-            "settings": "{}",
+            "settings": {},
             "widget": ""
         }
     ],
-    "settings_unfiltered": [],
+    "settings_unfiltered": [
+        "data"
+    ],
     "toHTML": {
         "_is_func": true,
         "javascript": "//var element = '<textarea name=\"' + this.id + '\">'+cms.functions.htmlEscape(this.settings.data ? (this.settings.data.javascript || '') : '')+'</textarea>';\nvar element = '<div class=\"mirror\"></div>'\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + 'function(' + (this.settings.args ? this.settings.args.join(',') : '') + ')' + element;\n}",
@@ -34,7 +36,14 @@
             "label"
         ]
     },
-    "deps": "{\"codemirror\":[\"mode/javascript/javascript.js\",\"mode/css/css.js\",\"theme/eclipse.css\",\"theme/neat.css\"]}",
+    "deps": {
+        "codemirror": [
+            "mode/javascript/javascript.js",
+            "mode/css/css.js",
+            "theme/eclipse.css",
+            "theme/neat.css"
+        ]
+    },
     "head": [],
     "tags": [
         "field_edit",
@@ -47,15 +56,25 @@
     ],
     "slots": [],
     "slot_tags": {},
-    "wrapper": "",
+    "processData": {
+        "_is_func": true,
+        "javascript": "return data;",
+        "args": [
+            "data",
+            "old",
+            "user"
+        ]
+    },
+    "wrapper": "div",
     "wrapperClass": "",
     "script": {
         "_is_func": true,
-        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';",
+        "args": []
     },
     "action": {
         "_is_func": true,
-        "javascript": "var wrapper = document.querySelector('#' + id + ' .mirror');\nvar myCodeMirror = CodeMirror(wrapper, {\n    mode: (settings.lang || \"javascript\"),\n    value: settings.data ? (settings.data.javascript || '') : '',\n    lineNumbers: true,\n    theme: 'neat'\n});\nreturn {\n    get: function() {\n        var code = myCodeMirror.getValue();\n        if (!code)\n            return undefined;\n        return {\n            _is_func: true,\n            javascript: code\n, args: settings.args        };\n    }\n}",
+        "javascript": "var wrapper = document.querySelector('#' + id + ' .mirror');\nvar myCodeMirror = CodeMirror(wrapper, {\n    mode: (settings.lang || \"javascript\"),\n    value: settings.data ? (settings.data.javascript || '') : '',\n    lineNumbers: true,\n    theme: 'neat'\n});\nreturn {\n    get: function() {\n        var code = myCodeMirror.getValue();\n        if (!code)\n            return undefined;\n        return {\n            _is_func: true,\n            javascript: code\n, args: settings.args || []        };\n    }\n}",
         "args": [
             "settings",
             "id",

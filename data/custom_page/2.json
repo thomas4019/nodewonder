@@ -10,7 +10,8 @@
                     "tabs": [
                         "zJWbHAt1",
                         "yOiXfhox",
-                        "YFTYAWMZ"
+                        "YFTYAWMZ",
+                        "PxiMYJix"
                     ]
                 }
             },
@@ -24,6 +25,10 @@
             },
             "YFTYAWMZ": {
                 "type": "hello_world",
+                "slots": {}
+            },
+            "PxiMYJix": {
+                "type": "test",
                 "slots": {}
             }
         },

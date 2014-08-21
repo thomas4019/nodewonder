@@ -39,7 +39,9 @@ functions.initializeState = function(state, scope, user, callback) {
 
     cms.widgets[name].settings_unfiltered = cms.widgets[name].settings_unfiltered || [];
     if (_.contains(cms.widgets[name].tags, 'field_edit')) {
-      cms.widgets[name].settings_unfiltered.push('data');
+      if (cms.widgets[name].settings_unfiltered.indexOf('data') == -1) {
+        cms.widgets[name].settings_unfiltered.push('data');
+      }
     }
 
     if ( !(_.contains(cms.widgets[name].tags, 'local-action')) ||

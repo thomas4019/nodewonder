@@ -21,6 +21,15 @@
             "asset/jsonlint/jsonlint.js"
         ]
     },
+	"processData": {
+		"_is_func": true,
+		"javascript": "return JSON.parse(data);",
+        "args": [
+            "data",
+            "old",
+            "user"
+        ]
+	},
     "tags": [
         "field_edit",
         "view",
