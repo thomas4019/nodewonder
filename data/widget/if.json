@@ -1,0 +1,40 @@
+{
+    "settingsModel": [
+        {
+            "name": "condition",
+            "type": "Text"
+        }
+    ],
+    "slots": [
+        "then",
+        "else"
+    ],
+    "slot_tags": {
+        "then": [
+            "action"
+        ],
+        "else": [
+            "action"
+        ]
+    },
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "if (eval(settings.condition)) {\n    handlers.then();\n} else {\n    handlers.else();\n}"
+    },
+    "name": "if",
+    "tags": [
+        "action",
+        "local-action"
+    ],
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "URL": "admin/data/job/run",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "mm23dcpJ": {
+                "type": "onload",
+                "slots": {
+                    "actions": [
+                        "ccg3doRx"
+                    ]
+                }
+            },
+            "ccg3doRx": {
+                "type": "exec",
+                "slots": {},
+                "settings": {
+                    "Code": {
+						"javascript": "cms.migrate4();"
+					}
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "mm23dcpJ"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

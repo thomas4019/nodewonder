@@ -1,0 +1,34 @@
+{
+    "slots": [
+        "tabs"
+    ],
+    "settings": [
+        {
+            "name": "onmouseover",
+            "type": "Boolean"
+        }
+    ],
+    "deps": {
+        "jquery": [],
+        "jquery-ui": [
+            "themes/smoothness/jquery-ui.min.css",
+            "themes/smoothness/jquery.ui.theme.css"
+        ]
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "var options = {};\nif (this.settings.onmouseover) {\n    options['event'] = 'mouseover';\n}\nreturn '$( \"#' + this.id + '\" ).tabs(' + JSON.stringify(options) + ');'"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var html = '<ul>';\n\n_.each(this.slotAssignments.tabs, function(widget, index) {\n    html += '<li><a href=\"#tabs-' + index + '\"> Tab ' + index + '</a></li>';\n});\nhtml += '</ul>';\n\n_.each(this.slotAssignments.tabs, function(widget, index) {\n    html += '<div id=\"tabs-' + index + '\">' + widget.html() + '</div>';\n});\n\nreturn html;"
+    },
+    "name": "tabs",
+    "tags": [
+        "view"
+    ]
+}

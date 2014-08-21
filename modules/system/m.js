@@ -15,6 +15,82 @@ module.exports = {
 widgets = module.exports.widgets;
 functions = module.exports.functions;
 
+functions.generateRecordID = function() {
+  return cms.functions.makeid(16);
+}
+
+functions.retrieve = function(val, otherwise) {
+  if (typeof val === 'undefined')
+    return otherwise;
+  return (typeof val == 'function') ? val() : val;
+}
+
+functions.htmlEscape = function(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+functions.getDefaultWidget = function(type) {
+  var widgets = cms.model_widgets[type];
+  if (widgets)
+    return Object.keys(widgets)[0];
+  else
+    return null;
+}
+
+functions.expandPostValues = function(values) {
+  var data = {};
+  var tocheck = [];
+
+  _.each(values, function(value, key) {
+    var parts = key.split('-');
+    if (parts.length >= 2) {
+      var current = data;
+      for (var i = 1; i < parts.length - 1; i++) {
+        var v = parts[i];
+        current = current[v] = current[v] || {};
+      }
+      var last = parts[parts.length - 1];
+      if (value == 'new Array') {
+        value = [];
+        tocheck.push(last);
+      }
+      if (value == 'new Object') {
+        value = {};
+        //tocheck.push(last);
+      }
+      current[last] = value;
+    }
+  });
+
+  function hasValues(value) {
+    if (typeof value == 'object') {
+      for (var key in value)
+        if (hasValues(value[key]))
+          return true;
+
+      return false;
+    }
+
+    if (value == '{}')
+      return false;
+
+    return value;
+  }
+
+  _.each(tocheck, function(key, index) {
+    data[key] = _.filter(data[key], function(value) {
+      return hasValues(value);
+    });
+  });
+
+  return data;
+}
+
 function postMiddleware(req, res, next) {
   if (req.method == 'POST' && req.url == '/post') {
     console.log('post');
@@ -206,10 +282,12 @@ widgets.custom_widget = {
     if (this.settings.pseudo_widget)
       this.custom = deep.clone(cms.model_data['custom_widget'][this.settings.pseudo_widget]);
   },
-  children: function(callback2) {
+  children: function(callback) {
     var widgets = this.custom.Code.widgets;
     var slotAssignments = this.custom.Code.slotAssignments;
     var settings = this.settings;
+
+    var callback2 = callback;
 
     var callback = function() {
       callback2({'body': widgets}, slotAssignments);

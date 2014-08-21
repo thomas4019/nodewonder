@@ -1,0 +1,11 @@
+{
+    "tags": [
+        "view"
+    ],
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'eval(JSON.parse(sessionStorage.getItem(\"flash\")))';"
+    },
+    "name": "flash_get"
+}

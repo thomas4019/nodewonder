@@ -1,0 +1,27 @@
+{
+    "slots": [
+        "actions"
+    ],
+    "slot_tags": {
+        "actions": [
+            "action"
+        ]
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return cms.functions.createActionCode(this.slotAssignments.actions);"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return '';"
+    },
+    "name": "onload",
+    "tags": [
+        "view"
+    ],
+    "settings_unfiltered": []
+}

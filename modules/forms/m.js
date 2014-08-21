@@ -15,22 +15,13 @@ var bootstrap_settings = {
   }
 };
 
-function htmlEscape(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
-
 widgets.checkbox = {
   tags: ['field_edit'],
   settingsModel: [{"name": "label", "type": "Text"},
       {"name": "name", "type": "Text"},
       {"name": "data", "type": "Boolean"} ],
-  processData: function(value) {
-    return value == "on";
+  processData: function(data) {
+    return data == "on";
   },
   toHTML: function(label) {
     return '<input type="checkbox" name="' + this.id + '" ' + (this.settings.data ? 'checked="checked"': '' ) + ' >' +  label;
@@ -44,8 +35,7 @@ widgets.textbox = {
   deps: {'jquery': [],'bootstrap':[]},
   tags: ['field_edit'],
   toHTML: function(label) {
-    var element = '<input class="form-control input-small" type="text" name="' + this.id + '"' + (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '')+' />';
-
+    var element = '<input class="form-control input-small" type="text" name="' + this.id + '"' + (this.settings.data ? ' value="' + cms.functions.htmlEscape(this.settings.data) + '"' : '')+' />';
     if (this.settings.inline) {
       return '<div class="controls form-inline">' + (this.settings.label ? label : '') + element + '</div>';
     } else {
@@ -60,7 +50,7 @@ widgets.password = {
   settingsModel: [ {"name": "inline", "type": "Boolean"},
       {"name": "data", "type": "Text"} ],
   toHTML: function(label) {
-    var element = '<input class="form-control input-small" type="password" name="' + this.id + '"' + (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '')+' />';
+    var element = '<input class="form-control input-small" type="password" name="' + this.id + '"' + (this.settings.data ? ' value="' + cms.functions.htmlEscape(this.settings.data) + '"' : '')+' />';
 
     if (this.settings.inline) {
       return '<div class="controls form-inline">' + (this.settings.label ? label : '') + element + '</div>';
@@ -77,7 +67,7 @@ widgets.email_textbox = {
   settingsModel: [ {"name": "inline", "type": "Boolean"},
       {"name": "data", "type": "Email"} ],
   toHTML: function(label) {
-    var element = '<input class="form-control input-small" type="email" name="' + this.id + '"' + (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '')+' />';
+    var element = '<input class="form-control input-small" type="email" name="' + this.id + '"' + (this.settings.data ? ' value="' + cms.functions.htmlEscape(this.settings.data) + '"' : '')+' />';
 
     if (this.settings.inline) {
       return '<div class="controls form-inline">' + (this.settings.label ? label : '') + element + '</div>';
@@ -102,10 +92,11 @@ widgets.numeric_textbox = {
       return 'Number is too large';
     if (this.settings.min && data < this.settings.min)
       return 'Number is too small';
+    return true;
   },
   toHTML: function(label) {
     var label = '<label class="control-label" for="' + this.id + '-textbox" style="padding-right: 5px;">' + (this.settings.label ? this.settings.label : '') + ':' + '</label>';
-    var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="number" name="' + this.id + '"'+ (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '') + ' />';
+    var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="number" name="' + this.id + '"'+ (this.settings.data ? ' value="' + cms.functions.htmlEscape(this.settings.data) + '"' : '') + ' />';
 
     if (this.settings.inline) {
       return '<div class="controls form-inline">' + label + element + '</div>';
@@ -287,7 +278,7 @@ widgets.date = {
     if (!value || _.isEmpty(value))
       value = '';
 
-    var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="text" name="' + this.id + '"'+ (this.settings.data ? ' value="' + htmlEscape(this.settings.data) + '"' : '') + ' />';
+    var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="text" name="' + this.id + '"'+ (this.settings.data ? ' value="' + cms.functions.htmlEscape(this.settings.data) + '"' : '') + ' />';
 
     if (this.settings.inline) {
       return '<div class="controls form-inline">' + label + element + '</div>';
@@ -345,6 +336,8 @@ widgets.field_multi = {
       this.count = 3;
     }
 
+    delete this.w_input['data'];
+
     for (var i = 0; i < this.count; i ++) {
       state["body"]["" + (i)] = {};
       state["body"]["" + (i)]['type'] = this.w_type;
@@ -371,7 +364,7 @@ widgets.field_multi = {
     var arr = '<input type="hidden" name="'+this.id+'" value="' + (this.map ? 'new Object' : 'new Array') + '" />';
     return label + arr + this.renderSlot('body');
   },
-  processData: function(value, old, user) {
+  processData: function(data, old, user) {
     var widget = cms.functions.newWidget(this.w_type, this.settings);
     old = old || {};
     var out;
@@ -379,8 +372,8 @@ widgets.field_multi = {
     if (this.map) {
       out = {};
 
-      for (key in value) {
-        var processed = widget.processData(value[key], old[key], user);
+      for (key in data) {
+        var processed = widget.processData(data[key], old[key], user);
         if (processed.key) {
           out[processed.key] = processed.value;
           delete processed['key'];
@@ -389,8 +382,11 @@ widgets.field_multi = {
     } else {
       out = [];
 
-      for (key in value) {
-        out.push(widget.processData(value[key], old[key], user));
+      for (key in data) {
+        var value = widget.processData(data[key], old[key], user);
+        if (value) { // TODO(thomas): Do better falsey checking
+          out.push(value);
+        }
       }
     }
 
@@ -426,11 +422,11 @@ widgets.key_value = {
   toHTML: function(slots) {
     return this.renderSlot('body');
   },
-  processData: function(value) {
-    var key = value.key;
+  processData: function(data) {
+    var key = data.key;
     var widget = cms.functions.newWidget(this.w_type, this.settings);
 
-    var out = widget.processData(value.value);
+    var out = widget.processData(data.value);
     out['key'] = key;
 
     return out;
@@ -445,7 +441,7 @@ widgets.rating = {
   },
   toHTML: function() {
     var label = '<label class="control-label" for="' + this.id + '-textbox" style="padding-right: 5px;">' + this.settings.label + ':' + '</label>';
-    var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="number" name="' + this.id + '" ' + (this.settings.data ? 'value="' + htmlEscape(this.settings.data) + '"' : '') + '/>';
+    var element = '<input id="'+this.id+'-textbox" class="form-control input-small" type="number" name="' + this.id + '" ' + (this.settings.data ? 'value="' + cms.functions.htmlEscape(this.settings.data) + '"' : '') + '/>';
 
     return (this.settings.label ? label : '') + element;
   }
@@ -541,19 +537,27 @@ widgets.upload = {
 widgets.codemirror = {
   settingsModel: [{"name": "lang", "type": "Text"},
   {"name": "height", "type": "Number"},
-  {"name": "data", "type": "Code"}],
-  deps: {'codemirror':['mode/javascript/javascript.js', 'theme/eclipse.css', 'theme/neat.css']},
+  {"name": "data", "type": "Code"},
+  {"name": "args", "type": "Text", "quantity": "1+"}],
+  deps: {'codemirror':['mode/javascript/javascript.js', 'mode/css/css.js', 'theme/eclipse.css', 'theme/neat.css']},
   tags: ['field_edit'],
   action: function(settings, id, scope, handlers) {
-    var wrapper = document.querySelector('#' + id + ' textarea');
-    var myCodeMirror = CodeMirror.fromTextArea(wrapper, {
-      mode: "javascript",
+    var wrapper = document.querySelector('#' + id + ' .mirror');
+    var myCodeMirror = CodeMirror(wrapper, {
+      mode: (settings.lang || "javascript"),
+      value: settings.data ? (settings.data.javascript || '') : '',
       lineNumbers: true,
       theme: 'neat'
     });
     return {
       get: function() {
-        return myCodeMirror.getValue();
+        var code = myCodeMirror.getValue();
+        if (!code)
+          return undefined;
+        return {
+          _is_func: true,
+          javascript: code
+        };
       }
     }
   },
@@ -561,30 +565,32 @@ widgets.codemirror = {
     return '#'+this.id+' .CodeMirror {height: '+(this.settings.height || 125)+'px;}';
   },
   toHTML: function(label) {
-    var element = '<textarea name="' + this.id + '">'+htmlEscape(this.settings.data || '')+'</textarea>';
+    //var element = '<textarea name="' + this.id + '">'+cms.functions.htmlEscape(this.settings.data ? (this.settings.data.javascript || '') : '')+'</textarea>';
+    var element = '<div class="mirror"></div>'
 
     if (this.settings.inline) {
       return '<div class="controls form-inline">' + (this.settings.label ? label : '') + element + '</div>';
     } else {
-      return (this.settings.label ? label : '') + element;
+      return (this.settings.label ? label : '') + 'function(' + (this.settings.args ? this.settings.args.join(',') : '') + ')' + element;
     }
   }
 };
 
 widgets.jsoneditor = {
   settingsModel: [{"name": "data", "type": "JSON"},
+  {"name": "width", "type": "Number"},
   {"name": "height", "type": "Number"}],
   deps: {'jsoneditor': ['jsoneditor.min.css', 'jsoneditor.min.js', 'asset/ace/ace.js', 'asset/jsonlint/jsonlint.js']},
   tags: ['field_edit'],
   action: function(settings, id, scope, handlers) {
-    console.log(scope);
     var container = document.querySelector('#' + id + ' .json');
     var options = {
         mode: 'code',
         modes: ['code', 'tree'], // allowed modes
     };
-    console.log(settings.data);
-    var editor = new JSONEditor(container, options, JSON.parse(settings.data || '{}') );
+    var data = settings.data || {};
+    data = typeof data == 'string' ? JSON.parse(data) : data;
+    var editor = new JSONEditor(container, options, data);
 
     return {
       get: function() {
@@ -593,7 +599,7 @@ widgets.jsoneditor = {
     }
   },
   toHTML: function(label) {
-    var element = '<div class="json" style="height: '+ (this.settings.height || 200) +'px;"></div>';
+    var element = '<div class="json" style="width: '+(this.settings.width+'px' || 'auto')+'; height: '+ (this.settings.height || 200) +'px;"></div>';
 
     if (this.settings.inline) {
       return '<div class="controls form-inline">' + (this.settings.label ? label : '') + element + '</div>';

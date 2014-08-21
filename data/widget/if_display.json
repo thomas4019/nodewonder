@@ -1,0 +1,31 @@
+{
+    "settingsModel": [
+        {
+            "name": "condition",
+            "type": "Text"
+        }
+    ],
+    "slots": [
+        "then",
+        "else"
+    ],
+    "load": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "var user = this.user;\nthis.display = eval(this.settings.condition);\ncallback();"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "if (this.display) {\n    return this.renderSlot('then');\n} else {\n    return this.renderSlot('else');\n}"
+    },
+    "name": "if_display",
+    "tags": [
+        "view"
+    ],
+    "settings_unfiltered": []
+}

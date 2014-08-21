@@ -1,0 +1,37 @@
+{
+    "settingsModel": [
+        {
+            "name": "model",
+            "type": "RecordRef",
+            "settings": {
+                "model": "model"
+            }
+        },
+        {
+            "name": "record",
+            "type": "Text"
+        },
+        {
+            "name": "view",
+            "type": "Text"
+        }
+    ],
+    "children": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "cms.functions.getRecord(settings.model, settings.record, function(err, data) {\n    var record = data;\n    cms.functions.getRecord('model', settings.model, function(err, data2) {\n        var model = data2;\n        var model_view;\n        _.each(model.views, function(view) {\n            if (view.Name == settings.view) {\n                model_view = view;\n            }\n        });\n        _.each(model_view.Code.widgets, function(widget) {\n            if (widget.model && widget.field) {\n                widget.settings = widget.settings || {};\n                widget.settings.data = record[widget.field];\n            }\n        });\n        callback({\n            'body': model_view.Code.widgets\n        }, model_view.Code.slotAssignments);\n    });\n});"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return this.renderSlot('body');"
+    },
+    "name": "model_record_view",
+    "tags": [
+        "view"
+    ]
+}

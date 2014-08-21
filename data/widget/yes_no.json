@@ -1,0 +1,28 @@
+{
+    "tags": [
+        "field_view",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "true_text",
+            "type": "Text"
+        },
+        {
+            "name": "false_text",
+            "type": "Text"
+        },
+        {
+            "name": "data",
+            "type": "Boolean"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return this.settings.data ? (this.settings.true_text || 'Yes') : (this.settings.false_text || 'No');"
+    },
+    "name": "yes_no"
+}

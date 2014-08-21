@@ -1,0 +1,43 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "vote"
+        },
+        {
+            "name": "star_count",
+            "type": "Number"
+        }
+    ],
+    "deps": {
+        "raty": [
+            "lib/jquery.raty.js"
+        ]
+    },
+    "processData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "old",
+            "user"
+        ],
+        "javascript": "old = old || {};\nold.ratings = old.ratings || {};\nold.total = old.total || 0;\nold.count = old.count || 0;\n\nvar amount = parseFloat(data);\nif (old.ratings[user.clientID]) { //changing rating\n    var diff = amount - old.ratings[user.clientID];\n    old.total += diff;\n} else {\n    old.total += amount;\n    old.count++;\n}\n\nold.average = old.total / old.count;\nold.ratings[user.clientID] = amount;\nreturn old;"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "this.settings.data = this.settings.data || {\n    average: 0,\n    count: 0\n};\nreturn '<label class=\"control-label\">' + this.settings.label + ':</label><div id=\"' + this.id + '-stars\"></div>' +\n    '<input id=\"' + this.id + '-score\" class=\"form-control input-small\" type=\"hidden\" name=\"' + this.id + '\" ' + (this.settings.data ? 'value=\"' + this.settings.data.average + '\"' : '') + ' />' +\n    'Average: ' + Math.round(this.settings.data.average * 100) / 100 + ' (' + this.settings.data.count + ' vote)';"
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return '$(\"#' + this.id + '-stars\").raty({ click: function(score) { $(\"#' + this.id + '-score\").val(score); }, ' +\n    (this.settings.data ? ' score: ' + this.settings.data.average + ',' : '') +\n    (this.settings.star_count ? ' number: ' + this.settings.star_count + ',' : '') +\n    ' path: \"/bower_components/raty/lib/img\", half: true });';"
+    },
+    "name": "fivestar"
+}

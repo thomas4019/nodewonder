@@ -1,0 +1,65 @@
+{
+    "settingsModel": [
+        {
+            "name": "lang",
+            "type": "Text"
+        },
+        {
+            "name": "height",
+            "type": "Number"
+        },
+        {
+            "name": "data",
+            "type": "Code"
+        },
+        {
+            "name": "args",
+            "type": "Text",
+            "quantity": "1+"
+        }
+    ],
+    "deps": {
+        "codemirror": [
+            "mode/javascript/javascript.js",
+            "mode/css/css.js",
+            "theme/eclipse.css",
+            "theme/neat.css"
+        ]
+    },
+    "tags": [
+        "field_edit",
+        "view",
+        "action",
+        "local-action"
+    ],
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "var wrapper = document.querySelector('#' + id + ' .mirror');\nvar myCodeMirror = CodeMirror(wrapper, {\n    mode: (settings.lang || \"javascript\"),\n    value: settings.data ? (settings.data.javascript || '') : '',\n    lineNumbers: true,\n    theme: 'neat'\n});\nreturn {\n    get: function() {\n        var code = myCodeMirror.getValue();\n        if (!code)\n            return undefined;\n        return {\n            _is_func: true,\n            javascript: code\n        };\n    }\n}"
+    },
+    "style": {
+        "_is_func": true,
+        "args": [
+            ""
+        ],
+        "javascript": "return '#' + this.id + ' .CodeMirror {height: ' + (this.settings.height || 125) + 'px;}';"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "//var element = '<textarea name=\"' + this.id + '\">'+cms.functions.htmlEscape(this.settings.data ? (this.settings.data.javascript || '') : '')+'</textarea>';\nvar element = '<div class=\"mirror\"></div>'\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + 'function(' + (this.settings.args ? this.settings.args.join(',') : '') + ')' + element;\n}"
+    },
+    "name": "codemirror",
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    }
+}

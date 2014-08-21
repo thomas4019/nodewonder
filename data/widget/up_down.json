@@ -1,0 +1,42 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "vote"
+        }
+    ],
+    "deps": {
+        "font-awesome": [
+            "css/font-awesome.css"
+        ]
+    },
+    "head": [
+        "/modules/forms/up_down.css"
+    ],
+    "processData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "old",
+            "user"
+        ],
+        "javascript": "old = old || {};\nold.ratings = old.ratings || {};\nold.total = old.total || 0;\nold.count = old.count || 0;\n\nvar amount = parseFloat(data);\nif (old.ratings[user.clientID]) { //changing rating\n    var diff = amount - old.ratings[user.clientID];\n    old.total += diff;\n} else {\n    old.total += amount;\n    old.count++;\n}\n\nold.average = old.total / old.count;\nold.ratings[user.clientID] = amount;\nreturn old;"
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return '$(\"#' + this.id + ' .up-vote\").on(\"click\", function() { \\\n      $(\"#' + this.id + ' .up-vote\").addClass(\"selected\"); $(\"#' + this.id + ' .down-vote\").removeClass(\"selected\"); $(\"#' + this.id + ' input\").val(1); \\\n    });' +\n    '$(\"#' + this.id + ' .down-vote\").on(\"click\", function() { \\\n      $(\"#' + this.id + ' .down-vote\").addClass(\"selected\"); $(\"#' + this.id + ' .up-vote\").removeClass(\"selected\"); $(\"#' + this.id + ' input\").val(-1); \\\n    });';"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var label = '<label class=\"control-label\">' + this.settings.label + ':</label>';\nreturn '<i class=\"up-vote fa fa-caret-up fa-3x\"></i>' +\n    '<div style=\"width: 30px; text-align: center;\">' + (this.settings.data ? this.settings.data.total : '') + '</div>' +\n    '<i class=\"down-vote fa fa-caret-down fa-3x\"></i>' +\n    '<input type=\"hidden\" name=\"' + this.id + '\" >';"
+    },
+    "name": "up_down"
+}

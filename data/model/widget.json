@@ -19,10 +19,41 @@
             "required": false
         },
         {
+            "name": "settings_unfiltered",
+            "type": "Text",
+            "quantity": "1+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "toHTML",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": {
+                "lang": "",
+                "height": 250,
+                "data": "",
+                "args": [
+                    "label"
+                ]
+            },
+            "required": false
+        },
+        {
             "name": "deps",
             "type": "JSON",
             "quantity": "",
             "widget": "jsoneditor",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "head",
+            "type": "Text",
+            "quantity": "1+",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },
@@ -51,23 +82,7 @@
             "required": false
         },
         {
-            "name": "head",
-            "type": "Text",
-            "quantity": "1+",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
             "name": "setup",
-            "type": "Code",
-            "quantity": "",
-            "widget": "codemirror",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "getWidget",
             "type": "Code",
             "quantity": "",
             "widget": "codemirror",
@@ -79,7 +94,13 @@
             "type": "Code",
             "quantity": "",
             "widget": "codemirror",
-            "settings": "",
+            "settings": {
+                "lang": "",
+                "height": null,
+                "args": [
+                    "callback"
+                ]
+            },
             "required": false
         },
         {
@@ -87,7 +108,15 @@
             "type": "Code",
             "quantity": "",
             "widget": "codemirror",
-            "settings": "",
+            "settings": {
+                "lang": "",
+                "height": null,
+                "args": [
+                    "data",
+                    "old",
+                    "user"
+                ]
+            },
             "required": false
         },
         {
@@ -95,6 +124,21 @@
             "type": "Code",
             "quantity": "",
             "widget": "codemirror",
+            "settings": {
+                "lang": "",
+                "height": null,
+                "args": [
+                    "data",
+                    "callback"
+                ]
+            },
+            "required": false
+        },
+        {
+            "name": "wrapper",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },
@@ -115,35 +159,20 @@
             "required": false
         },
         {
-            "name": "toHTML",
-            "type": "Code",
-            "quantity": "",
-            "widget": "codemirror",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "settings_unfiltered",
-            "type": "Text",
-            "quantity": "1+",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "wrapper",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
             "name": "action",
             "type": "Code",
             "quantity": "",
             "widget": "codemirror",
-            "settings": "",
+            "settings": {
+                "lang": "",
+                "height": null,
+                "args": [
+                    "settings",
+                    "id",
+                    "scope",
+                    "handlers"
+                ]
+            },
             "required": false
         },
         {
@@ -155,11 +184,104 @@
             "required": false
         },
         {
-            "name": "save",
+            "name": "pseudo_names",
             "type": "Code",
             "quantity": "",
             "widget": "codemirror",
             "settings": "",
+            "required": false
+        },
+        {
+            "name": "doProcess",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": {
+                "lang": "",
+                "height": null,
+                "args": [
+                    "input",
+                    "callback"
+                ]
+            },
+            "required": false
+        },
+        {
+            "name": "save",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": {
+                "lang": "",
+                "height": null,
+                "args": [
+                    "values",
+                    "user",
+                    "req",
+                    "res",
+                    "callback"
+                ]
+            },
+            "required": false
+        },
+        {
+            "name": "load",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": {
+                "lang": "",
+                "height": null,
+                "data": "",
+                "args": [
+                    "callback"
+                ]
+            },
+            "required": false
+        },
+        {
+            "name": "makeEventJS",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": {
+                "lang": "",
+                "height": null,
+                "args": [
+                    "selector",
+                    "code"
+                ]
+            },
+            "required": false
+        },
+        {
+            "name": "init",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": {
+                "lang": "css",
+                "height": null,
+                "data": "",
+                "args": [
+                    ""
+                ]
+            },
+            "required": false
+        },
+        {
+            "name": "style",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": {
+                "lang": "css",
+                "height": null,
+                "data": "",
+                "args": [
+                    ""
+                ]
+            },
             "required": false
         }
     ],

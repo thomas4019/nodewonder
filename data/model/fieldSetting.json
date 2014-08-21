@@ -24,15 +24,16 @@
             "quantity": "",
             "widget": "jsoneditor",
             "settings": {
-                "height": 120,
-                "label": "settings"
+                "width": 350,
+                "height": 120
             },
             "required": false
         },
         {
-            "name": "",
-            "type": "",
+            "name": "widget",
+            "type": "Text",
             "quantity": "",
+            "widget": "textbox",
             "settings": "",
             "required": false
         }

@@ -1,0 +1,28 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "deps": {
+        "jquery": [],
+        "bootstrap": []
+    },
+    "settingsModel": [
+        {
+            "name": "inline",
+            "type": "Boolean"
+        },
+        {
+            "name": "data",
+            "type": "Email"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var element = '<input class=\"form-control input-small\" type=\"email\" name=\"' + this.id + '\"' + (this.settings.data ? ' value=\"' + cms.functions.htmlEscape(this.settings.data) + '\"' : '') + ' />';\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + element;\n}"
+    },
+    "name": "email_textbox"
+}

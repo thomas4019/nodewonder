@@ -1,0 +1,33 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "Captcha"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var recaptcha = new Recaptcha(PUBLIC_KEY, PRIVATE_KEY);\nreturn '<label class=\"control-label\">Captcha:</label>' + recaptcha.toHTML();"
+    },
+    "validateData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "callback"
+        ],
+        "javascript": "var raw_data = {\n    remoteip: '24.49.170.112',\n    challenge: data.recaptcha_challenge_field,\n    response: data.recaptcha_response_field\n};\nvar recaptcha = new Recaptcha(PUBLIC_KEY, PRIVATE_KEY, raw_data);\n\nrecaptcha.verify(function(success, error_code) {\n    if (success) {\n        callback(false);\n    } else {\n        callback('invalid');\n    }\n});"
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'setTimeout(function() {' +\n    '$(\"input[name=\\'recaptcha_response_field\\']\").attr(\"name\", \"' + this.id + '-recaptcha_response_field\");' +\n    '$(\"input[name=\\'recaptcha_challenge_field\\']\").attr(\"name\", \"' + this.id + '-recaptcha_challenge_field\");' +\n    '}, 500);';"
+    },
+    "name": "recaptcha"
+}

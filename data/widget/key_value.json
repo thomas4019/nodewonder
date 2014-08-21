@@ -1,0 +1,35 @@
+{
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "this.w_type = this.settings.widget;\nthis.w_input = this.settings;\n\ndelete this.w_input['widget'];\ndelete this.w_input['label'];"
+    },
+    "children": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "var state = {\n    \"body\": {}\n};\n\nstate[\"body\"][\"key\"] = {\n    type: 'textbox',\n    settings: {\n        data: (this.settings.data ? this.settings.data.key : undefined)\n    }\n};\n\nstate[\"body\"][\"value\"] = {\n    type: this.w_type,\n    settings: deep.clone(this.w_input),\n};\nstate[\"body\"][\"value\"][\"settings\"][\"data\"] = this.settings.data ? this.settings.data.value : undefined;\n\ncallback(state);"
+    },
+    "wrapper_style": "padding-left: 5px;",
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return this.renderSlot('body');"
+    },
+    "processData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "old",
+            "user"
+        ],
+        "javascript": "var key = data.key;\nvar widget = cms.functions.newWidget(this.w_type, this.settings);\n\nvar out = widget.processData(data.value);\nout['key'] = key;\n\nreturn out;"
+    },
+    "name": "key_value",
+    "tags": [
+        "view"
+    ]
+}

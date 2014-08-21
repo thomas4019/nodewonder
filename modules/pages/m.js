@@ -148,7 +148,7 @@ functions.viewPage = function(path, vars, scope, callback, error_callback) {
 
     if (page.controller && page.controller.length > 0) {
       //eval(page.controller);
-      var i = 0;  
+      var i = 0;
       context['widgets'] = page.code.widgets;
       context['slotAssignments'] = page.code.slotAssignments;
       context['scope'] = page.scope;
@@ -222,6 +222,7 @@ functions.renderPage = function(page, vars, callback) {
   } else if ('raw' in vars) {
     cms.functions.renderStateParts(page.code.widgets, page.code.slotAssignments, user, function(html, results) {
       var head = results.head;
+      cms.functions.expandHead(head);
       head = head.concat(cms.functions.processDeps(results.deps));
       /*encoded_head = _.map(encoded_head, function (element) {
         return element.replace(/<\/script/g, '</scr"+"ipt');

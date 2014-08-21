@@ -1,0 +1,21 @@
+{
+    "deps": {
+        "jquery": [],
+        "bootstrap": []
+    },
+    "slots": [
+        "left",
+        "right"
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var template = Handlebars.compile('<div class=\"row\"><div class=\"col-sm-6\">{{{ renderSlot \"left\" }}} ' +\n    '</div><div class=\"col-sm-6\">{{{ renderSlot \"right\" }}}</div></div>');\nreturn template(this);"
+    },
+    "name": "two_col",
+    "tags": [
+        "view"
+    ]
+}

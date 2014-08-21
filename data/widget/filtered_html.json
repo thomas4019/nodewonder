@@ -1,0 +1,21 @@
+{
+    "wrapper": "p",
+    "tags": [
+        "field_view",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "Text"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return this.settings.data;"
+    },
+    "name": "filtered_html"
+}

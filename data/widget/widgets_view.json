@@ -1,0 +1,38 @@
+{
+    "settingsModel": [
+        {
+            "name": "model",
+            "type": "Record",
+            "settings": {
+                "model": "model"
+            }
+        },
+        {
+            "name": "record",
+            "type": "Text"
+        },
+        {
+            "name": "field",
+            "type": "Text"
+        }
+    ],
+    "children": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "var settings = this.settings;\nvar extra_settings = deep.clone(this.settings);\ndelete extra_settings['model'];\ndelete extra_settings['record'];\ndelete extra_settings['field'];\ncms.functions.getRecord(settings.model, settings.record, function(err, data) {\n    var code = data[settings.field];\n    _.each(code.widgets, function(widget) {\n        widget.settings = widget.settings || {};\n        _.defaults(widget.settings, extra_settings);\n    });\n    callback({\n        'body': code.widgets\n    }, code.slotAssignments);\n});"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return this.renderSlot('body');"
+    },
+    "name": "widgets_view",
+    "tags": [
+        "view"
+    ],
+    "settings_unfiltered": []
+}

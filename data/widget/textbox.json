@@ -1,0 +1,34 @@
+{
+    "settingsModel": [
+        {
+            "name": "inline",
+            "type": "Boolean"
+        },
+        {
+            "name": "data",
+            "type": "Text"
+        }
+    ],
+    "head": [
+        "/modules/forms/forms.css"
+    ],
+    "deps": {
+        "jquery": [],
+        "bootstrap": []
+    },
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var element = '<input class=\"form-control input-small\" type=\"text\" name=\"' + this.id + '\"' + (this.settings.data ? ' value=\"' + cms.functions.htmlEscape(this.settings.data) + '\"' : '') + ' />';\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + element;\n}"
+    },
+    "name": "textbox",
+    "settings_unfiltered": [
+        "data",
+    ]
+}

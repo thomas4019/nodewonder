@@ -1,0 +1,24 @@
+{
+    "tags": [
+        "field_view",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "format",
+            "type": "Text"
+        },
+        {
+            "name": "data",
+            "type": "Date"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return moment(this.settings.data).format(this.settings.format || 'MMMM Do YYYY');"
+    },
+    "name": "formatted_date"
+}

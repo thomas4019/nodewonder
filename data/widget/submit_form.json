@@ -1,0 +1,44 @@
+{
+    "settingsModel": [
+        {
+            "name": "selector",
+            "type": "Text"
+        }
+    ],
+    "deps": {
+        "jquery": [],
+        "jquery-form": []
+    },
+    "slots": [
+        "success",
+        "failure"
+    ],
+    "slot_tags": {
+        "success": [
+            "action"
+        ],
+        "failure": [
+            "action"
+        ]
+    },
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "var id = settings.selector ? settings.selector.substr(1) : '';\nvar model = nw.model[id];\nvar data = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#' + id + ' :input').serializeArray()));\n\nnw.functions.cleanErrors(id);\nnw.functions.processModel(model.fields, data, function(results) {\n    console.log(results);\n    if (results.validationErrors && Object.keys(results.validationErrors).length) {\n        console.log('model has errors');\n        nw.functions.showErrors(id, results.validationErrors);\n    } else {\n        console.log('model success');\n        $(\"form\").ajaxSubmit({\n            success: function() {\n                handlers.success();\n            },\n            error: function(responseText, statusText, xhr, $form) {\n                console.log(responseText);\n                console.log(statusText);\n                handlers.failure();\n            }\n        });\n    }\n});"
+    },
+    "name": "submit_form",
+    "tags": [
+        "action",
+        "local-action"
+    ],
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    }
+}

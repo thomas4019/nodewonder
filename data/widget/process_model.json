@@ -1,0 +1,31 @@
+{
+    "settingsModel": [
+        {
+            "name": "model",
+            "type": "Text"
+        },
+        {
+            "name": "data",
+            "type": "JSON"
+        }
+    ],
+    "wrapper": "none",
+    "load": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "var model_widget = cms.functions.newWidget('model_form', {\n    'fields': this.settings.fields\n});\nvar old = {};\nvar user = {};\nuser.clientID = 'unknownID';\nuser.ip = '0.0.0.0';\n\nthis.processed = model_widget.processData(this.settings.data, old);\nmodel_widget.validateData(this.processed, function(c_errors) {\n    console.log('validation finished');\n    this.errors = c_errors;\n    callback();\n});"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return JSON.stringify({\n    validationErrors: this.errors,\n    data: this.processed\n});"
+    },
+    "name": "process_model",
+    "tags": [
+        "view"
+    ]
+}

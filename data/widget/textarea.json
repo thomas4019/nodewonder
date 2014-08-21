@@ -1,0 +1,28 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "label",
+            "type": "Text"
+        },
+        {
+            "name": "name",
+            "type": "Text"
+        },
+        {
+            "name": "data",
+            "type": "Text"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var element = '<textarea class=\"form-control input-small\"  name=\"' + this.id + '\" >' + (this.settings.data || '') + '</textarea>';\nreturn label + element;"
+    },
+    "name": "textarea"
+}

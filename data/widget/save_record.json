@@ -1,0 +1,71 @@
+{
+    "settingsModel": [
+        {
+            "name": "model",
+            "type": "Text"
+        },
+        {
+            "name": "record",
+            "type": "Text"
+        },
+        {
+            "name": "data_name",
+            "type": "Text"
+        },
+        {
+            "name": "data",
+            "type": "JSON"
+        },
+        {
+            "name": "record_id_dest",
+            "type": "Text"
+        }
+    ],
+    "slots": [
+        "success",
+        "failure"
+    ],
+    "slot_tags": {
+        "success": [
+            "action"
+        ],
+        "failure": [
+            "action"
+        ]
+    },
+    "tags": [
+        "filtered",
+        "action",
+        "local-action",
+        "process"
+    ],
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "var data = scope[settings.data_name];\nnw.functions.doProcess(settings.token, {\n    data: data\n}, function(result) {\n    if (settings.record_id_dest) {\n        scope[settings.record_id_dest] = result.record;\n    }\n    handlers.success();\n}, handlers.failure);"
+    },
+    "doProcess": {
+        "_is_func": true,
+        "args": [
+            "input",
+            "callback"
+        ],
+        "javascript": "var widget = this;\nvar settings = this.settings;\nconsole.log(input.data);\nconsole.log(this.user);\n\ncms.functions.getRecord('model', settings.model, function(err, model) {\n    var record = settings.record;\n\n    cms.functions.getRecord(settings.model, record, function(err, old_data) {\n        var model_widget = cms.functions.newWidget('model_form', {\n            model: 'model',\n            record: settings.model\n        });\n        var processed = model_widget.processData(input.data, old_data, widget.user);\n        console.log(processed);\n\n        if (settings.record == 'create') {\n            if (model.index) {\n                if (processed[model.index]) {\n                    record = processed[model.index];\n                } else {\n                    record = cms.functions.generateRecordID();\n                    processed[model.index] = record;\n                }\n            } else\n                record = cms.functions.generateRecordID();\n        } else {\n            if (model.index) {\n                if (old_data[model.index] != processed[model.index]) {\n                    record = processed[model.index];\n                    cms.functions.deleteRecord(settings.model, old_data[model.index]);\n                }\n            }\n        }\n\n        cms.functions.saveRecord(settings.model, record, processed, function(err, records) {\n            callback(err, {\n                record: record\n            });\n        });\n    });\n});"
+    },
+    "name": "save_record",
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    },
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "cms.functions.setupProcess(this.name, this.settings);"
+    }
+}

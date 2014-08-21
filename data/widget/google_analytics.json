@@ -1,0 +1,40 @@
+{
+    "settingsModel": [
+        {
+            "name": "code",
+            "type": "Text"
+        },
+        {
+            "name": "url",
+            "type": "Text"
+        }
+    ],
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "(function(i, s, o, g, r, a, m) {\n    i['GoogleAnalyticsObject'] = r;\n    i[r] = i[r] || function() {\n        (i[r].q = i[r].q || []).push(arguments)\n    }, i[r].l = 1 * new Date();\n    a = s.createElement(o),\n    m = s.getElementsByTagName(o)[0];\n    a.async = 1;\n    a.src = g;\n    m.parentNode.insertBefore(a, m)\n})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');\n\nga('create', settings.code, settings.url);\nga('send', 'pageview');"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return ''"
+    },
+    "name": "google_analytics",
+    "tags": [
+        "view",
+        "action",
+        "local-action"
+    ],
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    }
+}

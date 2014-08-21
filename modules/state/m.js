@@ -3,7 +3,8 @@ var _ = require('underscore'),
     async = require('async'),
     path = require('path'),
     dextend = require('dextend'),
-    deep = require('deep');
+    deep = require('deep'),
+    beautify_js = require('js-beautify');
 
 var cms;
 module.exports = {
@@ -15,10 +16,6 @@ module.exports = {
 };
 widgets = module.exports.widgets;
 functions = module.exports.functions;
-
-function retreive(val) {
-  return (typeof val === 'function') ? val() : val;
-}
 
 functions.initializeState = function(state, scope, user, callback) {
   var widgets_buffer = {};
@@ -45,7 +42,7 @@ functions.initializeState = function(state, scope, user, callback) {
       cms.widgets[name].settings_unfiltered.push('data');
     }
 
-    if ( !_.contains(cms.widgets[name].tags, 'local-action') ||
+    if ( !(_.contains(cms.widgets[name].tags, 'local-action')) ||
      _.contains(cms.widgets[name].tags, 'filtered')) {
       cms.functions.fillSettings(w.settings, scope, cms.widgets[name].settings_unfiltered);
     }
@@ -132,10 +129,11 @@ functions.initializeState = function(state, scope, user, callback) {
 
     _.each(widgets_buffer, function(widget, id) {
       if (widget.deps) {
-        dextend(results.deps, retreive(widget.deps));
+        dextend(results.deps, cms.functions.retrieve(widget.deps));
       }
       if (widget.script) {
         if (typeof widget.script == 'function') {
+          //console.log(widget.name);
           var script = widget.script();
           if (typeof script == 'undefined') {
             console.error('widget :' + id + ' returned undefined script');
@@ -220,7 +218,7 @@ functions.renderState = function(state, slotAssignments, user, callback, values)
     var all_head = [];
     all_head = all_head.concat(results.head);
     all_head = all_head.concat(cms.functions.processDeps(results.deps));
-    all_head.push('<script>$(function() {var scope = ' + JSON.stringify(values) + ';' + results.script + '});</script>');
+    all_head.push('<script>$(function() {var scope = ' + JSON.stringify(values) + ';' + beautify_js(results.script) + '});</script>');
     all_head.push('<style type="text/css">'+results.style+'</style>');
     callback(html, all_head);
   }, values);

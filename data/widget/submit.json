@@ -1,0 +1,38 @@
+{
+    "settingsModel": [
+        {
+            "name": "label",
+            "type": "Text"
+        },
+        {
+            "name": "button_type",
+            "type": "Text",
+            "widget": "select",
+            "settings": {
+                "label": "Button Type",
+                "choices": [
+                    "default",
+                    "primary",
+                    "success",
+                    "info",
+                    "warning",
+                    "danger"
+                ]
+            }
+        }
+    ],
+    "deps": {
+        "jquery": []
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return '<input type=\"submit\" class=\"btn btn-' + this.settings.button_type + '\" value=\"' + this.settings.label + '\" />'"
+    },
+    "name": "submit",
+    "tags": [
+        "view"
+    ]
+}

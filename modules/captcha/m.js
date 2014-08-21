@@ -50,10 +50,10 @@ widgets.captchagen = {
   tags: ['field_edit'],
   settingsModel: [{"name": "data", "type": "Captcha"}],
   toHTML: function() {
-    return ''  
+    return ''
   },
   validateData: function(data) {
-
+    return true;
   },
   script: function() {
     return '';

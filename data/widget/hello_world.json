@@ -1,0 +1,13 @@
+{
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return 'Hello World';"
+    },
+    "name": "hello_world",
+    "tags": [
+        "view"
+    ]
+}

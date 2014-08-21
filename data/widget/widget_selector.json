@@ -1,0 +1,27 @@
+{
+    "deps": {
+        "select2": []
+    },
+    "head": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "var widgets = {};\n_.each(cms.widgets, function(w, name) {\n    widgets[w.name] = {\n        id: w.name,\n        text: w.name,\n        name: w.name,\n        widget: w.name,\n        tags: w.tags,\n        settings: cms.functions.retrieve(w.settingsModel, false),\n        slots: cms.functions.retrieve(w.slots, []),\n        slot_tags: cms.functions.retrieve(w.slot_tags, {})\n    };\n    /*if (_.contains(w.tags,'view')) {\n        widgets[w.name].slots.push('events');\n        widgets[w.name].slot_tags['events'] = ['event'];\n      }*/\n    if (_.contains(w.tags, 'event')) {\n        widgets[w.name].slots.push('actions');\n        widgets[w.name].slot_tags['actions'] = ['action'];\n    }\n    if (w.pseudo_names) {\n        var widget = widgets[w.name];\n        var names = cms.functions.retrieve(w.pseudo_names, []);\n        _.each(names, function(pseudo_name) {\n            widgets[pseudo_name] = deep.clone(widget);\n            widgets[pseudo_name].text = pseudo_name;\n            widgets[pseudo_name].name = name;\n            widgets[pseudo_name].widget = name;\n            widgets[pseudo_name].id = pseudo_name;\n            widgets[pseudo_name].settings = w.settingsModel(pseudo_name);\n        });\n    }\n});\n\nreturn ['<scr' + 'ipt type=\"text/javascript\">nw.widgets=' + JSON.stringify(widgets) + ';</scr' + 'ipt>'];",
+        "_func_override": true
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'setupWidgetSelector(\"#' + this.id + ' .widget-selector\");';"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return '<input type=\"hidden\" class=\"widget-selector\">';"
+    },
+    "name": "widget_selector",
+    "tags": [
+        "view"
+    ]
+}

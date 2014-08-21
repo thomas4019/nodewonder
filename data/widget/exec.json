@@ -1,0 +1,46 @@
+{
+    "settingsModel": [
+        {
+            "name": "Code",
+            "type": "Code"
+        }
+    ],
+    "deps": {
+        "jquery": []
+    },
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "nw.functions.doProcess(settings.token, {}, function(result) {}, function() {});"
+    },
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "cms.functions.setupProcess('exec', this.settings);"
+    },
+    "doProcess": {
+        "_is_func": true,
+        "args": [
+            "input",
+            "callback"
+        ],
+        "javascript": "eval(this.settings.Code.javascript);"
+    },
+    "name": "exec",
+    "tags": [
+        "action",
+        "local-action",
+        "process"
+    ],
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    },
+    "settings_unfiltered": []
+}

@@ -1,0 +1,19 @@
+{
+    "settingsModel": [
+        {
+            "name": "url",
+            "type": "Text"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return '<iframe src=\"' + this.settings.url + '\" style=\"width: 100%; height: 800px;\" ></iframe>';"
+    },
+    "name": "iframe",
+    "tags": [
+        "view"
+    ]
+}

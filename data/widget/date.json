@@ -1,0 +1,40 @@
+{
+    "deps": {
+        "jquery": {},
+        "jquery-ui": [
+            "themes/smoothness/jquery-ui.min.css"
+        ]
+    },
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "Date"
+        }
+    ],
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return '$(\"#' + this.id + ' input\").datepicker();';"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var value = this.settings.data ? moment(this.settings.data).format('MM/DD/YYYY') : '';\n\nif (!value || _.isEmpty(value))\n    value = '';\n\nvar element = '<input id=\"' + this.id + '-textbox\" class=\"form-control input-small\" type=\"text\" name=\"' + this.id + '\"' + (this.settings.data ? ' value=\"' + cms.functions.htmlEscape(this.settings.data) + '\"' : '') + ' />';\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + label + element + '</div>';\n} else {\n    return label + element;\n}"
+    },
+    "processData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "old",
+            "user"
+        ],
+        "javascript": "return new Date(data).getTime();"
+    },
+    "name": "date"
+}

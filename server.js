@@ -1,18 +1,30 @@
+pa_ = require('underscore');
+
 var http = require('http');
 
-var fs = require('fs'),
-    url = require('url'),
-    connect = require('connect'),
-    Handlebars = require("handlebars"),
-    querystring = require('querystring'),
-    _ = require('underscore'),
-    async = require('async'),
-    dive = require('dive'),
-    path = require('path'),
-    repl = require("repl"),
-    bower = require('bower'),
-    bowerJson = require('bower-json'),
-    dextend = require('dextend');
+global._ = require('underscore');
+fs = require('fs');
+url = require('url');
+connect = require('connect');
+Handlebars = require("handlebars");
+querystring = require('querystring');
+async = require('async');
+dive = require('dive');
+path = require('path');
+repl = require("repl");
+bower = require('bower');
+bowerJson = require('bower-json');
+dextend = require('dextend');
+beautify_js = require('js-beautify');
+deep = require('deep');
+deepExtend = require('deep-extend');
+dextend = require('dextend');
+moment = require('moment');
+vm = require("vm");
+url = require("url");
+beautify_js = require('js-beautify');
+
+var _ = global._
 
 cms = {};
 cms.m = {};
@@ -36,9 +48,10 @@ cms.settings = {};
 cms.settings_group = 'production';
 
 cms.functions.addWidgetType = function(module, name, widgetType) {
-  _.defaults(widgetType, Widget.prototype);
-  widgetType.module = module;
   widgetType.name = name;
+
+  /*_.defaults(widgetType, Widget.prototype);
+  widgetType.module = module;*/
 
   widgetType.tags = widgetType.tags || [];
   if (widgetType.toHTML) {
@@ -86,15 +99,60 @@ cms.functions.addWidgetType = function(module, name, widgetType) {
   installDependencies(widgetType);
 }
 
-cms.functions.newWidget = function(type, settings, id) {
+cms.functions.loadWidget = function(widget) {
+  //console.log(widget.name);
+  return cms.functions.evalFunctions(widget, widget);
+}
+
+cms.functions.evalFunctions = function(widget, object) {
+  if (object instanceof Array) {
+    return object;
+  }
+  if (typeof object == 'object') {
+    if ('_is_func' in object) {
+      var func = new Function(object.args.join(','), object.javascript);//.bind(widget);
+      return func;
+    } else {
+      var object2 = _.clone(object);
+      for (var key in object) {
+        object2[key] = cms.functions.evalFunctions(widget, object[key]);
+      }
+      return object2;
+    }
+  }
+
+  return object;
+} // cms.functions.evalFunctions(cms.model_data['widget']['button'])
+
+cms.functions.newWidget4 = function(type, settings, id) {
   //console.log(type);
-  var w = Object.create(cms.widgets[type]);
+  var w = Object.create(cms.functions.loadWidget(cms.model_data['widget'][type]));
+  _.defaults(w, Widget.prototype);
   w.settings = settings || {};
   if (id) {
     w.id = id;
   }
   if (w.setup)
     w.setup();
+  return w;
+}
+
+cms.functions.newWidget = function(type, settings, id) { //traditional
+  //console.log(type);
+  //console.log(cms.widgets[type]);
+  var w = Object.create(cms.widgets[type]);
+  //console.log(type);
+  //console.log(Object.keys(_));
+  _.defaults(w, Widget.prototype);
+  w.settings = settings || {};
+  if (id) {
+    w.id = id;
+  }
+  if (w.setup) {
+    //w.name = 1232;
+    w.cool = 'hello';
+    w.setup.call(w);
+  }
   return w;
 }
 
@@ -107,6 +165,35 @@ cms.functions.ret = function(val, otherwise) {
     return otherwise;
   return (typeof val === 'function') ? val() : val;
 }
+
+cms.functions.getWidget = function(field, input) {
+  var default_widget = cms.functions.getDefaultWidget(field.type);
+
+  var type = field.widget ? field.widget : default_widget;
+
+  if (type == 'model_form') {
+    input['model'] = 'model';
+    input['record'] = field.type;
+    input['inline'] = 'model';
+  }
+
+  if (field.quantity) {
+    input['quantity'] = field.quantity;
+    if (_.contains(cms.widgets[type].tags, 'field_edit_multiple')) {
+      //widget itself will do multiple
+    } else {
+      input['widget'] = type;
+      type = 'field_multi';
+    }
+  }
+
+  if (input && input.data && input.data._func_override) {
+    console.log('!!!!!!!!!!!!!!');
+    type = 'codemirror';
+  }
+
+  return type;
+};
 
 var Widget = function () {};
 
@@ -141,7 +228,7 @@ Widget.prototype.html = function () {
   try {
     widget_html = (this.toHTML) ? this.toHTML(label) : '';
   } catch(err) {
-    console.error("PROBLEM DURING RENDERING");
+    console.error("PROBLEM DURING RENDERING " + this.name + " " + this.id);
     console.error(err.stack);
   }
 
@@ -167,10 +254,10 @@ Widget.prototype.renderSlot = function(slotName) {
   return zone_html;
 }
 
-Widget.prototype.processData = function(value) {
-  return value;
+Widget.prototype.processData = function(data) {
+  return data;
 }
-Widget.prototype.validateData = function(value) {
+Widget.prototype.validateData = function(data) {
   return false;
 }
 
@@ -275,6 +362,7 @@ function processDeps(callback) {
 }
 
 function initWidgets(callback) {
+
   for(type in cms.widgets) {
     if (cms.widgets[type].init) {
       cms.widgets[type].init();
@@ -285,6 +373,17 @@ function initWidgets(callback) {
       cms.m[module].init();
     }
   }
+
+  cms.widgets2 = {};
+  _.each(cms.model_data['widget'], function(wData, type) {
+    var widget = cms.functions.loadWidget(wData)
+    if (type != 'template' && type != 'process') {
+      console.log(type);
+      cms.widgets[type] = widget;
+    }
+    cms.widgets2[type] = widget;
+  });
+
   callback();
 }
 
@@ -465,6 +564,43 @@ cms.migrate3 = function() {
 
 cms.migrate4 = function() {
   _.forEach(cms.widgets, function(widget, name) {
-    console.log(widget.tags);
+    //console.log(widget.tags);
+
+    var widgetData = cms.funcsToString(widget);
+    cms.functions.saveRecord('widget', name, widgetData);
   });
+}
+
+cms.funcsToString = function(object) {
+  var object2 = {};
+  var widgetModel = cms.models['widget'];
+  var fields = {};
+  _.each(widgetModel.fields, function(field) {
+    fields[field.name] = field;
+  });
+  for (var key in object) {
+    if (object.hasOwnProperty(key)) {
+      if (typeof object[key] == 'function') {
+        object2[key] = {
+          _is_func: true,
+          args: fields[key].settings.args || [],
+          javascript: cms.getFuncBody(object[key]),
+        }
+        if (fields[key] && fields[key].type != 'Code') {
+          object2[key]['_func_override'] = true;
+          //console.log(key+' '+object.name);
+        }
+      } else {
+        object2[key] = object[key];
+      }
+    }
+  }
+  return object2
+}
+
+cms.getFuncBody = function(func) {
+  var code = func.toString();
+  var begin = code.indexOf('{') + 1;
+  var end = code.lastIndexOf('}');
+  return beautify_js(code.substring(begin, end).trim());
 }

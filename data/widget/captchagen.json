@@ -1,0 +1,33 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "Captcha"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return ''"
+    },
+    "validateData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "callback"
+        ],
+        "javascript": "return true;"
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return '';"
+    },
+    "name": "captchagen"
+}

@@ -36,7 +36,7 @@ function userMiddleware(req, res, next) {
 }
 
 functions.isAllowed = function(permission, user) {
-  console.log(permission);
+  //console.log(permission);
   if (permission) {
     if (permission.role && permission.role.length) {
       if (user) {
@@ -76,7 +76,7 @@ widgets.user_login = {
         callback(undefined, data);
         return;
       } else {
-        callback('invalid');
+        callback('invalid p');
       }
     });
   }
@@ -96,7 +96,6 @@ widgets.user_logout = {
   doProcess: function(input, callback) {
     var cookies = new Cookies( this.req, this.res, COOKIE_KEYS);
     cookies.set('clientID', '', {signed: true, overwrite: true, expires: new Date(1) });
-    console.log('logged out');
     callback(undefined, 'success');
   }
 }
@@ -104,6 +103,21 @@ widgets.user_logout = {
 widgets.get_record = {
   doProcess: function() {
 
+  }
+}
+
+widgets.exec = {
+  settingsModel: [{"name":"Code", "type":"Code"}],
+  deps: {jquery: []},
+  action: function(settings, id, scope, handlers) {
+    nw.functions.doProcess(settings.token, {}, function(result) {
+    }, function() { } );
+  },
+  setup: function() {
+    cms.functions.setupProcess('exec', this.settings);
+  },
+  doProcess: function(input) {
+    eval(this.settings.Code.javascript);
   }
 }
 

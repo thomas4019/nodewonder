@@ -1,0 +1,59 @@
+{
+    "settingsModel": [
+        {
+            "name": "model",
+            "type": "Text"
+        },
+        {
+            "name": "record",
+            "type": "Text"
+        }
+    ],
+    "slots": [
+        "success",
+        "failure"
+    ],
+    "tags": [
+        "filtered",
+        "action",
+        "local-action",
+        "process"
+    ],
+    "slot_tags": {
+        "success": [
+            "action"
+        ],
+        "failure": [
+            "action"
+        ]
+    },
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "nw.functions.doProcess(settings.token, {}, handlers.success, handlers.failure);"
+    },
+    "doProcess": {
+        "_is_func": true,
+        "args": [
+            "input",
+            "callback"
+        ],
+        "javascript": "cms.functions.deleteRecord(this.settings.model, this.settings.record, function(err) {\n    callback(err, {});\n});"
+    },
+    "name": "delete_record",
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    },
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "cms.functions.setupProcess(this.name, this.settings);"
+    }
+}

@@ -46,7 +46,7 @@ functions.loadModelIntoMemory = function(model, callback) {
       console.error(model);
       return;
     }
-    
+
     var key = path.relative('data/' + model + '/',file).slice(0, -5);
     var ext = path.extname(file);
     if (ext == '.json') {
@@ -128,13 +128,6 @@ functions.wrapInForm = function(html, widget, vars) {
   return out;
 }
 
-var copy = function (original) {
-  return Object.keys(original).reduce(function (copy, key) {
-      copy[key] = original[key];
-      return copy;
-  }, {});
-}
-
 widgets.delete_record = {
   settingsModel: [{"name": "model", "type": "Text"},
     {"name": "record", "type": "Text"}],
@@ -204,7 +197,7 @@ widgets.save_record = {
 
     cms.functions.getRecord('model', settings.model, function(err, model) {
       var record = settings.record;
-      
+
       cms.functions.getRecord(settings.model, record, function(err,   old_data) {
         var model_widget = cms.functions.newWidget('model_form', {model: 'model', record: settings.model});
         var processed = model_widget.processData(input.data, old_data, widget.user);
@@ -216,7 +209,7 @@ widgets.save_record = {
               record = processed[model.index];
             } else {
               record = cms.functions.generateRecordID();
-              processed[model.index] = record; 
+              processed[model.index] = record;
             }
           }
           else

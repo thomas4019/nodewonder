@@ -17,12 +17,6 @@ module.exports = {
 widgets = module.exports.widgets;
 functions = module.exports.functions;
 
-function retrieve(val, otherwise) {
-  if (typeof val === 'undefined')
-    return otherwise;
-  return (typeof val == 'function') ? val() : val;
-}
-
 widgets.middleware_listing = {
   deps: {jquery: [],bootstrap: [], 'jquery.tablesorter': ['css/theme.blue.css','css/theme.bootstrap.css', 'js/jquery.tablesorter.widgets.js']},
   script: function () {
@@ -60,7 +54,7 @@ widgets.widget_code_editor = {
     return 'angular.bootstrap("#' + this.id + '");';
   },
   processData: function(data) {
-    console.log(data);
+    //console.log(data);
     return data ? JSON.parse(data) : undefined;
   },
   toHTML: function(label) {
@@ -91,9 +85,9 @@ widgets.widget_selector = {
   			name: w.name,
         widget: w.name,
   			tags: w.tags,
-  			settings: retrieve(w.settingsModel, false),
-  			slots: retrieve(w.slots, []),
-        slot_tags: retrieve(w.slot_tags, {})
+  			settings: cms.functions.retrieve(w.settingsModel, false),
+  			slots: cms.functions.retrieve(w.slots, []),
+        slot_tags: cms.functions.retrieve(w.slot_tags, {})
   		};
       /*if (_.contains(w.tags,'view')) {
         widgets[w.name].slots.push('events');
@@ -105,7 +99,8 @@ widgets.widget_selector = {
       }
       if (w.pseudo_names) {
         var widget = widgets[w.name];
-        _.each(retrieve(w.pseudo_names, []), function(pseudo_name) {
+        var names = cms.functions.retrieve(w.pseudo_names, []);
+        _.each(names, function(pseudo_name) {
           widgets[pseudo_name] = deep.clone(widget);
           widgets[pseudo_name].text = pseudo_name;
           widgets[pseudo_name].name = name;
@@ -116,12 +111,12 @@ widgets.widget_selector = {
       }
     });
 
-  	return ['<script type="text/javascript">nw.widgets=' + JSON.stringify(widgets) + ';</script>'];
+  	return ['<scr'+'ipt type="text/javascript">nw.widgets=' + JSON.stringify(widgets) + ';</scr'+'ipt>'];
   },
   script: function() {
     return 'setupWidgetSelector("#' + this.id + ' .widget-selector");';
   },
-  toHTML: function(value) {
+  toHTML: function() {
     return '<input type="hidden" class="widget-selector">';
   }
 }
@@ -158,7 +153,7 @@ widgets.widget_listing = {
 
     html += '<tbody>';
     _.each(cms.widgets, function(w) {
-      var settings = retrieve(w.settingsModel);
+      var settings = cms.functions.retreive(w.settingsModel);
       var data;
       _.each(settings, function(field) {
         if (field.name == 'data') {
@@ -168,7 +163,7 @@ widgets.widget_listing = {
       html += '<tr> <td>' + w.module + '</td> <td>' + w.name + '</td> <td>' + usage[w.name] + '</td> ' +
       '<td>' + (w.settings ? JSON.stringify(w.settings) : '') + '</td> <td>' + (w.deps ? JSON.stringify(w.deps) : '') + '</td> ' +
       '<td>' + (w.tags ? JSON.stringify(w.tags) : '') + '</td>  <td>' + (data ? data.type : '') + '</td> ' +
-      '<td>' + (w.slots ? JSON.stringify(retrieve(w.slots)) : '') + '</td> <td>' + (w.slot_tags ? JSON.stringify(w.slot_tags) : '') + '</td>  </tr>';
+      '<td>' + (w.slots ? JSON.stringify(cms.functions.retreive(w.slots)) : '') + '</td> <td>' + (w.slot_tags ? JSON.stringify(w.slot_tags) : '') + '</td>  </tr>';
     });
     html += '</tbody>';
 

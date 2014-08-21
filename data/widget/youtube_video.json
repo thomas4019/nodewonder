@@ -1,0 +1,20 @@
+{
+    "settingsModel": [
+        {
+            "name": "id",
+            "type": "Text",
+            "label": "Video ID"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return '<iframe width=\"560\" height=\"315\" src=\"//www.youtube.com/embed/' + this.settings.id + '\" frameborder=\"0\" allowfullscreen></iframe>';"
+    },
+    "name": "youtube_video",
+    "tags": [
+        "view"
+    ]
+}

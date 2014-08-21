@@ -6,7 +6,7 @@ function setupWidgetSelector(id) {
 		query: function (query) {
 			var data = {more: false, results: []};
 			var groups = {};
-			
+
 			if ( $('#wyobn3bP-fields') ) {
 				var model = {text: 'Model', children: []};
 				data.results.push(model);
@@ -55,7 +55,7 @@ function stateController($scope) {
 	_.each($scope.widgets, function(w) {
 		w.has_form = nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.type].settings;
 	});
-	
+
 	$scope.field_widgets = {};
 
 	for (type in $scope.edit_widgets) {
@@ -121,7 +121,7 @@ function stateController($scope) {
 		query: function (query) {
 			var data = {more: false, results: []};
 			_.each(widgets[$scope.widgets[_id].type].slots, function(slot) {
-				data.results.push({"id":slot, "text": slot});	
+				data.results.push({"id":slot, "text": slot});
 			});
 			query.callback(data);
 		}
@@ -156,7 +156,7 @@ function stateController($scope) {
 		}
 		//stateChanged();
 		$scope.exportState();
-	}	
+	}
 
 	$scope.deleteWidget = function(id) {
 		if ($scope.widgets[id]) {
@@ -170,7 +170,7 @@ function stateController($scope) {
 		}
 		//stateChanged();
 		$scope.exportState();
-	}	
+	}
 
 	$scope.configureWidget = function(id) {
 		var type = $scope.widgets[id].type;
@@ -184,12 +184,13 @@ function stateController($scope) {
 
 		nw.functions.configureWidget(id, settings_model, settings, function(new_settings) {
 			console.log(new_settings);
+			console.log('configure finished');
 			$scope.widgets[id].settings = new_settings;
 			$scope.widgets[id].settings['pseudo_widget'] = pseudo_widget;
 		  $scope.exportState();
-		  $("#widgetForm").hide();
+		  $("#widgetForm").remove();
 		});
-	}	
+	}
 
 	$scope.addWidget = function (id, slot) {
 		_id = id;

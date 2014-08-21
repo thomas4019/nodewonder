@@ -1,0 +1,47 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "deps": {
+        "jquery": [],
+        "ckeditor": [
+            "ckeditor.js"
+        ]
+    },
+    "settingsModel": [
+        {
+            "name": "label",
+            "type": "Text"
+        },
+        {
+            "name": "toolbar",
+            "type": "Text",
+            "widget": "select",
+            "settings": {
+                "label": "Button Type",
+                "choices": [
+                    "Basic",
+                    "Advanced"
+                ]
+            }
+        },
+        {
+            "name": "data",
+            "type": "Text"
+        }
+    ],
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'CKEDITOR.replace(\"' + this.id + '-Editor\",{toolbar:\"Basic\"});';"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return label + '<textarea id=\"' + this.id + '-Editor\" name=\"' + this.id + '\">' + (this.settings.data || '') + '</textarea>';"
+    },
+    "name": "ckeditor"
+}

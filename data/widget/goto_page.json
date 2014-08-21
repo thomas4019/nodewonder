@@ -1,0 +1,32 @@
+{
+    "settingsModel": [
+        {
+            "name": "URL",
+            "type": "Text"
+        }
+    ],
+    "deps": {
+        "handlebars": []
+    },
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "window.location = '/' + settings.URL;"
+    },
+    "name": "goto_page",
+    "tags": [
+        "action",
+        "local-action"
+    ],
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    },
+    "settings_unfiltered": []
+}

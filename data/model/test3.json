@@ -1,6 +1,4 @@
 {
-    "0": [],
-    "1": [],
     "name": "test3",
     "description": "",
     "fields": [
@@ -9,28 +7,27 @@
             "type": "Text",
             "quantity": "",
             "widget": "textbox",
-            "settings": ""
+            "settings": "",
+            "required": false
         },
         {
             "name": "check",
             "type": "Boolean",
             "quantity": "",
             "widget": "checkbox",
-            "settings": ""
+            "settings": "",
+            "required": false
         },
         {
             "name": "date",
             "type": "Date",
             "quantity": "",
             "widget": "date",
-            "settings": ""
+            "settings": "",
+            "required": false
         }
     ],
     "index": "",
-    "views": [
-        {
-            "Name": "",
-            "Code": "{\"widgets\":{},\"slotAssignments\":{\"body\":[]}}"
-        }
-    ]
+    "views": {},
+    "storage": "disk+memory"
 }

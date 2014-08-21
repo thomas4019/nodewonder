@@ -1,0 +1,50 @@
+{
+    "deps": {
+        "jquery": [],
+        "select2": []
+    },
+    "tags": [
+        "field_edit",
+        "field_edit_multiple",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "label",
+            "type": "Text"
+        },
+        {
+            "name": "model",
+            "type": "Record",
+            "settings": {
+                "model": "model"
+            }
+        },
+        {
+            "name": "data",
+            "type": "Record"
+        }
+    ],
+    "processData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "old",
+            "user"
+        ],
+        "javascript": "if (this.settings.quantity) {\n    if (!data) {\n        return [];\n    }\n    if (typeof data == 'string')\n        return [data];\n    return data;\n}\nreturn data;"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var data = this.settings.data;\nvar choices = [];\nchoices = choices.concat(Object.keys(cms.model_data[this.settings.model]));\n\nvar html = label + '<select class=\"sel\" ' + (this.settings.quantity ? 'multiple' : '') + ' style=\"width: 100%;height: 34px;\" name=\"' + this.id + '\">';\nif (!this.settings.quantity) {\n    html += '<option value=\"\"> - Select - </option>';\n}\nif (this.settings.quantity) {\n    _.each(choices, function(choice) {\n        html += '<option value=\"' + choice + '\" ' + (_.contains(data, choice) ? 'selected' : '') + '>' + choice + '</option>';\n    });\n} else {\n    _.each(choices, function(choice) {\n        html += '<option value=\"' + choice + '\" ' + (data == choice ? 'selected' : '') + '>' + choice + '</option>';\n    });\n}\nhtml += '</select>';\nreturn html;"
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return '$(\"#' + this.id + ' .sel\").select2();';"
+    },
+    "name": "model_record_reference"
+}

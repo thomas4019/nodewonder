@@ -103,18 +103,26 @@ widgets.on_leaving = {
   toHTML: function() {return '';}
 }
 
-var jquery_actions = ['click', 'dblclick', 'focusout', 'hover', 'mousedown', 'mouseenter', 'mouseleave', 'mousemove', 'mouseout', 'mouseover', 'mouseup'];
+/*var jquery_actions = ['click', 'dblclick', 'focusout', 'hover', 'mousedown', 'mouseenter', 'mouseleave', 'mousemove', 'mouseout', 'mouseover', 'mouseup'];
 
 _.each(jquery_actions, function(name) {
 
   widgets['on'+name] = {
-    makeEventJS: function(sel, code) {
-      return '$("' + sel + '").on( "'+name+'",\n function() {' + code + '});\n'
+    settings:
+    makeEventJS: function(selector, code) {
+      return '$("' + selector + '").on( "'+name+'",\n function() {' + code + '});\n'
     },
     script: functions.eventScript
   }
 
-});
+});*/
+
+widgets['onclick'] = {
+  makeEventJS: function(selector, code) {
+    return '$("' + selector + '").on( "click",\n function() {' + code + '});\n'
+  },
+  script: functions.eventScript
+}
 
 widgets.refresh = {
   makeActionJS: function() {

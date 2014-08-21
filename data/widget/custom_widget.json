@@ -1,0 +1,37 @@
+{
+    "pseudo_names": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return Object.keys(cms.model_data['custom_widget']);"
+    },
+    "settingsModel": {
+        "_is_func": true,
+        "args": ["pseudo_name"],
+        "javascript": "if (pseudo_name)\n    return cms.model_data['custom_widget'][pseudo_name].Settings;\nelse\n    return [{\n        \"name\": \"pseudo_widget\",\n        \"type\": \"Record\",\n        \"settings\": {\n            \"model\": \"custom_widget\"\n        }\n    }];",
+        "_func_override": true
+    },
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "if (this.settings.pseudo_widget)\n    this.custom = deep.clone(cms.model_data['custom_widget'][this.settings.pseudo_widget]);"
+    },
+    "children": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "var widgets = this.custom.Code.widgets;\nvar slotAssignments = this.custom.Code.slotAssignments;\nvar settings = this.settings;\n\nvar callback2 = callback;\n\nvar callback = function() {\n    callback2({\n        'body': widgets\n    }, slotAssignments);\n}\n\neval(this.custom.controller);"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return this.renderSlot('body');"
+    },
+    "name": "custom_widget",
+    "tags": [
+        "view"
+    ],
+    "settings_unfiltered": []
+}

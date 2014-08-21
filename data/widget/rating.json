@@ -1,0 +1,29 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "vote"
+        }
+    ],
+    "processData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "old",
+            "user"
+        ],
+        "javascript": "return parseFloat(data);"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var label = '<label class=\"control-label\" for=\"' + this.id + '-textbox\" style=\"padding-right: 5px;\">' + this.settings.label + ':' + '</label>';\nvar element = '<input id=\"' + this.id + '-textbox\" class=\"form-control input-small\" type=\"number\" name=\"' + this.id + '\" ' + (this.settings.data ? 'value=\"' + cms.functions.htmlEscape(this.settings.data) + '\"' : '') + '/>';\n\nreturn (this.settings.label ? label : '') + element;"
+    },
+    "name": "rating"
+}

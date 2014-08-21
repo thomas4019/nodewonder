@@ -1,0 +1,17 @@
+{
+    "settingsModel": [
+        {
+            "name": "message",
+            "type": "Text"
+        }
+    ],
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'alert(\"' + this.settings.message + '\");';"
+    },
+    "name": "alert",
+    "tags": [
+        "action"
+    ]
+}

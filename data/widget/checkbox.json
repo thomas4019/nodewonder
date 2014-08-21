@@ -1,0 +1,37 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "label",
+            "type": "Text"
+        },
+        {
+            "name": "name",
+            "type": "Text"
+        },
+        {
+            "name": "data",
+            "type": "Boolean"
+        }
+    ],
+    "processData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "old",
+            "user"
+        ],
+        "javascript": "return data == \"on\";"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return '<input type=\"checkbox\" name=\"' + this.id + '\" ' + (this.settings.data ? 'checked=\"checked\"' : '') + ' >' + label;"
+    },
+    "name": "checkbox"
+}

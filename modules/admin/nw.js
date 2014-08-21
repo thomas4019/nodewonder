@@ -204,6 +204,16 @@ var nw = function() {
 	    	$("#widgetForm").remove();
 	    } else {
 	    	var form_begin = $("#widgetForm").html('<div>' + id + '</div>' + result.html + '<input type="button" class="save" value="Save">' + '<div class="close">X</div>');
+
+				_.each(result.head, function(dep) {
+					if (_.indexOf(nw.head, dep) == -1) {
+						console.log('Adding: '+dep+' to page');
+						$('head').append(dep);
+						nw.head.push(dep);
+					}
+				});
+				setTimeout('var scope = {}; ' + result.javascript, 25);
+
 		    $("#widgetForm .close").click(function() {
 		    	$("#widgetForm").remove();
 		    });

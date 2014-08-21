@@ -1,0 +1,27 @@
+{
+    "deps": {
+        "jquery": [],
+        "bootstrap": [],
+        "jquery.tablesorter": [
+            "css/theme.blue.css",
+            "css/theme.bootstrap.css",
+            "js/jquery.tablesorter.widgets.js"
+        ]
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return '$(\"#' + this.id + ' table\").tablesorter({widgets:[\"zebra\", \"stickyHeaders\"]});';"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var html = '<table class=\"tablesorter-blue\">';\nhtml += '<thead> <tr> <th>Module</th> <th>Name</th> <th>Priority</th> </tr> </thead>'\n\nhtml += '<tbody>';\n_.each(cms.middleware, function(w) {\n    html += '<tr> <td>' + w.module + '</td> <td>' + w.name + '</td> <td>' + w.priority + '</td> ';\n    html += '</tr>';\n});\nhtml += '</tbody>';\n\nhtml += '</table>';\n\nreturn html;"
+    },
+    "name": "middleware_listing",
+    "tags": [
+        "view"
+    ]
+}

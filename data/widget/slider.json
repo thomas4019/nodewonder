@@ -1,0 +1,39 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "deps": {
+        "jquery": [],
+        "jquery-ui": [
+            "themes/smoothness/jquery-ui.css"
+        ]
+    },
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "Number"
+        },
+        {
+            "name": "min",
+            "type": "Number"
+        },
+        {
+            "name": "max",
+            "type": "Number"
+        }
+    ],
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "var options = {\n    range: 'max',\n    min: this.settings.min || 1,\n    max: this.settings.max || 10\n};\nif (this.settings.data)\n    options.value = this.settings.data;\noptions.slide = \"REPLACE\";\nvar code = 'function( event, ui ) { $( \"#' + this.id + ' input\" ).val( $( \"#' + this.id + ' .slider\" ).slider( \"value\" ) );  }';\noptions = JSON.stringify(options);\noptions = options.replace('\"REPLACE\"', code);\nreturn '$( \"#' + this.id + ' .slider\" ).slider(' + options + '); ';"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var label = '<label for=\"' + this.id + '\" style=\"padding-right: 5px;\">' + (this.settings.label ? this.settings.label : '') + ':' + '</label><input name=\"' + this.id + '\" type=\"textbox\" style=\"border:0; color:#f6931f; font-weight:bold;\" ' + (this.settings.data ? 'value=\"' + this.settings.data : '') + '\" />';\nvar element = '<div class=\"slider\" />';\nreturn label + element;"
+    },
+    "name": "slider"
+}

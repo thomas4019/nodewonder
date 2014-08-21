@@ -1,0 +1,54 @@
+{
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "JSON"
+        },
+        {
+            "name": "width",
+            "type": "Number"
+        },
+        {
+            "name": "height",
+            "type": "Number"
+        }
+    ],
+    "deps": {
+        "jsoneditor": [
+            "jsoneditor.min.css",
+            "jsoneditor.min.js",
+            "asset/ace/ace.js",
+            "asset/jsonlint/jsonlint.js"
+        ]
+    },
+    "tags": [
+        "field_edit",
+        "view",
+        "action",
+        "local-action"
+    ],
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "var container = document.querySelector('#' + id + ' .json');\nvar options = {\n    mode: 'code',\n    modes: ['code', 'tree'], // allowed modes\n};\nvar data = settings.data || {};\ndata = typeof data == 'string' ? JSON.parse(data) : data;\nvar editor = new JSONEditor(container, options, data);\n\nreturn {\n    get: function() {\n        return JSON.stringify(editor.get());\n    }\n}"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var element = '<div class=\"json\" style=\"width: ' + (this.settings.width + 'px' || 'auto') + '; height: ' + (this.settings.height || 200) + 'px;\"></div>';\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + element;\n}"
+    },
+    "style": ".poweredBy {display: none;}",
+    "name": "jsoneditor",
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    }
+}

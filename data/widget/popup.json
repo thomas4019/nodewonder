@@ -1,0 +1,34 @@
+{
+    "slots": [
+        "container"
+    ],
+    "settings": [
+        {
+            "name": "resizable",
+            "type": "Boolean"
+        }
+    ],
+    "deps": {
+        "jquery": [],
+        "jquery-ui": [
+            "themes/smoothness/jquery-ui.min.css",
+            "themes/smoothness/jquery.ui.theme.css"
+        ]
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return '<div id=\"dialog-confirm\" title=\"Title?\">' +\n    '<p>' +\n    //'<span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>' + \n    this.renderSlot('container'); +\n    '</p>' +\n    '</div>';"
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return '$( \"#dialog-confirm\" ).dialog({ show: { effect: \"blind\", duration: 1000 }, hide: { effect: \"explode\", duration: 1000}, resizable: false, modal: true, autoOpen: false, minHeight:\"350\", height:\"auto\", minWidth: \"500px\", width: \"auto\", buttons: {' +\n    '\"Ok\": function () { $(this).dialog(\"close\"); }, \"Cancel\": function () { $(this).dialog(\"close\"); }' +\n    '}});' + '$(\"#jHtdjRQt button\").click(function() { console.log(1234); $( \"#dialog-confirm\" ).dialog(\"open\"); });';"
+    },
+    "name": "popup",
+    "tags": [
+        "view"
+    ]
+}

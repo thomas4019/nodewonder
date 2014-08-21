@@ -20,85 +20,6 @@ module.exports = {
 functions = module.exports.functions;
 widgets = module.exports.widgets;
 
-function retreive(val) {
-  return (typeof val == 'function') ? val() : val;
-}
-
-functions.generateRecordID = function() {
-	return cms.functions.makeid(16);
-}
-
-functions.getDefaultWidget = function(type) {
-	var widgets = cms.model_widgets[type];
-	if (widgets)
-		return Object.keys(widgets)[0];
-	else
-		return null;
-}
-
-functions.expandPostValues = function(values) {
-	var data = {};
-	var tocheck = [];
-
-	_.each(values, function(value, key) {
-		var parts = key.split('-');
-		if (parts.length >= 2) {
-			var current = data;
-			for (var i = 1; i < parts.length - 1; i++) {
-				var v = parts[i];
-				current = current[v] = current[v] || {};
-			}
-			var last = parts[parts.length - 1];
-			if (value == 'new Array') {
-				value = [];
-				tocheck.push(last);
-			}
-			if (value == 'new Object') {
-				value = {};
-				//tocheck.push(last);
-			}
-			current[last] = value;
-		}
-	});
-
-	function hasValues(value) {
-		if (typeof value == 'object') {
-			for (var key in value)
-				if (hasValues(value[key]))
-					return true;
-
-			return false;
-		}
-
-		if (value == '{}')
-			return false;
-
-		return value;
-	}
-
-	_.each(tocheck, function(key, index) {
-		data[key] = _.filter(data[key], function(value) {
-			return hasValues(value);
-		});
-	});
-
-	return data;
-}
-
-function flatten(out, prefix, value, fields) {
-	if (typeof value == 'object' ) {
-		//out[prefix] = value;
-		for (var key in value)
-			flatten(out, prefix+'-'+key, value[key], fields)
-	} else if(Array.isArray(value)) {
-		out[prefix] = '[' + value[0] + ']';
-	} else {
-		out[prefix] = value;
-	}
-
-	return out;
-}
-
 widgets.model_form = {
 	tags: ['field_edit'],
 	init: function() {
@@ -139,29 +60,6 @@ widgets.model_form = {
 			this.settings.data = JSON.parse(this.settings.data);
 		}
 	},
-  getWidget: function(field, input) {
-  	var default_widget = cms.functions.getDefaultWidget(field.type);
-
-		var type = field.widget ? field.widget : default_widget;
-
-  	if (type == 'model_form') {
-  		input['model'] = 'model';
-  		input['record'] = field.type;
-  		input['inline'] = 'model';
-  	}
-
-  	if (field.quantity) {
-  		input['quantity'] = field.quantity;
-  		if (_.contains(cms.widgets[type].tags, 'field_edit_multiple')) {
-  			//widget itself will do multiple
-  		} else {
-  			input['widget'] = type;
-  			type = 'field_multi';
-  		}
-  	}
-
-  	return type;
-  },
   children: function(callback) {
 		var that = this;
 
@@ -180,9 +78,9 @@ widgets.model_form = {
 	  	}
 
 	  	var subdata = (model_values_obj) ? model_values_obj[field.name] : undefined;
-	  	var input = _.extend(field.settings || {}, {label: field.name, data: subdata});
+	  	var input = _.extend(_.clone(field.settings) || {}, {label: field.name, data: subdata});
 
-	  	var widget_type = that.getWidget(field, input);
+	  	var widget_type = cms.functions.getWidget(field, input);
 
 	  	state["body"][field.name] = {type: widget_type, settings: input};
 	  });
@@ -204,7 +102,7 @@ widgets.model_form = {
 			var field_old = old ? old[field.name] : undefined;
 
 			var input = field.settings || {};
-			var widget_type = that.getWidget(field, input);
+			var widget_type = cms.functions.getWidget(field, input);
 
 			var widget = cms.functions.newWidget(widget_type, input);
 			var processed = widget.processData(field_data, field_old, user);
@@ -229,7 +127,7 @@ widgets.model_form = {
 
 			var field_data = data[field.name];
 			var input = field.settings || {};
-			var widget_type = that.getWidget(field, input);
+			var widget_type = cms.functions.getWidget(field, input);
 
 			function handle(error) {
 				count++;
@@ -240,12 +138,10 @@ widgets.model_form = {
 			}
 
 			var widget = cms.functions.newWidget(widget_type, input);
-			if (widget.validateData.length == 2) { //async
-				widget.validateData(field_data, handle);
-			} else { //sync
-				var error = widget.validateData(field_data);
-				handle(error);
-			}
+      var error = widget.validateData(field_data, handle);
+			if (error != undefined) {
+        handle(error);
+      }
 		});
   },
   wrapperClass: function() {
@@ -346,7 +242,7 @@ widgets.model_data_listing = {
 
 widgets.model_type_selector = {
 	head: function() {
-		return ['<script type="text/javascript">nw.edit_widgets='+JSON.stringify(cms.edit_widgets)+';</script>',
+		return ['<script type="text/javascript">nw.edit_widgets='+JSON.stringify(cms.edit_widgets)+';</scr'+'ipt>',
 	'/modules/models/field.js']
 	},
 	script: function() {
@@ -448,7 +344,7 @@ widgets.widget_settings_model = {
 	wrapper: 'none',
 	toHTML: function() {
 		var type = cms.widgets[this.settings.widget_type];
-		var settings_model = type.settingsModel ? retreive(type.settingsModel) : [];
+		var settings_model = type.settingsModel ? cms.functions.retrieve(type.settingsModel) : [];
 
 		return JSON.stringify(settings_model);
 	}
@@ -482,7 +378,7 @@ widgets.get_form_data = {
     {"name": "dest", "type": "Text"}],
   action: function(settings, id, scope, handlers) {
     var id = settings.selector ? settings.selector.substr(1) : '';
-    console.log(settings.selector);
+    //console.log(settings.selector);
     var model = nw.model[id];
 
     var values = nw.functions.serializedArrayToValues($('#'+id+' :input').serializeArray());
@@ -495,6 +391,6 @@ widgets.get_form_data = {
     var data = nw.functions.expandPostValues(values);
 
     scope[settings.dest] = data;
-    console.log(scope);
+    //console.log(scope);
   }
 }

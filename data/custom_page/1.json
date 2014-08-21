@@ -1,0 +1,36 @@
+{
+    "URL": "1",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "ZzkQx9Vm": {
+                "type": "onload",
+                "slots": {
+                    "actions": [
+                        "e7myeZCu"
+                    ]
+                }
+            },
+            "e7myeZCu": {
+                "type": "exec",
+                "slots": {},
+                "settings": {
+					"Code": {
+						"javascript": "console.log('123123123');console.log(Object.keys(_));"
+					}
+				}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "ZzkQx9Vm"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

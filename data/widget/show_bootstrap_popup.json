@@ -1,0 +1,17 @@
+{
+    "settingsModel": [
+        {
+            "name": "selector",
+            "type": "Text"
+        }
+    ],
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return '$( \"' + this.settings.selector + '\" ).modal(\"show\");';"
+    },
+    "name": "show_bootstrap_popup",
+    "tags": [
+        "action"
+    ]
+}

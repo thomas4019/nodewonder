@@ -1,0 +1,41 @@
+{
+    "slots": [
+        "header",
+        "featured",
+        "sidebar_first",
+        "highlighted",
+        "title",
+        "tabs",
+        "help",
+        "action_links",
+        "content",
+        "sidebar_second",
+        "triptych",
+        "footer_above",
+        "footer"
+    ],
+    "head": [
+        "/themes/bartik/css/colors.css",
+        "/themes/bartik/css/layout.css",
+        "/themes/bartik/css/style.css",
+        "/themes/bartik/css/system.base.css"
+    ],
+    "load": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "var that = this;\nfs.readFile('themes/bartik/page.html', 'utf8', function(err, data) {\n    if (err) {\n        return console.log(err);\n    }\n    that.template = Handlebars.compile(data);\n    callback();\n});"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return this.template(this);"
+    },
+    "name": "home",
+    "tags": [
+        "view"
+    ]
+}

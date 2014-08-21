@@ -1,0 +1,92 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "init": {
+        "_is_func": true,
+        "args": [
+            ""
+        ],
+        "javascript": "cms.functions.loadModelIntoMemory('model');\n_.each(cms.model_data.model, function(list, key) {\n    if (key != 'model') {\n        cms.functions.loadModelIntoMemory(key);\n    }\n});"
+    },
+    "settingsModel": [
+        {
+            "name": "model",
+            "type": "Text"
+        },
+        {
+            "name": "record",
+            "type": "Text"
+        },
+        {
+            "name": "field",
+            "type": "Text"
+        },
+        {
+            "name": "inline",
+            "type": "Boolean"
+        }
+    ],
+    "deps": {
+        "underscore": []
+    },
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "if (!this.settings.field) {\n    this.settings.field = 'fields';\n}\n\nif (this.settings.fields) {\n    if (typeof this.settings.fields === 'string')\n        this.fields = JSON.parse(this.settings.fields);\n    else\n        this.fields = this.settings.fields;\n} else if (this.settings.model) {\n    if (!cms.model_data[this.settings.model]) {\n        console.trace('Unknown model type: ' + this.settings.model);\n    }\n    if (!cms.model_data[this.settings.model][this.settings.record]) {\n        console.trace('Unknown record: ' + this.settings.record);\n    }\n    this.fields = cms.model_data[this.settings.model][this.settings.record][this.settings.field];\n}\n\nif (typeof this.settings.data == 'string') {\n    this.settings.data = JSON.parse(this.settings.data);\n}"
+    },
+    "children": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "var that = this;\n\nvar model_values_obj = this.settings.data;\nif (!this.fields) {\n    console.trace('missing fields');\n    console.error(this.settings);\n}\n\nvar state = {\n    \"body\": {}\n};\n\n_.each(this.fields, function(field, index) {\n    if (field.type == '') {\n        console.error('empty field');\n        return;\n    }\n\n    var subdata = (model_values_obj) ? model_values_obj[field.name] : undefined;\n    var input = _.extend(_.clone(field.settings) || {}, {\n        label: field.name,\n        data: subdata\n    });\n\n    var widget_type = cms.functions.getWidget(field, input);\n\n    state[\"body\"][field.name] = {\n        type: widget_type,\n        settings: input\n    };\n});\n\ncallback(state);"
+    },
+    "head": [
+        "/modules/models/models.css"
+    ],
+    "processData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "old",
+            "user"
+        ],
+        "javascript": "var that = this;\nvar out = {};\n\n_.each(this.fields, function(field) {\n    if (field.type == '') {\n        console.error('empty field');\n        return;\n    }\n\n    var field_data = data ? data[field.name] : undefined;\n    var field_old = old ? old[field.name] : undefined;\n\n    var input = field.settings || {};\n    var widget_type = cms.functions.getWidget(field, input);\n\n    var widget = cms.functions.newWidget(widget_type, input);\n    var processed = widget.processData(field_data, field_old, user);\n    out[field.name] = processed;\n});\n\nreturn out;"
+    },
+    "validateData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "callback"
+        ],
+        "javascript": "console.log('model processing data');\nvar that = this;\nvar errors = {};\n\nvar total = Object.keys(this.fields).length;\nvar count = 0;\n\n_.each(this.fields, function(field) {\n    if (field.type == '') {\n        console.error('empty field');\n        return;\n    }\n\n    var field_data = data[field.name];\n    var input = field.settings || {};\n    var widget_type = cms.functions.getWidget(field, input);\n\n    function handle(error) {\n        count++;\n        if (error)\n            errors[field.name] = error;\n        if (count == total)\n            callback(errors);\n    }\n\n    var widget = cms.functions.newWidget(widget_type, input);\n    var error = widget.validateData(field_data, handle);\n    if (error != undefined) {\n        handle(error);\n    }\n});"
+    },
+    "wrapperClass": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "if (this.settings.inline)\n    return 'inline-model-form';\nelse\n    return '';",
+        "_func_override": true
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.model[\"' + this.id + '\"] = ' + JSON.stringify({\n    \"fields\": this.fields\n}) + ';';"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return this.renderSlot('body');"
+    },
+    "name": "model_form",
+    "settings_unfiltered": [
+        "data",
+        "data",
+        "data",
+        "data",
+        "data"
+    ]
+}

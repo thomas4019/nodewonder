@@ -1,0 +1,27 @@
+{
+    "deps": {
+        "jquery": [],
+        "bootstrap": [],
+        "jquery.tablesorter": [
+            "css/theme.blue.css",
+            "css/theme.bootstrap.css",
+            "js/jquery.tablesorter.widgets.js"
+        ]
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return '$(\"#' + this.id + ' table\").tablesorter({widgets:[\"zebra\", \"stickyHeaders\"]});';"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var html = '<table class=\"tablesorter-blue\">';\nhtml += '<thead> <tr> <th>URL</th> <th>Name</th> <th>Priority</th> </tr> </thead>';\n\nhtml += '<tbody>';\nfor (var i = 0; i < cms.analytics_pageviews.length; i++) {\n    var view = cms.analytics_pageviews[i];\n    html += '<tr> <td>' + view.url + '</td> </tr>';\n}\nhtml += '</tbody>';\n\nhtml += '</table>';\n\nreturn html;"
+    },
+    "name": "analytics_pageviews",
+    "tags": [
+        "view"
+    ]
+}

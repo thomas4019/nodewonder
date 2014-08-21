@@ -1,0 +1,62 @@
+{
+    "settingsModel": [
+        {
+            "name": "model",
+            "type": "Text"
+        },
+        {
+            "name": "field",
+            "type": "Text"
+        },
+        {
+            "name": "value",
+            "type": "Text"
+        }
+    ],
+    "slots": [
+        "then",
+        "else"
+    ],
+    "slot_tags": {
+        "then": [
+            "action"
+        ],
+        "else": [
+            "action"
+        ]
+    },
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "nw.functions.doProcess(settings.token, {\n    value: settings.value\n}, handlers.then, handlers['else']);"
+    },
+    "doProcess": {
+        "_is_func": true,
+        "args": [
+            "input",
+            "callback"
+        ],
+        "javascript": "/*cms.functions.getRecord(this.settings.model, input.record, function(err, data) {\n      if (err) {\n        callback('false');\n      } else {\n        callback(undefined, 'true');\n      }\n    });*/\ncms.functions.findOneByField(this.settings.model, this.settings.field, input.value, function(err, data) {\n    if (err) {\n        callback('false');\n    } else {\n        callback(undefined, 'true');\n    }\n});"
+    },
+    "name": "if_record_exists",
+    "tags": [
+        "action",
+        "local-action",
+        "process"
+    ],
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    },
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "cms.functions.setupProcess(this.name, this.settings);"
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "slots": [
+        "actions"
+    ],
+    "slot_tags": {
+        "actions": [
+            "action"
+        ]
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'sessionStorage.setItem(\"flash\", \\'' + JSON.stringify(cms.functions.concatActions(this.slotAssignments.actions)) + '\\');'"
+    },
+    "name": "flash_set",
+    "tags": [],
+    "settings_unfiltered": []
+}

@@ -1,0 +1,25 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "Text"
+        },
+        {
+            "name": "choices",
+            "type": "Text",
+            "quantity": "+"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var choices = this.settings.choices;\nif (Array.isArray(choices)) {\n    choices = _.object(choices, choices);\n}\n\nvar element = '<select class=\"form-control\" name=\"' + this.id + '\">';\n\nfor (choice in choices) {\n    element += '<option value=\"' + choice + '\" ' + (choice == this.settings.data ? 'selected=\"selected\"' : '') + ' >' + choice + '</option>';\n}\n\nelement += '</select>';\n\nreturn label + element;"
+    },
+    "name": "select"
+}

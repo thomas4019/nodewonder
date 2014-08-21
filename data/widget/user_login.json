@@ -1,0 +1,59 @@
+{
+    "settingsModel": [
+        {
+            "name": "email",
+            "type": "Text"
+        },
+        {
+            "name": "password",
+            "type": "Text"
+        }
+    ],
+    "slots": [
+        "success",
+        "failure"
+    ],
+    "slot_tags": {
+        "success": [
+            "action"
+        ],
+        "failure": [
+            "action"
+        ]
+    },
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "var data = {\n    email: settings.email,\n    password: settings.password\n};\nnw.functions.doProcess(settings.token, {\n    data: data\n}, function(result) {\n    handlers.success();\n}, handlers.failure);"
+    },
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "cms.functions.setupProcess('user_login', this.settings);"
+    },
+    "doProcess": {
+        "_is_func": true,
+        "args": [
+            "input",
+            "callback"
+        ],
+        "javascript": "var cookies = new Cookies(this.req, this.res, COOKIE_KEYS);\ncms.functions.findOneByField('user', 'email', input.data.email, function(err, data) {\n    if (err) {\n        callback('invalid');\n        return\n    }\n    if (data.password == input.data.password) {\n        cookies.set('clientID', data.clientID, {\n            signed: true,\n            overwrite: true\n        });\n        callback(undefined, data);\n        return;\n    } else {\n        callback('invalid p');\n    }\n});"
+    },
+    "name": "user_login",
+    "tags": [
+        "action",
+        "local-action",
+        "process"
+    ],
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    },
+    "settings_unfiltered": []
+}

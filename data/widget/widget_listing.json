@@ -1,0 +1,27 @@
+{
+    "deps": {
+        "jquery": [],
+        "bootstrap": [],
+        "jquery.tablesorter": [
+            "css/theme.blue.css",
+            "css/theme.bootstrap.css",
+            "js/jquery.tablesorter.widgets.js"
+        ]
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return '$(\"#' + this.id + ' table\").tablesorter({widgets:[\"zebra\", \"stickyHeaders\"]});';"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var usage = cms.functions.getWidgetUsage();\n\nvar html = '<table class=\"tablesorter-blue\">';\nhtml += '<thead> <tr><th>Module</th> <th>Widget Name</th> <th>Usage</th> <th>Settings</th> <th>Deps</th> <th>Tags</th> <th>Data</th> <th>Slots</th> <th>Slot Tags</th></tr> </thead>'\n\nhtml += '<tbody>';\n_.each(cms.widgets, function(w) {\n    var settings = cms.functions.retreive(w.settingsModel);\n    var data;\n    _.each(settings, function(field) {\n        if (field.name == 'data') {\n            data = field;\n        }\n    });\n    html += '<tr> <td>' + w.module + '</td> <td>' + w.name + '</td> <td>' + usage[w.name] + '</td> ' +\n        '<td>' + (w.settings ? JSON.stringify(w.settings) : '') + '</td> <td>' + (w.deps ? JSON.stringify(w.deps) : '') + '</td> ' +\n        '<td>' + (w.tags ? JSON.stringify(w.tags) : '') + '</td>  <td>' + (data ? data.type : '') + '</td> ' +\n        '<td>' + (w.slots ? JSON.stringify(cms.functions.retreive(w.slots)) : '') + '</td> <td>' + (w.slot_tags ? JSON.stringify(w.slot_tags) : '') + '</td>  </tr>';\n});\nhtml += '</tbody>';\n\nhtml += '</table>';\n\nreturn html;"
+    },
+    "name": "widget_listing",
+    "tags": [
+        "view"
+    ]
+}

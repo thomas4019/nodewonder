@@ -1,0 +1,16 @@
+{
+    "makeEventJS": {
+        "_is_func": true,
+        "args": [
+            "selector",
+            "code"
+        ],
+        "javascript": "return '$(\"' + selector + '\").on( \"' + name + '\",\\n function() {' + code + '});\\n'"
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "var slots = this.slotAssignments;\nvar selector = '#' + this.parent.id;\nvar code = cms.functions.createActionCode(slots.actions);\n//var code = cms.functions.concatActions(slots.actions);\nreturn this.makeEventJS(selector, code);"
+    },
+    "name": "onmouseenter"
+}

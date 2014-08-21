@@ -1,0 +1,16 @@
+{
+    "slots": [
+        "content"
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var template = Handlebars.compile('<div style=\"margin-left: auto; width: 700px; margin-right: auto; border: 1px solid black; border-radius: 10px; padding: 15px; \">' +\n    ' {{{ renderSlot \"content\" }}} </div>');\nreturn template(this);"
+    },
+    "name": "centered",
+    "tags": [
+        "view"
+    ]
+}

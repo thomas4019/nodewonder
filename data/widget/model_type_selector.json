@@ -1,0 +1,24 @@
+{
+    "head": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return ['<script type=\"text/javascript\">nw.edit_widgets=' + JSON.stringify(cms.edit_widgets) + ';</scr' + 'ipt>',\n    '/modules/models/field.js'\n]",
+        "_func_override": true
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'model_field_type_setup(\"' + this.id + '\"); $(\"#' + this.id + ' select\").on(\"change\", function() {model_field_type_setup(\"' + this.id + '\"); });';"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var data = this.settings.data;\nvar choices = Object.keys(cms.model_widgets);\n\nchoices = choices.concat(Object.keys(cms.model_data['model']));\n\nvar html = label + '<select class=\"form-control\" name=\"' + this.id + '\">';\nhtml += '<option value=\"\"> - Select - </option>';\n_.each(choices, function(choice) {\n    html += '<option value=\"' + choice + '\" ' + (data == choice ? 'selected' : '') + '>' + choice + '</option>';\n});\nhtml += '</select>';\nreturn html;"
+    },
+    "name": "model_type_selector",
+    "tags": [
+        "view"
+    ]
+}

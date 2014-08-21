@@ -1,0 +1,28 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "Number"
+        },
+        {
+            "name": "min",
+            "type": "Number"
+        },
+        {
+            "name": "max",
+            "type": "Number"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var element = this.settings.min + '<input type=\"range\" style=\"width: 300px; display: inline;\" name=\"' + this.id + '\" value=\"' + this.settings.data + '\" min=\"' + this.settings.min + '\" max=\"' + this.settings.max + '\">' + this.settings.max;\nreturn label + element;"
+    },
+    "name": "range"
+}

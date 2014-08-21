@@ -1,0 +1,14 @@
+{
+    "name": "helloworld",
+    "tags": [
+        "field_edit"
+    ],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "string"
+        }
+    ],
+    "toHTML": "function () { return 'hello'; }",
+    "action": "function (stuff) { alert('hi'); }"
+}

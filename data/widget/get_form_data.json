@@ -1,0 +1,32 @@
+{
+    "settingsModel": [
+        {
+            "name": "selector",
+            "type": "Text"
+        },
+        {
+            "name": "dest",
+            "type": "Text"
+        }
+    ],
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "var id = settings.selector ? settings.selector.substr(1) : '';\n//console.log(settings.selector);\nvar model = nw.model[id];\n\nvar values = nw.functions.serializedArrayToValues($('#' + id + ' :input').serializeArray());\n\n_.forEach(nw.fieldGetters, function(get, id) {\n    var value = get();\n    values[id] = value;\n});\n\nvar data = nw.functions.expandPostValues(values);\n\nscope[settings.dest] = data;\n//console.log(scope);"
+    },
+    "name": "get_form_data",
+    "tags": [
+        "action",
+        "local-action"
+    ],
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "head": [
+        "/socket.io/socket.io.js",
+        "/modules/log/site_log.js"
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return '<h2>Site Activity</h2><div id=\"log\"></div>';"
+    },
+    "name": "site_log",
+    "tags": [
+        "view"
+    ]
+}

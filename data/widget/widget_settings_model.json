@@ -1,0 +1,14 @@
+{
+    "wrapper": "none",
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var type = cms.widgets[this.settings.widget_type];\nvar settings_model = type.settingsModel ? cms.functions.retrieve(type.settingsModel) : [];\n\nreturn JSON.stringify(settings_model);"
+    },
+    "name": "widget_settings_model",
+    "tags": [
+        "view"
+    ]
+}

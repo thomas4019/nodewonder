@@ -1,0 +1,18 @@
+{
+    "settingsModel": [
+        {
+            "name": "js",
+            "type": "Javascript",
+            "widget": "textarea"
+        }
+    ],
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return this.settings.js;"
+    },
+    "name": "execute",
+    "tags": [
+        "action"
+    ]
+}

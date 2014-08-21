@@ -1,0 +1,20 @@
+{
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "File"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return '<input type=\"file\" name=\"' + this.id + '\" />'"
+    },
+    "name": "upload"
+}

@@ -1,0 +1,26 @@
+{
+    "deps": {
+        "jquery": [],
+        "jquery-ui": [],
+        "fullcalendar": [
+            "fullcalendar.min.js",
+            "fullcalendar.css"
+        ]
+    },
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return \"$('#fcalendar').fullCalendar({ header: { left: 'prev,next today', center: 'title', \" +\n    \"right: 'month,agendaWeek,agendaDay' }, editable: true});\";"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return '<div id=\"fcalendar\"></div>';"
+    },
+    "name": "calendar",
+    "tags": [
+        "view"
+    ]
+}

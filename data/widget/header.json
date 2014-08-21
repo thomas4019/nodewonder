@@ -1,0 +1,30 @@
+{
+    "wrapper": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return this.settings.type || 'h1';",
+        "_func_override": true
+    },
+    "tags": [
+        "field_view",
+        "view"
+    ],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "Text"
+        },
+        {
+            "name": "type",
+            "type": "Text"
+        }
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return this.settings.data;"
+    },
+    "name": "header"
+}

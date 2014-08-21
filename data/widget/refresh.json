@@ -1,0 +1,11 @@
+{
+    "makeActionJS": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'location.reload();';"
+    },
+    "name": "refresh",
+    "tags": [
+        "action"
+    ]
+}

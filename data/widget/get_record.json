@@ -1,0 +1,20 @@
+{
+    "doProcess": {
+        "_is_func": true,
+        "args": [
+            "input",
+            "callback"
+        ],
+        "javascript": ""
+    },
+    "name": "get_record",
+    "tags": [
+        "action",
+        "process"
+    ],
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "cms.functions.setupProcess(this.name, this.settings);"
+    }
+}
