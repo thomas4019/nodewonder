@@ -23,6 +23,8 @@ var COOKIE_KEYS = ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
   'fd075a38-a4dd-4c98-a552-239c11f6f5f7'];
 
 function userMiddleware(req, res, next) {
+  global._ = _; // TODO(thomas): This is a TOTAL HACK
+
   var cookies = new Cookies( req, res, COOKIE_KEYS);
   req.clientID = cookies.get('clientID')
   if (!req.clientID) {

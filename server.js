@@ -2,7 +2,7 @@ pa_ = require('underscore');
 
 var http = require('http');
 
-global._ = require('underscore');
+_ = require('underscore');
 fs = require('fs');
 url = require('url');
 connect = require('connect');
@@ -23,8 +23,16 @@ moment = require('moment');
 vm = require("vm");
 url = require("url");
 beautify_js = require('js-beautify');
+passport = require('passport');
+LocalStrategy = require('passport-local').Strategy;
+Cookies = require('cookies');
 
-var _ = global._
+COOKIE_KEYS = ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
+  'af15db41-ef32-4a3f-bb15-7edce2e3744c',
+  'fd075a38-a4dd-4c98-a552-239c11f6f5f7'];
+
+var _ = require('underscore');
+global._ = _;
 
 cms = {};
 cms.m = {};
@@ -376,12 +384,8 @@ function initWidgets(callback) {
 
   cms.widgets2 = {};
   _.each(cms.model_data['widget'], function(wData, type) {
-    var widget = cms.functions.loadWidget(wData)
-    if (type != 'template' && type != 'process') {
-      console.log(type);
-      cms.widgets[type] = widget;
-    }
-    cms.widgets2[type] = widget;
+    var widget = cms.functions.loadWidget(wData);
+    cms.widgets[type] = widget;
   });
 
   callback();

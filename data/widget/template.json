@@ -14,7 +14,7 @@
         "args": [
             "callback"
         ],
-        "javascript": "var that = this;\nfs.readFile(this.settings.path, 'utf8', function(err, data) {\n    if (err) {\n        return console.log(err);\n    }\n    that.template = Handlebars.compile(data);\n    callback();\n});"
+        "javascript": "fs.readFile(this.settings.path, 'utf8', function(err, data) {\n   this.template = Handlebars.compile(data); callback();\n}.bind(this));"
     },
     "toHTML": {
         "_is_func": true,
