@@ -97,6 +97,11 @@ functions.saveRecord = function(model_name, record_id, value, callback) {
     fs.writeFile('data/' + model_name + '/' + record_id  + '.json', JSON.stringify(value, null, 4)) ;
   }
 
+  if(model_name == 'widget') {
+    cms.functions.addWidgetType(cms.functions.loadWidget(value));
+    cms.widgets[value.name].init();
+  }
+
   if (!cms.model_data[model_name])
     cms.model_data[model_name] = {};
   cms.model_data[model_name][record_id] = value;

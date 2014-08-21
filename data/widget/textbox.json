@@ -1,34 +1,43 @@
 {
+    "name": "textbox",
     "settingsModel": [
         {
             "name": "inline",
-            "type": "Boolean"
+            "type": "Boolean",
+            "settings": {},
+            "widget": ""
         },
         {
             "name": "data",
-            "type": "Text"
+            "type": "Text",
+            "settings": {},
+            "widget": ""
         }
     ],
-    "head": [
-        "/modules/forms/forms.css"
+    "settings_unfiltered": [
+        "data"
     ],
+    "toHTML": {
+        "_is_func": true,
+        "javascript": "var element = '<input class=\"form-control input-small\" type=\"text\" name=\"' + this.id + '\"' + (this.settings.data ? ' value=\"' + cms.functions.htmlEscape(this.settings.data) + '\"' : '') + ' />';\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + element;\n}",
+        "args": [
+            "label"
+        ]
+    },
     "deps": {
         "jquery": [],
         "bootstrap": []
     },
+    "head": [
+        "/modules/forms/forms.css"
+    ],
     "tags": [
         "field_edit",
         "view"
     ],
-    "toHTML": {
-        "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "var element = '<input class=\"form-control input-small\" type=\"text\" name=\"' + this.id + '\"' + (this.settings.data ? ' value=\"' + cms.functions.htmlEscape(this.settings.data) + '\"' : '') + ' />';\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + element;\n}"
-    },
-    "name": "textbox",
-    "settings_unfiltered": [
-        "data"
-    ]
+    "slots": [],
+    "slot_tags": {},
+    "wrapper": "div",
+    "wrapperClass": "",
+    "weight": -10
 }

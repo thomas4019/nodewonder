@@ -55,17 +55,16 @@ cms.middleware = [];
 cms.settings = {};
 cms.settings_group = 'production';
 
-cms.functions.addWidgetType = function(module, name, widgetType) {
-  widgetType.name = name;
-
+cms.functions.addWidgetType = function(widgetType) {
   function ensureTag(tag) {
     if (widgetType.tags.indexOf(tag) == -1) {
       widgetType.tags.push(tag);
     }
   }
 
-  /*_.defaults(widgetType, Widget.prototype);
-  widgetType.module = module;*/
+  var name = widgetType.name;
+
+  _.defaults(widgetType, Widget.prototype);
 
   widgetType.tags = widgetType.tags || [];
   if (widgetType.toHTML) {
@@ -101,7 +100,7 @@ cms.functions.addWidgetType = function(module, name, widgetType) {
       cms.view_widgets[type] = cms.view_widgets[type] || [];
       if (_.contains(widgetType.tags, 'field_edit')) {
         cms.edit_widgets[type].push(name);
-        cms.model_widgets[type][name] = widgetType;
+        cms.model_widgets[type].push(widgetType);
       }
       if (_.contains(widgetType.tags, 'field_view')) {
         cms.view_widgets[type].push(name);
@@ -122,8 +121,11 @@ cms.functions.evalFunctions = function(widget, object, key) {
   if (object instanceof Array) {
     return object;
   }
+  if (object == null) {
+    return object;
+  }
   if (typeof object == 'object') {
-    if ('_is_func' in object) {
+    if ('_is_func' in object && 'javascript' in object) {
       if (!object.args) {
         console.log(widget.name + ' ' + key + ' missing args');
       }
@@ -144,7 +146,6 @@ cms.functions.evalFunctions = function(widget, object, key) {
 cms.functions.newWidget = function(type, settings, id) {
   var w = Object.create(cms.widgets[type]);
 
-  _.defaults(w, Widget.prototype);
   w.settings = settings || {};
   if (id) {
     w.id = id;
@@ -231,7 +232,7 @@ Widget.prototype.html = function () {
     console.error(err.stack);
   }
 
-  var wrapper = this.retrieve(this.wrapper, 'div');
+  var wrapper = this.retrieve(this.wrapper, 'div') || 'div';
 
   var style = this.wrapper_style ? ' style="' + cms.functions.retrieve(this.wrapper_style) + '" ' : '';
 
@@ -260,6 +261,19 @@ Widget.prototype.validateData = function(data) {
   return false;
 }
 
+Widget.prototype.weight = 0;
+
+Widget.prototype.init = function() {
+  if (this.htmlTemplate) {
+    this.htmlCompiled = Handlebars.compile(this.htmlTemplate.htmlmixed);//.bind(null, [this]);
+    console.log(this.toHTML);
+  }
+}
+
+Widget.prototype.toHTML = function() {
+  return this.htmlCompiled ? this.htmlCompiled(this) : '';
+}
+
 var allDeps = [];
 
 var app = connect()
@@ -274,6 +288,7 @@ async.series(
   registerModels,
   addMiddleware,
   initWidgets,
+  sortWidgets,
   installAllDeps,
   processDeps
   ],
@@ -363,21 +378,30 @@ function processDeps(callback) {
 
 function initWidgets(callback) {
 
-  for(type in cms.widgets) {
-    if (cms.widgets[type].init) {
-      cms.widgets[type].init();
-    }
-  }
   for(module in cms.m) {
     if (cms.m[module].init) {
       cms.m[module].init();
     }
   }
+
   _.each(cms.model_data['widget'], function(wData, type) {
     var widget = cms.functions.loadWidget(wData);
-    cms.functions.addWidgetType('', widget.name, widget);
+    cms.functions.addWidgetType(widget);
   });
 
+  for(type in cms.widgets) {
+    if (cms.widgets[type].init) {
+      cms.widgets[type].init();
+    }
+  }
+
+  callback();
+}
+
+function sortWidgets(callback) {
+  cms.model_widgets['Text'].sort(function (a, b) {
+    return a.weight || 0 > b.weight || 0;
+  });
   callback();
 }
 

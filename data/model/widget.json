@@ -27,6 +27,18 @@
             "required": false
         },
         {
+            "name": "htmlTemplate",
+            "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
+            "settings": {
+                "lang": "htmlmixed",
+                "height": null,
+                "args": ""
+            },
+            "required": false
+        },
+        {
             "name": "toHTML",
             "type": "Code",
             "quantity": "",
@@ -275,13 +287,18 @@
             "quantity": "",
             "widget": "codemirror",
             "settings": {
-                "lang": "css",
+                "lang": "javascript",
                 "height": null,
-                "data": "",
-                "args": [
-                    ""
-                ]
+                "args": ""
             },
+            "required": false
+        },
+        {
+            "name": "weight",
+            "type": "Number",
+            "quantity": "",
+            "widget": "numeric_textbox",
+            "settings": "",
             "required": false
         }
     ],

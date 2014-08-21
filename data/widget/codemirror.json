@@ -31,15 +31,18 @@
     ],
     "toHTML": {
         "_is_func": true,
-        "javascript": "//var element = '<textarea name=\"' + this.id + '\">'+cms.functions.htmlEscape(this.settings.data ? (this.settings.data.javascript || '') : '')+'</textarea>';\nvar element = '<div class=\"mirror\"></div>'\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + 'function(' + (this.settings.args ? this.settings.args.join(',') : '') + ')' + element;\n}",
         "args": [
             "label"
-        ]
+        ],
+        "javascript": "var element = '<div class=\"mirror\"></div>'\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + 'function(' + (this.settings.args ? this.settings.args.join(',') : '') + ')' + element;\n}"
     },
     "deps": {
         "codemirror": [
             "mode/javascript/javascript.js",
             "mode/css/css.js",
+            "mode/xml/xml.js",
+            "mode/vbscript/vbscript.js",
+            "mode/htmlmixed/htmlmixed.js",
             "theme/eclipse.css",
             "theme/neat.css"
         ]
@@ -49,44 +52,45 @@
         "field_edit",
         "view",
         "action",
-        "local-action",
-        "view",
-        "action",
         "local-action"
     ],
     "slots": [],
     "slot_tags": {},
     "processData": {
         "_is_func": true,
-        "javascript": "return data;",
         "args": [
             "data",
             "old",
             "user"
-        ]
+        ],
+        "javascript": "return data;"
     },
     "wrapper": "div",
     "wrapperClass": "",
     "script": {
         "_is_func": true,
-        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';",
-        "args": []
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
     },
     "action": {
         "_is_func": true,
-        "javascript": "var wrapper = document.querySelector('#' + id + ' .mirror');\nvar myCodeMirror = CodeMirror(wrapper, {\n    mode: (settings.lang || \"javascript\"),\n    value: settings.data ? (settings.data.javascript || '') : '',\n    lineNumbers: true,\n    theme: 'neat'\n});\nreturn {\n    get: function() {\n        var code = myCodeMirror.getValue();\n        if (!code)\n            return undefined;\n        return {\n            _is_func: true,\n            javascript: code\n, args: settings.args || []        };\n    }\n}",
         "args": [
             "settings",
             "id",
             "scope",
             "handlers"
-        ]
+        ],
+        "javascript": "var wrapper = document.querySelector('#' + id + ' .mirror');\nvar myCodeMirror = CodeMirror(wrapper, {\n    mode: (settings.lang || \"javascript\"),\n    value: settings.data ? (settings.data[settings.lang || \"javascript\"] || '') : '',\n    lineNumbers: true,\n    theme: 'neat'\n});\nreturn {\n    get: function() {\n        var code = myCodeMirror.getValue();\n        if (!code)\n            return undefined;\n        var obj = {\n            _is_func: true,\n            args: settings.args || []\n        };\n        obj[settings.lang || 'javascript'] = code;\n      return obj;\n    }\n}"
     },
     "style": {
         "_is_func": true,
-        "javascript": "return '#' + this.id + ' .CodeMirror {height: ' + (this.settings.height || 125) + 'px;}';",
-        "args": [
-            ""
-        ]
-    }
+        "args": [],
+        "javascript": "return '#' + this.id + ' .CodeMirror {height: ' + (this.settings.height || 125) + 'px;}';"
+    },
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "hello"
+    },
+    "weight": null
 }

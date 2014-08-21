@@ -38,7 +38,7 @@ functions.htmlEscape = function(str) {
 functions.getDefaultWidget = function(type) {
   var widgets = cms.model_widgets[type];
   if (widgets)
-    return Object.keys(widgets)[0];
+    return widgets[0].name;
   else
     return null;
 }

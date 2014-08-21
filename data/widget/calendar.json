@@ -1,4 +1,19 @@
 {
+    "name": "calendar",
+    "settingsModel": [
+        {
+            "name": "",
+            "type": "",
+            "settings": {},
+            "widget": ""
+        }
+    ],
+    "settings_unfiltered": [],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "123<div id=\"fcalendar\"></div>234589"
+    },
     "deps": {
         "jquery": [],
         "jquery-ui": [],
@@ -7,20 +22,18 @@
             "fullcalendar.css"
         ]
     },
+    "head": [],
+    "tags": [
+        "view"
+    ],
+    "slots": [],
+    "slot_tags": {},
+    "wrapper": "",
+    "wrapperClass": "",
     "script": {
         "_is_func": true,
         "args": [],
         "javascript": "return \"$('#fcalendar').fullCalendar({ header: { left: 'prev,next today', center: 'title', \" +\n    \"right: 'month,agendaWeek,agendaDay' }, editable: true});\";"
     },
-    "toHTML": {
-        "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "return '<div id=\"fcalendar\"></div>';"
-    },
-    "name": "calendar",
-    "tags": [
-        "view"
-    ]
+    "weight": null
 }
