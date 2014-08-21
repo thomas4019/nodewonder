@@ -1,5 +1,7 @@
 function configureModelWidget(id) {
-	var widget_id = id.replace('-settings', '-widget')
+	var widget_id = id.substring(0, id.length - '-settings'.length) + '-widget';
+	console.log(id);
+	console.log(widget_id);
 	var widget_type = $('#' + widget_id + ' select').val();
 
 	var settings_text = $("#" + id + " textarea").text();
@@ -10,7 +12,7 @@ function configureModelWidget(id) {
 			console.log('processing model');
 			nw.functions.cleanErrors('start');
 			nw.functions.processModel(settings_model, new_settings, function(results) {
-				console.log(results); 
+				console.log(results);
 				if (results.validationErrors && Object.keys(results.validationErrors).length) {
 					console.log('model has errors');
 					nw.functions.showErrors('start', results.validationErrors);

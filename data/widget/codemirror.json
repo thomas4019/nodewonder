@@ -63,14 +63,14 @@
             "old",
             "user"
         ],
-        "javascript": "return data;"
+        "javascript": "return typeof data == 'string' ? JSON.parse(data) : data;"
     },
     "wrapper": "div",
     "wrapperClass": "",
     "script": {
         "_is_func": true,
         "args": [],
-        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + \n  '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
     },
     "action": {
         "_is_func": true,
@@ -80,17 +80,12 @@
             "scope",
             "handlers"
         ],
-        "javascript": "var wrapper = document.querySelector('#' + id + ' .mirror');\nvar myCodeMirror = CodeMirror(wrapper, {\n    mode: (settings.lang || \"javascript\"),\n    value: settings.data ? (settings.data[settings.lang || \"javascript\"] || '') : '',\n    lineNumbers: true,\n    theme: 'neat'\n});\nreturn {\n    get: function() {\n        var code = myCodeMirror.getValue();\n        if (!code)\n            return undefined;\n        var obj = {\n            _is_func: true,\n            args: settings.args || []\n        };\n        obj[settings.lang || 'javascript'] = code;\n      return obj;\n    }\n}"
+        "javascript": "var wrapper = document.querySelector('#' + id + ' .mirror');\nvar myCodeMirror = CodeMirror(wrapper, {\n    mode: (settings.lang || \"javascript\"),\n    value: settings.data ? (settings.data[settings.lang || \"javascript\"] || '') : '',\n    lineNumbers: true,\n    theme: 'neat'\n});\nreturn {\n    get: function() {\n        var code = myCodeMirror.getValue();\n        if (!code)\n            return undefined;\n        var obj = {\n            _is_func: true,\n            args: settings.args || []\n        };\n      if (settings.data._func_override) {\n        obj._func_override = true;\n      }\n        obj[settings.lang || 'javascript'] = code;\n      return obj;\n    }\n}"
     },
     "style": {
         "_is_func": true,
         "args": [],
-        "javascript": "return '#' + this.id + ' .CodeMirror {height: ' + (this.settings.height || 125) + 'px;}';"
-    },
-    "htmlTemplate": {
-        "_is_func": true,
-        "args": [],
-        "htmlmixed": "hello"
+        "javascript": "return '/*#' + this.id + ' .CodeMirror {height: ' + (this.settings.height || 125) + 'px;}*/ '+\n  '.CodeMirror {  border: 1px solid #eee;  height: auto;} ' +\n  '.CodeMirror-scroll {  overflow-y: hidden;  overflow-x: auto; }';"
     },
     "weight": null
 }

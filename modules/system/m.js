@@ -93,6 +93,8 @@ functions.expandPostValues = function(values) {
 }
 
 function postMiddleware(req, res, next) {
+  global._ = _; //TODO(thomas): This is a hack, not sure why needed.
+
   if (req.method == 'POST' && req.url == '/post') {
     console.log('post');
     console.log(res.post);

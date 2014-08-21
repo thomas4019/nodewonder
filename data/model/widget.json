@@ -12,7 +12,7 @@
         },
         {
             "name": "settingsModel",
-            "type": "fieldSetting",
+            "type": "field",
             "quantity": "1+",
             "widget": "model_form",
             "settings": "",
