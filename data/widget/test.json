@@ -1,14 +1,26 @@
 {
-    "name": "helloworld",
-    "tags": [
-        "field_edit"
-    ],
+    "name": "",
     "settingsModel": [
         {
-            "name": "data",
-            "type": "string"
+            "name": "",
+            "type": "",
+            "settings": "{}",
+            "widget": ""
         }
     ],
-    "toHTML": "function () { return 'hello'; }",
-    "action": "function (stuff) { alert('hi'); }"
+    "settings_unfiltered": [],
+    "toHTML": {
+        "_is_func": true,
+        "javascript": "return 'hi';",
+        "args": [
+            "label"
+        ]
+    },
+    "deps": {},
+    "head": [],
+    "tags": [],
+    "slots": [],
+    "slot_tags": {},
+    "wrapper": "",
+    "wrapperClass": ""
 }

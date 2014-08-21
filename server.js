@@ -82,7 +82,7 @@ cms.functions.addWidgetType = function(module, name, widgetType) {
   }
 
   if (widgetType.settingsModel) {
-    var settings = cms.functions.ret(widgetType.settingsModel);
+    var settings = cms.functions.retrieve(widgetType.settingsModel);
     var type;
     _.each(settings, function(field) {
       if (field.name == 'data') {
@@ -132,33 +132,15 @@ cms.functions.evalFunctions = function(widget, object) {
   return object;
 } // cms.functions.evalFunctions(cms.model_data['widget']['button'])
 
-cms.functions.newWidget4 = function(type, settings, id) {
-  //console.log(type);
-  var w = Object.create(cms.functions.loadWidget(cms.model_data['widget'][type]));
-  _.defaults(w, Widget.prototype);
-  w.settings = settings || {};
-  if (id) {
-    w.id = id;
-  }
-  if (w.setup)
-    w.setup();
-  return w;
-}
-
-cms.functions.newWidget = function(type, settings, id) { //traditional
-  //console.log(type);
-  //console.log(cms.widgets[type]);
+cms.functions.newWidget = function(type, settings, id) {
   var w = Object.create(cms.widgets[type]);
-  //console.log(type);
-  //console.log(Object.keys(_));
+
   _.defaults(w, Widget.prototype);
   w.settings = settings || {};
   if (id) {
     w.id = id;
   }
   if (w.setup) {
-    //w.name = 1232;
-    w.cool = 'hello';
     w.setup.call(w);
   }
   return w;
@@ -168,7 +150,7 @@ cms.functions.newWidget = function(type, settings, id) { //traditional
 cms.functions.staticThemeCopy();
 cms.functions.staticModulesCopy();*/
 
-cms.functions.ret = function(val, otherwise) {
+cms.functions.retrieve = function(val, otherwise) {
   if (typeof val === 'undefined')
     return otherwise;
   return (typeof val === 'function') ? val() : val;
@@ -205,7 +187,7 @@ cms.functions.getWidget = function(field, input) {
 
 var Widget = function () {};
 
-Widget.prototype.ret = function(val, otherwise) {
+Widget.prototype.retrieve = function(val, otherwise) {
   if (typeof val === 'undefined')
     return otherwise;
   return (typeof val === 'function') ? val.call(this) : val;
@@ -215,7 +197,7 @@ Widget.prototype.html = function () {
   var results = this.results;
 
   if (this.head) {
-    _.each(cms.functions.ret(this.head), function(head_element) {
+    _.each(cms.functions.retrieve(this.head), function(head_element) {
       if (!(head_element in results.head_map)) {
         results.head_map[head_element] = true;
         results.head.push(head_element);
@@ -240,11 +222,11 @@ Widget.prototype.html = function () {
     console.error(err.stack);
   }
 
-  var wrapper = this.ret(this.wrapper, 'div');
+  var wrapper = this.retrieve(this.wrapper, 'div');
 
-  var style = this.wrapper_style ? ' style="' + cms.functions.ret(this.wrapper_style) + '" ' : '';
+  var style = this.wrapper_style ? ' style="' + cms.functions.retrieve(this.wrapper_style) + '" ' : '';
 
-  var wclass = this.ret(this.wrapperClass, '');
+  var wclass = this.retrieve(this.wrapperClass, '');
 
   if (wrapper == 'none') {
     return widget_html + '\r\n';
@@ -271,24 +253,25 @@ Widget.prototype.validateData = function(data) {
 
 var allDeps = [];
 
-async.series(
-  [registerAllModules,
-  registerAllThemes,
-  registerModels,
-  installAllDeps,
-  processDeps,
-  addMiddleware,
-  initWidgets],
-  function() {
-    console.log('the server is ready - running at http://127.0.0.1:3000/');
-    console.log('-------------------------------------------------------');
-  });
-
 var app = connect()
   .use(connect.static('themes/html5up-tessellate/'))
   .use('/files', connect.static('files'))
   .use('/modules', connect.static('modules'))
   .use('/themes', connect.static('themes'));
+
+async.series(
+  [registerAllModules,
+  registerAllThemes,
+  registerModels,
+  addMiddleware,
+  initWidgets,
+  installAllDeps,
+  processDeps
+  ],
+  function() {
+    console.log('the server is ready - running at http://127.0.0.1:3000/');
+    console.log('-------------------------------------------------------');
+  });
 
 var app2 = http.createServer(app);
 app2.listen(3000);
@@ -350,7 +333,7 @@ function registerModels(callback) {
 }
 
 function installAllDeps(callback) {
-  console.log('installing bower dependencies: ');
+  console.log('installing bower dependencies('+allDeps.length+'): ');
 
   async.filter(allDeps, function(file, callback) {
     fs.exists('bower_components/' + file, function(exists) {
@@ -381,11 +364,9 @@ function initWidgets(callback) {
       cms.m[module].init();
     }
   }
-
-  cms.widgets2 = {};
   _.each(cms.model_data['widget'], function(wData, type) {
     var widget = cms.functions.loadWidget(wData);
-    cms.widgets[type] = widget;
+    cms.functions.addWidgetType('', widget.name, widget);
   });
 
   callback();
@@ -415,7 +396,7 @@ function addMiddleware(callback) {
 
 function installDependencies(thing) {
   if (thing.deps) {
-    _.each(Object.keys(cms.functions.ret(thing.deps)), function(dep, index) {
+    _.each(Object.keys(cms.functions.retrieve(thing.deps)), function(dep, index) {
       if (dep != 'order' && !_.contains(allDeps, dep)) {
         allDeps.push(dep);
       }
@@ -463,13 +444,13 @@ function registerModule(directory, module, prefix, callback) {
     cms.functions[name] = f;
   });
 
-  _.each(m.widgets, function(widget, name) {
+  /*_.each(m.widgets, function(widget, name) {
     if (typeof widget != 'function') {
       cms.functions.addWidgetType(module, name, widget);
     } else {
       console.log('invalid widget: ' + name);
     }
-  });
+  });*/
 
   _.each(m.middleware, function(middleware) {
     middleware.module = module;

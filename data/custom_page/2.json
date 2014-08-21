@@ -1,0 +1,41 @@
+{
+    "URL": "2",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "zwB0WX5T": {
+                "type": "tabs",
+                "slots": {
+                    "tabs": [
+                        "zJWbHAt1",
+                        "yOiXfhox",
+                        "YFTYAWMZ"
+                    ]
+                }
+            },
+            "zJWbHAt1": {
+                "type": "calendar",
+                "slots": {}
+            },
+            "yOiXfhox": {
+                "type": "button",
+                "slots": {}
+            },
+            "YFTYAWMZ": {
+                "type": "hello_world",
+                "slots": {}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "zwB0WX5T"
+            ]
+        }
+    },
+    "Title": "123",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}
