@@ -1,7 +1,8 @@
 var Handlebars = require('handlebars'),
   moment = require('moment'),
   _ = require('underscore'),
-  deep = require('deep');
+  deep = require('deep'),
+  querystring = require('querystring');
 
 var cms;
 module.exports = {
