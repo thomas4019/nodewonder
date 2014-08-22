@@ -15,7 +15,7 @@
         "args": [
             "label"
         ],
-        "javascript": "console.log(this.settings);\nvar type = cms.widgets[this.settings.widget_type];\nvar settings_model = type.settingsModel ? cms.functions.retrieve(type.settingsModel) : [];\n\nreturn JSON.stringify(settings_model);"
+        "javascript": "var type = cms.widgets[this.settings.widget_type];\nvar settings_model = type.settingsModel ? cms.functions.retrieve(type.settingsModel) : [];\n\nreturn JSON.stringify(settings_model);"
     },
     "deps": {},
     "head": [],

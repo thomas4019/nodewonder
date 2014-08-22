@@ -395,6 +395,8 @@ function initWidgets(callback) {
     }
   }
 
+  //cms.m.rules.init();
+
   callback();
 }
 

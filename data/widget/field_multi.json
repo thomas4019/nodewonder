@@ -1,28 +1,30 @@
 {
-    "setup": {
-        "_is_func": true,
-        "args": [],
-        "javascript": "this.w_input = deep.clone(this.settings);\n\nthis.can_add = false;\nthis.map = false;\nif (this.settings.quantity && this.settings.quantity.indexOf(':') !== -1) {\n    this.settings.quantity = this.settings.quantity.substr(this.settings.quantity.indexOf(':') + 1, this.settings.quantity.length)\n    this.w_type = 'key_value';\n    this.map = true;\n    var ndata = [];\n    _.each(this.settings.data, function(value, key) {\n        ndata.push({\n            key: key,\n            value: value\n        });\n    });\n    this.settings.data = ndata;\n} else {\n    this.w_type = this.settings.widget;\n    delete this.w_input['widget'];\n}\n\nif (this.settings.quantity && this.settings.quantity.slice(-1) == '+') {\n    this.can_add = true;\n    this.settings.quantity = this.settings.quantity.substring(0, this.settings.quantity.length - 1)\n}\n\ndelete this.w_input['label'];\nthis.w_input['inline'] = 'multi';"
-    },
-    "children": {
-        "_is_func": true,
-        "args": [
-            "callback"
-        ],
-        "javascript": "var state = {\n    \"body\": {}\n};\n\nif (this.can_add) {\n    state[\"body\"][\"add\"] = {\n        \"type\": \"button\",\n        \"slots\": {\n            \"events\": [\"onclick\"]\n        }\n    }\n    state[\"body\"][\"add\"][\"settings\"] = {\n        \"button_type\": \"primary\",\n        \"label\": \"Add more items\"\n    }\n}\n\nthis.count = (this.settings.data && Array.isArray(this.settings.data)) ? this.settings.data.length : this.settings.quantity;\n\nif (this.count == 0) {\n    this.count = this.settings.quantity;\n}\nif (this.count == '') {\n    this.count = 3;\n}\n\ndelete this.w_input['data'];\n\nfor (var i = 0; i < this.count; i++) {\n    state[\"body\"][\"\" + (i)] = {};\n    state[\"body\"][\"\" + (i)]['type'] = this.w_type;\n    state[\"body\"][\"\" + (i)]['settings'] = deep.clone(this.w_input);\n    if (this.settings.data && this.settings.data[i])\n        state[\"body\"][\"\" + i]['settings']['data'] = this.settings.data[i];\n}\n\nstate[\"body\"][\"onclick\"] = {\n    \"type\": \"onclick\",\n    \"slots\": {\n        \"actions\": [\"add_action\"]\n    }\n}\nstate[\"body\"][\"add_action\"] = {\n    \"type\": \"execute\",\n    \"settings\": {\n        \"js\": \"nw.functions.insertWidgetBefore('\" + this.w_type + \"','\" + this.id + \"-'+(nw.counter['\" + this.id + \"']++), '\" + JSON.stringify(this.w_input) + \"', '#\" + this.id + \"-add')\"\n    },\n}\ncallback(state);"
-    },
-    "wrapper_style": "padding-left: 5px;",
-    "script": {
-        "_is_func": true,
-        "args": [],
-        "javascript": "return 'nw.counter[\"' + this.id + '\"] = ' + (this.count) + ';';"
-    },
+    "name": "field_multi",
+    "settingsModel": [],
+    "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
         "args": [
             "label"
         ],
         "javascript": "var arr = '<input type=\"hidden\" name=\"' + this.id + '\" value=\"' + (this.map ? 'new Object' : 'new Array') + '\" />';\nreturn label + arr + this.renderSlot('body');"
+    },
+    "deps": {},
+    "head": [],
+    "tags": [],
+    "slots": [],
+    "slot_tags": {},
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "this.w_input = deep.clone(this.settings);\n\nthis.can_add = false;\nthis.map = false;\nif (this.settings.quantity && this.settings.quantity.indexOf(':') !== -1) {\n  this.map = true;\n}\nthis.settings.quantity = this.settings.quantity.substr(this.settings.quantity.indexOf(':') + 1, this.settings.quantity.length)\n    this.w_type = 'key_value';\n    \n    var ndata = [];\n    _.each(this.settings.data, function(value, key) {\n        ndata.push({\n            key: key,\n            value: value\n        });\n    });\n    this.settings.data = ndata;\n/*} else {\n    this.w_type = this.settings.widget;\n    delete this.w_input['widget'];\n}*/\n\nif (this.settings.quantity && this.settings.quantity.slice(-1) == '+') {\n    this.can_add = true;\n    this.settings.quantity = this.settings.quantity.substring(0, this.settings.quantity.length - 1)\n}\n\ndelete this.w_input['label'];\nthis.w_input['inline'] = 'multi';"
+    },
+    "children": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "var state = {\n    \"body\": {}\n};\n\nif (this.can_add) {\n    state[\"body\"][\"add\"] = {\n        \"type\": \"button\",\n        \"slots\": {\n            \"events\": [\"onclick\"]\n        }\n    }\n    state[\"body\"][\"add\"][\"settings\"] = {\n        \"button_type\": \"primary\",\n        \"label\": \"Add more items\"\n    }\n}\n\nthis.count = (this.settings.data && Array.isArray(this.settings.data)) ? this.settings.data.length : this.settings.quantity;\n\nif (this.count == 0) {\n    this.count = this.settings.quantity;\n}\nif (this.count == '') {\n    this.count = 3;\n}\n\ndelete this.w_input['data'];\n\nfor (var i = 0; i < this.count; i++) {\n    state[\"body\"][\"\" + (i)] = {};\n    state[\"body\"][\"\" + (i)]['type'] = this.w_type;\n    state[\"body\"][\"\" + (i)]['settings'] = deep.clone(this.w_input);\n    if (this.settings.data && this.settings.data[i])\n        state[\"body\"][\"\" + i]['settings']['data'] = this.settings.data[i];\n}\n\nstate[\"body\"][\"onclick\"] = {\n    \"type\": \"onclick\",\n    \"slots\": {\n        \"actions\": [\"add_action\"]\n    }\n}\nstate[\"body\"][\"add_action\"] = {\n    \"type\": \"execute\",\n    \"settings\": {\n        \"js\": \"nw.functions.insertWidgetBefore('\" + this.w_type + \"','\" + this.id + \"-'+(nw.counter['\" + this.id + \"']++), '\" +\n         JSON.stringify(this.w_input) + \"', '#\" + this.id + \"-add')\"\n    },\n}\ncallback(state);"
     },
     "processData": {
         "_is_func": true,
@@ -31,10 +33,14 @@
             "old",
             "user"
         ],
-        "javascript": "var widget = cms.functions.newWidget(this.w_type, this.settings);\nold = old || {};\nvar out;\n\nif (this.map) {\n    out = {};\n\n    for (key in data) {\n        var processed = widget.processData(data[key], old[key], user);\n        if (processed.key) {\n            out[processed.key] = processed.value;\n            delete processed['key'];\n        }\n    }\n} else {\n    out = [];\n\n    for (key in data) {\n        var value = widget.processData(data[key], old[key], user);\n        if (value) { // TODO(thomas): Do better falsey checking\n            out.push(value);\n        }\n    }\n}\n\nreturn out;"
+        "javascript": "var widget = cms.functions.newWidget(this.w_type, this.settings);\nold = old || {};\nvar out;\n\nif (this.map) {\n    out = {};\n} else {\n    out = [];\n}\n\nconsole.log('!!!!!!');\nconsole.log(data);\nfor (key in data) {\n  var processed = widget.processData(data[key], old[key], user);\n  console.log('-------' + this.w_type);\n  console.log(processed);\n  if (processed.key || processed.key === 0) {\n    out[processed.key] = processed.value;\n    delete processed['key'];\n  }\n}\n\nreturn out;"
     },
-    "name": "field_multi",
-    "tags": [
-        "view"
-    ]
+    "wrapper": "",
+    "wrapperClass": "",
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.counter[\"' + this.id + '\"] = ' + (this.count) + ';';"
+    },
+    "weight": null
 }

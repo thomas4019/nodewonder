@@ -1,0 +1,32 @@
+{
+    "name": "row_delete",
+    "settingsModel": [],
+    "settings_unfiltered": [],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "<i class=\"fa fa-times fa-border\"></i>"
+    },
+    "deps": {},
+    "head": [],
+    "tags": [
+        "view",
+        "action",
+        "local-action"
+    ],
+    "slots": [],
+    "slot_tags": {},
+    "wrapper": "",
+    "wrapperClass": "",
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "$('#'+id).on('click', function() { alert(123); });"
+    },
+    "weight": null
+}

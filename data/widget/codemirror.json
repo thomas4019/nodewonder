@@ -4,26 +4,34 @@
         {
             "name": "lang",
             "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
             "settings": {},
-            "widget": ""
+            "required": false
         },
         {
             "name": "height",
             "type": "Number",
+            "quantity": "",
+            "widget": "numeric_textbox",
             "settings": {},
-            "widget": ""
+            "required": false
         },
         {
             "name": "data",
             "type": "Code",
+            "quantity": "",
+            "widget": "codemirror",
             "settings": {},
-            "widget": ""
+            "required": false
         },
         {
             "name": "args",
             "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
             "settings": {},
-            "widget": ""
+            "required": false
         }
     ],
     "settings_unfiltered": [
@@ -80,7 +88,7 @@
             "scope",
             "handlers"
         ],
-        "javascript": "var wrapper = document.querySelector('#' + id + ' .mirror');\nvar myCodeMirror = CodeMirror(wrapper, {\n    mode: (settings.lang || \"javascript\"),\n    value: settings.data ? (settings.data[settings.lang || \"javascript\"] || '') : '',\n    lineNumbers: true,\n    theme: 'neat'\n});\nreturn {\n    get: function() {\n        var code = myCodeMirror.getValue();\n        if (!code)\n            return undefined;\n        var obj = {\n            _is_func: true,\n            args: settings.args || []\n        };\n      if (settings.data._func_override) {\n        obj._func_override = true;\n      }\n        obj[settings.lang || 'javascript'] = code;\n      return obj;\n    }\n}"
+        "javascript": "var wrapper = document.querySelector('#' + id + ' .mirror');\nvar myCodeMirror = CodeMirror(wrapper, {\n    mode: (settings.lang || \"javascript\"),\n    value: settings.data ? (settings.data[settings.lang || \"javascript\"] || '') : '',\n    lineNumbers: true,\n    theme: 'neat'\n});\nreturn {\n    get: function() {\n        var code = myCodeMirror.getValue();\n        if (!code)\n            return undefined;\n        var obj = {\n            _is_func: true,\n            args: settings.args || []\n        };\n      if (settings.data && settings.data._func_override) {\n        obj._func_override = true;\n      }\n        obj[settings.lang || 'javascript'] = code;\n      return obj;\n    }\n}"
     },
     "style": {
         "_is_func": true,
