@@ -22,8 +22,10 @@ function userMiddleware(req, res, next) {
   global._ = _; // TODO(thomas): This is a TOTAL HACK
 
   var cookies = new Cookies( req, res, COOKIE_KEYS);
-  req.clientID = cookies.get('clientID')
+  req.clientID = cookies.get('clientID');
+  console.log('clientID: ' + req.clientID);
   if (!req.clientID) {
+    console.log('NEW USER');
     req.clientID = cms.functions.makeid(12);
     cookies.set('clientID', req.clientID, {signed: true, overwrite: true});
   }

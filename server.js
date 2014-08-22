@@ -26,6 +26,7 @@ beautify_js = require('js-beautify');
 passport = require('passport');
 LocalStrategy = require('passport-local').Strategy;
 Cookies = require('cookies');
+phantom = require('phantom');
 
 COOKIE_KEYS = ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
   'af15db41-ef32-4a3f-bb15-7edce2e3744c',
@@ -636,4 +637,67 @@ cms.getFuncBody = function(func) {
   var begin = code.indexOf('{') + 1;
   var end = code.lastIndexOf('}');
   return beautify_js(code.substring(begin, end).trim());
+}
+
+cms.test = function() {
+  var BASE_URL = 'http://localhost:3000';
+
+  phantom.create(function (ph) {
+    var count = 0;
+    var pending = 0;
+    function finished() {
+      if (++count == pending) {
+        ph.exit();
+        console.log('DONE TESTING');
+      }
+    }
+
+    var settings = {};
+    cms.functions.setupProcess('user_login', settings)
+    var data = {
+      token: settings.token,
+      widget: 'process',
+      input: '{"data":{"email":"th4019@gmail.com","password":"123"}}'
+    };
+    var enc_data = querystring.stringify(data);
+    cms.phantomPost(ph, BASE_URL, '/post', 'POST', enc_data, function() {
+      _.each(cms.model_data['custom_page'], function(page, url) {
+        url = '/'+url;
+        if (url.indexOf('%') === -1 && url != '/user/logout') {
+          pending++;
+          cms.phantomCapture(ph, BASE_URL, url, finished);
+        }
+      });
+      cms.phantomCapture(ph, BASE_URL, '/admin/data/?model=model&record=widget', finished);
+      cms.phantomCapture(ph, BASE_URL, '/admin/data/?model=widget&record=button', finished);
+      cms.phantomCapture(ph, BASE_URL, '/admin/data/?model=custom_page&record=admin', finished);
+      pending += 3;
+    });
+  });
+}
+
+cms.phantomPost = function(ph, base, url, method, data, callback) {
+  ph.createPage(function (page) {
+    page.set('viewportSize', {width:1024, height:768});
+    page.open(base + url, method, data, function (status) {
+      console.log('POST ', status);
+      callback();
+    });
+  });
+}
+
+cms.phantomCapture = function(ph, base, url, callback, method, data) {
+  ph.createPage(function (page) {
+
+    page.set('viewportSize', {width:1024, height:768});
+    page.open(base + url, method, data, function (status) {
+      console.log('opened page? ', status);
+      page.evaluate(function () { return document.title; }, function (result) {
+        console.log('Page title is ' + result);
+        var filename = url.replace(/\//gi, '-') + '.png';
+        page.render('screenshots/current/'+filename);
+        callback();
+      });
+    });
+  });
 }

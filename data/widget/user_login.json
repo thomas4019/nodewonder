@@ -1,26 +1,47 @@
 {
+    "name": "user_login",
     "settingsModel": [
         {
             "name": "email",
-            "type": "Text"
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "required": false
         },
         {
             "name": "password",
-            "type": "Text"
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "required": false
         }
+    ],
+    "settings_unfiltered": [],
+    "deps": {},
+    "head": [],
+    "tags": [
+        "action",
+        "local-action",
+        "process",
+        "view"
     ],
     "slots": [
         "success",
         "failure"
     ],
     "slot_tags": {
-        "success": [
-            "action"
-        ],
-        "failure": [
-            "action"
-        ]
+        "success": "action",
+        "failure": "action"
     },
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "cms.functions.setupProcess('user_login', this.settings);"
+    },
+    "wrapper": "",
+    "wrapperClass": "",
     "action": {
         "_is_func": true,
         "args": [
@@ -31,10 +52,10 @@
         ],
         "javascript": "var data = {\n    email: settings.email,\n    password: settings.password\n};\nnw.functions.doProcess(settings.token, {\n    data: data\n}, function(result) {\n    handlers.success();\n}, handlers.failure);"
     },
-    "setup": {
+    "makeActionJS": {
         "_is_func": true,
         "args": [],
-        "javascript": "cms.functions.setupProcess('user_login', this.settings);"
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
     },
     "doProcess": {
         "_is_func": true,
@@ -42,18 +63,7 @@
             "input",
             "callback"
         ],
-        "javascript": "var cookies = new Cookies(this.req, this.res, COOKIE_KEYS);\ncms.functions.findOneByField('user', 'email', input.data.email, function(err, data) {\n    if (err) {\n        callback('invalid');\n        return\n    }\n    if (data.password == input.data.password) {\n        cookies.set('clientID', data.clientID, {\n            signed: true,\n            overwrite: true\n        });\n        callback(undefined, data);\n        return;\n    } else {\n        callback('invalid p');\n    }\n});"
+        "javascript": "var cookies = new Cookies(this.req, this.res, COOKIE_KEYS);\ncms.functions.findOneByField('user', 'email', input.data.email, function(err, data) {\n    if (err) {\n        callback('invalid');\n        return\n    }\n    if (data.password == input.data.password) {\n        cookies.set('clientID', data.clientID, {\n            signed: true,\n            overwrite: true\n        });\n        console.log(data.clientID + ' logged in');\n        callback(undefined, data);\n        return;\n    } else {\n        callback('invalid p');\n    }\n});"
     },
-    "name": "user_login",
-    "tags": [
-        "action",
-        "local-action",
-        "process"
-    ],
-    "makeActionJS": {
-        "_is_func": true,
-        "args": [],
-        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
-    },
-    "settings_unfiltered": []
+    "weight": null
 }
