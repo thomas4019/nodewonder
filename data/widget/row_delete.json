@@ -9,11 +9,7 @@
     },
     "deps": {},
     "head": [],
-    "tags": [
-        "view",
-        "action",
-        "local-action"
-    ],
+    "tags": [],
     "slots": [],
     "slot_tags": {},
     "wrapper": "",
@@ -26,7 +22,7 @@
             "scope",
             "handlers"
         ],
-        "javascript": "$('#'+id).on('click', function() { alert(123); });"
+        "javascript": "$('#'+id).on('click', function() { $('#'+id).parent().remove() });"
     },
     "weight": null
 }

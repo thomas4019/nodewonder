@@ -9,27 +9,13 @@ module.exports = {
     functions : {},
     widgets : {},
     init: function() {
-      _.each(cms.widgets, function(w, name) {
-        if (w.action && !w.script) {
-          if (w.toHTML) {
-            w.script = actionScript;
-          } else {
-            w.makeActionJS = actionScript;
-          }
-        }
-      });
+
     },
     register : function(_cms) {
       cms = _cms;
     }
 };
 functions = module.exports.functions;
-widgets = module.exports.widgets;
-
-function actionScript() {
-  return 'nw.functions.processActionResult("'+this.id+'", new '+this.action+'(nw.functions.fillSettings('+JSON.stringify(this.settings)+', scope, []), ' +
-        '"'+this.id+'", scope,'+cms.functions.createHandlersCode(this)+'));';
-}
 
 functions.concatActions = function(actions) {
   var code = '';

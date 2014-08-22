@@ -55,6 +55,11 @@ cms.middleware = [];
 cms.settings = {};
 cms.settings_group = 'production';
 
+function actionScript() {
+  return 'nw.functions.processActionResult("'+this.id+'", new '+this.action+'(nw.functions.fillSettings('+JSON.stringify(this.settings)+', scope, []), ' +
+        '"'+this.id+'", scope,'+cms.functions.createHandlersCode(this)+'));';
+}
+
 cms.functions.addWidgetType = function(widgetType) {
   function ensureTag(tag) {
     if (widgetType.tags.indexOf(tag) == -1) {
@@ -63,6 +68,14 @@ cms.functions.addWidgetType = function(widgetType) {
   }
 
   var name = widgetType.name;
+
+  if (widgetType.action && !widgetType.script) {
+    if (widgetType.hasOwnProperty('toHTML')) {
+      widgetType.script = actionScript;
+    } else {
+      widgetType.makeActionJS = actionScript;
+    }
+  }
 
   _.defaults(widgetType, Widget.prototype);
 
