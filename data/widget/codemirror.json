@@ -93,7 +93,8 @@
     "style": {
         "_is_func": true,
         "args": [],
-        "javascript": "return '/*#' + this.id + ' .CodeMirror {height: ' + (this.settings.height || 125) + 'px;}*/ '+\n  '.CodeMirror {  border: 1px solid #eee;  height: auto;} ' +\n  '.CodeMirror-scroll {  overflow-y: hidden;  overflow-x: auto; }';"
+        "_func_override": true,
+        "javascript": "return {css: this.settings.height ? (this.id + ' .CodeMirror {height: ' + this.settings.height + 'px;} ') : '' +\n  '.CodeMirror {  border: 1px solid #eee;  height: auto;} ' +\n        '.CodeMirror-scroll {  overflow-y: hidden;  overflow-x: auto; }'};"
     },
     "weight": null
 }

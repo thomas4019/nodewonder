@@ -39,5 +39,10 @@
     },
     "wrapper": "",
     "wrapperClass": "",
+    "style": {
+        "_is_func": true,
+        "args": [],
+        "css": ".widget-key_value {\n\tdisplay: table;\n}\n\n.widget-key_value > div {\n\tdisplay: table-cell;\n\tvertical-align: middle;\n\tpadding: 5px;\n}"
+    },
     "weight": null
 }

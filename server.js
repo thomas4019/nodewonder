@@ -32,15 +32,11 @@ COOKIE_KEYS = ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
   'fd075a38-a4dd-4c98-a552-239c11f6f5f7'];
 
 cms = {};
-cms.m = {};
 cms.functions = {};
 cms.widgets = {};
 cms.model_widgets = {};
 cms.edit_widgets = {};
 cms.view_widgets = {};
-cms.events = {};
-cms.conditions = {};
-cms.actions = {};
 cms.deps = {};
 
 cms.model_data = {};
@@ -226,8 +222,7 @@ var app = connect()
   .use('/themes', connect.static('themes'));
 
 async.series(
-  [registerAllModules,
-  registerAllThemes,
+  [registerAllThemes,
   registerModels,
   initFuncs,
   addMiddleware,
@@ -321,30 +316,28 @@ function processDeps(callback) {
 }
 
 function initFuncs(callback) {
-  registerModule('modules', 'storage', '', function() {
-    cms.functions.loadModelIntoMemory('model');
-    _.each(cms.model_data.model, function(list, key) {
-      if (key != 'model') {
-        cms.functions.loadModelIntoMemory(key);
-      }
-    });
-
-    cms.model_data['model'] = cms.model_data['model'] || {};
-    cms.models = cms.model_data['model'];
-
-    _.each(cms.model_data['function'], function(functionData) {
-      var func = cms.functions.evalFunctions(functionData, functionData);
-      cms.functions[func.name] = func.code;
-    });
-
-    initSandbox = {
-      load: cms.functions.loadRecord,
-      loadPage: cms.functions.loadPageState
-    };
-    context = vm.createContext(initSandbox);
-
-    callback();
+  cms.functions.loadModelIntoMemory('model');
+  _.each(cms.model_data.model, function(list, key) {
+    if (key != 'model') {
+      cms.functions.loadModelIntoMemory(key);
+    }
   });
+
+  cms.model_data['model'] = cms.model_data['model'] || {};
+  cms.models = cms.model_data['model'];
+
+  _.each(cms.model_data['function'], function(functionData) {
+    var func = cms.functions.evalFunctions(functionData, functionData);
+    cms.functions[func.name] = func.code;
+  });
+
+  initSandbox = {
+    load: cms.functions.loadRecord,
+    loadPage: cms.functions.loadPageState
+  };
+  context = vm.createContext(initSandbox);
+
+  callback();
 }
 
 function initWidgets(callback) {
@@ -365,8 +358,6 @@ function initWidgets(callback) {
       cms.widgets[type].init();
     }
   }
-
-  //cms.m.rules.init();
 
   callback();
 }
@@ -429,7 +420,7 @@ function registerDep(dep, callback) {
 
 function registerModule(directory, module, prefix, callback) {
   var m = require('./' + directory + '/' + module + '/m');
-  cms.m[module] = m;
+
   if (m.register) {
     m.register(cms);
   }
@@ -684,5 +675,3 @@ cms.phantomCapture = function(ph, base, url, callback, method, data) {
     });
   });
 }
-
-//cms.migrate6();

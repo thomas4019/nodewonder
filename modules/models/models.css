@@ -1,7 +1,0 @@
-.inline-model-form {
-	display: table;
-}
-.inline-model-form > div {
-	display: table-cell;
-	padding: 5px;
-}

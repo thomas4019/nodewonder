@@ -4,26 +4,34 @@
         {
             "name": "model",
             "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
             "settings": {},
-            "widget": ""
+            "required": false
         },
         {
             "name": "record",
             "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
             "settings": {},
-            "widget": ""
+            "required": false
         },
         {
             "name": "field",
             "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
             "settings": {},
-            "widget": ""
+            "required": false
         },
         {
             "name": "inline",
             "type": "Boolean",
+            "quantity": "",
+            "widget": "checkbox",
             "settings": {},
-            "widget": ""
+            "required": false
         }
     ],
     "settings_unfiltered": [
@@ -71,7 +79,7 @@
             "old",
             "user"
         ],
-        "javascript": "var that = this;\nvar out = {};\n\n_.each(this.fields, function(field) {\n    if (field.type == '') {\n        console.error('empty field');\n        return;\n    }\n\n    var field_data = data ? data[field.name] : undefined;\n    var field_old = old ? old[field.name] : undefined;\n\n    var input = field.settings || {};\n    var widget_type = cms.functions.getWidget(field, input);\n  if (field_data && field_data._func_override) {\n    widget_type = 'codemirror';\n  }\n\n    var widget = cms.functions.newWidget(widget_type, input);\n    var processed = widget.processData(field_data, field_old, user);\n    out[field.name] = processed;\n});\n\nreturn out;"
+        "javascript": "var that = this;\nvar out = {};\n\n_.each(this.fields, function(field) {\n    if (field.type == '') {\n        console.error('empty field');\n        return;\n    }\n\n    var field_data = data ? data[field.name] : undefined;\n    var field_old = old ? old[field.name] : undefined;\n\n    var input = field.settings || {};\n    var widget_type = cms.functions.getWidget(field, input);\n  if (field_data && field_data._func_override) {\n    widget_type = 'codemirror';\n    input['lang'] = 'javascript';\n  }\n\n    var widget = cms.functions.newWidget(widget_type, input);\n    var processed = widget.processData(field_data, field_old, user);\n    out[field.name] = processed;\n});\n\nreturn out;"
     },
     "validateData": {
         "_is_func": true,
@@ -84,14 +92,19 @@
     "wrapper": "",
     "wrapperClass": {
         "_is_func": true,
-		"_func_override": true,
         "args": [],
+        "_func_override": true,
         "javascript": "if (this.settings.inline)\n    return 'inline-model-form';\nelse\n    return '';"
     },
     "script": {
         "_is_func": true,
         "args": [],
         "javascript": "return 'nw.model[\"' + this.id + '\"] = ' + JSON.stringify({\n    \"fields\": this.fields\n}) + ';';"
+    },
+    "style": {
+        "_is_func": true,
+        "args": [],
+        "css": ".inline-model-form {\n\tdisplay: table;\n}\n.inline-model-form > div {\n\tdisplay: table-cell;\n\tpadding: 5px;\n}"
     },
     "weight": null
 }

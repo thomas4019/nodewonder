@@ -287,9 +287,9 @@
             "quantity": "",
             "widget": "codemirror",
             "settings": {
-                "lang": "javascript",
+                "lang": "css",
                 "height": null,
-                "args": ""
+                "args": []
             },
             "required": false
         },

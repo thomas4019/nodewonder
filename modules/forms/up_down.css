@@ -1,8 +1,0 @@
-.up-vote.selected, .down-vote.selected {
-	color: rgb(255, 150, 0);
-	text-shadow:
-   -2px -2px 1px #FCA,  
-    2px -2px 1px #FCA,
-    -2px 2px 1px #FCA,
-     2px 2px 1px #FCA;
-}
