@@ -10,6 +10,7 @@ Handlebars = require("handlebars");
 querystring = require('querystring');
 async = require('async');
 dive = require('dive');
+diveSync = require('diveSync');
 path = require('path');
 repl = require("repl");
 bower = require('bower');
@@ -56,9 +57,21 @@ cms.middleware = [];
 cms.settings = {};
 cms.settings_group = 'production';
 
-function actionScript() {
+context = {};
+
+global['actionScript'] = function() {
   return 'nw.functions.processActionResult("'+this.id+'", new '+this.action+'(nw.functions.fillSettings('+JSON.stringify(this.settings)+', scope, []), ' +
         '"'+this.id+'", scope,'+cms.functions.createHandlersCode(this)+'));';
+}
+
+cms.functions.installDependencies = function(thing) {
+  if (thing.deps) {
+    _.each(Object.keys(cms.functions.retrieve(thing.deps)), function(dep, index) {
+      if (dep != 'order' && !_.contains(allDeps, dep)) {
+        allDeps.push(dep);
+      }
+    });
+  }
 }
 
 cms.functions.addWidgetType = function(widgetType) {
@@ -123,39 +136,13 @@ cms.functions.addWidgetType = function(widgetType) {
   }
 
   cms.widgets[name] = widgetType;
-  installDependencies(widgetType);
+  cms.functions.installDependencies(widgetType);
 }
 
 cms.functions.loadWidget = function(widget) {
   //console.log(widget.name);
   return cms.functions.evalFunctions(widget, widget);
 }
-
-cms.functions.evalFunctions = function(widget, object, key) {
-  if (object instanceof Array) {
-    return object;
-  }
-  if (object == null) {
-    return object;
-  }
-  if (typeof object == 'object') {
-    if ('_is_func' in object && 'javascript' in object) {
-      if (!object.args) {
-        console.log(widget.name + ' ' + key + ' missing args');
-      }
-      var func = new Function(object.args.join(','), object.javascript);//.bind(widget);
-      return func;
-    } else {
-      var object2 = _.clone(object);
-      for (var key in object) {
-        object2[key] = cms.functions.evalFunctions(widget, object[key], key);
-      }
-      return object2;
-    }
-  }
-
-  return object;
-} // cms.functions.evalFunctions(cms.model_data['widget']['button'])
 
 cms.functions.newWidget = function(type, settings, id) {
   var w = Object.create(cms.widgets[type]);
@@ -209,7 +196,7 @@ cms.functions.getWidget = function(field, input) {
   return type;
 };
 
-var Widget = function () {};
+Widget = function () {};
 
 Widget.prototype.retrieve = function(val, otherwise) {
   if (typeof val === 'undefined')
@@ -296,7 +283,7 @@ Widget.prototype.toHTML = function() {
   return this.htmlCompiled ? this.htmlCompiled(this) : '';
 }
 
-var allDeps = [];
+allDeps = [];
 
 var app = connect()
   .use(connect.static('themes/html5up-tessellate/'))
@@ -308,6 +295,7 @@ async.series(
   [registerAllModules,
   registerAllThemes,
   registerModels,
+  initFuncs,
   addMiddleware,
   initWidgets,
   sortWidgets,
@@ -398,6 +386,34 @@ function processDeps(callback) {
   async.each(allDeps, registerDep, callback);
 }
 
+function initFuncs(callback) {
+  cms.functions = {};
+  registerModule('modules', 'storage', '', function() {
+    cms.functions.loadModelIntoMemory('model');
+    _.each(cms.model_data.model, function(list, key) {
+      if (key != 'model') {
+        cms.functions.loadModelIntoMemory(key);
+      }
+    });
+
+    cms.model_data['model'] = cms.model_data['model'] || {};
+    cms.models = cms.model_data['model'];
+
+    _.each(cms.model_data['function'], function(functionData) {
+      var func = cms.functions.evalFunctions(functionData, functionData);
+      cms.functions[func.name] = func.code;
+    });
+
+    initSandbox = {
+      load: cms.functions.loadRecord,
+      loadPage: cms.functions.loadPageState
+    };
+    context = vm.createContext(initSandbox);
+
+    callback();
+  });
+}
+
 function initWidgets(callback) {
 
   for(module in cms.m) {
@@ -449,16 +465,6 @@ function addMiddleware(callback) {
     }
   });
   callback();
-}
-
-function installDependencies(thing) {
-  if (thing.deps) {
-    _.each(Object.keys(cms.functions.retrieve(thing.deps)), function(dep, index) {
-      if (dep != 'order' && !_.contains(allDeps, dep)) {
-        allDeps.push(dep);
-      }
-    });
-  }
 }
 
 function registerDep(dep, callback) {
@@ -614,11 +620,15 @@ cms.migrate4 = function() {
 }
 
 cms.migrate5 = function() {
-  _.forEach(cms.functions, function(function, name) {
+  _.forEach(cms.functions, function(f, name) {
     var funcObj = {
       name: name,
-      args: cms.getFuncArgs(function),
-      code: cms.getFuncBody(function),
+      args: cms.getFuncArgs(f),
+      code: {
+        "_is_func": true,
+        "args": cms.getFuncArgs(f),
+        "javascript": cms.getFuncBody(f),
+      }
     };
     cms.functions.saveRecord('function', name, funcObj);
   });

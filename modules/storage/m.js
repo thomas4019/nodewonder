@@ -131,3 +131,29 @@ functions.wrapInForm = function(html, widget, vars) {
 
   return out;
 }
+
+functions.evalFunctions = function(widget, object, key) {
+  if (object instanceof Array) {
+    return object;
+  }
+  if (object == null) {
+    return object;
+  }
+  if (typeof object == 'object') {
+    if ('_is_func' in object && 'javascript' in object) {
+      if (!object.args) {
+        console.log(widget.name + ' ' + key + ' missing args');
+      }
+      var func = new Function(object.args.join(','), object.javascript);//.bind(widget);
+      return func;
+    } else {
+      var object2 = _.clone(object);
+      for (var key in object) {
+        object2[key] = cms.functions.evalFunctions(widget, object[key], key);
+      }
+      return object2;
+    }
+  }
+
+  return object;
+}
