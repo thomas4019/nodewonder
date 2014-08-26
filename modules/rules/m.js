@@ -29,7 +29,7 @@ functions.createHandlersCode = function(action) {
   var code = '{';
   var first = true;
   _.each(action.slot_tags, function(tags, slot_name) {
-    if (_.contains(tags, 'action')) {
+    if (_.contains(tags, 'action') || tags == 'action') {
       if (!first)
         code += ',';
       code += slot_name + ': function() {\n' +

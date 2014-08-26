@@ -134,29 +134,12 @@ functions.initializeState = function(state, scope, user, callback) {
         dextend(results.deps, cms.functions.retrieve(widget.deps));
       }
       if (widget.script) {
-        if (typeof widget.script == 'function') {
-          //console.log(widget.name);
-          var script = widget.script();
-          if (typeof script == 'undefined') {
-            console.error('widget :' + id + ' returned undefined script');
-            script = '';
-          }
-          results.script += '\n' + script;
-        }
-        else
-          results.script += '\n' + widget.script;
+        var script = widget.safeRetrieve('script', '');
+        results.script += '\n' + script;
       }
       if (widget.style) {
-        if (typeof widget.style == 'function') {
-          var style = widget.style();
-          if (typeof style == 'undefined') {
-            console.error('widget :' + id + ' returned undefined style');
-            style = '';
-          }
-          results.style += '\n' + style;
-        }
-        else
-          results.style += '\n' + widget.style;
+        var style = widget.safeRetrieve('script', '');
+        results.style += '\n' + style;
       }
     });
 

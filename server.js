@@ -217,40 +217,48 @@ Widget.prototype.retrieve = function(val, otherwise) {
   return (typeof val === 'function') ? val.call(this) : val;
 }
 
+Widget.prototype.safeRetrieve = function(name, otherwise, args) {
+  var val = this[name];
+  if (typeof val === 'undefined')
+    return otherwise;
+
+  try {
+    return ((typeof val === 'function') ? val.call(this, args) : val) || otherwise;
+  } catch(err) {
+    console.error("PROBLEM IN " + this.id + " " + this.name + "." + name + "()");
+    console.error(err.stack);
+    return otherwise;
+  }
+}
+
 Widget.prototype.html = function () {
   var results = this.results;
 
   if (this.head) {
-    _.each(cms.functions.retrieve(this.head), function(head_element) {
-      if (!(head_element in results.head_map)) {
-        results.head_map[head_element] = true;
-        results.head.push(head_element);
-      }
-    });
-  }
-  if (this.values) {
-    _.extend(results.values, this.values());
+    var headElements = this.safeRetrieve('head');
+
+    if (headElements) {
+      headElements.forEach(function(head_element) {
+        if (!(head_element in results.head_map)) {
+          results.head_map[head_element] = true;
+          results.head.push(head_element);
+        }
+      });
+    }
   }
 
-  var rel_value = (results.values && this.id in results.values) ? results.values[this.id] : undefined;
   if (this.settings.label && this.settings.label != '<none>') {
     var label = '<label for="' + this.id + '" style="padding-right: 5px;">' + this.settings.label + ':' + '</label>';
   } else {
     var label = '';
   }
-  var widget_html = '';
-  try {
-    widget_html = (this.toHTML) ? this.toHTML(label) : '';
-  } catch(err) {
-    console.error("PROBLEM DURING RENDERING " + this.name + " " + this.id);
-    console.error(err.stack);
-  }
+  var widget_html = this.safeRetrieve('toHTML', '', [label]);
 
-  var wrapper = this.retrieve(this.wrapper, 'div') || 'div';
+  var wrapper = this.safeRetrieve('wrapper', 'div');
 
-  var style = this.wrapper_style ? ' style="' + cms.functions.retrieve(this.wrapper_style) + '" ' : '';
+  var style = this.wrapper_style ? ' style="' + this.safeRetrieve('wrapper_style') + '" ' : '';
 
-  var wclass = this.retrieve(this.wrapperClass, '');
+  var wclass = this.safeRetrieve('wrapperClass', '');
 
   if (wrapper == 'none') {
     return widget_html + '\r\n';
@@ -637,6 +645,13 @@ cms.getFuncBody = function(func) {
   var begin = code.indexOf('{') + 1;
   var end = code.lastIndexOf('}');
   return beautify_js(code.substring(begin, end).trim());
+}
+
+cms.getFuncArgs = function(func) {
+  var code = func.toString();
+  var begin = code.indexOf('(') + 1;
+  var end = code.indexOf(')');
+  return code.substring(begin, end).replace(/ /g, "").split(",");
 }
 
 cms.test = function() {
