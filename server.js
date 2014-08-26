@@ -613,6 +613,17 @@ cms.migrate4 = function() {
   });
 }
 
+cms.migrate5 = function() {
+  _.forEach(cms.functions, function(function, name) {
+    var funcObj = {
+      name: name,
+      args: cms.getFuncArgs(function),
+      code: cms.getFuncBody(function),
+    };
+    cms.functions.saveRecord('function', name, funcObj);
+  });
+}
+
 cms.funcsToString = function(object) {
   var object2 = {};
   var widgetModel = cms.models['widget'];
