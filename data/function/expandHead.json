@@ -1,0 +1,13 @@
+{
+    "name": "expandHead",
+    "args": [
+        "head"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "head"
+        ],
+        "javascript": "_.each(head, function(element, index) {\n    if (element.charAt(0) != '<') {\n        var ext = path.extname(element);\n        if (ext == '.js') {\n            head[index] = '<script type=\"text/javascript\" src=\"' + element + '\"></script>';\n        }\n        if (ext == '.css') {\n            head[index] = '<link rel=\"stylesheet\" href=\"' + element + '\" />';\n        }\n    }\n});"
+    }
+}

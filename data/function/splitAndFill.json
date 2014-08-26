@@ -1,0 +1,15 @@
+{
+    "name": "splitAndFill",
+    "args": [
+        "state",
+        "values"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "state",
+            "values"
+        ],
+        "javascript": "return cms.functions.fillValues(state, cms.functions.splitValues(values));"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "retrieve",
+    "args": [
+        "val",
+        "otherwise"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "val",
+            "otherwise"
+        ],
+        "javascript": "if (typeof val === 'undefined')\n    return otherwise;\nreturn (typeof val == 'function') ? val() : val;"
+    }
+}

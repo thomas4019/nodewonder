@@ -1,0 +1,13 @@
+{
+    "name": "processDeps",
+    "args": [
+        "deps"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "deps"
+        ],
+        "javascript": "if (!deps) {\n    return '';\n}\nvar order = deps['order'];\ndelete deps['order'];\nif (order)\n    order = _.union(order, Object.keys(deps));\nelse\n    order = Object.keys(deps);\nvar head = [];\norder.forEach(function(dep) {\n    var depFiles = _.union(cms.deps[dep], deps[dep]);;\n    head.push(cms.functions.processDep(dep, depFiles));\n});\n\nreturn head;"
+    }
+}

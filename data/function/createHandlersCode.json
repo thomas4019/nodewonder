@@ -1,0 +1,13 @@
+{
+    "name": "createHandlersCode",
+    "args": [
+        "action"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "action"
+        ],
+        "javascript": "var code = '{';\nvar first = true;\n_.each(action.slot_tags, function(tags, slot_name) {\n    if (tags.indexOf('action') != -1 || tags == 'action') {\n        if (!first)\n            code += ',';\n        code += slot_name + ': function() {\\n' +\n            cms.functions.createActionCode(action.slotAssignments[slot_name]) +\n            '}';\n        first = false;\n    }\n});\ncode += '}';\nreturn code;"
+    }
+}

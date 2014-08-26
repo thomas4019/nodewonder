@@ -1,0 +1,13 @@
+{
+    "name": "getDefaultWidget",
+    "args": [
+        "type"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "type"
+        ],
+        "javascript": "var widgets = cms.model_widgets[type];\nif (widgets)\n    return widgets[0].name;\nelse\n    return null;"
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "name": "renderPage",
+    "args": [
+        "page",
+        "vars",
+        "callback"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "page",
+            "vars",
+            "callback"
+        ],
+        "javascript": "page.widgets = cms.functions.splitAndFill(page.widgets, vars);\nvar user = page.scope.user;\n\nif (!cms.functions.isAllowed(page.permission, page.scope.user)) {\n    callback('permission denied', 'text/html', 403);\n    return;\n}\n\nif ('json' in vars) {\n    var json = JSON.stringify(page.code.widgets, null, 4);\n    callback(json, 'text/javascript');\n} else if ('processedjson' in vars) {\n    cms.functions.initializeState(page.code.widgets, page.scope, user, function(widgets_buffer, results, state) {\n        var json = JSON.stringify({\n            widgets: state,\n            slotAssignments: page.code.slotAssignments\n        }, null, 4);\n        callback(json, 'text/javascript');\n    });\n} else if ('scope' in vars) {\n    var json = JSON.stringify(page.scope, null, 4);\n    callback(json, 'text/javascript');\n} else if ('vars' in vars) {\n    var json = JSON.stringify(vars, null, 4);\n    callback(json, 'text/javascript');\n} else if ('perf' in vars) {\n    cms.functions.renderStateParts(page.code.widgets, page.code.slotAssignments, user, function(html, results) {\n        var out = {};\n        out = results.perf;\n        results.perf['end'] = process.hrtime(results.perf.start);\n        var json_out = JSON.stringify(out, 0, 4);\n        callback(json_out, 'text/javascript');\n    }, page.scope);\n} else if ('perm' in vars) {\n    var json = JSON.stringify(page.permission, null, 4);\n    callback(json, 'text/javascript');\n} else if ('raw' in vars) {\n    cms.functions.renderStateParts(page.code.widgets, page.code.slotAssignments, user, function(html, results) {\n        var head = results.head;\n        cms.functions.expandHead(head);\n        head = head.concat(cms.functions.processDeps(results.deps));\n        /*encoded_head = _.map(encoded_head, function (element) {\n        return element.replace(/<\\/script/g, '</scr\"+\"ipt');\n      });*/\n        var out = {};\n        out['html'] = html;\n        out['head'] = head;\n        out['javascript'] = results.script;\n        var json_out = JSON.stringify(out, 0, 4);\n        callback(json_out, 'text/javascript');\n    }, page.scope);\n} else {\n    cms.functions.renderState(page.code.widgets, page.code.slotAssignments, user, function(html, head) {\n        var content_type = page.contentType ? page.contentType : 'text/html';\n        var title = page.Title ? Handlebars.compile(page.Title)(page.scope) : 'default name';\n        cms.functions.expandHead(head);\n        head.unshift('<script type=\"text/javascript\" src=\"/bower_components/handlebars/handlebars.min.js\"></script><script type=\"text/javascript\" src=\"/modules/admin/nw.js\"></script><link rel=\"stylesheet\" href=\"/modules/admin/nw.css\"></link>')\n        if (content_type == 'text/html') {\n            var encoded_head = JSON.stringify(head);\n            encoded_head = encoded_head.replace(/<\\/script/g, '</scr\"+\"ipt');\n            var head_meta = '<script type=\"text/javascript\">nw.head = ' + encoded_head + ';</script>';\n            head.push(head_meta);\n            var html = page_template({\n                'head': head.join('\\n'),\n                'title': title,\n                'body': html\n            });\n        }\n        callback(html, content_type);\n    }, page.scope);\n}"
+    }
+}

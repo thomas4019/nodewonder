@@ -1,0 +1,21 @@
+{
+    "name": "renderStateParts",
+    "args": [
+        "state",
+        "slotAssignments",
+        "user",
+        "callback",
+        "values"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "state",
+            "slotAssignments",
+            "user",
+            "callback",
+            "values"
+        ],
+        "javascript": "cms.functions.initializeState(state, values, user, function(widgets_buffer, results, state) {\n    var render_results = results;\n\n    async.each(Object.keys(widgets_buffer), function(id, callback) {\n        var widget = widgets_buffer[id];\n        widget.results = render_results;\n\n        if (widget.load) {\n            results.perf.load_start[id] = process.hrtime(results.perf.start)[1];\n            widget.load(function() {\n                results.perf.load_end[id] = process.hrtime(results.perf.start)[1];\n                callback();\n            });\n        } else {\n            callback();\n        }\n    }, function(err, results2) {\n        var html = '';\n        _.each(slotAssignments['body'], function(id, index) {\n            if (widgets_buffer[id]) {\n                results.perf.render_start[id] = process.hrtime(results.perf.start)[1];\n                html += widgets_buffer[id].html();\n                results.perf.render_end[id] = process.hrtime(results.perf.start)[1];\n            } else {\n                console.error(\"Widget missing \" + id);\n            }\n        });\n\n        callback(html, render_results);\n    });\n\n});"
+    }
+}

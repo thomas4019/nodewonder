@@ -1,0 +1,13 @@
+{
+    "name": "staticThemeCopy",
+    "args": [
+        ""
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            ""
+        ],
+        "javascript": "var theme = 'themes/html5up-tessellate/';\ndive(theme, {}, function(err, file) {\n    var ext = path.extname(file);\n    var pa = path.relative(theme, file);\n    mkdirp(path.dirname('static/' + pa), function(err) {\n        cms.functions.copyFile(file, 'static/' + pa, function() {\n\n        });\n    });\n});"
+    }
+}

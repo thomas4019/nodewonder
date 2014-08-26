@@ -1,0 +1,15 @@
+{
+    "name": "loadRecord",
+    "args": [
+        "model_name",
+        "record_id"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "model_name",
+            "record_id"
+        ],
+        "javascript": "return cms.model_data[model_name][record_id];"
+    }
+}

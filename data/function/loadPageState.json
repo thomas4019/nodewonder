@@ -1,0 +1,15 @@
+{
+    "name": "loadPageState",
+    "args": [
+        "path",
+        "callback"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "path",
+            "callback"
+        ],
+        "javascript": "cms.functions.getRecord('custom_page', path, function(err, page) {\n    //console.log('l: ' + path + \"=\" + err);\n    if (err) {\n        //console.log(err);\n        callback(err, page);\n        return;\n    }\n\n    if (page.controller && typeof(page.controller) == \"string\") {\n        page.controller = [page.controller];\n    } else {\n        page.controller = [];\n    }\n\n    //console.log('loading: ' + path);\n    //console.log(page);\n    //console.log(err);\n    if (page.parent) {\n        cms.functions.loadPageState(page.parent, function(err, parent) {\n            //here we do the merge\n            if (err || !parent) {\n                console.error('missing parent');\n                console.error(err);\n            }\n            var combined = dextend(parent, page);\n            combined.controller = parent.controller.concat(page.controller);\n\n            _.each(combined.code.slotAssignments, function(value, key) {\n                if (key.indexOf(':') !== -1) {\n                    var parts = key.split(\":\");\n                    //console.log(parts);\n                    var slots = combined.code.widgets[parts[0]].slots;\n                    slots[parts[1]] = value;\n                }\n            });\n            //console.log(combined);\n            callback(err, combined);\n        });\n\n    } else {\n        callback(err, page);\n    }\n});"
+    }
+}

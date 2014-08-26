@@ -1,0 +1,13 @@
+{
+    "name": "concatActions",
+    "args": [
+        "actions"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "actions"
+        ],
+        "javascript": "var code = '';\nactions.forEach(function(action) {\n    code += action.makeActionJS() + '\\n';\n});\nreturn code;"
+    }
+}

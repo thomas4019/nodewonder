@@ -1,0 +1,17 @@
+{
+    "name": "copyFile",
+    "args": [
+        "source",
+        "target",
+        "cb"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "source",
+            "target",
+            "cb"
+        ],
+        "javascript": "var cbCalled = false;\n\nvar rd = fs.createReadStream(source);\nrd.on(\"error\", function(err) {\n    done(err);\n});\nvar wr = fs.createWriteStream(target);\nwr.on(\"error\", function(err) {\n    done(err);\n});\nwr.on(\"close\", function(ex) {\n    done();\n});\nrd.pipe(wr);\n\nfunction done(err) {\n    if (!cbCalled) {\n        cb(err);\n        cbCalled = true;\n    }\n}"
+    }
+}

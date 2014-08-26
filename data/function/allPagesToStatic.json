@@ -1,0 +1,13 @@
+{
+    "name": "allPagesToStatic",
+    "args": [
+        ""
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            ""
+        ],
+        "javascript": "dive('pages', {}, function(err, file) {\n    var ext = path.extname(file);\n    var pa = path.relative('pages', file).slice(0, -ext.length);\n    if (ext == '.json') {\n        cms.functions.pageToStatic(pa);\n    }\n});"
+    }
+}

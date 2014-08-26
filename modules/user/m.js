@@ -15,12 +15,8 @@ module.exports = {
     cms = _cms;
   }
 };
-functions = module.exports.functions;
-widgets = module.exports.widgets;
 
 function userMiddleware(req, res, next) {
-  global._ = _; // TODO(thomas): This is a TOTAL HACK
-
   var cookies = new Cookies( req, res, COOKIE_KEYS);
   req.clientID = cookies.get('clientID');
   console.log('clientID: ' + req.clientID);
@@ -33,19 +29,4 @@ function userMiddleware(req, res, next) {
     req.user = user || {};
     next();
   });
-}
-
-functions.isAllowed = function(permission, user) {
-  //console.log(permission);
-  if (permission) {
-    if (permission.role && permission.role.length) {
-      if (user) {
-        return _.intersection(permission.role, user.roles).length;
-      } else {
-        return false;
-      }
-    }
-  }
-
-  return true;
 }

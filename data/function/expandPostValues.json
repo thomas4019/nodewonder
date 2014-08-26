@@ -1,0 +1,13 @@
+{
+    "name": "expandPostValues",
+    "args": [
+        "values"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "values"
+        ],
+        "javascript": "var data = {};\nvar tocheck = [];\n\n_.each(values, function(value, key) {\n    var parts = key.split('-');\n    if (parts.length >= 2) {\n        var current = data;\n        for (var i = 1; i < parts.length - 1; i++) {\n            var v = parts[i];\n            current = current[v] = current[v] || {};\n        }\n        var last = parts[parts.length - 1];\n        if (value == 'new Array') {\n            value = [];\n            tocheck.push(last);\n        }\n        if (value == 'new Object') {\n            value = {};\n            //tocheck.push(last);\n        }\n        current[last] = value;\n    }\n});\n\nfunction hasValues(value) {\n    if (typeof value == 'object') {\n        for (var key in value)\n            if (hasValues(value[key]))\n                return true;\n\n        return false;\n    }\n\n    if (value == '{}')\n        return false;\n\n    return value;\n}\n\n_.each(tocheck, function(key, index) {\n    data[key] = _.filter(data[key], function(value) {\n        return hasValues(value);\n    });\n});\n\nreturn data;"
+    }
+}

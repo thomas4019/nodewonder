@@ -1,0 +1,13 @@
+{
+    "name": "generateRecordID",
+    "args": [
+        ""
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            ""
+        ],
+        "javascript": "return cms.functions.makeid(16);"
+    }
+}

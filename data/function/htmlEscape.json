@@ -1,0 +1,13 @@
+{
+    "name": "htmlEscape",
+    "args": [
+        "str"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "str"
+        ],
+        "javascript": "return String(str)\n    .replace(/&/g, '&amp;')\n    .replace(/\"/g, '&quot;')\n    .replace(/'/g, '&#39;')\n    .replace(/</g, '&lt;')\n    .replace(/>/g, '&gt;');"
+    }
+}

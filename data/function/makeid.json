@@ -1,0 +1,13 @@
+{
+    "name": "makeid",
+    "args": [
+        "length"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "length"
+        ],
+        "javascript": "var text = \"\";\nvar possible = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\";\n\nfor (var i = 0; i < length; i++)\n    text += possible.charAt(Math.floor(Math.random() * possible.length));\n\nreturn text;"
+    }
+}

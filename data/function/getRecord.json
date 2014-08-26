@@ -1,0 +1,17 @@
+{
+    "name": "getRecord",
+    "args": [
+        "model_name",
+        "record_id",
+        "callback"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "model_name",
+            "record_id",
+            "callback"
+        ],
+        "javascript": "if (!cms.model_data[model_name]) {\n    callback(\"model not found\");\n    console.error('model:' + model_name + ' missing');\n    return;\n}\nif (!cms.model_data[model_name][record_id]) {\n    callback(\"record not found\", undefined);\n    return;\n}\ncallback(undefined, deep.clone(cms.model_data[model_name][record_id]));"
+    }
+}

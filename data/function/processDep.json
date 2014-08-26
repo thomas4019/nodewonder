@@ -1,0 +1,15 @@
+{
+    "name": "processDep",
+    "args": [
+        "dep",
+        "depFiles"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "dep",
+            "depFiles"
+        ],
+        "javascript": "var folder = 'bower_components/' + dep + '/';\n\nvar html = '';\ndepFiles.forEach(function(file) {\n    if (file) {\n        html += cms.functions.fileToHTML('/' + folder, file);\n    }\n});\nreturn html;"
+    }
+}

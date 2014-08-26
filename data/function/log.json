@@ -1,0 +1,17 @@
+{
+    "name": "log",
+    "args": [
+        "type",
+        "message",
+        "data"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "type",
+            "message",
+            "data"
+        ],
+        "javascript": "console.log(type);"
+    }
+}

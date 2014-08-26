@@ -1,0 +1,15 @@
+{
+    "name": "loadModelIntoMemory",
+    "args": [
+        "model",
+        "callback"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "model",
+            "callback"
+        ],
+        "javascript": "if (!fs.existsSync('data/' + model + '/'))\n    return;\n\nconsole.log('loading data for \"' + model + '\"');\n\nvar models = fs.readdirSync('data/' + model + '/');\ncms.model_data = cms.model_data || {};\ncms.model_data[model] = {};\n\ndiveSync('data/' + model + '/', {}, function(err, file) {\n    if (err) {\n        console.trace(err);\n        console.error(file);\n        console.error(model);\n        return;\n    }\n\n    var key = path.relative('data/' + model + '/', file).slice(0, -5);\n    var ext = path.extname(file);\n    if (ext == '.json') {\n        var record_id = key;\n        var data = fs.readFileSync(file, {\n            encoding: 'utf8'\n        });\n\n        if (data) {\n            cms.model_data[model] = cms.model_data[model] || {};\n            cms.model_data[model][record_id] = JSON.parse(data);\n        } else {\n            console.error('empty record: ' + model + '-' + record_id);\n        }\n    }\n});"
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "name": "fillSettings",
+    "args": [
+        "settings",
+        "scope",
+        "exclude"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "scope",
+            "exclude"
+        ],
+        "javascript": "exclude = exclude; // || ['data'];\n_.each(settings, function(value, key) {\n    if (value && (typeof value === 'string') && value.indexOf(\"{{\") != -1 && (!_.contains(exclude, key))) {\n        var template = Handlebars.compile(value);\n        settings[key] = template(scope);\n    }\n})"
+    }
+}

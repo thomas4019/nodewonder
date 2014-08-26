@@ -1,8 +1,6 @@
-pa_ = require('underscore');
-
 var http = require('http');
 
-_ = require('underscore');
+_ = require('lodash');
 fs = require('fs');
 url = require('url');
 connect = require('connect');
@@ -12,7 +10,6 @@ async = require('async');
 dive = require('dive');
 diveSync = require('diveSync');
 path = require('path');
-repl = require("repl");
 bower = require('bower');
 bowerJson = require('bower-json');
 dextend = require('dextend');
@@ -32,9 +29,6 @@ phantom = require('phantom');
 COOKIE_KEYS = ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
   'af15db41-ef32-4a3f-bb15-7edce2e3744c',
   'fd075a38-a4dd-4c98-a552-239c11f6f5f7'];
-
-var _ = require('underscore');
-global._ = _;
 
 cms = {};
 cms.m = {};
@@ -64,137 +58,12 @@ global['actionScript'] = function() {
         '"'+this.id+'", scope,'+cms.functions.createHandlersCode(this)+'));';
 }
 
-cms.functions.installDependencies = function(thing) {
-  if (thing.deps) {
-    _.each(Object.keys(cms.functions.retrieve(thing.deps)), function(dep, index) {
-      if (dep != 'order' && !_.contains(allDeps, dep)) {
-        allDeps.push(dep);
-      }
-    });
+fs.readFile('page.html', 'utf8', function(err, data) {
+  if (err) {
+    return console.error(err);
   }
-}
-
-cms.functions.addWidgetType = function(widgetType) {
-  function ensureTag(tag) {
-    if (widgetType.tags.indexOf(tag) == -1) {
-      widgetType.tags.push(tag);
-    }
-  }
-
-  var name = widgetType.name;
-
-  if (widgetType.action && !widgetType.script) {
-    if (widgetType.hasOwnProperty('toHTML')) {
-      widgetType.script = actionScript;
-    } else {
-      widgetType.makeActionJS = actionScript;
-    }
-  }
-
-  _.defaults(widgetType, Widget.prototype);
-
-  widgetType.tags = widgetType.tags || [];
-  if (widgetType.toHTML) {
-    ensureTag('view');
-  }
-  if (widgetType.makeEventJS) {
-    ensureTag('event');
-  }
-  if (widgetType.makeActionJS || widgetType.action || widgetType.doProcess) {
-    ensureTag('action');
-  }
-  if (widgetType.action) {
-    ensureTag('local-action');
-  }
-  if (widgetType.doProcess) {
-    ensureTag('process');
-  }
-  if (widgetType.execute) {
-    ensureTag('executable');
-  }
-
-  if (widgetType.settingsModel) {
-    var settings = cms.functions.retrieve(widgetType.settingsModel);
-    var type;
-    _.each(settings, function(field) {
-      if (field.name == 'data') {
-        type = field.type;
-      }
-    });
-    if (type) {
-      cms.edit_widgets[type] = cms.edit_widgets[type] || [];
-      cms.model_widgets[type] = cms.model_widgets[type] || [];
-      cms.view_widgets[type] = cms.view_widgets[type] || [];
-      if (_.contains(widgetType.tags, 'field_edit')) {
-        cms.edit_widgets[type].push(name);
-        cms.model_widgets[type].push(widgetType);
-      }
-      if (_.contains(widgetType.tags, 'field_view')) {
-        cms.view_widgets[type].push(name);
-      }
-    }
-  }
-
-  cms.widgets[name] = widgetType;
-  cms.functions.installDependencies(widgetType);
-}
-
-cms.functions.loadWidget = function(widget) {
-  //console.log(widget.name);
-  return cms.functions.evalFunctions(widget, widget);
-}
-
-cms.functions.newWidget = function(type, settings, id) {
-  var w = Object.create(cms.widgets[type]);
-
-  w.settings = settings || {};
-  if (id) {
-    w.id = id;
-  }
-  if (w.setup) {
-    w.setup.call(w);
-  }
-  return w;
-}
-
-/*cms.functions.allPagesToStatic();
-cms.functions.staticThemeCopy();
-cms.functions.staticModulesCopy();*/
-
-cms.functions.retrieve = function(val, otherwise) {
-  if (typeof val === 'undefined')
-    return otherwise;
-  return (typeof val === 'function') ? val() : val;
-}
-
-cms.functions.getWidget = function(field, input) {
-  var default_widget = cms.functions.getDefaultWidget(field.type);
-
-  var type = field.widget ? field.widget : default_widget;
-
-  if (type == 'model_form') {
-    input['model'] = 'model';
-    input['record'] = field.type;
-    input['inline'] = 'model';
-  }
-
-  if (field.quantity) {
-    input['quantity'] = field.quantity;
-    if (_.contains(cms.widgets[type].tags, 'field_edit_multiple')) {
-      //widget itself will do multiple
-    } else {
-      input['widget'] = type;
-      type = 'field_multi';
-    }
-  }
-
-  if (input && input.data && input.data._func_override) {
-    console.log('!!!!!!!!!!!!!!');
-    type = 'codemirror';
-  }
-
-  return type;
-};
+  page_template = Handlebars.compile(data);
+});
 
 Widget = function () {};
 
@@ -309,7 +178,7 @@ async.series(
 
 var app2 = http.createServer(app);
 app2.listen(3000);
-repl.start({prompt: ':', useGlobal:true});
+//repl.start({prompt: ':', useGlobal:true});
 
 /*var io = require('socket.io').listen(app2)
 
@@ -387,6 +256,7 @@ function processDeps(callback) {
 }
 
 function initFuncs(callback) {
+  console.log(cms.functions);
   cms.functions = {};
   registerModule('modules', 'storage', '', function() {
     cms.functions.loadModelIntoMemory('model');
@@ -506,14 +376,6 @@ function registerModule(directory, module, prefix, callback) {
     f.prototype.name = name;
     cms.functions[name] = f;
   });
-
-  /*_.each(m.widgets, function(widget, name) {
-    if (typeof widget != 'function') {
-      cms.functions.addWidgetType(module, name, widget);
-    } else {
-      console.log('invalid widget: ' + name);
-    }
-  });*/
 
   _.each(m.middleware, function(middleware) {
     middleware.module = module;

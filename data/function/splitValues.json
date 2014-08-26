@@ -1,0 +1,13 @@
+{
+    "name": "splitValues",
+    "args": [
+        "values"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "values"
+        ],
+        "javascript": "var widgetValues = {};\n\n_.each(values, function(value, key) {\n    var parts = key.split(\"-\");\n    if (parts.length == 2) {\n        var widget_id = parts[0];\n        var value_id = parts[1];\n\n        if (!widgetValues[widget_id]) {\n            widgetValues[widget_id] = {};\n        }\n\n        widgetValues[widget_id][value_id] = value;\n    }\n});\n\nreturn widgetValues;"
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "name": "saveRecord",
+    "args": [
+        "model_name",
+        "record_id",
+        "value",
+        "callback"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "model_name",
+            "record_id",
+            "value",
+            "callback"
+        ],
+        "javascript": "if (!cms.models[model_name].storage || cms.models[model_name].storage == 'disk+memory') {\n    mkdirp('data/' + model_name + '/' + path.dirname(record_id));\n    fs.writeFile('data/' + model_name + '/' + record_id + '.json', JSON.stringify(value, null, 4));\n}\n\nif (model_name == 'widget') {\n    cms.functions.addWidgetType(cms.functions.loadWidget(value));\n    cms.widgets[value.name].init();\n}\n\nif (!cms.model_data[model_name])\n    cms.model_data[model_name] = {};\ncms.model_data[model_name][record_id] = value;\nif (callback)\n    callback(undefined, value);"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "name": "staticModulesCopy",
+    "args": [
+        ""
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            ""
+        ],
+        "javascript": "var theme = 'modules/';\ndive(theme, {}, function(err, file) {\n    var ext = path.extname(file);\n    var pa = path.relative(theme, file);\n    if (ext == '.css' || ext == '.js' && pa.substr(pa.length - 4) != 'm.js') {\n        mkdirp(path.dirname('static/' + pa), function(err) {\n            cms.functions.copyFile(file, 'static/' + pa, function() {\n\n            });\n        });\n    }\n});"
+    }
+}

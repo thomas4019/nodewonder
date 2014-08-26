@@ -1,0 +1,19 @@
+{
+    "name": "findOneByField",
+    "args": [
+        "model_name",
+        "field",
+        "value",
+        "callback"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "model_name",
+            "field",
+            "value",
+            "callback"
+        ],
+        "javascript": "for (id in cms.model_data[model_name]) {\n    var data = cms.model_data[model_name][id];\n    if (data[field] == value) {\n        callback(undefined, data, id);\n        return;\n    }\n}\ncallback('not found', undefined);"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "name": "loadWidget",
+    "args": [
+        "widget"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "widget"
+        ],
+        "javascript": "//console.log(widget.name);\nreturn cms.functions.evalFunctions(widget, widget);"
+    }
+}

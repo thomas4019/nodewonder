@@ -1,0 +1,15 @@
+{
+    "name": "fillValues",
+    "args": [
+        "state",
+        "values"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "state",
+            "values"
+        ],
+        "javascript": "_.each(state, function(w, id) {\n    if (values[id]) {\n        state[id]['settings'] = _.extend(w, values[id]);\n    }\n});\n\nreturn state;"
+    }
+}

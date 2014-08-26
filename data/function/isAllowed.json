@@ -1,0 +1,15 @@
+{
+    "name": "isAllowed",
+    "args": [
+        "permission",
+        "user"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "permission",
+            "user"
+        ],
+        "javascript": "//console.log(permission);\nif (permission) {\n    if (permission.role && permission.role.length) {\n        if (user) {\n            return _.intersection(permission.role, user.roles).length;\n        } else {\n            return false;\n        }\n    }\n}\n\nreturn true;"
+    }
+}

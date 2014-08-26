@@ -1,0 +1,13 @@
+{
+    "name": "getWidgetUsage",
+    "args": [
+        ""
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            ""
+        ],
+        "javascript": "var usage = {};\nfor (var model_name in cms.model_data['model']) {\n    var model = cms.model_data['model'][model_name];\n    model.fields.forEach(function(field) {\n\n        if (field.type == 'Widgets') {\n            for (var record in cms.model_data[model_name]) {\n                var data = cms.model_data[model_name][record];\n\n                if (data[field.name]) {\n                    for (var id in data[field.name].widgets) {\n                        var widget = data[field.name].widgets[id];\n\n                        usage[widget.type] = usage[widget.type] || 0;\n                        usage[widget.type]++;\n                    }\n                }\n            }\n        }\n    });\n}\nreturn usage;"
+    }
+}
