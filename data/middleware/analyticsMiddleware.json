@@ -1,0 +1,13 @@
+{
+    "name": "analyticsMiddleware",
+    "priority": -10,
+    "code": {
+        "_is_func": true,
+        "args": [
+            "req",
+            "res",
+            "next"
+        ],
+        "javascript": "cms.functions.saveRecord('pageview', cms.functions.generateRecordID(), {\n    url: req.url,\n    datetime: Date.now(),\n    ip: req.connection.remoteAddress\n});\nnext();"
+    }
+}

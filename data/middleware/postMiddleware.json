@@ -1,0 +1,13 @@
+{
+    "name": "postMiddleware",
+    "priority": -2,
+    "code": {
+        "_is_func": true,
+        "args": [
+            "req",
+            "res",
+            "next"
+        ],
+        "javascript": "if (req.method == 'POST' && req.url == '/post') {\n    console.log('post');\n    console.log(res.post);\n    var saveResponse = function(err, data) {\n        if (err) {\n            console.error(500);\n            console.error(err);\n            res.writeHead(500, {\n                'Content-Type': 'application/json'\n            });\n            var toSend = JSON.stringify(err, 0, 2);\n            res.write(toSend);\n        } else {\n            console.log(200);\n            console.log(data);\n            res.writeHead(200, {\n                'Content-Type': 'application/json'\n            });\n            var toSend = JSON.stringify(data, 0, 2);\n            res.write(toSend);\n        }\n        res.end();\n    }\n\n    var widget_name = res.post['widget'];\n    delete res.post['widget'];\n    var widget = cms.functions.newWidget(widget_name);\n\n    var user = {};\n    user.clientID = req.clientID;\n    user.ip = req.connection.remoteAddress;\n\n    if (widget.load) {\n        widget.load(function() {\n            results = widget.save(res.post, user, req, res, saveResponse);\n        });\n    } else {\n        results = widget.save(res.post, user, req, res, saveResponse);\n    }\n} else {\n    next();\n}"
+    }
+}

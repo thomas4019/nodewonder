@@ -1,0 +1,13 @@
+{
+    "name": "userMiddleware",
+    "priority": -1,
+    "code": {
+        "_is_func": true,
+        "args": [
+            "req",
+            "res",
+            "next"
+        ],
+        "javascript": "var cookies = new Cookies(req, res, COOKIE_KEYS);\nreq.clientID = cookies.get('clientID');\nconsole.log('clientID: ' + req.clientID);\nif (!req.clientID) {\n    console.log('NEW USER');\n    req.clientID = cms.functions.makeid(12);\n    cookies.set('clientID', req.clientID, {\n        signed: true,\n        overwrite: true\n    });\n}\ncms.functions.getRecord('user', req.clientID, function(err, user) {\n    req.user = user || {};\n    next();\n});"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "name": "processPost",
+    "priority": -3,
+    "code": {
+        "_is_func": true,
+        "args": [
+            "req",
+            "res",
+            "next"
+        ],
+        "javascript": "var queryData = \"\";\nif (typeof next !== 'function') return null;\n\nif (req.method == 'POST') {\n    req.on('data', function(data) {\n        queryData += data;\n        if (queryData.length > 1e6) {\n            queryData = \"\";\n            res.writeHead(413, {\n                'Content-Type': 'text/plain'\n            }).end();\n            req.connection.destroy();\n        }\n    });\n\n    req.on('end', function() {\n        res.post = querystring.parse(queryData);\n        next();\n    });\n\n} else {\n    next();\n}"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "name": "bowerMiddleware",
+    "priority": -5,
+    "base" : "/bower_components",
+    "code": {
+        "_is_func": true,
+        "args": [
+            "req",
+            "res",
+            "next"
+        ],
+        "javascript": "return connect.static('bower_components')(req, res, next);"
+    }
+}

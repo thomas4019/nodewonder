@@ -1,0 +1,13 @@
+{
+    "name": "customPageMiddleware",
+    "priority": 0,
+    "code": {
+        "_is_func": true,
+        "args": [
+            "req",
+            "res",
+            "next"
+        ],
+        "javascript": "var url_parts = url.parse(req.url, true);\nvar query = url_parts.query;\nvar path = url_parts.pathname.substring(1);\n\nvar scope = {};\nscope.user = req.user;\n\ncms.functions.viewPage(path, query, scope, function(page, vars) {\n\n    cms.functions.renderPage(page, vars, function(html, content_type, code) {\n        res.writeHead(code || 200, {\n            'Content-Type': content_type\n        });\n        res.end(html);\n    });\n}, next);"
+    }
+}

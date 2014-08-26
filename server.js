@@ -25,6 +25,7 @@ passport = require('passport');
 LocalStrategy = require('passport-local').Strategy;
 Cookies = require('cookies');
 phantom = require('phantom');
+mkdirp = require('mkdirp');
 
 COOKIE_KEYS = ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
   'af15db41-ef32-4a3f-bb15-7edce2e3744c',
@@ -58,12 +59,77 @@ global['actionScript'] = function() {
         '"'+this.id+'", scope,'+cms.functions.createHandlersCode(this)+'));';
 }
 
+global['processSetup'] = function() {
+  cms.functions.setupProcess(this.name, this.settings);
+}
+
+
 fs.readFile('page.html', 'utf8', function(err, data) {
   if (err) {
     return console.error(err);
   }
   page_template = Handlebars.compile(data);
 });
+
+cms.functions.loadModelIntoMemory = function(model, callback) {
+  if (!fs.existsSync('data/' + model + '/'))
+    return;
+
+  console.log('loading data for "' + model + '"');
+
+  var models = fs.readdirSync('data/' + model + '/');
+  cms.model_data = cms.model_data || {};
+  cms.model_data[model] = {};
+
+  diveSync('data/' + model + '/', {}, function(err, file) {
+    if (err) {
+      console.trace(err);
+      console.error(file);
+      console.error(model);
+      return;
+    }
+
+    var key = path.relative('data/' + model + '/',file).slice(0, -5);
+    var ext = path.extname(file);
+    if (ext == '.json') {
+      var record_id = key;
+      var data = fs.readFileSync(file, {encoding: 'utf8'});
+
+      if (data) {
+        cms.model_data[model] = cms.model_data[model] || {};
+        cms.model_data[model][record_id] = JSON.parse(data);
+      } else {
+        console.error('empty record: ' + model+'-'+record_id);
+      }
+    }
+  });
+}
+
+cms.functions.evalFunctions = function(widget, object, key) {
+  if (object instanceof Array) {
+    return object;
+  }
+  if (object == null) {
+    return object;
+  }
+  if (typeof object == 'object') {
+    if ('_is_func' in object && 'javascript' in object) {
+      if (!object.args) {
+        console.log(widget.name + ' ' + key + ' missing args');
+      }
+      var func = new Function(object.args.join(','), object.javascript);//.bind(widget);
+      return func;
+    } else {
+      var object2 = _.clone(object);
+      for (var key in object) {
+        object2[key] = cms.functions.evalFunctions(widget, object[key], key);
+      }
+      return object2;
+    }
+  }
+
+  return object;
+}
 
 Widget = function () {};
 
@@ -144,7 +210,6 @@ Widget.prototype.weight = 0;
 Widget.prototype.init = function() {
   if (this.htmlTemplate) {
     this.htmlCompiled = Handlebars.compile(this.htmlTemplate.htmlmixed);//.bind(null, [this]);
-    console.log(this.toHTML);
   }
 }
 
@@ -256,8 +321,6 @@ function processDeps(callback) {
 }
 
 function initFuncs(callback) {
-  console.log(cms.functions);
-  cms.functions = {};
   registerModule('modules', 'storage', '', function() {
     cms.functions.loadModelIntoMemory('model');
     _.each(cms.model_data.model, function(list, key) {
@@ -315,23 +378,22 @@ function sortWidgets(callback) {
   callback();
 }
 
-function functionName(fun) {
-  var ret = fun.toString();
-  ret = ret.substr('function '.length);
-  ret = ret.substr(0, ret.indexOf('('));
-  return ret;
-}
-
 function addMiddleware(callback) {
+  cms.middleware = [];
+  _.each(cms.model_data['middleware'], function(data) {
+    var middleware = cms.functions.evalFunctions(data, data);
+    cms.middleware.push(middleware);
+  });
+
   cms.middleware.sort(function(a, b) {
     return (a.priority || 0) - (b.priority || 0);
   });
   _.each(cms.middleware, function(middleware, index) {
-    middleware.name = functionName(middleware.func);
+    middleware.code = middleware.code || middleware.func;
     if (middleware.base) {
-      app.use(middleware.base, middleware.func);
+      app.use(middleware.base, middleware.code);
     } else {
-      app.use(middleware.func);
+      app.use(middleware.code);
     }
   });
   callback();
@@ -496,6 +558,22 @@ cms.migrate5 = function() {
   });
 }
 
+cms.migrate6 = function() {
+  _.forEach(cms.middleware, function(m, index) {
+    var name = cms.getFuncName(m.func);
+    var funcObj = {
+      name: name,
+      priority: m.priority,
+      code: {
+        "_is_func": true,
+        "args": cms.getFuncArgs(m.func),
+        "javascript": cms.getFuncBody(m.func),
+      }
+    };
+    cms.functions.saveRecord('middleware', name, funcObj);
+  });
+}
+
 cms.funcsToString = function(object) {
   var object2 = {};
   var widgetModel = cms.models['widget'];
@@ -521,6 +599,13 @@ cms.funcsToString = function(object) {
     }
   }
   return object2
+}
+
+cms.getFuncName = function(func) {
+  var code = func.toString();
+  var begin = code.indexOf('n ') + 1;
+  var end = code.indexOf('(');
+  return code.substring(begin, end).trim();
 }
 
 cms.getFuncBody = function(func) {
@@ -599,3 +684,5 @@ cms.phantomCapture = function(ph, base, url, callback, method, data) {
     });
   });
 }
+
+//cms.migrate6();
