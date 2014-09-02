@@ -12,8 +12,6 @@ diveSync = require('diveSync');
 path = require('path');
 bower = require('bower');
 bowerJson = require('bower-json');
-dextend = require('dextend');
-beautify_js = require('js-beautify');
 deep = require('deep');
 deepExtend = require('deep-extend');
 dextend = require('dextend');
@@ -189,9 +187,13 @@ Widget.prototype.html = function () {
 Widget.prototype.renderSlot = function(slotName) {
   var zone_html = '';
   _.each(this.slotAssignments[slotName], function(w, i) {
-    zone_html += w.html(this.values);
+    zone_html += w.html();
   });
   return zone_html;
+}
+
+Widget.prototype.renderSlotIndex = function(slotName, index) {
+  return this.slotAssignments[slotName][index].html();
 }
 
 Widget.prototype.processData = function(data) {

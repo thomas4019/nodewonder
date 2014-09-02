@@ -1,6 +1,11 @@
 
 jQuery(function ($) {
 
+$.fn.drupalGetSummary = function () {
+  var callback = this.data('summaryCallback');
+  return (this[0] && callback) ? $.trim(callback(this[0])) : '';
+};
+
 /**
  * This script transforms a set of fieldsets into a stack of vertical
  * tabs. Another tab pane can be selected by clicking on the respective
@@ -77,7 +82,9 @@ Drupal.theme = {};
 Drupal.verticalTab = function (settings) {
   var self = this;
   console.log(self);
-  //$.extend(this, settings, Drupal.theme('verticalTab', settings));
+  $.extend(this, settings, themeVerticalTab(settings));
+
+  console.log(this);
 
   this.link.click(function () {
     self.focus();
@@ -184,7 +191,7 @@ Drupal.verticalTab.prototype = {
  *       (jQuery version)
  *   - summary: The jQuery element that contains the tab summary
  */
-/*Drupal.theme.prototype.verticalTab = function (settings) {
+function themeVerticalTab(settings) {
   var tab = {};
   tab.item = $('<li class="vertical-tab-button" tabindex="-1"></li>')
     .append(tab.link = $('<a href="#"></a>')
@@ -193,7 +200,7 @@ Drupal.verticalTab.prototype = {
     )
   );
   return tab;
-};*/
+};
 
   attach();
 });

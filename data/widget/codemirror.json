@@ -71,7 +71,7 @@
             "old",
             "user"
         ],
-        "javascript": "return typeof data == 'string' ? JSON.parse(data) : data;"
+        "javascript": "var data = typeof data == 'string' ? JSON.parse(data) : data;\nif (data && data.htmlmixed) {\n  data.htmlmixed = beautify_js.html(data.htmlmixed);\n}\nreturn data;"
     },
     "wrapper": "div",
     "wrapperClass": "",
