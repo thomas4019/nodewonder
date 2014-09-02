@@ -302,7 +302,7 @@
             "required": false
         }
     ],
-    "index": "",
+    "index": "name",
     "views": {},
     "storage": "disk+memory"
 }

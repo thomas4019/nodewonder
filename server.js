@@ -217,7 +217,7 @@ allDeps = [];
 
 var app = connect()
   .use(connect.static('themes/html5up-tessellate/'))
-  .use('/files', connect.static('files'))
+  .use('/', connect.static('files'))
   .use('/modules', connect.static('modules'))
   .use('/themes', connect.static('themes'));
 
