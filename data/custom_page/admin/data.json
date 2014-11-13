@@ -1,14 +1,15 @@
 {
+    "URL": "admin/data",
     "parent": "admin",
+    "controller": "",
     "code": {
         "widgets": {
             "bSTlkYv9": {
                 "type": "model_data_listing",
                 "slots": {},
                 "settings": {
-                    "model": "model",
-                    "row_template": "<a href=\"/admin/list/{{ key }}/\"><span class=\"glyphicon glyphicon-list\"></span> {{ key }}</a>",
-                    "title": "Site Data"
+                    "row_template": "<a href=\"/admin/data/?model=model&record={{ key }}\"><span class=\"glyphicon glyphicon-cog\"></span></a> <a href=\"/admin/list/{{ key }}/\"><span class=\"glyphicon glyphicon-list\"></span> {{ key }}</a>",
+                    "model": "model"
                 }
             }
         },
@@ -17,5 +18,10 @@
                 "bSTlkYv9"
             ]
         }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
     }
 }

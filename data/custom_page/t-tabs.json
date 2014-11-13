@@ -1,0 +1,49 @@
+{
+    "URL": "t-tabs",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "0qKWRbe6": {
+                "type": "vertical_tabs",
+                "slots": {
+                    "tabs": [
+                        "GIRBdr6A",
+                        "qOwaQCHS"
+                    ]
+                },
+                "settings": {
+                    "0": [],
+                    "tabs": [
+                        {
+                            "key": "0",
+                            "value": "1"
+                        },
+                        {
+                            "key": "a",
+                            "value": "b"
+                        }
+                    ]
+                }
+            },
+            "GIRBdr6A": {
+                "type": "calendar",
+                "slots": {}
+            },
+            "qOwaQCHS": {
+                "type": "hello_world",
+                "slots": {}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "0qKWRbe6"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

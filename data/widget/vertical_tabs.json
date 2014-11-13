@@ -16,7 +16,7 @@
         "args": [
             "label"
         ],
-        "javascript": "var html = '<div class=\"vertical-tabs-panes\">';\nconsole.log(this.settings);\nfor (var index in this.slotAssignments.tabs) {\n  var widget = this.slotAssignments.tabs[index];\n  html += '<fieldset class=\"menu-link-form collapsible collapsed\">';\n  html +=  '<legend><span class=\"fieldset-legend\">'+this.settings.tabs[index]+'</span></legend>';\n  html += widget.html();\n  html += '<div class=\"fieldset-wrapper\"></div></fieldset>';\n}\nhtml += '<input class=\"vertical-tabs-active-tab\" type=\"hidden\" name=\"additional_settings__active_tab\" value=\"\" /></div>';\nreturn html;"
+        "javascript": "var html = '<div class=\"vertical-tabs-panes\">';\nconsole.log(this.settings.tabs[0]);\nfor (var index in this.slotAssignments.tabs) {\n  var widget = this.slotAssignments.tabs[index];\n  html += '<fieldset class=\"menu-link-form collapsible collapsed\">';\n  html +=  '<legend><span class=\"fieldset-legend\">'+this.settings.tabs[index]+'</span></legend>';\n  html += widget.html();\n  html += '<div class=\"fieldset-wrapper\"></div></fieldset>';\n}\nhtml += '<input class=\"vertical-tabs-active-tab\" type=\"hidden\" name=\"additional_settings__active_tab\" value=\"\" /></div>';\nreturn html;"
     },
     "deps": {
         "jquery": []
