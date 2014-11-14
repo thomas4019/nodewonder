@@ -211,7 +211,8 @@ Widget.prototype.init = function() {
   }
 }
 
-Widget.prototype.toHTML = function() {
+Widget.prototype.toHTML = function(label) {
+  this.label = label;
   return this.htmlCompiled ? this.htmlCompiled(this) : '';
 }
 

@@ -35,7 +35,7 @@
             "old",
             "user"
         ],
-        "javascript": "var key = data.key;\nvar widget = cms.functions.newWidget(this.w_type, this.settings);\n\nvar out = {};\nout['key'] = key;\nout['value'] = widget.processData(data.value);\n\nreturn out;"
+        "javascript": "var key = data.key;\nvar widget = cms.functions.newWidget(this.w_type, this.settings);\n\nvar out = {};\nout['key'] = key;\nout['value'] = widget.processData(data.value);\nconsole.log(out);\n\nreturn out;"
     },
     "wrapper": "",
     "wrapperClass": "",

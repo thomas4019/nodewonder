@@ -1,22 +1,47 @@
 {
+    "name": "checkbox",
+    "settingsModel": [
+        {
+            "name": "label",
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "name",
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "data",
+            "type": "Boolean",
+            "quantity": "",
+            "widget": "checkbox",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "settings_unfiltered": [
+        "data"
+    ],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "<input type=\"checkbox\" name=\"{{id}}\" {{#if settings.data}} checked=\"checked\" {{/if}}>{{{label}}}"
+    },
+    "deps": {},
+    "head": [],
     "tags": [
         "field_edit",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "label",
-            "type": "Text"
-        },
-        {
-            "name": "name",
-            "type": "Text"
-        },
-        {
-            "name": "data",
-            "type": "Boolean"
-        }
-    ],
+    "slots": [],
+    "slot_tags": {},
     "processData": {
         "_is_func": true,
         "args": [
@@ -26,12 +51,7 @@
         ],
         "javascript": "return data == \"on\";"
     },
-    "toHTML": {
-        "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "return '<input type=\"checkbox\" name=\"' + this.id + '\" ' + (this.settings.data ? 'checked=\"checked\"' : '') + ' >' + label;"
-    },
-    "name": "checkbox"
+    "wrapper": "",
+    "wrapperClass": "",
+    "weight": null
 }

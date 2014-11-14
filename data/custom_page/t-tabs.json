@@ -17,11 +17,11 @@
                     "tabs": [
                         {
                             "key": "0",
-                            "value": "1"
+                            "value": "aaa"
                         },
                         {
-                            "key": "a",
-                            "value": "b"
+                            "key": "1",
+                            "value": "bbbb"
                         }
                     ]
                 }

@@ -11,12 +11,17 @@
         }
     ],
     "settings_unfiltered": [],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "<div class=\"vertical-tabs-panes\">\n    {{#each slotAssignments.tabs}}\n    <fieldset class=\"menu-link-form collapsible collapsed\">\n        <legend><span class=\"fieldset-legend\">{{this.label}}</span>\n        </legend>\n        {{{this.html}}}\n        <div class=\"fieldset-wrapper\"></div>\n    </fieldset>\n    {{/each}}\n    <input class=\"vertical-tabs-active-tab\" type=\"hidden\" name=\"additional_settings__active_tab\" value=\"\" />\n</div>"
+    },
     "toHTML": {
         "_is_func": true,
         "args": [
             "label"
         ],
-        "javascript": "var html = '<div class=\"vertical-tabs-panes\">';\nconsole.log(this.settings.tabs[0]);\nfor (var index in this.slotAssignments.tabs) {\n  var widget = this.slotAssignments.tabs[index];\n  html += '<fieldset class=\"menu-link-form collapsible collapsed\">';\n  html +=  '<legend><span class=\"fieldset-legend\">'+this.settings.tabs[index]+'</span></legend>';\n  html += widget.html();\n  html += '<div class=\"fieldset-wrapper\"></div></fieldset>';\n}\nhtml += '<input class=\"vertical-tabs-active-tab\" type=\"hidden\" name=\"additional_settings__active_tab\" value=\"\" /></div>';\nreturn html;"
+        "javascript": "for (var index in this.slotAssignments.tabs) {\n  this.slotAssignments.tabs[index].label = this.settings.tabs[index];\n}\nreturn Handlebars.compile(this.htmlTemplate.htmlmixed)(this);"
     },
     "deps": {
         "jquery": []

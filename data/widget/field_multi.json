@@ -11,13 +11,15 @@
     },
     "deps": {},
     "head": [],
-    "tags": [],
+    "tags": [
+        "view"
+    ],
     "slots": [],
     "slot_tags": {},
     "setup": {
         "_is_func": true,
         "args": [],
-        "javascript": "this.w_input = deep.clone(this.settings);\n\nthis.can_add = false;\nthis.map = false;\nif (this.settings.quantity && this.settings.quantity.indexOf(':') !== -1) {\n  this.map = true;\n}\nthis.settings.quantity = this.settings.quantity.substr(this.settings.quantity.indexOf(':') + 1, this.settings.quantity.length)\n    this.w_type = 'key_value';\n    \n    var ndata = [];\n    _.each(this.settings.data, function(value, key) {\n        ndata.push({\n            key: key,\n            value: value\n        });\n    });\n    this.settings.data = ndata;\n/*} else {\n    this.w_type = this.settings.widget;\n    delete this.w_input['widget'];\n}*/\n\nif (this.settings.quantity && this.settings.quantity.slice(-1) == '+') {\n    this.can_add = true;\n    this.settings.quantity = this.settings.quantity.substring(0, this.settings.quantity.length - 1)\n}\n\ndelete this.w_input['label'];\nthis.w_input['inline'] = 'multi';"
+        "javascript": "this.w_input = deep.clone(this.settings);\n\nthis.settings.quantity = this.settings.quantity || '';\nvar re = /([a-zA-Z]*)([0-9]*)-?([0-9]*)(\\+?):?(.*)/g;\n// 1=key, 2=min, 3=max, 4=add, 5=remainder\ntokens = re.exec(this.settings.quantity);\n//console.log(tokens);\n\nthis.can_add = false;\nthis.map = false;\nif (tokens[1]) {\n  this.map = true;\n}\nthis.settings.quantity = tokens[5];\nthis.w_type = 'key_value';\n    \nvar ndata = [];\n_.each(this.settings.data, function(value, key) {\n    ndata.push({\n        key: key,\n        value: value\n    });\n});\nthis.settings.data = ndata;\n\nif (tokens[4]) {\n    this.can_add = true;\n}\nthis.settings.quantity = tokens[2];\n\ndelete this.w_input['label'];\nthis.w_input['inline'] = 'multi';"
     },
     "children": {
         "_is_func": true,
