@@ -43,5 +43,10 @@
     "slot_tags": {},
     "wrapper": "div",
     "wrapperClass": "",
+    "style": {
+        "_is_func": true,
+        "args": [],
+        "css": "#{{id}} {\n  {{#if settings.width}}\n  width: {{settings.width}}px;\n  {{/if}}\n}"
+    },
     "weight": -10
 }

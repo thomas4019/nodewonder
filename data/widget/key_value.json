@@ -26,7 +26,7 @@
         "args": [
             "callback"
         ],
-        "javascript": "var state = {\n    \"body\": {}\n};\n\nstate[\"body\"][\"key\"] = {\n    type: 'textbox',\n    settings: {\n        data: (this.settings.data ? this.settings.data.key : undefined)\n    }\n};\n\nstate[\"body\"][\"value\"] = {\n    type: this.w_type,\n    settings: deep.clone(this.w_input),\n};\nstate[\"body\"][\"value\"][\"settings\"][\"data\"] = this.settings.data ? this.settings.data.value : undefined;\n\nstate[\"body\"][\"delete\"] = {\n    type: \"row_delete\",\n};\n\ncallback(state);"
+        "javascript": "var state = {\n    \"body\": {}\n};\n\nstate[\"body\"][\"key\"] = {\n    type: 'textbox',\n    settings: {\n      \twidth: 50,\n        data: (this.settings.data ? this.settings.data.key : undefined)\n    }\n};\n\nstate[\"body\"][\"value\"] = {\n    type: this.w_type,\n    settings: deep.clone(this.w_input),\n};\nstate[\"body\"][\"value\"][\"settings\"][\"data\"] = this.settings.data ? this.settings.data.value : undefined;\n\nstate[\"body\"][\"delete\"] = {\n    type: \"row_delete\",\n};\n\ncallback(state);"
     },
     "processData": {
         "_is_func": true,

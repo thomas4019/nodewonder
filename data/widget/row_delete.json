@@ -22,7 +22,7 @@
             "scope",
             "handlers"
         ],
-        "javascript": "$('#'+id).on('click', function() { $('#'+id).parent().remove() });"
+        "javascript": "$('#'+id).on('click', function() { console.log('removing'); $('#'+id).parent().remove() });"
     },
     "weight": null
 }

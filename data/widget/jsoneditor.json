@@ -1,18 +1,39 @@
 {
+    "name": "jsoneditor",
     "settingsModel": [
         {
             "name": "data",
-            "type": "JSON"
+            "type": "JSON",
+            "quantity": "",
+            "widget": "jsoneditor",
+            "settings": "",
+            "required": false
         },
         {
             "name": "width",
-            "type": "Number"
+            "type": "Number",
+            "quantity": "",
+            "widget": "numeric_textbox",
+            "settings": "",
+            "required": false
         },
         {
             "name": "height",
-            "type": "Number"
+            "type": "Number",
+            "quantity": "",
+            "widget": "numeric_textbox",
+            "settings": "",
+            "required": false
         }
     ],
+    "settings_unfiltered": [],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var element = '<div class=\"json\" style=\"width: ' + (this.settings.width ? this.settings.width + 'px' : 'auto') + '; height: ' + (this.settings.height || 200) + 'px;\"></div>';\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + element;\n}"
+    },
     "deps": {
         "jsoneditor": [
             "jsoneditor.min.css",
@@ -21,21 +42,31 @@
             "asset/jsonlint/jsonlint.js"
         ]
     },
-	"processData": {
-		"_is_func": true,
-		"javascript": "return JSON.parse(data);",
-        "args": [
-            "data",
-            "old",
-            "user"
-        ]
-	},
+    "head": [],
     "tags": [
         "field_edit",
         "view",
         "action",
         "local-action"
     ],
+    "slots": [],
+    "slot_tags": {},
+    "processData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "old",
+            "user"
+        ],
+        "javascript": "return JSON.parse(data);"
+    },
+    "wrapper": "",
+    "wrapperClass": "",
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    },
     "action": {
         "_is_func": true,
         "args": [
@@ -46,18 +77,5 @@
         ],
         "javascript": "var container = document.querySelector('#' + id + ' .json');\nvar options = {\n    mode: 'code',\n    modes: ['code', 'tree'], // allowed modes\n};\nvar data = settings.data || {};\ndata = typeof data == 'string' ? JSON.parse(data) : data;\nvar editor = new JSONEditor(container, options, data);\n\nreturn {\n    get: function() {\n        return JSON.stringify(editor.get());\n    }\n}"
     },
-    "toHTML": {
-        "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "var element = '<div class=\"json\" style=\"width: ' + (this.settings.width + 'px' || 'auto') + '; height: ' + (this.settings.height || 200) + 'px;\"></div>';\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + element;\n}"
-    },
-    "style": ".poweredBy {display: none;}",
-    "name": "jsoneditor",
-    "script": {
-        "_is_func": true,
-        "args": [],
-        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
-    }
+    "weight": null
 }
