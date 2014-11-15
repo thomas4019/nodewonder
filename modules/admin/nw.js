@@ -167,6 +167,13 @@ var nw = function() {
 			//causes it to scroll to tho top for some reason.
 			var tempScrollTop = $(window).scrollTop();
 			eval('var scope = {}; ' + result.javascript);
+			if (result.style) {
+				var node = document.createElement('style');
+    		node.innerHTML = result.style;
+    		console.log(node);
+    		document.body.appendChild(node);
+    	}
+
 			$(window).scrollTop(tempScrollTop);
 		});
 	}
@@ -213,6 +220,13 @@ var nw = function() {
 					}
 				});
 				setTimeout('var scope = {}; ' + result.javascript, 25);
+
+				if (result.style) {
+					var node = document.createElement('style');
+	    		node.innerHTML = result.style;
+	    		console.log(node);
+	    		document.body.appendChild(node);
+	    	}
 
 		    $("#widgetForm .close").click(function() {
 		    	$("#widgetForm").remove();

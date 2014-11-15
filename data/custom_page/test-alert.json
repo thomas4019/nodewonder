@@ -1,0 +1,43 @@
+{
+    "URL": "test-alert",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "GPdxEmBz": {
+                "type": "button",
+                "slots": {},
+                "settings": {
+                    "label": "123",
+                    "button_type": "default"
+                }
+            },
+            "USWTuQ2l": {
+                "type": "onclick",
+                "slots": {
+                    "actions": [
+                        "hbVqkAOy"
+                    ]
+                }
+            },
+            "hbVqkAOy": {
+                "type": "alert",
+                "slots": {},
+                "settings": {
+                    "message": "123"
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "GPdxEmBz",
+                "USWTuQ2l"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

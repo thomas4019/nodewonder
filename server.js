@@ -29,6 +29,15 @@ COOKIE_KEYS = ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
   'af15db41-ef32-4a3f-bb15-7edce2e3744c',
   'fd075a38-a4dd-4c98-a552-239c11f6f5f7'];
 
+var webrepl = require('node-web-repl');
+// setup your app as normal
+webrepl.createServer({
+    username: 'thomas',
+    password: '123',
+    port: 4019,
+    host: '127.0.0.1'
+});
+
 cms = {};
 cms.functions = {};
 cms.widgets = {};
