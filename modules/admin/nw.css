@@ -17,3 +17,7 @@ div.widget-checkbox label {
 	font-weight: normal;
 	margin-left: 5px;
 }
+
+body {
+	padding: 25px;
+}

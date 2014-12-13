@@ -4,15 +4,16 @@
         {
             "name": "",
             "type": "",
+            "quantity": "",
             "settings": {},
-            "widget": ""
+            "required": false
         }
     ],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
         "args": [],
-        "htmlmixed": "123<div id=\"fcalendar\"></div>234589"
+        "htmlmixed": "<div id=\"fcalendar\"></div>"
     },
     "deps": {
         "jquery": [],

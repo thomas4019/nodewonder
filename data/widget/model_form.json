@@ -51,9 +51,7 @@
     "deps": {
         "underscore": []
     },
-    "head": [
-        "/modules/models/models.css"
-    ],
+    "head": [],
     "tags": [
         "field_edit",
         "view"

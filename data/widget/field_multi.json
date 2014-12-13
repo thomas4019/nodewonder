@@ -1,20 +1,33 @@
 {
     "name": "field_multi",
-    "settingsModel": [],
-    "settings_unfiltered": [],
-    "toHTML": {
+    "settingsModel": [
+        {
+            "name": "",
+            "type": "",
+            "quantity": "",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "settings_unfiltered": [
+        ""
+    ],
+    "htmlTemplate": {
         "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "var arr = '<input type=\"hidden\" name=\"' + this.id + '\" value=\"' + (this.map ? 'new Object' : 'new Array') + '\" />';\nreturn label + arr + this.renderSlot('body');"
+        "args": [],
+        "htmlmixed": "{{{label}}}\n<input type=\"hidden\" name=\"{{id}}\" value=\"new {{#if map}}Object{{else}}Array{{/if}}\" />{{{ renderSlot \"body\" }}}"
     },
     "deps": {},
-    "head": [],
+    "head": [
+        ""
+    ],
     "tags": [
         "view"
     ],
-    "slots": [],
+    "slots": [
+        "",
+        ""
+    ],
     "slot_tags": {},
     "setup": {
         "_is_func": true,
@@ -26,7 +39,7 @@
         "args": [
             "callback"
         ],
-        "javascript": "var state = {\n    \"body\": {}\n};\n\nif (this.can_add) {\n    state[\"body\"][\"add\"] = {\n        \"type\": \"button\",\n        \"slots\": {\n            \"events\": [\"onclick\"]\n        }\n    }\n    state[\"body\"][\"add\"][\"settings\"] = {\n        \"button_type\": \"primary\",\n        \"label\": \"Add more items\"\n    }\n}\n\nthis.count = (this.settings.data && Array.isArray(this.settings.data)) ? this.settings.data.length : this.settings.quantity;\n\nif (this.count == 0) {\n    this.count = this.settings.quantity;\n}\nif (this.count == '') {\n    this.count = 3;\n}\n\ndelete this.w_input['data'];\n\nfor (var i = 0; i < this.count; i++) {\n    state[\"body\"][\"\" + (i)] = {};\n    state[\"body\"][\"\" + (i)]['type'] = this.w_type;\n    state[\"body\"][\"\" + (i)]['settings'] = deep.clone(this.w_input);\n    if (this.settings.data && this.settings.data[i])\n        state[\"body\"][\"\" + i]['settings']['data'] = this.settings.data[i];\n    //else\n    //  state[\"body\"][\"\" + i]['settings']['data'] = {key: i};\n}\n\nstate[\"body\"][\"onclick\"] = {\n    \"type\": \"onclick\",\n    \"slots\": {\n        \"actions\": [\"add_action\"]\n    }\n}\nstate[\"body\"][\"add_action\"] = {\n    \"type\": \"execute\",\n    \"settings\": {\n        \"js\": \"nw.functions.insertWidgetBefore('\" + this.w_type + \"','\" + this.id + \"-'+(nw.counter['\" + this.id + \"']++), '\" +\n         JSON.stringify(this.w_input) + \"', '#\" + this.id + \"-add')\"\n    },\n}\ncallback(state);"
+        "javascript": "var state = {\n    \"body\": {}\n};\n\nif (this.can_add) {\n    state[\"body\"][\"add\"] = {\n        \"type\": \"button\",\n        \"slots\": {\n            \"events\": [\"onclick\"]\n        }\n    }\n    state[\"body\"][\"add\"][\"settings\"] = {\n        \"button_type\": \"primary\",\n        \"label\": \"Add more items\"\n    }\n}\n\nthis.count = (this.settings.data && Array.isArray(this.settings.data)) ? this.settings.data.length : this.settings.quantity;\n\nif (this.count == 0) {\n    this.count = this.settings.quantity;\n}\nif (this.count == '') {\n    this.count = 3;\n}\n\ndelete this.w_input['data'];\n\nfor (var i = 0; i < this.count; i++) {\n    state[\"body\"][\"\" + (i)] = {};\n    state[\"body\"][\"\" + (i)]['type'] = this.w_type;\n    state[\"body\"][\"\" + (i)]['settings'] = deep.clone(this.w_input);\n    if (this.settings.data && this.settings.data[i])\n        state[\"body\"][\"\" + i]['settings']['data'] = this.settings.data[i];\n    else if (!this.map)\n      state[\"body\"][\"\" + i]['settings']['data'] = {key: i};\n}\n\nstate[\"body\"][\"onclick\"] = {\n    \"type\": \"onclick\",\n    \"slots\": {\n        \"actions\": [\"add_action\"]\n    }\n}\nstate[\"body\"][\"add_action\"] = {\n    \"type\": \"execute\",\n    \"settings\": {\n      \"js\": \"d = \" + JSON.stringify(this.w_input) + \"; \" + (this.map ? \"\" : \"d['data'] = {key: (nw.counter['\" + this.id + \"'])}; \") +  \"nw.functions.insertWidgetBefore('\" + this.w_type + \"','\" + \n      this.id + \"-'+(nw.counter['\" + this.id + \"']++), JSON.stringify(d), '#\" + this.id + \"-add')\"\n    },\n}\ncallback(state);"
     },
     "processData": {
         "_is_func": true,

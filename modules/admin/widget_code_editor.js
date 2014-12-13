@@ -11,7 +11,8 @@ function setupWidgetSelector(id) {
 				var model = {text: 'Model', children: []};
 				data.results.push(model);
 				var fields = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#wyobn3bP-fields :input').serializeArray())).fields;
-				_.each(fields, function(field) {
+				_.each(fields, function(kv) {
+					field = kv.value;
 					if (field.name) {
 						if(!query.term || field.name.toUpperCase().indexOf(query.term.toUpperCase()	) !== -1) {
 							var w = JSON.parse(JSON.stringify(nw.widgets[field.widget]));

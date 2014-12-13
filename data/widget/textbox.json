@@ -32,9 +32,7 @@
         "jquery": [],
         "bootstrap": []
     },
-    "head": [
-        "/modules/forms/forms.css"
-    ],
+    "head": [],
     "tags": [
         "field_edit",
         "view"

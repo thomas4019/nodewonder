@@ -1,0 +1,41 @@
+{
+    "name": "test",
+    "description": "",
+    "fields": [
+        {
+            "name": "deps",
+            "type": "Text",
+            "quantity": "1",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "deps2",
+            "type": "Text",
+            "quantity": "2+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "deps3",
+            "type": "Text",
+            "quantity": "key3+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "deps4",
+            "type": "Text",
+            "quantity": "key+:1+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "index": "",
+    "views": {},
+    "storage": "disk+memory"
+}
