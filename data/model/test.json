@@ -5,7 +5,7 @@
         {
             "name": "deps",
             "type": "Text",
-            "quantity": "1",
+            "quantity": "",
             "widget": "textbox",
             "settings": "",
             "required": false
@@ -14,7 +14,7 @@
             "name": "deps2",
             "type": "Text",
             "quantity": "2+",
-            "widget": "textbox",
+            "widget": "password",
             "settings": "",
             "required": false
         },
@@ -29,7 +29,7 @@
         {
             "name": "deps4",
             "type": "Text",
-            "quantity": "key+:1+",
+            "quantity": "2+:1+",
             "widget": "textbox",
             "settings": "",
             "required": false

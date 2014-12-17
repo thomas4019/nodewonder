@@ -88,7 +88,7 @@
         {
             "name": "slot_tags",
             "type": "Text",
-            "quantity": "key:2+",
+            "quantity": "key2+",
             "widget": "textbox",
             "settings": "",
             "required": false

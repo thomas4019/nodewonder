@@ -37,7 +37,7 @@
         {
             "name": "views",
             "type": "Widgets",
-            "quantity": "key:1+",
+            "quantity": "key1+",
             "widget": "widget_code_editor",
             "settings": "",
             "required": false

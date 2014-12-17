@@ -1,7 +1,17 @@
 {
     "name": "key_value",
-    "settingsModel": [],
-    "settings_unfiltered": [],
+    "settingsModel": [
+        {
+            "name": "",
+            "type": "",
+            "quantity": "",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "settings_unfiltered": [
+        ""
+    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -19,7 +29,7 @@
     "setup": {
         "_is_func": true,
         "args": [],
-        "javascript": "this.w_type = this.settings.widget;\nthis.w_input = this.settings;\n\ndelete this.w_input['widget'];\ndelete this.w_input['label'];"
+        "javascript": "this.w_type = this.settings.kvwidget;\nthis.w_input = this.settings;\n\ndelete this.w_input['kvwidget'];\ndelete this.w_input['label'];"
     },
     "children": {
         "_is_func": true,
