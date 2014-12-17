@@ -1,0 +1,39 @@
+{
+    "name": "data_json",
+    "settingsModel": [
+        {
+            "name": "",
+            "type": "",
+            "quantity": "",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "settings_unfiltered": [
+        ""
+    ],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return JSON.stringify(cms.model_data);"
+    },
+    "deps": {},
+    "head": [
+        ""
+    ],
+    "tags": [
+        "",
+        "",
+        "view"
+    ],
+    "slots": [
+        "",
+        ""
+    ],
+    "slot_tags": {},
+    "wrapper": "none",
+    "wrapperClass": "",
+    "weight": null
+}

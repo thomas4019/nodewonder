@@ -1,0 +1,25 @@
+{
+    "URL": "internal/all_data",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "UsftHfOS": {
+                "type": "data_json",
+                "slots": {
+                    "": []
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "UsftHfOS"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "text/javascript",
+    "permission": {
+        "role": []
+    }
+}

@@ -1,39 +1,65 @@
 {
+    "name": "model_data_listing",
     "settingsModel": [
         {
             "name": "row_template",
             "type": "Text",
-            "widget": "textarea"
+            "quantity": "",
+            "widget": "textarea",
+            "settings": "",
+            "required": false
         },
         {
             "name": "model",
-            "type": "Text"
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "required": false
         },
         {
             "name": "manual_list",
-            "type": "Boolean"
+            "type": "Boolean",
+            "quantity": "",
+            "widget": "checkbox",
+            "settings": "",
+            "required": false
         },
         {
             "name": "add_button",
-            "type": "Boolean"
+            "type": "Boolean",
+            "quantity": "",
+            "widget": "checkbox",
+            "settings": "",
+            "required": false
         }
     ],
     "settings_unfiltered": [
         "row_template"
     ],
-    "deps": {
-        "jquery": [],
-        "bootstrap": []
-    },
     "toHTML": {
         "_is_func": true,
         "args": [
             "label"
         ],
-        "javascript": "var row_template;\nif (this.settings.row_template) {\n    row_template = Handlebars.compile(this.settings.row_template);\n}\n\nvar html = '';\n\nhtml += '<h1>' + (this.settings.title ? this.settings.title : ('<a href=\"/admin/list/model\">Models</a> : ' + this.settings.model)) + '</h1>';\n\nif (!this.settings.manual_list) {\n    html += '<ul class=\"list-group\">'\n}\n\nvar data = cms.model_data[this.settings.model];\nfor (key in data) {\n    var list = data[key];\n    if (!this.settings.manual_list) {\n        html += '<li class=\"list-group-item\" >';\n    }\n    if (!this.settings.row_template) {\n        html += '<a href=\"/admin/data/?model=' + this.settings.model + '&record=' + key + '\">' + key + '</a>';\n    } else {\n        list['key'] = key;\n        html += row_template(list);\n    }\n    if (!this.settings.manual_list) {\n        html += '</li>';\n    }\n}\n\nif (!this.settings.manual_list) {\n    html += '</ul>';\n}\n\nif (this.settings.add_button) {\n    html += '<a class=\"btn btn-primary\" href=\"/admin/data/?model=' + this.settings.model + '&record=create\">Create new</a></li>';\n}\n\nreturn html;"
+        "javascript": "var row_template;\nif (this.settings.row_template) {\n    row_template = Handlebars.compile(this.settings.row_template);\n}\n\nvar html = '';\n\nhtml += '<h1>' + (this.settings.title ? this.settings.title : ('<a href=\"/admin/list/model\">Models</a> : ' + this.settings.model)) + '</h1>';\n\nif (this.settings.add_button) {\n    html += '<a class=\"btn btn-primary\" href=\"/admin/data/?model=' + this.settings.model + '&record=create\">Create new</a></li>';\n}\n\nif (!this.settings.manual_list) {\n    html += '<ul class=\"list-group\">'\n}\n\nvar data = cms.model_data[this.settings.model];\nfor (key in data) {\n    var list = data[key];\n    if (!this.settings.manual_list) {\n        html += '<li class=\"list-group-item\" >';\n    }\n    if (!this.settings.row_template) {\n        html += '<a href=\"/admin/data/?model=' + this.settings.model + '&record=' + key + '\">' + key + '</a>';\n    } else {\n        list['key'] = key;\n        html += row_template(list);\n    }\n    if (!this.settings.manual_list) {\n        html += '</li>';\n    }\n}\n\nif (!this.settings.manual_list) {\n    html += '</ul>';\n}\n\nif (this.settings.add_button) {\n    html += '<a class=\"btn btn-primary\" href=\"/admin/data/?model=' + this.settings.model + '&record=create\">Create new</a></li>';\n}\n\nreturn html;"
     },
-    "name": "model_data_listing",
+    "deps": {
+        "jquery": [],
+        "bootstrap": []
+    },
+    "head": [
+        ""
+    ],
     "tags": [
         "view"
-    ]
+    ],
+    "slots": [
+        "",
+        ""
+    ],
+    "slot_tags": {},
+    "wrapper": "",
+    "wrapperClass": "",
+    "weight": null
 }

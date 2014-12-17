@@ -28,11 +28,18 @@
             "8LcE4GTX": {
                 "type": "hello_world",
                 "slots": {}
+            },
+            "87s6pqg6": {
+                "type": "admin_search",
+                "slots": {
+                    "": []
+                }
             }
         },
         "slotAssignments": {
             "body": [
-                "YxOICjag"
+                "YxOICjag",
+                "87s6pqg6"
             ]
         }
     },
