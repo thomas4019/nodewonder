@@ -186,10 +186,21 @@ function stateController($scope) {
 		nw.functions.configureWidget(id, settings_model, settings, function(new_settings) {
 			console.log(new_settings);
 			console.log('configure finished');
-			$scope.widgets[id].settings = new_settings;
-			$scope.widgets[id].settings['pseudo_widget'] = pseudo_widget;
-		  $scope.exportState();
-		  $("#widgetForm").remove();
+
+			nw.functions.cleanErrors('start');
+			nw.functions.processModel(settings_model, new_settings, function(results) {
+				console.log(results);
+				if (results.validationErrors && Object.keys(results.validationErrors).length) {
+					console.log('model has errors');
+					nw.functions.showErrors('start', results.validationErrors);
+				} else {
+					$scope.widgets[id].settings = results.data;
+					$scope.widgets[id].settings['pseudo_widget'] = pseudo_widget;
+				  $scope.exportState();
+				  $("#widgetForm").remove();
+				}
+			});
+
 		});
 	}
 
