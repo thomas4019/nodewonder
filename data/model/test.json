@@ -33,6 +33,14 @@
             "widget": "textbox",
             "settings": "",
             "required": false
+        },
+        {
+            "name": "deps5",
+            "type": "Text",
+            "quantity": "key1+:1+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
         }
     ],
     "index": "",

@@ -9,9 +9,7 @@
             "required": false
         }
     ],
-    "settings_unfiltered": [
-        ""
-    ],
+    "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
         "args": [
