@@ -1,0 +1,22 @@
+{
+    "A": "1123",
+    "B": false,
+    "C": [
+        {
+            "name": "123",
+            "type": "Captcha",
+            "quantity": "aoeu",
+            "widget": "captchagen",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "aoeu",
+            "type": "Code",
+            "quantity": "123",
+            "widget": "codemirror",
+            "settings": "",
+            "required": false
+        }
+    ]
+}

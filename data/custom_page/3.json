@@ -1,0 +1,28 @@
+{
+    "URL": "3",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "v40dZYOU": {
+                "type": "model_record_view",
+                "slots": {},
+                "settings": {
+                    "model": "test2",
+                    "record": "s5FqM8gOKqEjoiu9",
+                    "view": "default"
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "v40dZYOU"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

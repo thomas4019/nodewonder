@@ -1,28 +1,35 @@
 {
+    "name": "model_record_view",
     "settingsModel": [
         {
             "name": "model",
-            "type": "RecordRef",
+            "type": "Record",
+            "quantity": "",
+            "widget": "model_record_reference",
             "settings": {
+                "label": "",
                 "model": "model"
-            }
+            },
+            "required": false
         },
         {
             "name": "record",
-            "type": "Text"
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
         },
         {
             "name": "view",
-            "type": "Text"
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
         }
     ],
-    "children": {
-        "_is_func": true,
-        "args": [
-            "callback"
-        ],
-        "javascript": "cms.functions.getRecord(settings.model, settings.record, function(err, data) {\n    var record = data;\n    cms.functions.getRecord('model', settings.model, function(err, data2) {\n        var model = data2;\n        var model_view;\n        _.each(model.views, function(view) {\n            if (view.Name == settings.view) {\n                model_view = view;\n            }\n        });\n        _.each(model_view.Code.widgets, function(widget) {\n            if (widget.model && widget.field) {\n                widget.settings = widget.settings || {};\n                widget.settings.data = record[widget.field];\n            }\n        });\n        callback({\n            'body': model_view.Code.widgets\n        }, model_view.Code.slotAssignments);\n    });\n});"
-    },
+    "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -30,8 +37,21 @@
         ],
         "javascript": "return this.renderSlot('body');"
     },
-    "name": "model_record_view",
+    "deps": {},
+    "head": [],
     "tags": [
         "view"
-    ]
+    ],
+    "slots": [],
+    "slot_tags": {},
+    "children": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "cms.functions.getRecord(this.settings.model, this.settings.record, function(err, data) {\n    var record = data;\n    cms.functions.getRecord('model', this.settings.model, function(err, data2) {\n        var model = data2;\n        var model_view = model.views[this.settings.view];\n        console.log(model.views);\n        _.each(model_view.widgets, function(widget) {\n            if (widget.model && widget.field) {\n                widget.settings = widget.settings || {};\n                widget.settings.data = record[widget.field];\n                widget.settings.label = widget.field;\n              if (widget.model_type) {\n                widget.settings.model = 'model';\n                widget.settings.record = widget.model_type;\n                widget.settings.inline = 'multi';\n              }\n            }\n        }.bind(this));\n        callback({\n            'body': model_view.widgets\n        }, model_view.slotAssignments);\n    }.bind(this));\n}.bind(this));"
+    },
+    "wrapper": "",
+    "wrapperClass": "",
+    "weight": null
 }

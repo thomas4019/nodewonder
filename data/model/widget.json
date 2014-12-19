@@ -55,9 +55,9 @@
         },
         {
             "name": "deps",
-            "type": "JSON",
-            "quantity": "",
-            "widget": "jsoneditor",
+            "type": "Text",
+            "quantity": "bowerrepo1+:1+",
+            "widget": "textbox",
             "settings": "",
             "required": false
         },

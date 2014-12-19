@@ -1,0 +1,66 @@
+{
+    "name": "test2",
+    "description": "",
+    "fields": [
+        {
+            "name": "A",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "B",
+            "type": "Boolean",
+            "quantity": "2+",
+            "widget": "checkbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "C",
+            "type": "field",
+            "quantity": "2+",
+            "widget": "model_form",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "index": "",
+    "views": {
+        "default": {
+            "widgets": {
+                "KtKaE16Q": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "field": "B",
+                    "model_type": "Boolean",
+                    "model": "Model"
+                },
+                "Yd4t6Kn1": {
+                    "type": "textbox",
+                    "slots": {},
+                    "field": "A",
+                    "model_type": "Text",
+                    "model": "Model"
+                },
+                "lJccEWQH": {
+                    "type": "model_form",
+                    "slots": {},
+                    "field": "C",
+                    "model_type": "field",
+                    "model": "Model"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "KtKaE16Q",
+                    "Yd4t6Kn1",
+                    "lJccEWQH"
+                ]
+            }
+        }
+    },
+    "storage": "disk+memory"
+}

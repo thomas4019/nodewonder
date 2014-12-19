@@ -46,5 +46,5 @@
         "args": [],
         "css": "#{{id}} {\n  {{#if settings.width}}\n  width: {{settings.width}}px;\n  {{/if}}\n}"
     },
-    "weight": -10
+    "weight": 10
 }

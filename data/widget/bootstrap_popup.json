@@ -1,25 +1,24 @@
 {
-    "slots": [
-        "container",
-        "buttons"
-    ],
+    "name": "bootstrap_popup",
     "settingsModel": [
         {
             "name": "resizable",
-            "type": "Boolean"
+            "type": "Boolean",
+            "quantity": "",
+            "widget": "checkbox",
+            "settings": "",
+            "required": false
         },
         {
             "name": "title",
-            "type": "Text"
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "required": false
         }
     ],
-    "deps": {
-        "jquery": [],
-        "bootstrap": [],
-        "font-awesome": [
-            "css/font-awesome.min.css"
-        ]
-    },
+    "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -27,13 +26,28 @@
         ],
         "javascript": "return '' +\n    '<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\\\n      <div class=\"modal-dialog\">\\\n        <div class=\"modal-content\">\\\n          <div class=\"modal-header\">\\\n            <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\\\n            <h4 class=\"modal-title\" id=\"myModalLabel\">' + this.settings.title + '</h4>\\\n          </div>\\\n          <div class=\"modal-body\">' +\n    this.renderSlot('container') +\n    '</div>\\\n          <div class=\"modal-footer\">' +\n    this.renderSlot('buttons') +\n    '</div>\\\n        </div>\\\n      </div>\\\n    </div>';"
     },
+    "deps": {
+        "jquery": [],
+        "bootstrap": [],
+        "font-awesome": [
+            "css/font-awesome.min.css"
+        ]
+    },
+    "head": [],
+    "tags": [
+        "view"
+    ],
+    "slots": [
+        "container",
+        "buttons"
+    ],
+    "slot_tags": {},
+    "wrapper": "",
+    "wrapperClass": "",
     "script": {
         "_is_func": true,
         "args": [],
         "javascript": "return '$( \"#dialog-confirm\" ).modal({ show: { effect: \"blind\", duration: 1000 }, hide: { effect: \"explode\", duration: 1000}, resizable: false, modal: true, autoOpen: false, minHeight:\"350\", height:\"auto\", minWidth: \"500px\", width: \"auto\", buttons: {' +\n    '\"Ok\": function () { $(this).modal(\"close\"); }, \"Cancel\": function () { $(this).modal(\"close\"); }' +\n    '}});';"
     },
-    "name": "bootstrap_popup",
-    "tags": [
-        "view"
-    ]
+    "weight": null
 }
