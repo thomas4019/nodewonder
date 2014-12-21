@@ -1,0 +1,17 @@
+{
+    "name": "getModelField",
+    "args": [
+        "model",
+        "name"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "model",
+            "name"
+        ],
+        "javascript": "for (var i = 0; i < model.fields.length; i++) {\n  var field = model.fields[i];\n  if (field.name == name) {\n    return field;\n  }\n}"
+    },
+    "calls": [],
+    "callers": []
+}

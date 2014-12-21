@@ -20,7 +20,7 @@
         },
         {
             "name": "C",
-            "type": "field",
+            "type": "widget_instance",
             "quantity": "2+",
             "widget": "model_form",
             "settings": "",

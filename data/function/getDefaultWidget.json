@@ -9,5 +9,7 @@
             "type"
         ],
         "javascript": "var widgets = cms.model_widgets[type];\nif (widgets)\n    return widgets[0].name;\nelse\n    return null;"
-    }
+    },
+    "calls": [],
+    "callers": []
 }

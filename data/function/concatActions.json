@@ -9,5 +9,9 @@
             "actions"
         ],
         "javascript": "var code = '';\nactions.forEach(function(action) {\n    code += action.makeActionJS() + '\\n';\n});\nreturn code;"
-    }
+    },
+    "calls": [],
+    "callers": [
+        "eventScript"
+    ]
 }

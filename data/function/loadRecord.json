@@ -11,5 +11,7 @@
             "record_id"
         ],
         "javascript": "return cms.model_data[model_name][record_id];"
-    }
+    },
+    "calls": [],
+    "callers": []
 }

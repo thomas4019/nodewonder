@@ -13,5 +13,7 @@
             "callback"
         ],
         "javascript": "exists = cms.model_data[model_name] && cms.model_data[model_name][record_id] ? true : false;\nif (exists) {\n    delete cms.model_data[model_name][record_id];\n    fs.unlink('data/' + model_name + '/' + record_id + '.json');\n}\nif (callback)\n    callback(!exists);"
-    }
+    },
+    "calls": [],
+    "callers": []
 }

@@ -25,9 +25,25 @@
             "widget": "codemirror",
             "settings": "",
             "required": false
+        },
+        {
+            "name": "calls",
+            "type": "Text",
+            "quantity": "0+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "callers",
+            "type": "Text",
+            "quantity": "0+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
         }
     ],
-    "index": "",
+    "index": "name",
     "views": {},
     "storage": "disk+memory"
 }

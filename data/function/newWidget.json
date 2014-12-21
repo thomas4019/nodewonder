@@ -13,5 +13,7 @@
             "id"
         ],
         "javascript": "var w = Object.create(cms.widgets[type]);\n\nw.settings = settings || {};\nif (id) {\n    w.id = id;\n}\nif (w.setup) {\n    w.setup.call(w);\n}\nreturn w;"
-    }
+    },
+    "callers": [],
+    "calls": []
 }

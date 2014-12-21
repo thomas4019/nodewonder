@@ -11,5 +11,9 @@
             "file"
         ],
         "javascript": "if (!file || typeof file !== 'string') {\n    console.log('invalid dependency:' + folder + ' ' + JSON.stringify(file));\n    return;\n}\nvar ext = file.split('.').pop();\nvar full = folder + file;\nif (ext == 'js') {\n    return '<script type=\"text/javascript\" src=\"' + full + '\"></script>\\n';\n} else if (ext == 'css') {\n    return '<link rel=\"stylesheet\" href=\"' + full + '\" />\\n';\n} else {\n    return '';\n}"
-    }
+    },
+    "calls": [],
+    "callers": [
+        "processDep"
+    ]
 }

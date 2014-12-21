@@ -13,5 +13,7 @@
             "data"
         ],
         "javascript": "console.log(type);"
-    }
+    },
+    "calls": [],
+    "callers": []
 }

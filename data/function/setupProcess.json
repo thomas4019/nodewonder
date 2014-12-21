@@ -11,5 +11,9 @@
             "settings"
         ],
         "javascript": "var token = cms.functions.makeid(36);\nsettings.token = token;\n\ncms.pending_processes[token] = {\n    process: widget,\n    settings: settings,\n    token: settings.token\n};"
-    }
+    },
+    "calls": [
+        "makeid"
+    ],
+    "callers": []
 }

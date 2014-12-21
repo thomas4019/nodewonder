@@ -13,5 +13,7 @@
             "vars"
         ],
         "javascript": "var out = '<form action=\"/post\" method=\"post\">' + '<input type=\"hidden\" name=\"widget\" value=\"' + widget + '\">';\n\n_.each(vars, function(value, key) {\n    out += '<input type=\"hidden\" name=\"' + key + '\" value=\"' + value + '\">';\n});\nout += html;\nout += '</form>';\n\nreturn out;"
-    }
+    },
+    "calls": [],
+    "callers": []
 }

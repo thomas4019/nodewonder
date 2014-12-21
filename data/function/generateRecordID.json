@@ -9,5 +9,9 @@
             ""
         ],
         "javascript": "return cms.functions.makeid(16);"
-    }
+    },
+    "calls": [
+        "makeid"
+    ],
+    "callers": []
 }

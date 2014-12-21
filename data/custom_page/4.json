@@ -1,0 +1,28 @@
+{
+    "URL": "4",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "M8s5f55z": {
+                "type": "model_record_view",
+                "slots": {},
+                "settings": {
+                    "model": "widget",
+                    "record": "bootstrap_popup",
+                    "view": "default"
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "M8s5f55z"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

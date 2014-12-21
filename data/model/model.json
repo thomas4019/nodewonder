@@ -21,7 +21,7 @@
         {
             "name": "fields",
             "type": "field",
-            "quantity": "+",
+            "quantity": "2+",
             "widget": "model_form",
             "settings": "",
             "required": false
@@ -60,6 +60,6 @@
         }
     ],
     "index": "name",
-    "views": [],
+    "views": {},
     "storage": "disk+memory"
 }

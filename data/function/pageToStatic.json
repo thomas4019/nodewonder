@@ -9,5 +9,10 @@
             "fpath"
         ],
         "javascript": "fs.readFile('pages/' + fpath + '.json', 'utf8', function(err, data) {\n    if (err) {\n        console.trace(\"Here I am!\")\n        return console.log(err);\n    }\n    console.log('static: ' + fpath);\n    //TODO: Update this code below\n    var jdata = JSON.parse(data);\n    var state = jdata[0];\n    var rules = jdata[1];\n    cms.functions.processRules(rules, function(script, deps) {\n        script = '<script>$(function() {' + script + '});</script>'\n        console.log('- ' + fpath);\n        cms.functions.renderState(state, {}, function(html) {\n            mkdirp(path.dirname('static/' + fpath), function(err) {\n                fs.writeFile('static/' + fpath + '.html', html);\n            });\n        }, script, deps); //'<base href=\"http://localhost:3000/\" target=\"_blank\" >'\n    });\n});"
-    }
+    },
+    "callers": [],
+    "calls": [
+        "processRules",
+        "renderState"
+    ]
 }

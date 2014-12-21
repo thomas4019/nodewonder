@@ -32,9 +32,9 @@
         },
         {
             "name": "code",
-            "type": "Widgets",
+            "type": "widget_code",
             "quantity": "",
-            "widget": "widget_code_editor",
+            "widget": "model_form",
             "settings": {
                 "label": "code",
                 "name": "code",

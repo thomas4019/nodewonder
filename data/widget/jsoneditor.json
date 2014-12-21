@@ -26,7 +26,9 @@
             "required": false
         }
     ],
-    "settings_unfiltered": [],
+    "settings_unfiltered": [
+        "data"
+    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -76,6 +78,11 @@
             "handlers"
         ],
         "javascript": "var container = document.querySelector('#' + id + ' .json');\nvar options = {\n    mode: 'code',\n    modes: ['code', 'tree'], // allowed modes\n};\nvar data = settings.data || {};\ndata = typeof data == 'string' ? JSON.parse(data) : data;\nvar editor = new JSONEditor(container, options, data);\n\nreturn {\n    get: function() {\n        return JSON.stringify(editor.get());\n    }\n}"
+    },
+    "style": {
+        "_is_func": true,
+        "args": [],
+        "css": ".poweredBy {\n  display: none;\n}"
     },
     "weight": null
 }

@@ -1,0 +1,33 @@
+{
+    "name": "widget_instance",
+    "description": "",
+    "fields": [
+        {
+            "name": "type",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "slots",
+            "type": "Text",
+            "quantity": "name0+:2+",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "settings",
+            "type": "JSON",
+            "quantity": "",
+            "widget": "jsoneditor",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "index": "",
+    "views": {},
+    "storage": "disk+memory"
+}

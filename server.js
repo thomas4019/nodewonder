@@ -1,29 +1,23 @@
-var http = require('http');
+var npmMapping = {
+  'cookies': 'Cookies',
+  'js-beautify': 'beautify_js',
+  'deep-extend': 'deepExtend',
+  'bower-json': 'bowerJson',
+  'handlebars': 'Handlebars',
+  'lodash': '_',
+};
 
-_ = require('lodash');
-fs = require('fs');
-url = require('url');
-connect = require('connect');
-Handlebars = require("handlebars");
-querystring = require('querystring');
-async = require('async');
-dive = require('dive');
-diveSync = require('diveSync');
-path = require('path');
-bower = require('bower');
-bowerJson = require('bower-json');
-deep = require('deep');
-deepExtend = require('deep-extend');
-dextend = require('dextend');
-moment = require('moment');
-vm = require("vm");
-url = require("url");
-beautify_js = require('js-beautify');
-passport = require('passport');
-LocalStrategy = require('passport-local').Strategy;
-Cookies = require('cookies');
-phantom = require('phantom');
-mkdirp = require('mkdirp');
+var modules = ['lodash','http','fs','url','connect','handlebars','querystring',
+'async','dive','diveSync','path','bower','bower-json','deep','deep-extend',
+'dextend','moment','vm','url','js-beautify','passport','cookies','phantom','mkdirp'];
+
+modules.forEach(function(module) {
+  alias = module;
+  if (module in npmMapping) {
+    alias = npmMapping[module];
+  }
+  global[alias] = require(module);
+});
 
 COOKIE_KEYS = ['4c518e8c-332c-4c72-8ecf-f63f45b4ff56',
   'af15db41-ef32-4a3f-bb15-7edce2e3744c',
@@ -38,31 +32,31 @@ webrepl.createServer({
     host: '127.0.0.1'
 });
 
-cms = {};
-cms.functions = {};
-cms.widgets = {};
-cms.model_widgets = {};
-cms.edit_widgets = {};
-cms.view_widgets = {};
-cms.deps = {};
-
-cms.model_data = {};
-cms.pending_forms = {};
-cms.pending_processes = {};
-
-cms.middleware = [];
-
-cms.settings = {};
-cms.settings_group = 'production';
+cms = {
+  functions: {},
+  widgets: {},
+  model_widgets: {},
+  edit_widgets: {},
+  view_widgets: {},
+  deps: {},
+  model_data: {
+    model: {}
+  },
+  pending_forms: {},
+  pending_processes: {},
+  middleware: [],
+  settings: {},
+  settings_group: 'production',
+};
 
 context = {};
 
-global['actionScript'] = function() {
+actionScript = function() {
   return 'nw.functions.processActionResult("'+this.id+'", new '+this.action+'(nw.functions.fillSettings('+JSON.stringify(this.settings)+', scope, []), ' +
         '"'+this.id+'", scope,'+cms.functions.createHandlersCode(this)+'));';
 }
 
-global['processSetup'] = function() {
+processSetup = function() {
   cms.functions.setupProcess(this.name, this.settings);
 }
 
@@ -81,14 +75,13 @@ cms.functions.loadModelIntoMemory = function(model, callback) {
   console.log('loading data for "' + model + '"');
 
   var models = fs.readdirSync('data/' + model + '/');
-  cms.model_data = cms.model_data || {};
   cms.model_data[model] = {};
 
   diveSync('data/' + model + '/', {}, function(err, file) {
     if (err) {
-      console.trace(err);
       console.error(file);
       console.error(model);
+      console.trace(err);
       return;
     }
 
@@ -100,6 +93,7 @@ cms.functions.loadModelIntoMemory = function(model, callback) {
 
       if (data) {
         cms.model_data[model] = cms.model_data[model] || {};
+        //console.log('parsing ' + file);
         cms.model_data[model][record_id] = JSON.parse(data);
       } else {
         console.error('empty record: ' + model+'-'+record_id);
@@ -235,8 +229,8 @@ var app = connect()
 
 async.series(
   [registerAllThemes,
-  registerModels,
   initFuncs,
+  registerModels,
   addMiddleware,
   initWidgets,
   sortWidgets,
@@ -303,6 +297,7 @@ function registerModels(callback) {
   _.each(cms.model_data['model'], function(model, type) {
     cms.edit_widgets[type] = cms.edit_widgets[type] || [];
     cms.edit_widgets[type].push('model_form');
+    cms.edit_widgets[type].push('jsoneditor');
   });
   callback();
 }
@@ -375,9 +370,11 @@ function initWidgets(callback) {
 }
 
 function sortWidgets(callback) {
+  //console.log('sorting widgets');
   cms.model_widgets['Text'].sort(function (a, b) {
-    return a.weight || 0 > b.weight || 0;
+    return a.weight || 0 < b.weight || 0;
   });
+  //console.log(cms.model_widgets['Text']);
   callback();
 }
 
@@ -431,22 +428,6 @@ function registerDep(dep, callback) {
 }
 
 function registerModule(directory, module, prefix, callback) {
-  var m = require('./' + directory + '/' + module + '/m');
-
-  if (m.register) {
-    m.register(cms);
-  }
-
-  _.each(m.functions, function(f, name) {
-    f.prototype.name = name;
-    cms.functions[name] = f;
-  });
-
-  _.each(m.middleware, function(middleware) {
-    middleware.module = module;
-    cms.middleware.push(middleware);
-  });
-
   callback();
 }
 
@@ -574,6 +555,16 @@ cms.migrate6 = function() {
       }
     };
     cms.functions.saveRecord('middleware', name, funcObj);
+  });
+}
+
+cms.migrate7 = function() {
+  _.forEach(cms.model_data.function, function(funcData, index) {
+    //var func = cms.functions.loadRecord('function', index);
+    console.log(index);
+    //funcData.callers = [];
+    funcData.calls = ['123'];
+    cms.functions.saveRecord('function', index, funcData);
   });
 }
 

@@ -21,11 +21,15 @@
             },
             "GIRBdr6A": {
                 "type": "calendar",
-                "slots": {}
+                "slots": {},
+                "settings": {}
             },
             "qOwaQCHS": {
-                "type": "hello_world",
-                "slots": {}
+                "type": "youtube_video",
+                "slots": {},
+                "settings": {
+                    "id": "mUBf5rRSyO0"
+                }
             }
         },
         "slotAssignments": {

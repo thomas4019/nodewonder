@@ -9,5 +9,12 @@
             "widgetType"
         ],
         "javascript": "function ensureTag(tag) {\n    if (widgetType.tags.indexOf(tag) == -1) {\n        widgetType.tags.push(tag);\n    }\n}\n\nvar name = widgetType.name;\n\nif (widgetType.action && !widgetType.script) {\n    if (widgetType.hasOwnProperty('toHTML') || widgetType.hasOwnProperty('htmlTemplate')) {\n        widgetType.script = actionScript;\n    } else {\n        widgetType.makeActionJS = actionScript;\n    }\n}\n\n_.defaults(widgetType, Widget.prototype);\n\n\nif (widgetType.doProcess && !widgetType.setup) {\n  widgetType.setup = processSetup;\n}\n\nwidgetType.tags = widgetType.tags || [];\nif (widgetType.toHTML) {\n    ensureTag('view');\n}\nif (widgetType.makeEventJS) {\n    ensureTag('event');\n}\nif (widgetType.makeActionJS || widgetType.action || widgetType.doProcess) {\n    ensureTag('action');\n}\nif (widgetType.action) {\n    ensureTag('local-action');\n}\nif (widgetType.doProcess) {\n    ensureTag('process');\n}\nif (widgetType.execute) {\n    ensureTag('executable');\n}\n\nif (widgetType.settingsModel) {\n    var settings = cms.functions.retrieve(widgetType.settingsModel);\n    var type;\n    _.each(settings, function(field) {\n        if (field.name == 'data') {\n            type = field.type;\n        }\n    });\n    if (type) {\n        cms.edit_widgets[type] = cms.edit_widgets[type] || [];\n        cms.model_widgets[type] = cms.model_widgets[type] || [];\n        cms.view_widgets[type] = cms.view_widgets[type] || [];\n        if (_.contains(widgetType.tags, 'field_edit')) {\n            cms.edit_widgets[type].push(name);\n            cms.model_widgets[type].push(widgetType);\n        }\n        if (_.contains(widgetType.tags, 'field_view')) {\n            cms.view_widgets[type].push(name);\n        }\n    }\n}\n\ncms.widgets[name] = widgetType;\ncms.functions.installDependencies(widgetType);"
-    }
+    },
+    "calls": [
+        "retrieve",
+        "installDependencies"
+    ],
+    "callers": [
+        "saveRecord"
+    ]
 }

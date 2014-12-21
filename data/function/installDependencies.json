@@ -9,5 +9,9 @@
             "thing"
         ],
         "javascript": "if (thing.deps) {\n    _.each(Object.keys(cms.functions.retrieve(thing.deps)), function(dep, index) {\n        if (dep != 'order' && !_.contains(allDeps, dep)) {\n            allDeps.push(dep);\n        }\n    });\n}"
-    }
+    },
+    "callers": [],
+    "calls": [
+        "retrieve"
+    ]
 }

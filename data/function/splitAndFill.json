@@ -11,5 +11,10 @@
             "values"
         ],
         "javascript": "return cms.functions.fillValues(state, cms.functions.splitValues(values));"
-    }
+    },
+    "callers": [],
+    "calls": [
+        "fillValues",
+        "splitValues"
+    ]
 }

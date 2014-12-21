@@ -1,4 +1,23 @@
 {
+    "name": "widget_input_config",
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "JSON",
+            "quantity": "",
+            "widget": "jsoneditor",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "settings_unfiltered": [],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var html = '';\n\nhtml += '<textarea style=\"display:none;\" id=\"' + this.id + '-text\" name=\"' + this.id + '\">' +\n    (this.settings.data ? JSON.stringify(this.settings.data) : '') + '</textarea>' +\n    '<a onclick=\"configureModelWidget(this.id);\" id=\"' + this.id + '\"><i class=\"fa fa-cog fa-lg configure\"></i></a>';\n\nreturn html;"
+    },
     "deps": {
         "jquery": [],
         "bootstrap": [],
@@ -10,6 +29,11 @@
     "head": [
         "/modules/models/widget_config.js"
     ],
+    "tags": [
+        "view"
+    ],
+    "slots": [],
+    "slot_tags": {},
     "processData": {
         "_is_func": true,
         "args": [
@@ -19,15 +43,7 @@
         ],
         "javascript": "if (!data)\n    return data;\nreturn JSON.parse(data);"
     },
-    "toHTML": {
-        "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "var html = '';\n\nhtml += '<textarea style=\"display:none;\" id=\"' + this.id + '-text\" name=\"' + this.id + '\">' +\n    (this.settings.data ? JSON.stringify(this.settings.data) : '') + '</textarea>' +\n    '<a onclick=\"configureModelWidget(this.id);\" id=\"' + this.id + '\"><i class=\"fa fa-cog fa-lg configure\"></i></a>';\n\nreturn html;"
-    },
-    "name": "widget_input_config",
-    "tags": [
-        "view"
-    ]
+    "wrapper": "",
+    "wrapperClass": "",
+    "weight": null
 }
