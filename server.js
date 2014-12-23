@@ -340,7 +340,8 @@ function initFuncs(callback) {
 
   initSandbox = {
     load: cms.functions.loadRecord,
-    loadPage: cms.functions.loadPageState
+    loadPage: cms.functions.loadPageState,
+    query: cms.functions.executeQueryLocally
   };
   context = vm.createContext(initSandbox);
 

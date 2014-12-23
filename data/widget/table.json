@@ -1,0 +1,36 @@
+{
+    "name": "table",
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "JSON",
+            "quantity": "",
+            "widget": "jsoneditor",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "settings_unfiltered": [],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "<table class=\"table table-bordered table-striped\">\n    <thead>\n        <tr>\n            {{#each this.cols}}\n            <th>{{this}}</th>\n            {{/each}}\n        </tr>\n    </thead>\n    <tbody>\n        {{#each this.data}}\n        <tr>\n            {{#each this}}\n            <td>{{ json this }}</td>\n            {{/each}}\n        </tr>\n        {{/each}}\n    </tbody>"
+    },
+    "deps": {
+        "bootstrap": []
+    },
+    "head": [],
+    "tags": [
+        "view"
+    ],
+    "slots": [],
+    "slot_tags": {},
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "var cols = [];\n\nthis.settings.data.forEach(function(row) {\n  cols = _.union(cols, Object.keys(row));\n});\nthis.cols = cols;\n\nvar data = [];\nthis.settings.data.forEach(function(row) {\n  var buffer = [];\n  this.cols.forEach(function(col) {\n    buffer.push(row[col]);\n  });\n  data.push(buffer);\n}.bind(this));\nthis.data = data;\nHandlebars.registerHelper('json', function(context) {\n    return JSON.stringify(context);\n});"
+    },
+    "wrapper": "",
+    "wrapperClass": "",
+    "weight": null
+}

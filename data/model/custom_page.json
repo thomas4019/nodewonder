@@ -34,7 +34,7 @@
             "name": "code",
             "type": "widget_code",
             "quantity": "",
-            "widget": "model_form",
+            "widget": "widget_code_editor",
             "settings": {
                 "label": "code",
                 "name": "code",

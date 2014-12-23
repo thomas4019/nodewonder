@@ -1,0 +1,23 @@
+{
+    "URL": "query",
+    "parent": "admin",
+    "controller": "widgets.xxixWNHl.settings = {}; widgets.xxixWNHl.settings.data = query(load('query', args.q)); callback();",
+    "code": {
+        "widgets": {
+            "xxixWNHl": {
+                "type": "table",
+                "slots": {}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "xxixWNHl"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

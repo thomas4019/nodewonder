@@ -1,0 +1,14 @@
+{
+    "from": "widget",
+    "select": [
+        "name",
+        "htmlTemplate",
+        "toHTML",
+        "style",
+        "children",
+        "deps"
+    ],
+    "where": "",
+    "orderby": "",
+    "limit": null
+}

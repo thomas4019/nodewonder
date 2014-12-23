@@ -1,0 +1,12 @@
+{
+    "from": "function",
+    "select": [
+        "name",
+        "args",
+        "calls",
+        "callers"
+    ],
+    "where": "",
+    "orderby": "",
+    "limit": null
+}

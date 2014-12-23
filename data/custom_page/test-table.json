@@ -1,0 +1,29 @@
+{
+    "URL": "test-table",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "KHrCJjFY": {
+                "type": "table",
+                "slots": {},
+                "settings": {
+                    "data": [{"a":1},
+{"b":2},
+{"a":3, "c": "3a"}
+]
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "KHrCJjFY"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

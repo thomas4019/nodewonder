@@ -1,22 +1,31 @@
 {
-    "head": [
-        "/modules/admin/widget_code_editor.js",
-        "/modules/admin/widget_code_editor.css"
-    ],
-    "tags": [
-        "field_edit",
-        "view"
-    ],
+    "name": "widget_code_editor",
     "settingsModel": [
         {
             "name": "label",
-            "type": "Text"
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "required": false
         },
         {
             "name": "data",
-            "type": "Widgets"
+            "type": "widget_code",
+            "quantity": "",
+            "widget": "widget_code_editor",
+            "settings": "",
+            "required": false
         }
     ],
+    "settings_unfiltered": [],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var v = JSON.stringify(this.settings.data || {});\nv = v.replace(/'/g, \"&#39;\");\nreturn this.renderSlot('body') +\n    '<textarea style=\"display: none;\" class=\"widget-code-editor\" name=\"' + this.id + '\"></textarea>' +\n    label +\n    '<div class=\"ng\" ng-init=\\'edit_widgets = ' + JSON.stringify(cms.edit_widgets) + ';view_widgets = ' + JSON.stringify(cms.view_widgets) + ';view_widgets = ' + JSON.stringify(cms.view_widgets) + ';state = ' + v + ';field_id=\"' + this.id + '\";\\' >' +\n    '<div ng-controller=\"stateController\">' +\n    '<div class=\"widget-menu\" ng-if=\"menu || cut\" ng-include=\"\\'/modules/admin/widget-menu.html\\'\"></div>' +\n    '<ul id=\"state-ctrl\">' +\n    '<li ng-init=\"id = \\'body\\'; slot_name = \\'body\\';\" id=\"{{ id }}-{{ slot_name }}\" ng-include=\"\\'/modules/admin/slot.html\\'\"></li>' +\n    '<li ng-repeat=\"id in slotAssignments[\\'body\\']\" id=\"{{ id }}\" ng-include=\"\\'/modules/admin/widget.html\\'\"></li>' +\n    '</div>' +\n    '</div>' + '<input type=\"hidden\" class=\"slot-selector\">';"
+    },
     "deps": {
         "jquery": [],
         "bootstrap": [],
@@ -28,17 +37,22 @@
             "css/font-awesome.css"
         ]
     },
+    "head": [
+        "/modules/admin/widget_code_editor.js",
+        "/modules/admin/widget_code_editor.css"
+    ],
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "slots": [],
+    "slot_tags": {},
     "children": {
         "_is_func": true,
         "args": [
             "callback"
         ],
         "javascript": "var body = {};\nbody['sel'] = {\n    'type': 'widget_selector'\n}\ncallback({\n    'body': body\n});"
-    },
-    "script": {
-        "_is_func": true,
-        "args": [],
-        "javascript": "return 'angular.bootstrap(\"#' + this.id + '\");';"
     },
     "processData": {
         "_is_func": true,
@@ -49,12 +63,12 @@
         ],
         "javascript": "//console.log(data);\nreturn data ? JSON.parse(data) : undefined;"
     },
-    "toHTML": {
+    "wrapper": "",
+    "wrapperClass": "",
+    "script": {
         "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "var v = JSON.stringify(this.settings.data || {});\nv = v.replace(/'/g, \"&#39;\");\nreturn this.renderSlot('body') +\n    '<textarea style=\"display: none;\" class=\"widget-code-editor\" name=\"' + this.id + '\"></textarea>' +\n    label +\n    '<div class=\"ng\" ng-init=\\'edit_widgets = ' + JSON.stringify(cms.edit_widgets) + ';view_widgets = ' + JSON.stringify(cms.view_widgets) + ';view_widgets = ' + JSON.stringify(cms.view_widgets) + ';state = ' + v + ';field_id=\"' + this.id + '\";\\' >' +\n    '<div ng-controller=\"stateController\">' +\n    '<div class=\"widget-menu\" ng-if=\"menu || cut\" ng-include=\"\\'/modules/admin/widget-menu.html\\'\"></div>' +\n    '<ul id=\"state-ctrl\">' +\n    '<li ng-init=\"id = \\'body\\'; slot_name = \\'body\\';\" id=\"{{ id }}-{{ slot_name }}\" ng-include=\"\\'/modules/admin/slot.html\\'\"></li>' +\n    '<li ng-repeat=\"id in slotAssignments[\\'body\\']\" id=\"{{ id }}\" ng-include=\"\\'/modules/admin/widget.html\\'\"></li>' +\n    '</div>' +\n    '</div>' + '<input type=\"hidden\" class=\"slot-selector\">';"
+        "args": [],
+        "javascript": "return 'angular.bootstrap(\"#' + this.id + '\");';"
     },
-    "name": "widget_code_editor"
+    "weight": null
 }

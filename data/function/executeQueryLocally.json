@@ -1,0 +1,15 @@
+{
+    "name": "executeQueryLocally",
+    "args": [
+        "query"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "query"
+        ],
+        "javascript": "console.log(query);\nvar results = [];\n_.each(cms.model_data[query.from], function(data, record) {\n  var row = _.pick(data, query.select);\n  results.push(row);\n});\nconsole.log(results);\nreturn results;"
+    },
+    "calls": [],
+    "callers": []
+}
