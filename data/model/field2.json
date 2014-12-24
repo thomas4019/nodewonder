@@ -3,14 +3,6 @@
     "description": "",
     "fields": [
         {
-            "name": "name",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": true
-        },
-        {
             "name": "type",
             "type": "Text",
             "quantity": "",

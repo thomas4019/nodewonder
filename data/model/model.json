@@ -27,6 +27,14 @@
             "required": false
         },
         {
+            "name": "schema",
+            "type": "schema",
+            "quantity": "",
+            "widget": "model_form",
+            "settings": "",
+            "required": false
+        },
+        {
             "name": "index",
             "type": "Text",
             "quantity": "",
@@ -55,14 +63,6 @@
                 "label": "storage",
                 "data": "disk+memory"
             },
-            "required": false
-        },
-        {
-            "name": "schema",
-            "type": "schema",
-            "quantity": "",
-            "widget": "model_form",
-            "settings": "",
             "required": false
         }
     ],

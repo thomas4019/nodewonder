@@ -569,6 +569,13 @@ cms.migrate7 = function() {
   });
 }
 
+cms.migrate8 = function() {
+  _.forEach(cms.model_data.model, function(model, index) {
+    
+    cms.functions.saveRecord('function', index, model);
+  });
+}
+
 cms.funcsToString = function(object) {
   var object2 = {};
   var widgetModel = cms.models['widget'];
