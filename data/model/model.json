@@ -36,9 +36,8 @@
         },
         {
             "name": "views",
-            "type": "Widgets",
+            "type": "",
             "quantity": "key1+",
-            "widget": "widget_code_editor",
             "settings": "",
             "required": false
         },
@@ -57,9 +56,16 @@
                 "data": "disk+memory"
             },
             "required": false
+        },
+        {
+            "name": "schema",
+            "type": "schema",
+            "quantity": "",
+            "widget": "model_form",
+            "settings": "",
+            "required": false
         }
     ],
     "index": "name",
-    "views": {},
     "storage": "disk+memory"
 }

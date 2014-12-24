@@ -1,0 +1,48 @@
+{
+    "name": "schema",
+    "description": "",
+    "fields": [
+        {
+            "name": "fields",
+            "type": "field2",
+            "quantity": "2+",
+            "widget": "model_form",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "display",
+            "type": "widget_code",
+            "quantity": "",
+            "widget": "widget_code_editor",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "index": "",
+    "storage": "disk+memory",
+    "schema": {
+        "fields": [
+            {
+                "name": "",
+                "type": "",
+                "quantity": "",
+                "settings": "",
+                "required": false
+            },
+            {
+                "name": "",
+                "type": "",
+                "quantity": "",
+                "settings": "",
+                "required": false
+            }
+        ],
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
+}
