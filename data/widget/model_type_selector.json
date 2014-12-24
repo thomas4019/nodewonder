@@ -1,6 +1,22 @@
 {
     "name": "model_type_selector",
-    "settingsModel": [],
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "Text",
+            "quantity": "",
+            "widget": "textbox",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "123",
+            "type": "",
+            "quantity": "",
+            "settings": "",
+            "required": false
+        }
+    ],
     "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
