@@ -44,9 +44,10 @@
         },
         {
             "name": "views",
-            "type": "",
+            "type": "Widgets",
             "quantity": "key1+",
             "settings": "",
+            "widget": "widget_code_editor",
             "required": false
         },
         {
@@ -61,11 +62,143 @@
                     ""
                 ],
                 "label": "storage",
-                "data": "disk+memory"
+                "data": "disk+memory",
+                "field_type": "Text"
             },
             "required": false
         }
     ],
     "index": "name",
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "description": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "fields": {
+                "type": "field",
+                "quantity": "2+"
+            },
+            "schema": {
+                "type": "schema",
+                "quantity": ""
+            },
+            "index": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "views": {
+                "type": "Widgets",
+                "quantity": "key1+"
+            },
+            "storage": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "name",
+                        "field_type": "Text"
+                    },
+                    "field": "name",
+                    "model_type": "Text",
+                    "model": "model"
+                },
+                "description": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "description",
+                        "field_type": "Text"
+                    },
+                    "field": "description",
+                    "model_type": "Text",
+                    "model": "model"
+                },
+                "fields": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "fields",
+                        "field_type": "field"
+                    },
+                    "field": "fields",
+                    "model_type": "field",
+                    "model": "model"
+                },
+                "schema": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "schema",
+                        "field_type": "schema"
+                    },
+                    "field": "schema",
+                    "model_type": "schema",
+                    "model": "model"
+                },
+                "index": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "index",
+                        "field_type": "Text"
+                    },
+                    "field": "index",
+                    "model_type": "Text",
+                    "model": "model"
+                },
+                "views": {
+                    "type": "widget_code_editor",
+                    "slots": {},
+                    "settings": {
+                        "label": "views",
+                        "field_type": "Widgets"
+                    },
+                    "field": "views",
+                    "model_type": "Widgets",
+                    "model": "model"
+                },
+                "storage": {
+                    "type": "select",
+                    "slots": {},
+                    "settings": {
+                        "choices": [
+                            "disk+memory",
+                            "memory",
+                            ""
+                        ],
+                        "label": "storage",
+                        "data": "disk+memory",
+                        "field_type": "Text"
+                    },
+                    "field": "storage",
+                    "model_type": "Text",
+                    "model": "model"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "name",
+                    "description",
+                    "fields",
+                    "schema",
+                    "index",
+                    "views",
+                    "storage"
+                ]
+            }
+        }
+    },
+    "key": "model"
 }

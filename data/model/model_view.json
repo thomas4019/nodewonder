@@ -24,7 +24,8 @@
                     "slotAssignments": {
                         "body": []
                     }
-                }
+                },
+                "field_type": "Widgets"
             },
             "required": false
         }
@@ -40,5 +41,58 @@
                 }
             }
         }
-    ]
+    ],
+    "schema": {
+        "fields": {
+            "Name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "Code": {
+                "type": "Widgets",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "Name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "Name",
+                        "field_type": "Text"
+                    },
+                    "field": "Name",
+                    "model_type": "Text",
+                    "model": "model_view"
+                },
+                "Code": {
+                    "type": "widget_code_editor",
+                    "slots": {},
+                    "settings": {
+                        "label": "Code",
+                        "model": "menu",
+                        "name": "Model",
+                        "data": {
+                            "widgets": {},
+                            "slotAssignments": {
+                                "body": []
+                            }
+                        },
+                        "field_type": "Widgets"
+                    },
+                    "field": "Code",
+                    "model_type": "Widgets",
+                    "model": "model_view"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "Name",
+                    "Code"
+                ]
+            }
+        }
+    },
+    "key": "model_view"
 }

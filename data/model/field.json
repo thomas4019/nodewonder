@@ -45,5 +45,113 @@
             "required": false
         }
     ],
-    "key": ""
+    "key": "field",
+    "schema": {
+        "fields": {
+            "name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "type": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "quantity": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "widget": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "settings": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "required": {
+                "type": "Boolean",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "name",
+                        "field_type": "Text"
+                    },
+                    "field": "name",
+                    "model_type": "Text",
+                    "model": "field"
+                },
+                "type": {
+                    "type": "model_type_selector",
+                    "slots": {},
+                    "settings": {
+                        "label": "type",
+                        "field_type": "Text"
+                    },
+                    "field": "type",
+                    "model_type": "Text",
+                    "model": "field"
+                },
+                "quantity": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "quantity",
+                        "field_type": "Text"
+                    },
+                    "field": "quantity",
+                    "model_type": "Text",
+                    "model": "field"
+                },
+                "widget": {
+                    "type": "model_widget_selector",
+                    "slots": {},
+                    "settings": {
+                        "label": "widget",
+                        "field_type": "Text"
+                    },
+                    "field": "widget",
+                    "model_type": "Text",
+                    "model": "field"
+                },
+                "settings": {
+                    "type": "widget_input_config",
+                    "slots": {},
+                    "settings": {
+                        "label": "settings",
+                        "field_type": "Text"
+                    },
+                    "field": "settings",
+                    "model_type": "Text",
+                    "model": "field"
+                },
+                "required": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "required",
+                        "field_type": "Boolean"
+                    },
+                    "field": "required",
+                    "model_type": "Boolean",
+                    "model": "field"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "name",
+                    "type",
+                    "quantity",
+                    "widget",
+                    "settings",
+                    "required"
+                ]
+            }
+        }
+    }
 }

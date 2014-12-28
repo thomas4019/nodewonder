@@ -8,13 +8,6 @@
             "widget": "textbox",
             "settings": "",
             "required": false
-        },
-        {
-            "name": "123",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "required": false
         }
     ],
     "settings_unfiltered": [],

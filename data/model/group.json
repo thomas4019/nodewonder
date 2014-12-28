@@ -22,7 +22,8 @@
                     "abc",
                     "pkbZuncyCbiaz5bl"
                 ],
-                "quantity": "+"
+                "quantity": "+",
+                "field_type": "Record"
             },
             "required": false
         },
@@ -38,7 +39,8 @@
                     "Invite-Only",
                     "Closed"
                 ],
-                "label": "Type"
+                "label": "Type",
+                "field_type": "Text"
             },
             "required": false
         }
@@ -54,5 +56,78 @@
                 }
             }
         }
-    ]
+    ],
+    "schema": {
+        "fields": {
+            "Name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "Members": {
+                "type": "Record",
+                "quantity": "+"
+            },
+            "Type": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "Name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "Name",
+                        "field_type": "Text"
+                    },
+                    "field": "Name",
+                    "model_type": "Text",
+                    "model": "group"
+                },
+                "Members": {
+                    "type": "model_record_reference",
+                    "slots": {},
+                    "settings": {
+                        "label": "Members",
+                        "model": "user",
+                        "data": [
+                            "abc",
+                            "pkbZuncyCbiaz5bl"
+                        ],
+                        "quantity": "+",
+                        "field_type": "Record"
+                    },
+                    "field": "Members",
+                    "model_type": "Record",
+                    "model": "group"
+                },
+                "Type": {
+                    "type": "radio",
+                    "slots": {},
+                    "settings": {
+                        "data": "Open",
+                        "choices": [
+                            "Open",
+                            "Invite-Only",
+                            "Closed"
+                        ],
+                        "label": "Type",
+                        "field_type": "Text"
+                    },
+                    "field": "Type",
+                    "model_type": "Text",
+                    "model": "group"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "Name",
+                    "Members",
+                    "Type"
+                ]
+            }
+        }
+    },
+    "key": "group"
 }

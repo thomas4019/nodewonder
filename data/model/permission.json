@@ -8,8 +8,9 @@
             "quantity": "+",
             "widget": "model_record_reference",
             "settings": {
-                "label": "",
-                "model": "role"
+                "label": "role",
+                "model": "role",
+                "field_type": "Record"
             },
             "required": false
         },
@@ -30,5 +31,51 @@
     ],
     "index": "",
     "views": {},
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "role": {
+                "type": "Record",
+                "quantity": "+"
+            },
+            "": {
+                "type": "",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "role": {
+                    "type": "model_record_reference",
+                    "slots": {},
+                    "settings": {
+                        "label": "role",
+                        "model": "role",
+                        "field_type": "Record"
+                    },
+                    "field": "role",
+                    "model_type": "Record",
+                    "model": "permission"
+                },
+                "": {
+                    "slots": {},
+                    "settings": {
+                        "label": "",
+                        "field_type": ""
+                    },
+                    "field": "",
+                    "model_type": "",
+                    "model": "permission"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "role",
+                    "",
+                    ""
+                ]
+            }
+        }
+    },
+    "key": "permission"
 }

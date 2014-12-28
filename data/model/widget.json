@@ -34,7 +34,9 @@
             "settings": {
                 "lang": "htmlmixed",
                 "height": null,
-                "args": ""
+                "args": "",
+                "label": "htmlTemplate",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -49,7 +51,9 @@
                 "data": "",
                 "args": [
                     "label"
-                ]
+                ],
+                "label": "toHTML",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -88,7 +92,7 @@
         {
             "name": "slot_tags",
             "type": "Text",
-            "quantity": "key2+",
+            "quantity": "key2+:1+",
             "widget": "textbox",
             "settings": "",
             "required": false
@@ -111,7 +115,9 @@
                 "height": null,
                 "args": [
                     "callback"
-                ]
+                ],
+                "label": "children",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -127,7 +133,9 @@
                     "data",
                     "old",
                     "user"
-                ]
+                ],
+                "label": "processData",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -142,7 +150,9 @@
                 "args": [
                     "data",
                     "callback"
-                ]
+                ],
+                "label": "validateData",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -183,7 +193,9 @@
                     "id",
                     "scope",
                     "handlers"
-                ]
+                ],
+                "label": "action",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -214,7 +226,9 @@
                 "args": [
                     "input",
                     "callback"
-                ]
+                ],
+                "label": "doProcess",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -232,7 +246,9 @@
                     "req",
                     "res",
                     "callback"
-                ]
+                ],
+                "label": "save",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -247,7 +263,9 @@
                 "data": "",
                 "args": [
                     "callback"
-                ]
+                ],
+                "label": "load",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -262,7 +280,9 @@
                 "args": [
                     "selector",
                     "code"
-                ]
+                ],
+                "label": "makeEventJS",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -277,7 +297,9 @@
                 "data": "",
                 "args": [
                     ""
-                ]
+                ],
+                "label": "init",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -289,7 +311,9 @@
             "settings": {
                 "lang": "css",
                 "height": null,
-                "args": []
+                "args": [],
+                "label": "style",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -302,6 +326,521 @@
             "required": false
         }
     ],
+    "schema": {
+        "fields": {
+            "name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "settingsModel": {
+                "type": "field",
+                "quantity": "1+"
+            },
+            "settings_unfiltered": {
+                "type": "Text",
+                "quantity": "1+"
+            },
+            "htmlTemplate": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "toHTML": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "deps": {
+                "type": "Text",
+                "quantity": "bowerrepo1+:1+"
+            },
+            "head": {
+                "type": "Text",
+                "quantity": "1+"
+            },
+            "tags": {
+                "type": "Text",
+                "quantity": "2+"
+            },
+            "slots": {
+                "type": "Text",
+                "quantity": "2+"
+            },
+            "slot_tags": {
+                "type": "Text",
+                "quantity": "key2+"
+            },
+            "setup": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "children": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "processData": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "validateData": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "wrapper": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "wrapperClass": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "script": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "action": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "makeActionJS": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "pseudo_names": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "doProcess": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "save": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "load": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "makeEventJS": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "init": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "style": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "weight": {
+                "type": "Number",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "name",
+                        "field_type": "Text"
+                    },
+                    "field": "name",
+                    "model_type": "Text",
+                    "model": "widget"
+                },
+                "settingsModel": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "settingsModel",
+                        "field_type": "field"
+                    },
+                    "field": "settingsModel",
+                    "model_type": "field",
+                    "model": "widget"
+                },
+                "settings_unfiltered": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "settings_unfiltered",
+                        "field_type": "Text"
+                    },
+                    "field": "settings_unfiltered",
+                    "model_type": "Text",
+                    "model": "widget"
+                },
+                "htmlTemplate": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "htmlmixed",
+                        "height": null,
+                        "args": "",
+                        "label": "htmlTemplate",
+                        "field_type": "Code"
+                    },
+                    "field": "htmlTemplate",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "toHTML": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "",
+                        "height": 250,
+                        "data": "",
+                        "args": [
+                            "label"
+                        ],
+                        "label": "toHTML",
+                        "field_type": "Code"
+                    },
+                    "field": "toHTML",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "deps": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "deps",
+                        "field_type": "Text"
+                    },
+                    "field": "deps",
+                    "model_type": "Text",
+                    "model": "widget"
+                },
+                "head": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "head",
+                        "field_type": "Text"
+                    },
+                    "field": "head",
+                    "model_type": "Text",
+                    "model": "widget"
+                },
+                "tags": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "tags",
+                        "field_type": "Text"
+                    },
+                    "field": "tags",
+                    "model_type": "Text",
+                    "model": "widget"
+                },
+                "slots": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "slots",
+                        "field_type": "Text"
+                    },
+                    "field": "slots",
+                    "model_type": "Text",
+                    "model": "widget"
+                },
+                "slot_tags": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "slot_tags",
+                        "field_type": "Text"
+                    },
+                    "field": "slot_tags",
+                    "model_type": "Text",
+                    "model": "widget"
+                },
+                "setup": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "label": "setup",
+                        "field_type": "Code"
+                    },
+                    "field": "setup",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "children": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "",
+                        "height": null,
+                        "args": [
+                            "callback"
+                        ],
+                        "label": "children",
+                        "field_type": "Code"
+                    },
+                    "field": "children",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "processData": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "",
+                        "height": null,
+                        "args": [
+                            "data",
+                            "old",
+                            "user"
+                        ],
+                        "label": "processData",
+                        "field_type": "Code"
+                    },
+                    "field": "processData",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "validateData": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "",
+                        "height": null,
+                        "args": [
+                            "data",
+                            "callback"
+                        ],
+                        "label": "validateData",
+                        "field_type": "Code"
+                    },
+                    "field": "validateData",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "wrapper": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "wrapper",
+                        "field_type": "Text"
+                    },
+                    "field": "wrapper",
+                    "model_type": "Text",
+                    "model": "widget"
+                },
+                "wrapperClass": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "wrapperClass",
+                        "field_type": "Text"
+                    },
+                    "field": "wrapperClass",
+                    "model_type": "Text",
+                    "model": "widget"
+                },
+                "script": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "label": "script",
+                        "field_type": "Code"
+                    },
+                    "field": "script",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "action": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "",
+                        "height": null,
+                        "args": [
+                            "settings",
+                            "id",
+                            "scope",
+                            "handlers"
+                        ],
+                        "label": "action",
+                        "field_type": "Code"
+                    },
+                    "field": "action",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "makeActionJS": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "label": "makeActionJS",
+                        "field_type": "Code"
+                    },
+                    "field": "makeActionJS",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "pseudo_names": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "label": "pseudo_names",
+                        "field_type": "Code"
+                    },
+                    "field": "pseudo_names",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "doProcess": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "",
+                        "height": null,
+                        "args": [
+                            "input",
+                            "callback"
+                        ],
+                        "label": "doProcess",
+                        "field_type": "Code"
+                    },
+                    "field": "doProcess",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "save": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "",
+                        "height": null,
+                        "args": [
+                            "values",
+                            "user",
+                            "req",
+                            "res",
+                            "callback"
+                        ],
+                        "label": "save",
+                        "field_type": "Code"
+                    },
+                    "field": "save",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "load": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "",
+                        "height": null,
+                        "data": "",
+                        "args": [
+                            "callback"
+                        ],
+                        "label": "load",
+                        "field_type": "Code"
+                    },
+                    "field": "load",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "makeEventJS": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "",
+                        "height": null,
+                        "args": [
+                            "selector",
+                            "code"
+                        ],
+                        "label": "makeEventJS",
+                        "field_type": "Code"
+                    },
+                    "field": "makeEventJS",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "init": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "css",
+                        "height": null,
+                        "data": "",
+                        "args": [
+                            ""
+                        ],
+                        "label": "init",
+                        "field_type": "Code"
+                    },
+                    "field": "init",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "style": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "css",
+                        "height": null,
+                        "args": [],
+                        "label": "style",
+                        "field_type": "Code"
+                    },
+                    "field": "style",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "weight": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "weight",
+                        "field_type": "Number"
+                    },
+                    "field": "weight",
+                    "model_type": "Number",
+                    "model": "widget"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "name",
+                    "settingsModel",
+                    "settings_unfiltered",
+                    "htmlTemplate",
+                    "toHTML",
+                    "deps",
+                    "head",
+                    "tags",
+                    "slots",
+                    "slot_tags",
+                    "setup",
+                    "children",
+                    "processData",
+                    "validateData",
+                    "wrapper",
+                    "wrapperClass",
+                    "script",
+                    "action",
+                    "makeActionJS",
+                    "pseudo_names",
+                    "doProcess",
+                    "save",
+                    "load",
+                    "makeEventJS",
+                    "init",
+                    "style",
+                    "weight"
+                ]
+            }
+        }
+    },
     "index": "name",
     "views": {
         "default": {

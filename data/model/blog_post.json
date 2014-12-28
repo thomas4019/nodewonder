@@ -29,5 +29,66 @@
     ],
     "index": "",
     "views": {},
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "Title": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "Body": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "Comments": {
+                "type": "comment",
+                "quantity": "+"
+            }
+        },
+        "display": {
+            "widgets": {
+                "Title": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "Title",
+                        "field_type": "Text"
+                    },
+                    "field": "Title",
+                    "model_type": "Text",
+                    "model": "blog_post"
+                },
+                "Body": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "Body",
+                        "field_type": "Text"
+                    },
+                    "field": "Body",
+                    "model_type": "Text",
+                    "model": "blog_post"
+                },
+                "Comments": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "Comments",
+                        "field_type": "comment"
+                    },
+                    "field": "Comments",
+                    "model_type": "comment",
+                    "model": "blog_post"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "Title",
+                    "Body",
+                    "Comments"
+                ]
+            }
+        }
+    },
+    "key": "blog_post"
 }

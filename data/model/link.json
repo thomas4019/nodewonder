@@ -23,5 +23,66 @@
             "widget": "",
             "required": false
         }
-    ]
+    ],
+    "schema": {
+        "fields": {
+            "url": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "title": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "alt": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "url": {
+                    "type": "",
+                    "slots": {},
+                    "settings": {
+                        "label": "url",
+                        "field_type": "Text"
+                    },
+                    "field": "url",
+                    "model_type": "Text",
+                    "model": "link"
+                },
+                "title": {
+                    "type": "",
+                    "slots": {},
+                    "settings": {
+                        "label": "title",
+                        "field_type": "Text"
+                    },
+                    "field": "title",
+                    "model_type": "Text",
+                    "model": "link"
+                },
+                "alt": {
+                    "type": "",
+                    "slots": {},
+                    "settings": {
+                        "label": "alt",
+                        "field_type": "Text"
+                    },
+                    "field": "alt",
+                    "model_type": "Text",
+                    "model": "link"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "url",
+                    "title",
+                    "alt"
+                ]
+            }
+        }
+    },
+    "key": "link"
 }

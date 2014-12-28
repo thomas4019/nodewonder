@@ -22,23 +22,48 @@
     "index": "",
     "storage": "disk+memory",
     "schema": {
-        "fields": [
-            {
-                "name": "",
-                "type": "",
+        "fields": {
+            "type": {
+                "type": "Text",
                 "quantity": ""
             },
-            {
-                "name": "",
-                "type": "",
+            "quantity": {
+                "type": "Text",
                 "quantity": ""
             }
-        ],
+        },
         "display": {
-            "widgets": {},
+            "widgets": {
+                "type": {
+                    "type": "model_type_selector",
+                    "slots": {},
+                    "settings": {
+                        "label": "type",
+                        "field_type": "Text"
+                    },
+                    "field": "type",
+                    "model_type": "Text",
+                    "model": "field2"
+                },
+                "quantity": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "quantity",
+                        "field_type": "Text"
+                    },
+                    "field": "quantity",
+                    "model_type": "Text",
+                    "model": "field2"
+                }
+            },
             "slotAssignments": {
-                "body": []
+                "body": [
+                    "type",
+                    "quantity"
+                ]
             }
         }
-    }
+    },
+    "key": "field2"
 }

@@ -21,7 +21,7 @@ var Drupal = {};
 Drupal.theme = {};
   function attach() {
     $('.vertical-tabs-panes').each(function () {
-      console.log(this);
+      //console.log(this);
       var focusID = $(':hidden.vertical-tabs-active-tab', this).val();
       var tab_focus;
 
@@ -128,7 +128,12 @@ Drupal.verticalTab.prototype = {
     this.item.addClass('selected');
     // Mark the active tab for screen readers.
     $('#active-vertical-tab').remove();
-    this.link.append('<span id="active-vertical-tab" class="element-invisible">' + '(active tab)' + '</span>');
+    this.link.append('<span id="active-vertical-tab" class="element-invisible">' + /*'(active tab)' +*/ '</span>');
+    
+    $(this.fieldset).find('.onTabFocus').each(function() {
+      console.log(this);
+      $(this).data('onTabFocus')();
+    });
   },
 
   /**

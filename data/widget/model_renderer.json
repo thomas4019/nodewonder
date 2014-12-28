@@ -1,0 +1,61 @@
+{
+    "name": "model_renderer",
+    "settingsModel": [
+        {
+            "name": "schema",
+            "type": "schema",
+            "quantity": "",
+            "widget": "model_form",
+            "settings": "",
+            "required": false
+        },
+        {
+            "name": "data",
+            "type": "JSON",
+            "quantity": "",
+            "widget": "jsoneditor",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "settings_unfiltered": [],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "{{{renderSlot \"body\"}}}"
+    },
+    "deps": {},
+    "head": [],
+    "tags": [
+        "view",
+        "action",
+        "local-action"
+    ],
+    "slots": [],
+    "slot_tags": {},
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "this.settings.schema = _.cloneDeep(this.settings.schema);\nvar fields = this.settings.schema.fields;\nthis.settings.fields = fields;\n_.each(this.settings.schema.display.widgets, function(widget, id) {\n  //console.log(widget);\n  if (widget.field && fields[widget.field] ) {\n    widget.settings.data = this.settings.data[widget.field];\n    //console.log(fields[widget.field]);\n    if (fields[widget.field].quantity) {\n      widget.settings.quantity = fields[widget.field].quantity;\n    }\n    //fields[widget.field].widget = widget.type;\n    widget.type = cms.functions.getWidget(widget.type, widget.settings, widget);\n    fields[widget.field].widget = widget.type;\n    fields[widget.field].settings = widget.settings;\n  }\n}.bind(this));"
+    },
+    "children": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "callback({body: this.settings.schema.display.widgets}, this.settings.schema.display.slotAssignments);"
+    },
+    "wrapper": "",
+    "wrapperClass": "",
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "nw.model[id] = {\n    \"fields\": settings.fields\n};"
+    },
+    "weight": ""
+}

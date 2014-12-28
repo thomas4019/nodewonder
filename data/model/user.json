@@ -48,13 +48,124 @@
             "quantity": "+",
             "widget": "model_record_reference",
             "settings": {
-                "label": "",
-                "model": "role"
+                "label": "roles",
+                "model": "role",
+                "field_type": "Record"
             },
             "required": false
         }
     ],
     "index": "clientID",
     "views": {},
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "clientID": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "username": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "password": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "captcha": {
+                "type": "Captcha",
+                "quantity": ""
+            },
+            "email": {
+                "type": "Email",
+                "quantity": ""
+            },
+            "roles": {
+                "type": "Record",
+                "quantity": "+"
+            }
+        },
+        "display": {
+            "widgets": {
+                "clientID": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "clientID",
+                        "field_type": "Text"
+                    },
+                    "field": "clientID",
+                    "model_type": "Text",
+                    "model": "user"
+                },
+                "username": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "username",
+                        "field_type": "Text"
+                    },
+                    "field": "username",
+                    "model_type": "Text",
+                    "model": "user"
+                },
+                "password": {
+                    "type": "password",
+                    "slots": {},
+                    "settings": {
+                        "label": "password",
+                        "field_type": "Text"
+                    },
+                    "field": "password",
+                    "model_type": "Text",
+                    "model": "user"
+                },
+                "captcha": {
+                    "type": "recaptcha",
+                    "slots": {},
+                    "settings": {
+                        "label": "captcha",
+                        "field_type": "Captcha"
+                    },
+                    "field": "captcha",
+                    "model_type": "Captcha",
+                    "model": "user"
+                },
+                "email": {
+                    "type": "email_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "email",
+                        "field_type": "Email"
+                    },
+                    "field": "email",
+                    "model_type": "Email",
+                    "model": "user"
+                },
+                "roles": {
+                    "type": "model_record_reference",
+                    "slots": {},
+                    "settings": {
+                        "label": "roles",
+                        "model": "role",
+                        "field_type": "Record"
+                    },
+                    "field": "roles",
+                    "model_type": "Record",
+                    "model": "user"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "clientID",
+                    "username",
+                    "password",
+                    "captcha",
+                    "email",
+                    "roles"
+                ]
+            }
+        }
+    },
+    "key": "user"
 }

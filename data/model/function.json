@@ -45,5 +45,98 @@
     ],
     "index": "name",
     "views": {},
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "args": {
+                "type": "Text",
+                "quantity": "+"
+            },
+            "code": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "calls": {
+                "type": "Text",
+                "quantity": "0+"
+            },
+            "callers": {
+                "type": "Text",
+                "quantity": "0+"
+            }
+        },
+        "display": {
+            "widgets": {
+                "name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "name",
+                        "field_type": "Text"
+                    },
+                    "field": "name",
+                    "model_type": "Text",
+                    "model": "function"
+                },
+                "args": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "args",
+                        "field_type": "Text"
+                    },
+                    "field": "args",
+                    "model_type": "Text",
+                    "model": "function"
+                },
+                "code": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "label": "code",
+                        "field_type": "Code"
+                    },
+                    "field": "code",
+                    "model_type": "Code",
+                    "model": "function"
+                },
+                "calls": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "calls",
+                        "field_type": "Text"
+                    },
+                    "field": "calls",
+                    "model_type": "Text",
+                    "model": "function"
+                },
+                "callers": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "callers",
+                        "field_type": "Text"
+                    },
+                    "field": "callers",
+                    "model_type": "Text",
+                    "model": "function"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "name",
+                    "args",
+                    "code",
+                    "calls",
+                    "callers"
+                ]
+            }
+        }
+    },
+    "key": "function"
 }

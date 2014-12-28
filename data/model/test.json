@@ -45,5 +45,98 @@
     ],
     "index": "",
     "views": {},
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "deps": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "deps2": {
+                "type": "Text",
+                "quantity": "2+"
+            },
+            "deps3": {
+                "type": "Text",
+                "quantity": "key3+"
+            },
+            "deps4": {
+                "type": "Text",
+                "quantity": "2+:1+"
+            },
+            "deps5": {
+                "type": "Text",
+                "quantity": "key1+:1+"
+            }
+        },
+        "display": {
+            "widgets": {
+                "deps": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "deps",
+                        "field_type": "Text"
+                    },
+                    "field": "deps",
+                    "model_type": "Text",
+                    "model": "test"
+                },
+                "deps2": {
+                    "type": "password",
+                    "slots": {},
+                    "settings": {
+                        "label": "deps2",
+                        "field_type": "Text"
+                    },
+                    "field": "deps2",
+                    "model_type": "Text",
+                    "model": "test"
+                },
+                "deps3": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "deps3",
+                        "field_type": "Text"
+                    },
+                    "field": "deps3",
+                    "model_type": "Text",
+                    "model": "test"
+                },
+                "deps4": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "deps4",
+                        "field_type": "Text"
+                    },
+                    "field": "deps4",
+                    "model_type": "Text",
+                    "model": "test"
+                },
+                "deps5": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "deps5",
+                        "field_type": "Text"
+                    },
+                    "field": "deps5",
+                    "model_type": "Text",
+                    "model": "test"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "deps",
+                    "deps2",
+                    "deps3",
+                    "deps4",
+                    "deps5"
+                ]
+            }
+        }
+    },
+    "key": "test"
 }

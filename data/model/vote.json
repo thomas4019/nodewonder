@@ -46,5 +46,82 @@
                 }
             }
         }
-    ]
+    ],
+    "schema": {
+        "fields": {
+            "total": {
+                "type": "Number",
+                "quantity": ""
+            },
+            "count": {
+                "type": "Number",
+                "quantity": ""
+            },
+            "average": {
+                "type": "Number",
+                "quantity": ""
+            },
+            "ratings": {
+                "type": "Number",
+                "quantity": "key:+"
+            }
+        },
+        "display": {
+            "widgets": {
+                "total": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "total",
+                        "field_type": "Number"
+                    },
+                    "field": "total",
+                    "model_type": "Number",
+                    "model": "vote"
+                },
+                "count": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "count",
+                        "field_type": "Number"
+                    },
+                    "field": "count",
+                    "model_type": "Number",
+                    "model": "vote"
+                },
+                "average": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "average",
+                        "field_type": "Number"
+                    },
+                    "field": "average",
+                    "model_type": "Number",
+                    "model": "vote"
+                },
+                "ratings": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "ratings",
+                        "field_type": "Number"
+                    },
+                    "field": "ratings",
+                    "model_type": "Number",
+                    "model": "vote"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "total",
+                    "count",
+                    "average",
+                    "ratings"
+                ]
+            }
+        }
+    },
+    "key": "vote"
 }

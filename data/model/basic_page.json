@@ -23,5 +23,66 @@
             "widget": "",
             "required": false
         }
-    ]
+    ],
+    "schema": {
+        "fields": {
+            "Title": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "Content": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "Published": {
+                "type": "Boolean",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "Title": {
+                    "type": "",
+                    "slots": {},
+                    "settings": {
+                        "label": "Title",
+                        "field_type": "Text"
+                    },
+                    "field": "Title",
+                    "model_type": "Text",
+                    "model": "basic_page"
+                },
+                "Content": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "Content",
+                        "field_type": "Text"
+                    },
+                    "field": "Content",
+                    "model_type": "Text",
+                    "model": "basic_page"
+                },
+                "Published": {
+                    "type": "",
+                    "slots": {},
+                    "settings": {
+                        "label": "Published",
+                        "field_type": "Boolean"
+                    },
+                    "field": "Published",
+                    "model_type": "Boolean",
+                    "model": "basic_page"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "Title",
+                    "Content",
+                    "Published"
+                ]
+            }
+        }
+    },
+    "key": "basic_page"
 }

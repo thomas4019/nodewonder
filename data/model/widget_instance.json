@@ -29,5 +29,66 @@
     ],
     "index": "",
     "views": {},
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "type": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "slots": {
+                "type": "Text",
+                "quantity": "name0+:2+"
+            },
+            "settings": {
+                "type": "JSON",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "type": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "type",
+                        "field_type": "Text"
+                    },
+                    "field": "type",
+                    "model_type": "Text",
+                    "model": "widget_instance"
+                },
+                "slots": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "slots",
+                        "field_type": "Text"
+                    },
+                    "field": "slots",
+                    "model_type": "Text",
+                    "model": "widget_instance"
+                },
+                "settings": {
+                    "type": "jsoneditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "settings",
+                        "field_type": "JSON"
+                    },
+                    "field": "settings",
+                    "model_type": "JSON",
+                    "model": "widget_instance"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "type",
+                    "slots",
+                    "settings"
+                ]
+            }
+        }
+    },
+    "key": "widget_instance"
 }

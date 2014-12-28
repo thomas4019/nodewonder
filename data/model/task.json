@@ -37,5 +37,81 @@
             "required": false
         }
     ],
-    "key": ""
+    "key": "task",
+    "schema": {
+        "fields": {
+            "Title": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "description": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "Completed": {
+                "type": "Boolean",
+                "quantity": ""
+            },
+            "Due": {
+                "type": "Date",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "Title": {
+                    "type": "",
+                    "slots": {},
+                    "settings": {
+                        "label": "Title",
+                        "field_type": "Text"
+                    },
+                    "field": "Title",
+                    "model_type": "Text",
+                    "model": "task"
+                },
+                "description": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "description",
+                        "field_type": "Text"
+                    },
+                    "field": "description",
+                    "model_type": "Text",
+                    "model": "task"
+                },
+                "Completed": {
+                    "type": "",
+                    "slots": {},
+                    "settings": {
+                        "label": "Completed",
+                        "field_type": "Boolean"
+                    },
+                    "field": "Completed",
+                    "model_type": "Boolean",
+                    "model": "task"
+                },
+                "Due": {
+                    "type": "",
+                    "slots": {},
+                    "settings": {
+                        "label": "Due",
+                        "field_type": "Date"
+                    },
+                    "field": "Due",
+                    "model_type": "Date",
+                    "model": "task"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "Title",
+                    "description",
+                    "Completed",
+                    "Due"
+                ]
+            }
+        }
+    }
 }

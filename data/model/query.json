@@ -8,8 +8,9 @@
             "quantity": "",
             "widget": "model_record_reference",
             "settings": {
-                "label": "",
-                "model": "model"
+                "label": "from",
+                "model": "model",
+                "field_type": "Record"
             },
             "required": false
         },
@@ -48,5 +49,99 @@
     ],
     "index": "",
     "views": {},
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "from": {
+                "type": "Record",
+                "quantity": ""
+            },
+            "select": {
+                "type": "Text",
+                "quantity": "2+"
+            },
+            "where": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "orderby": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "limit": {
+                "type": "Number",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "from": {
+                    "type": "model_record_reference",
+                    "slots": {},
+                    "settings": {
+                        "label": "from",
+                        "model": "model",
+                        "field_type": "Record"
+                    },
+                    "field": "from",
+                    "model_type": "Record",
+                    "model": "query"
+                },
+                "select": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "select",
+                        "field_type": "Text"
+                    },
+                    "field": "select",
+                    "model_type": "Text",
+                    "model": "query"
+                },
+                "where": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "where",
+                        "field_type": "Text"
+                    },
+                    "field": "where",
+                    "model_type": "Text",
+                    "model": "query"
+                },
+                "orderby": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "orderby",
+                        "field_type": "Text"
+                    },
+                    "field": "orderby",
+                    "model_type": "Text",
+                    "model": "query"
+                },
+                "limit": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "limit",
+                        "field_type": "Number"
+                    },
+                    "field": "limit",
+                    "model_type": "Number",
+                    "model": "query"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "from",
+                    "select",
+                    "where",
+                    "orderby",
+                    "limit"
+                ]
+            }
+        }
+    },
+    "key": "query"
 }

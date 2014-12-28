@@ -28,5 +28,65 @@
     ],
     "index": "",
     "views": {},
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "Code": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "": {
+                "type": "",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "name",
+                        "field_type": "Text"
+                    },
+                    "field": "name",
+                    "model_type": "Text",
+                    "model": "job"
+                },
+                "Code": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "label": "Code",
+                        "field_type": "Code"
+                    },
+                    "field": "Code",
+                    "model_type": "Code",
+                    "model": "job"
+                },
+                "": {
+                    "slots": {},
+                    "settings": {
+                        "label": "",
+                        "field_type": ""
+                    },
+                    "field": "",
+                    "model_type": "",
+                    "model": "job"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "name",
+                    "Code",
+                    ""
+                ]
+            }
+        }
+    },
+    "key": "job"
 }

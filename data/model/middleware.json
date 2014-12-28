@@ -22,7 +22,9 @@
                     "req",
                     "res",
                     "next"
-                ]
+                ],
+                "label": "code",
+                "field_type": "Code"
             },
             "required": false
         },
@@ -45,5 +47,89 @@
     ],
     "index": "",
     "views": {},
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "code": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "priority": {
+                "type": "Number",
+                "quantity": ""
+            },
+            "base": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "name",
+                        "field_type": "Text"
+                    },
+                    "field": "name",
+                    "model_type": "Text",
+                    "model": "middleware"
+                },
+                "code": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "",
+                        "height": null,
+                        "args": [
+                            "req",
+                            "res",
+                            "next"
+                        ],
+                        "label": "code",
+                        "field_type": "Code"
+                    },
+                    "field": "code",
+                    "model_type": "Code",
+                    "model": "middleware"
+                },
+                "priority": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "priority",
+                        "field_type": "Number"
+                    },
+                    "field": "priority",
+                    "model_type": "Number",
+                    "model": "middleware"
+                },
+                "base": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "base",
+                        "field_type": "Text"
+                    },
+                    "field": "base",
+                    "model_type": "Text",
+                    "model": "middleware"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "name",
+                    "code",
+                    "priority",
+                    "base"
+                ]
+            }
+        }
+    },
+    "key": "middleware"
 }

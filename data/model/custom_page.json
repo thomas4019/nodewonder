@@ -18,7 +18,8 @@
             "settings": {
                 "label": "parent",
                 "model": "custom_page",
-                "name": "parent"
+                "name": "parent",
+                "field_type": "Record"
             },
             "required": false
         },
@@ -53,7 +54,8 @@
                             "menu"
                         ]
                     }
-                }
+                },
+                "field_type": "widget_code"
             },
             "required": false
         },
@@ -84,5 +86,149 @@
     ],
     "index": "URL",
     "views": {},
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "URL": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "parent": {
+                "type": "Record",
+                "quantity": ""
+            },
+            "controller": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "code": {
+                "type": "widget_code",
+                "quantity": ""
+            },
+            "Title": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "contentType": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "permission": {
+                "type": "permission",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "URL": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "URL",
+                        "field_type": "Text"
+                    },
+                    "field": "URL",
+                    "model_type": "Text",
+                    "model": "custom_page"
+                },
+                "parent": {
+                    "type": "model_record_reference",
+                    "slots": {},
+                    "settings": {
+                        "label": "parent",
+                        "model": "custom_page",
+                        "name": "parent",
+                        "field_type": "Record"
+                    },
+                    "field": "parent",
+                    "model_type": "Record",
+                    "model": "custom_page"
+                },
+                "controller": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "controller",
+                        "field_type": "Text"
+                    },
+                    "field": "controller",
+                    "model_type": "Text",
+                    "model": "custom_page"
+                },
+                "code": {
+                    "type": "widget_code_editor",
+                    "slots": {},
+                    "settings": {
+                        "label": "code",
+                        "name": "code",
+                        "data": {
+                            "widgets": {
+                                "menu": {
+                                    "type": "template",
+                                    "settings": {
+                                        "path": "modules/admin/menu.html",
+                                        "username": "{{user.email}}"
+                                    }
+                                }
+                            },
+                            "slotAssignments": {
+                                "body": [
+                                    "menu"
+                                ]
+                            }
+                        },
+                        "field_type": "widget_code"
+                    },
+                    "field": "code",
+                    "model_type": "widget_code",
+                    "model": "custom_page"
+                },
+                "Title": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "Title",
+                        "field_type": "Text"
+                    },
+                    "field": "Title",
+                    "model_type": "Text",
+                    "model": "custom_page"
+                },
+                "contentType": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "contentType",
+                        "field_type": "Text"
+                    },
+                    "field": "contentType",
+                    "model_type": "Text",
+                    "model": "custom_page"
+                },
+                "permission": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "permission",
+                        "field_type": "permission"
+                    },
+                    "field": "permission",
+                    "model_type": "permission",
+                    "model": "custom_page"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "URL",
+                    "parent",
+                    "controller",
+                    "code",
+                    "Title",
+                    "contentType",
+                    "permission"
+                ]
+            }
+        }
+    },
+    "key": "custom_page"
 }

@@ -102,7 +102,7 @@ cms.functions.loadModelIntoMemory = function(model, callback) {
   });
 }
 
-cms.functions.evalFunctions = function(widget, object, key) {
+cms.functions.evalFunctions = function(id, object, key) {
   if (object instanceof Array) {
     return object;
   }
@@ -112,14 +112,14 @@ cms.functions.evalFunctions = function(widget, object, key) {
   if (typeof object == 'object') {
     if ('_is_func' in object && 'javascript' in object) {
       if (!object.args) {
-        console.log(widget.name + ' ' + key + ' missing args');
+        console.log(id + ' missing args');
       }
-      var func = new Function(object.args.join(','), object.javascript);//.bind(widget);
+      var func = new Function(object.args.join(','), 'if(-1 == "'+id+'".indexOf("Middleware")) { console.log("'+id +'.' +key+'");console.log(arguments); }'+ object.javascript);//.bind(widget);
       return func;
     } else {
       var object2 = _.clone(object);
       for (var key in object) {
-        object2[key] = cms.functions.evalFunctions(widget, object[key], key);
+        object2[key] = cms.functions.evalFunctions(id, object[key], key);
       }
       return object2;
     }
@@ -334,14 +334,16 @@ function initFuncs(callback) {
   cms.models = cms.model_data['model'];
 
   _.each(cms.model_data['function'], function(functionData) {
-    var func = cms.functions.evalFunctions(functionData, functionData);
+    var func = cms.functions.evalFunctions(functionData.name, functionData);
     cms.functions[func.name] = func.code;
+    //console.log(func.code);
   });
 
   initSandbox = {
     load: cms.functions.loadRecord,
     loadPage: cms.functions.loadPageState,
-    query: cms.functions.executeQueryLocally
+    query: cms.functions.executeQueryLocally,
+    log: console.log
   };
   context = vm.createContext(initSandbox);
 
@@ -382,7 +384,7 @@ function sortWidgets(callback) {
 function addMiddleware(callback) {
   cms.middleware = [];
   _.each(cms.model_data['middleware'], function(data) {
-    var middleware = cms.functions.evalFunctions(data, data);
+    var middleware = cms.functions.evalFunctions(data.name, data);
     cms.middleware.push(middleware);
   });
 
@@ -571,8 +573,38 @@ cms.migrate7 = function() {
 
 cms.migrate8 = function() {
   _.forEach(cms.model_data.model, function(model, index) {
-    
-    cms.functions.saveRecord('function', index, model);
+    model.schema = {
+      fields: {},
+      display: {
+        "widgets": {
+            
+        },
+        "slotAssignments": {
+            "body": [
+               
+            ]
+        }
+      }
+    };
+    model.fields.forEach(function(field) {
+      model.schema.fields[field.name] = {
+        type: field.type,
+        quantity: field.quantity
+      }
+      var id = field.name; //cms.functions.makeid(8);
+      model.schema.display.widgets[id] = {
+        type: field.widget,
+        slots: {},
+        settings: field.settings || {},
+        field: field.name,  
+        model_type: field.type,
+        model: index
+      };
+      model.schema.display.widgets[id].settings.label = field.name;
+      model.schema.display.widgets[id].settings.field_type = field.type;
+      model.schema.display.slotAssignments.body.push(id);
+    });
+    cms.functions.saveRecord('model', index, model);
   });
 }
 

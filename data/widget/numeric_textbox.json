@@ -1,50 +1,44 @@
 {
-    "tags": [
-        "field_edit",
-        "view"
-    ],
-    "deps": {
-        "jquery": [],
-        "bootstrap": []
-    },
+    "name": "numeric_textbox",
     "settingsModel": [
         {
             "name": "inline",
-            "type": "Boolean"
+            "type": "Boolean",
+            "quantity": "",
+            "widget": "checkbox",
+            "settings": "",
+            "required": false
         },
         {
             "name": "data",
-            "type": "Number"
+            "type": "Number",
+            "quantity": "",
+            "widget": "numeric_textbox",
+            "settings": "",
+            "required": false
         },
         {
             "name": "min",
             "type": "Number",
+            "quantity": "",
+            "widget": "numeric_textbox",
             "settings": {
                 "min": 2
-            }
+            },
+            "required": false
         },
         {
             "name": "max",
-            "type": "Number"
+            "type": "Number",
+            "quantity": "",
+            "widget": "numeric_textbox",
+            "settings": "",
+            "required": false
         }
     ],
-    "processData": {
-        "_is_func": true,
-        "args": [
-            "data",
-            "old",
-            "user"
-        ],
-        "javascript": "return parseInt(data);"
-    },
-    "validateData": {
-        "_is_func": true,
-        "args": [
-            "data",
-            "callback"
-        ],
-        "javascript": "if (this.settings.max && data > this.settings.max)\n    return 'Number is too large';\nif (this.settings.min && data < this.settings.min)\n    return 'Number is too small';\nreturn true;"
-    },
+    "settings_unfiltered": [
+        "data"
+    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -52,5 +46,35 @@
         ],
         "javascript": "var label = '<label class=\"control-label\" for=\"' + this.id + '-textbox\" style=\"padding-right: 5px;\">' + (this.settings.label ? this.settings.label : '') + ':' + '</label>';\nvar element = '<input id=\"' + this.id + '-textbox\" class=\"form-control input-small\" type=\"number\" name=\"' + this.id + '\"' + (this.settings.data ? ' value=\"' + cms.functions.htmlEscape(this.settings.data) + '\"' : '') + ' />';\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + label + element + '</div>';\n} else {\n    return label + element;\n}"
     },
-    "name": "numeric_textbox"
+    "deps": {
+        "jquery": [],
+        "bootstrap": []
+    },
+    "head": [],
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "slots": [],
+    "slot_tags": {},
+    "processData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "old",
+            "user"
+        ],
+        "javascript": "return isNaN(parseInt(data)) ? data : parseInt(data);"
+    },
+    "validateData": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "callback"
+        ],
+        "javascript": "/*if (data > 40) {\n  console.log('failing');\n  return 'arbitrary rule';\n}*/\nif (data !== \"\" && typeof data != \"number\")\n  \treturn 'Must be a number';\nif (this.settings.max && data > this.settings.max)\n    return 'Number is too large';\nif (this.settings.min && data < this.settings.min)\n    return 'Number is too small';\nreturn false;"
+    },
+    "wrapper": "",
+    "wrapperClass": "",
+    "weight": ""
 }

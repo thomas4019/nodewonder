@@ -1,0 +1,28 @@
+{
+    "name": "group",
+    "settingsModel": [
+        {
+            "name": "",
+            "type": "",
+            "quantity": "",
+            "settings": "",
+            "required": false
+        }
+    ],
+    "settings_unfiltered": [],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "{{{renderSlot \"children\"}}}"
+    },
+    "deps": {},
+    "head": [],
+    "tags": [],
+    "slots": [
+        "children"
+    ],
+    "slot_tags": {},
+    "wrapper": "",
+    "wrapperClass": "",
+    "weight": ""
+}

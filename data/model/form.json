@@ -48,5 +48,66 @@
                 }
             }
         }
-    ]
+    ],
+    "schema": {
+        "fields": {
+            "name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "Form": {
+                "type": "field",
+                "quantity": "2+"
+            },
+            "Actions": {
+                "type": "Widgets",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "name",
+                        "field_type": "Text"
+                    },
+                    "field": "name",
+                    "model_type": "Text",
+                    "model": "form"
+                },
+                "Form": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "Form",
+                        "field_type": "field"
+                    },
+                    "field": "Form",
+                    "model_type": "field",
+                    "model": "form"
+                },
+                "Actions": {
+                    "type": "widget_code_editor",
+                    "slots": {},
+                    "settings": {
+                        "label": "Actions",
+                        "field_type": "Widgets"
+                    },
+                    "field": "Actions",
+                    "model_type": "Widgets",
+                    "model": "form"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "name",
+                    "Form",
+                    "Actions"
+                ]
+            }
+        }
+    },
+    "key": "form"
 }

@@ -47,5 +47,82 @@
             }
         }
     ],
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "Name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "Settings": {
+                "type": "field",
+                "quantity": "+"
+            },
+            "Code": {
+                "type": "Widgets",
+                "quantity": ""
+            },
+            "controller": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "Name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "Name",
+                        "field_type": "Text"
+                    },
+                    "field": "Name",
+                    "model_type": "Text",
+                    "model": "custom_widget"
+                },
+                "Settings": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "Settings",
+                        "field_type": "field"
+                    },
+                    "field": "Settings",
+                    "model_type": "field",
+                    "model": "custom_widget"
+                },
+                "Code": {
+                    "type": "widget_code_editor",
+                    "slots": {},
+                    "settings": {
+                        "label": "Code",
+                        "field_type": "Widgets"
+                    },
+                    "field": "Code",
+                    "model_type": "Widgets",
+                    "model": "custom_widget"
+                },
+                "controller": {
+                    "type": "textarea",
+                    "slots": {},
+                    "settings": {
+                        "label": "controller",
+                        "field_type": "Text"
+                    },
+                    "field": "controller",
+                    "model_type": "Text",
+                    "model": "custom_widget"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "Name",
+                    "Settings",
+                    "Code",
+                    "controller"
+                ]
+            }
+        }
+    },
+    "key": "custom_widget"
 }

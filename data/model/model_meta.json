@@ -38,5 +38,66 @@
                 }
             }
         }
-    ]
+    ],
+    "schema": {
+        "fields": {
+            "created": {
+                "type": "Date",
+                "quantity": ""
+            },
+            "update": {
+                "type": "Date",
+                "quantity": ""
+            },
+            "author": {
+                "type": "Record",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "created": {
+                    "type": "date",
+                    "slots": {},
+                    "settings": {
+                        "label": "created",
+                        "field_type": "Date"
+                    },
+                    "field": "created",
+                    "model_type": "Date",
+                    "model": "model_meta"
+                },
+                "update": {
+                    "type": "date",
+                    "slots": {},
+                    "settings": {
+                        "label": "update",
+                        "field_type": "Date"
+                    },
+                    "field": "update",
+                    "model_type": "Date",
+                    "model": "model_meta"
+                },
+                "author": {
+                    "type": "model_record_reference",
+                    "slots": {},
+                    "settings": {
+                        "label": "author",
+                        "field_type": "Record"
+                    },
+                    "field": "author",
+                    "model_type": "Record",
+                    "model": "model_meta"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "created",
+                    "update",
+                    "author"
+                ]
+            }
+        }
+    },
+    "key": "model_meta"
 }

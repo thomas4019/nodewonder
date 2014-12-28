@@ -8,6 +8,6 @@
         "args": [
             "widget"
         ],
-        "javascript": "//console.log(widget.name);\nreturn cms.functions.evalFunctions(widget, widget);"
+        "javascript": "//console.log(widget.name);\nreturn cms.functions.evalFunctions(widget.name, widget);"
     }
 }

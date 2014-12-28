@@ -63,14 +63,15 @@ function stateController($scope) {
 		$scope.field_widgets[type] = $scope.field_widgets[type] || [];
 		for (var i in $scope.edit_widgets[type]) {
 			var widget = $scope.edit_widgets[type][i];
-			$scope.field_widgets[type].push({widget: widget, group: 'edit'});
+			//$scope.field_widgets[type].push({widget: widget, group: 'edit'});
+			$scope.field_widgets[type].push(widget);
 		}
 	}
 	for (type in $scope.view_widgets) {
 		$scope.field_widgets[type] = $scope.field_widgets[type] || [];
 		for (var i in $scope.view_widgets[type]) {
 			var widget = $scope.view_widgets[type][i];
-			$scope.field_widgets[type].push({widget: widget, group: 'view'});
+			//$scope.field_widgets[type].push({widget: widget, group: 'view'});
 		}
 	}
 
@@ -91,7 +92,7 @@ function stateController($scope) {
 			slots[slot_name] = [];
 		});
 		//var slots = JSON.parse()
-		var new_id = nw.functions.makeid(8);
+		var new_id = selected.model ? selected.name : nw.functions.makeid(8);
 		if (selected.model)
 			$scope.widgets[new_id] = {type: selected.widget, slots: slots, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, slot_tags: selected.slot_tags};
 		else

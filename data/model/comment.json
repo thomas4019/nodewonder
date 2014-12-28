@@ -27,5 +27,50 @@
     ],
     "index": "",
     "views": {},
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "body": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "": {
+                "type": "",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "body": {
+                    "type": "textarea",
+                    "slots": {},
+                    "settings": {
+                        "label": "body",
+                        "field_type": "Text"
+                    },
+                    "field": "body",
+                    "model_type": "Text",
+                    "model": "comment"
+                },
+                "": {
+                    "slots": {},
+                    "settings": {
+                        "label": "",
+                        "field_type": ""
+                    },
+                    "field": "",
+                    "model_type": "",
+                    "model": "comment"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "body",
+                    "",
+                    ""
+                ]
+            }
+        }
+    },
+    "key": "comment"
 }

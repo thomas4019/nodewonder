@@ -14,7 +14,7 @@
     "htmlTemplate": {
         "_is_func": true,
         "args": [],
-        "htmlmixed": "<div class=\"vertical-tabs-panes\">\n    {{#each slotAssignments.tabs}}\n    <fieldset class=\"menu-link-form collapsible collapsed\">\n        <legend><span class=\"fieldset-legend\">{{this.label}}</span>\n        </legend>\n        {{{this.html}}}\n        <div class=\"fieldset-wrapper\"></div>\n    </fieldset>\n    {{/each}}\n    <input class=\"vertical-tabs-active-tab\" type=\"hidden\" name=\"additional_settings__active_tab\" value=\"\" />\n</div>"
+        "htmlmixed": "<div class=\"vertical-tabs-panes\">\n    {{#each slotAssignments.tabs}}\n    <fieldset id=\"{{@index}}\" class=\"menu-link-form collapsible collapsed\">\n        <legend><span class=\"fieldset-legend\">{{this.label}}</span>\n        </legend>\n        {{{this.html}}}\n        <div class=\"fieldset-wrapper\"></div>\n    </fieldset>\n    {{/each}}\n    <input class=\"vertical-tabs-active-tab\" type=\"hidden\" name=\"additional_settings__active_tab\" value=\"0\" />\n</div>"
     },
     "toHTML": {
         "_is_func": true,
@@ -27,8 +27,8 @@
         "jquery": []
     },
     "head": [
-        "vertical-tabs.css",
-        "vertical-tabs.js"
+        "/vertical-tabs.css",
+        "/vertical-tabs.js"
     ],
     "tags": [
         "view"
@@ -39,10 +39,5 @@
     "slot_tags": {},
     "wrapper": "",
     "wrapperClass": "",
-    "style": {
-        "_is_func": true,
-        "args": [],
-        "css": "/**\n * Markup free clearing.\n *\n * @see http://perishablepress.com/press/2009/12/06/new-clearfix-hack\n */\n.clearfix:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n/* IE6 */\n* html .clearfix {\n  height: 1%;\n}\n/* IE7 */\n*:first-child + html .clearfix {\n  min-height: 1%;\n}\n\n.widget-vertical_tabs a {\n  color: #0074BD;\n  text-decoration: none;\n}"
-    },
-    "weight": null
+    "weight": ""
 }

@@ -265,6 +265,7 @@ var nw = function() {
 		data['data'] = JSON.stringify(model_data);
 		$.getJSON('/internal/process_model', data, function(result) {
 			console.log(result);
+			console.log('processed');
 			callback(result);
 		});
 	}

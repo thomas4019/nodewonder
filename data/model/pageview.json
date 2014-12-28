@@ -38,5 +38,65 @@
             }
         }
     ],
-    "storage": "memory"
+    "storage": "memory",
+    "schema": {
+        "fields": {
+            "url": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "datetime": {
+                "type": "Date",
+                "quantity": ""
+            },
+            "": {
+                "type": "",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "url": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "url",
+                        "field_type": "Text"
+                    },
+                    "field": "url",
+                    "model_type": "Text",
+                    "model": "pageview"
+                },
+                "datetime": {
+                    "type": "date",
+                    "slots": {},
+                    "settings": {
+                        "label": "datetime",
+                        "field_type": "Date"
+                    },
+                    "field": "datetime",
+                    "model_type": "Date",
+                    "model": "pageview"
+                },
+                "": {
+                    "slots": {},
+                    "settings": {
+                        "label": "",
+                        "field_type": ""
+                    },
+                    "field": "",
+                    "model_type": "",
+                    "model": "pageview"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "url",
+                    "datetime",
+                    ""
+                ]
+            }
+        }
+    },
+    "key": "pageview"
 }

@@ -42,7 +42,7 @@
         "args": [
             "label"
         ],
-        "javascript": "var element = '<div class=\"mirror\"></div>'\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + 'function(' + (this.settings.args ? this.settings.args.join(',') : '') + ')' + element;\n}"
+        "javascript": "var element = '<div class=\"mirror\"></div>'\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    var isCode = this.settings.lang == 'javascript' || !this.settings.lang;\n    var signature = 'function(' + (this.settings.args ? this.settings.args.join(',') : '') + ')';\n  return (this.settings.label ? label : '') + (isCode ? signature : '') + element;\n}"
     },
     "deps": {
         "codemirror": [
@@ -88,7 +88,7 @@
             "scope",
             "handlers"
         ],
-        "javascript": "var wrapper = document.querySelector('#' + id + ' .mirror');\nvar myCodeMirror = CodeMirror(wrapper, {\n    mode: (settings.lang || \"javascript\"),\n    value: settings.data ? (settings.data[settings.lang || \"javascript\"] || '') : '',\n    lineNumbers: true,\n    theme: 'neat'\n});\nreturn {\n    get: function() {\n        var code = myCodeMirror.getValue();\n        if (!code)\n            return undefined;\n        var obj = {\n            _is_func: true,\n            args: settings.args || []\n        };\n      if (settings.data && settings.data._func_override) {\n        obj._func_override = true;\n      }\n        obj[settings.lang || 'javascript'] = code;\n      return obj;\n    }\n}"
+        "javascript": "var wrapper = document.querySelector('#' + id + ' .mirror');\nvar myCodeMirror = CodeMirror(wrapper, {\n    mode: (settings.lang || \"javascript\"),\n    value: settings.data ? (settings.data[settings.lang || \"javascript\"] || '') : '',\n    lineNumbers: true,\n    theme: 'neat'\n});\n$(wrapper).data('onTabFocus', function() {\n  myCodeMirror.refresh();\n});\n$(wrapper).addClass('onTabFocus');\nnw.mirrors = nw.mirrors || [];\nnw.mirrors.push(myCodeMirror);\nreturn {\n    get: function() {\n        var code = myCodeMirror.getValue();\n        if (!code)\n            return undefined;\n        var obj = {\n            _is_func: true,\n            args: settings.args || []\n        };\n      if (settings.data && settings.data._func_override) {\n        obj._func_override = true;\n      }\n        obj[settings.lang || 'javascript'] = code;\n      return obj;\n    }\n}"
     },
     "style": {
         "_is_func": true,
@@ -96,5 +96,5 @@
         "_func_override": true,
         "javascript": "return {css: this.settings.height ? (this.id + ' .CodeMirror {height: ' + this.settings.height + 'px;} ') : '' +\n  '.CodeMirror {  border: 1px solid #eee;  height: auto;} ' +\n        '.CodeMirror-scroll {  overflow-y: hidden;  overflow-x: auto; }'};"
     },
-    "weight": null
+    "weight": ""
 }

@@ -1,22 +1,24 @@
 {
+    "name": "process_model",
     "settingsModel": [
         {
             "name": "model",
-            "type": "Text"
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "required": false
         },
         {
             "name": "data",
-            "type": "JSON"
+            "type": "JSON",
+            "quantity": "",
+            "widget": "jsoneditor",
+            "settings": "",
+            "required": false
         }
     ],
-    "wrapper": "none",
-    "load": {
-        "_is_func": true,
-        "args": [
-            "callback"
-        ],
-        "javascript": "var model_widget = cms.functions.newWidget('model_form', {\n    'fields': this.settings.fields\n});\nvar old = {};\nvar user = {};\nuser.clientID = 'unknownID';\nuser.ip = '0.0.0.0';\n\nthis.processed = model_widget.processData(this.settings.data, old);\nmodel_widget.validateData(this.processed, function(c_errors) {\n    console.log('validation finished');\n    this.errors = c_errors;\n    callback();\n});"
-    },
+    "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -24,8 +26,21 @@
         ],
         "javascript": "return JSON.stringify({\n    validationErrors: this.errors,\n    data: this.processed\n});"
     },
-    "name": "process_model",
+    "deps": {},
+    "head": [],
     "tags": [
         "view"
-    ]
+    ],
+    "slots": [],
+    "slot_tags": {},
+    "wrapper": "none",
+    "wrapperClass": "",
+    "load": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "var model_widget = cms.functions.newWidget('model_form', {\n    'fields': this.settings.fields\n});\nvar old = {};\nvar user = {};\nuser.clientID = 'unknownID';\nuser.ip = '0.0.0.0';\n\nthis.processed = model_widget.processData(this.settings.data, old);\nmodel_widget.validateData(this.processed, function(c_errors) {\n    console.log('validation finished');\n    console.log(c_errors);\n    this.errors = c_errors;\n    callback();\n}.bind(this));"
+    },
+    "weight": null
 }

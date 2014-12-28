@@ -30,5 +30,50 @@
                 }
             }
         }
-    ]
+    ],
+    "schema": {
+        "fields": {
+            "name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "fields": {
+                "type": "field",
+                "quantity": "1+"
+            }
+        },
+        "display": {
+            "widgets": {
+                "name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "name",
+                        "field_type": "Text"
+                    },
+                    "field": "name",
+                    "model_type": "Text",
+                    "model": "setting"
+                },
+                "fields": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "fields",
+                        "field_type": "field"
+                    },
+                    "field": "fields",
+                    "model_type": "field",
+                    "model": "setting"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "name",
+                    "fields"
+                ]
+            }
+        }
+    },
+    "key": "setting"
 }

@@ -20,5 +20,50 @@
         }
     ],
     "index": "",
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "schema": {
+        "fields": {
+            "fields": {
+                "type": "field2",
+                "quantity": "name2+"
+            },
+            "display": {
+                "type": "widget_code",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "fields": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "fields",
+                        "field_type": "field2"
+                    },
+                    "field": "fields",
+                    "model_type": "field2",
+                    "model": "schema"
+                },
+                "display": {
+                    "type": "widget_code_editor",
+                    "slots": {},
+                    "settings": {
+                        "label": "display",
+                        "field_type": "widget_code"
+                    },
+                    "field": "display",
+                    "model_type": "widget_code",
+                    "model": "schema"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "fields",
+                    "display"
+                ]
+            }
+        }
+    },
+    "key": "schema"
 }

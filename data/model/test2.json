@@ -4,10 +4,17 @@
     "fields": [
         {
             "name": "A",
-            "type": "Text",
+            "type": "Number",
             "quantity": "",
-            "widget": "textbox",
-            "settings": "",
+            "widget": "numeric_textbox",
+            "settings": {
+                "inline": false,
+                "data": null,
+                "min": 10,
+                "max": 20,
+                "label": "A",
+                "field_type": "Number"
+            },
             "required": false
         },
         {
@@ -27,6 +34,70 @@
             "required": false
         }
     ],
+    "schema": {
+        "fields": {
+            "A": {
+                "type": "Number",
+                "quantity": ""
+            },
+            "B": {
+                "type": "Boolean",
+                "quantity": "2+"
+            },
+            "C": {
+                "type": "widget_instance",
+                "quantity": "2+"
+            }
+        },
+        "display": {
+            "widgets": {
+                "A": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "inline": false,
+                        "data": null,
+                        "min": 10,
+                        "max": 20,
+                        "label": "A",
+                        "field_type": "Number"
+                    },
+                    "field": "A",
+                    "model_type": "Number",
+                    "model": "test2"
+                },
+                "B": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "B",
+                        "field_type": "Boolean"
+                    },
+                    "field": "B",
+                    "model_type": "Boolean",
+                    "model": "test2"
+                },
+                "C": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "C",
+                        "field_type": "widget_instance"
+                    },
+                    "field": "C",
+                    "model_type": "widget_instance",
+                    "model": "test2"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "A",
+                    "B",
+                    "C"
+                ]
+            }
+        }
+    },
     "index": "",
     "views": {
         "default": {

@@ -1,18 +1,18 @@
 {
     "name": "evalFunctions",
     "args": [
-        "widget",
+        "id",
         "object",
         "key"
     ],
     "code": {
         "_is_func": true,
         "args": [
-            "widget",
+            "id",
             "object",
             "key"
         ],
-        "javascript": "if (object instanceof Array) {\n    return object;\n}\nif (object == null) {\n    return object;\n}\nif (typeof object == 'object') {\n    if ('_is_func' in object && 'javascript' in object) {\n        if (!object.args) {\n            console.log(widget.name + ' ' + key + ' missing args');\n        }\n        var func = new Function(object.args.join(','), object.javascript); //.bind(widget);\n        return func;\n    } else {\n        var object2 = _.clone(object);\n        for (var key in object) {\n            object2[key] = cms.functions.evalFunctions(widget, object[key], key);\n        }\n        return object2;\n    }\n}\n\nreturn object;"
+        "javascript": "  if (object instanceof Array) {\n    return object;\n  }\n  if (object == null) {\n    return object;\n  }\n  if (typeof object == 'object') {\n    if ('_is_func' in object && 'javascript' in object) {\n      if (!object.args) {\n        console.log(id + ' missing args');\n      }\n      var func = new Function(object.args.join(','), 'if(-1 == \"'+id+'\".indexOf(\"Middleware\")) { console.log(\"'+id +'.' +key+'\");console.log(arguments); }'+ object.javascript);//.bind(widget);\n      return func;\n    } else {\n      var object2 = _.clone(object);\n      for (var key in object) {\n        object2[key] = cms.functions.evalFunctions(id, object[key], key);\n      }\n      return object2;\n    }\n  }\n\n  return object;"
     },
     "calls": [
         "evalFunctions"
