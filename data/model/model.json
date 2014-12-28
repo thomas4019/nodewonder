@@ -43,14 +43,6 @@
             "required": false
         },
         {
-            "name": "views",
-            "type": "Widgets",
-            "quantity": "key1+",
-            "settings": "",
-            "widget": "widget_code_editor",
-            "required": false
-        },
-        {
             "name": "storage",
             "type": "Text",
             "quantity": "",
@@ -68,8 +60,6 @@
             "required": false
         }
     ],
-    "index": "name",
-    "storage": "disk+memory",
     "schema": {
         "fields": {
             "name": {
@@ -93,7 +83,7 @@
                 "quantity": ""
             },
             "views": {
-                "type": "Widgets",
+                "type": "",
                 "quantity": "key1+"
             },
             "storage": {
@@ -103,6 +93,17 @@
         },
         "display": {
             "widgets": {
+                "CJQVF99G": {
+                    "type": "two_col",
+                    "slots": {
+                        "left": [
+                            "name"
+                        ],
+                        "right": [
+                            "description"
+                        ]
+                    }
+                },
                 "name": {
                     "type": "textbox",
                     "slots": {},
@@ -189,8 +190,7 @@
             },
             "slotAssignments": {
                 "body": [
-                    "name",
-                    "description",
+                    "CJQVF99G",
                     "fields",
                     "schema",
                     "index",
@@ -200,5 +200,6 @@
             }
         }
     },
-    "key": "model"
+    "index": "name",
+    "storage": "disk+memory"
 }

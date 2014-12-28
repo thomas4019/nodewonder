@@ -366,7 +366,7 @@
             },
             "slot_tags": {
                 "type": "Text",
-                "quantity": "key2+"
+                "quantity": "key2+:1+"
             },
             "setup": {
                 "type": "Code",
@@ -917,71 +917,5 @@
         }
     },
     "index": "name",
-    "views": {
-        "default": {
-            "widgets": {
-                "4Gy4sTXA": {
-                    "type": "vertical_tabs",
-                    "slots": {
-                        "tabs": []
-                    },
-                    "settings": {
-                        "tabs": [
-                            "1",
-                            "1",
-                            "1",
-                            "1",
-                            "1"
-                        ]
-                    }
-                },
-                "Du1RUABO": {
-                    "type": "textbox",
-                    "slots": {},
-                    "field": "name",
-                    "model_type": "Text",
-                    "model": "Model"
-                },
-                "VaTM8rR4": {
-                    "type": "textbox",
-                    "slots": {},
-                    "field": "tags",
-                    "model_type": "Text",
-                    "model": "Model"
-                },
-                "iZp2o1TC": {
-                    "type": "codemirror",
-                    "slots": {},
-                    "field": "htmlTemplate",
-                    "model_type": "Code",
-                    "model": "Model"
-                },
-                "bM02fyh5": {
-                    "type": "codemirror",
-                    "slots": {},
-                    "field": "action",
-                    "model_type": "Code",
-                    "model": "Model"
-                },
-                "nfU5LHth": {
-                    "type": "codemirror",
-                    "slots": {},
-                    "field": "style",
-                    "model_type": "Code",
-                    "model": "Model"
-                }
-            },
-            "slotAssignments": {
-                "body": [
-                    "4Gy4sTXA",
-                    "Du1RUABO",
-                    "VaTM8rR4",
-                    "iZp2o1TC",
-                    "bM02fyh5",
-                    "nfU5LHth"
-                ]
-            }
-        }
-    },
     "storage": "disk+memory"
 }

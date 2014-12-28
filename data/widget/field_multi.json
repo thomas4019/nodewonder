@@ -41,7 +41,7 @@
             "old",
             "user"
         ],
-        "javascript": "var widget = cms.functions.newWidget(this.w_type, this.settings);\nold = old || {};\nvar out;\n\nif (this.map) {\n    out = {};\n} else {\n    out = [];\n}\n\n//console.log('!!!!!!');\n//console.log(data);\nfor (key in data) {\n  var processed = widget.processData(data[key], old[key], user);\n  //console.log('-------' + this.w_type);\n  //console.log(processed);\n  if ( (processed.key || processed.key === 0) && processed.value) {\n    out[processed.key] = processed.value;\n    delete processed['key'];\n  }\n}\n\nreturn out;"
+        "javascript": "var widget = cms.functions.newWidget(this.w_type, this.settings);\nold = old || {};\nvar out;\n\nif (this.map) {\n    out = {};\n} else {\n    out = [];\n}\n\n//console.log('!!!!!!');\n//console.log(data);\nfor (key in data) {\n  if (key && data[key]) {\n  var processed = widget.processData(data[key], old[key], user);\n  //console.log('-------' + this.w_type);\n  //console.log(processed);\n  if ( (processed.key || processed.key === 0) && processed.value) {\n    out[processed.key] = processed.value;\n    delete processed['key'];\n  }\n  }\n}\n\nreturn out;"
     },
     "wrapper": "",
     "wrapperClass": "",
