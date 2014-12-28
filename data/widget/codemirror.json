@@ -42,7 +42,7 @@
         "args": [
             "label"
         ],
-        "javascript": "var element = '<div class=\"mirror\"></div>'\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    var isCode = this.settings.lang == 'javascript' || !this.settings.lang;\n    var signature = 'function(' + (this.settings.args ? this.settings.args.join(',') : '') + ')';\n  return (this.settings.label ? label : '') + (isCode ? signature : '') + element;\n}"
+        "javascript": "var element = '<div class=\"mirror\"></div>'\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    var isCode = this.settings.lang == 'javascript' || !this.settings.lang;\n    var signature = 'function(' + (this.settings.args ? this.settings.args.join(', ') : '') + ')';\n  return (this.settings.label ? label : '') + (isCode ? signature : '') + element;\n}"
     },
     "deps": {
         "codemirror": [

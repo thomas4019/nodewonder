@@ -1,0 +1,11 @@
+{
+    "from": "widget",
+    "select": [
+        "name",
+        "slot_tags",
+        "slots"
+    ],
+    "where": "",
+    "orderby": "",
+    "limit": ""
+}

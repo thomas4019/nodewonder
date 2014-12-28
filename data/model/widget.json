@@ -439,6 +439,42 @@
         },
         "display": {
             "widgets": {
+                "P8qet6hN": {
+                    "type": "vertical_tabs",
+                    "slots": {
+                        "tabs": [
+                            "wqf5Ke01",
+                            "VVsxIVVv",
+                            "DapvwhYw",
+                            "KbfleboJ",
+                            "VlH5CYfb",
+                            "Sbxc559U",
+                            "AlFua52G"
+                        ]
+                    },
+                    "settings": {
+                        "tabs": [
+                            "Basic",
+                            "Children",
+                            "Deps",
+                            "Settings",
+                            "Advanced",
+                            "Process",
+                            "Data"
+                        ]
+                    }
+                },
+                "wqf5Ke01": {
+                    "type": "group",
+                    "slots": {
+                        "children": [
+                            "name",
+                            "htmlTemplate",
+                            "action",
+                            "style"
+                        ]
+                    }
+                },
                 "name": {
                     "type": "textbox",
                     "slots": {},
@@ -447,28 +483,6 @@
                         "field_type": "Text"
                     },
                     "field": "name",
-                    "model_type": "Text",
-                    "model": "widget"
-                },
-                "settingsModel": {
-                    "type": "model_form",
-                    "slots": {},
-                    "settings": {
-                        "label": "settingsModel",
-                        "field_type": "field"
-                    },
-                    "field": "settingsModel",
-                    "model_type": "field",
-                    "model": "widget"
-                },
-                "settings_unfiltered": {
-                    "type": "textbox",
-                    "slots": {},
-                    "settings": {
-                        "label": "settings_unfiltered",
-                        "field_type": "Text"
-                    },
-                    "field": "settings_unfiltered",
                     "model_type": "Text",
                     "model": "widget"
                 },
@@ -486,55 +500,48 @@
                     "model_type": "Code",
                     "model": "widget"
                 },
-                "toHTML": {
+                "action": {
                     "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "",
-                        "height": 250,
-                        "data": "",
+                        "height": null,
                         "args": [
-                            "label"
+                            "settings",
+                            "id",
+                            "scope",
+                            "handlers"
                         ],
-                        "label": "toHTML",
+                        "label": "action",
                         "field_type": "Code"
                     },
-                    "field": "toHTML",
+                    "field": "action",
                     "model_type": "Code",
                     "model": "widget"
                 },
-                "deps": {
-                    "type": "textbox",
+                "style": {
+                    "type": "codemirror",
                     "slots": {},
                     "settings": {
-                        "label": "deps",
-                        "field_type": "Text"
+                        "lang": "css",
+                        "height": null,
+                        "args": [],
+                        "label": "style",
+                        "field_type": "Code"
                     },
-                    "field": "deps",
-                    "model_type": "Text",
+                    "field": "style",
+                    "model_type": "Code",
                     "model": "widget"
                 },
-                "head": {
-                    "type": "textbox",
-                    "slots": {},
-                    "settings": {
-                        "label": "head",
-                        "field_type": "Text"
-                    },
-                    "field": "head",
-                    "model_type": "Text",
-                    "model": "widget"
-                },
-                "tags": {
-                    "type": "textbox",
-                    "slots": {},
-                    "settings": {
-                        "label": "tags",
-                        "field_type": "Text"
-                    },
-                    "field": "tags",
-                    "model_type": "Text",
-                    "model": "widget"
+                "VVsxIVVv": {
+                    "type": "group",
+                    "slots": {
+                        "children": [
+                            "slots",
+                            "slot_tags",
+                            "children"
+                        ]
+                    }
                 },
                 "slots": {
                     "type": "textbox",
@@ -558,17 +565,6 @@
                     "model_type": "Text",
                     "model": "widget"
                 },
-                "setup": {
-                    "type": "codemirror",
-                    "slots": {},
-                    "settings": {
-                        "label": "setup",
-                        "field_type": "Code"
-                    },
-                    "field": "setup",
-                    "model_type": "Code",
-                    "model": "widget"
-                },
                 "children": {
                     "type": "codemirror",
                     "slots": {},
@@ -585,39 +581,37 @@
                     "model_type": "Code",
                     "model": "widget"
                 },
-                "processData": {
-                    "type": "codemirror",
+                "DapvwhYw": {
+                    "type": "group",
+                    "slots": {
+                        "children": [
+                            "deps",
+                            "head",
+                            "wrapper",
+                            "wrapperClass"
+                        ]
+                    }
+                },
+                "deps": {
+                    "type": "textbox",
                     "slots": {},
                     "settings": {
-                        "lang": "",
-                        "height": null,
-                        "args": [
-                            "data",
-                            "old",
-                            "user"
-                        ],
-                        "label": "processData",
-                        "field_type": "Code"
+                        "label": "deps",
+                        "field_type": "Text"
                     },
-                    "field": "processData",
-                    "model_type": "Code",
+                    "field": "deps",
+                    "model_type": "Text",
                     "model": "widget"
                 },
-                "validateData": {
-                    "type": "codemirror",
+                "head": {
+                    "type": "textbox",
                     "slots": {},
                     "settings": {
-                        "lang": "",
-                        "height": null,
-                        "args": [
-                            "data",
-                            "callback"
-                        ],
-                        "label": "validateData",
-                        "field_type": "Code"
+                        "label": "head",
+                        "field_type": "Text"
                     },
-                    "field": "validateData",
-                    "model_type": "Code",
+                    "field": "head",
+                    "model_type": "Text",
                     "model": "widget"
                 },
                 "wrapper": {
@@ -642,6 +636,92 @@
                     "model_type": "Text",
                     "model": "widget"
                 },
+                "KbfleboJ": {
+                    "type": "group",
+                    "slots": {
+                        "children": [
+                            "settingsModel",
+                            "settings_unfiltered",
+                            "weight",
+                            "tags"
+                        ]
+                    }
+                },
+                "settingsModel": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "settingsModel",
+                        "field_type": "field"
+                    },
+                    "field": "settingsModel",
+                    "model_type": "field",
+                    "model": "widget"
+                },
+                "settings_unfiltered": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "settings_unfiltered",
+                        "field_type": "Text"
+                    },
+                    "field": "settings_unfiltered",
+                    "model_type": "Text",
+                    "model": "widget"
+                },
+                "weight": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "weight",
+                        "field_type": "Number"
+                    },
+                    "field": "weight",
+                    "model_type": "Number",
+                    "model": "widget"
+                },
+                "VlH5CYfb": {
+                    "type": "group",
+                    "slots": {
+                        "children": [
+                            "toHTML",
+                            "setup",
+                            "script",
+                            "makeActionJS",
+                            "makeEventJS",
+                            "init",
+                            "pseudo_names"
+                        ]
+                    }
+                },
+                "toHTML": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "",
+                        "height": 250,
+                        "data": "",
+                        "args": [
+                            "label"
+                        ],
+                        "label": "toHTML",
+                        "field_type": "Code"
+                    },
+                    "field": "toHTML",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "setup": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "label": "setup",
+                        "field_type": "Code"
+                    },
+                    "field": "setup",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
                 "script": {
                     "type": "codemirror",
                     "slots": {},
@@ -650,25 +730,6 @@
                         "field_type": "Code"
                     },
                     "field": "script",
-                    "model_type": "Code",
-                    "model": "widget"
-                },
-                "action": {
-                    "type": "codemirror",
-                    "slots": {},
-                    "settings": {
-                        "lang": "",
-                        "height": null,
-                        "args": [
-                            "settings",
-                            "id",
-                            "scope",
-                            "handlers"
-                        ],
-                        "label": "action",
-                        "field_type": "Code"
-                    },
-                    "field": "action",
                     "model_type": "Code",
                     "model": "widget"
                 },
@@ -683,16 +744,49 @@
                     "model_type": "Code",
                     "model": "widget"
                 },
-                "pseudo_names": {
+                "makeEventJS": {
                     "type": "codemirror",
                     "slots": {},
                     "settings": {
-                        "label": "pseudo_names",
+                        "lang": "",
+                        "height": null,
+                        "args": [
+                            "selector",
+                            "code"
+                        ],
+                        "label": "makeEventJS",
                         "field_type": "Code"
                     },
-                    "field": "pseudo_names",
+                    "field": "makeEventJS",
                     "model_type": "Code",
                     "model": "widget"
+                },
+                "init": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "lang": "css",
+                        "height": null,
+                        "data": "",
+                        "args": [
+                            ""
+                        ],
+                        "label": "init",
+                        "field_type": "Code"
+                    },
+                    "field": "init",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "Sbxc559U": {
+                    "type": "group",
+                    "slots": {
+                        "children": [
+                            "doProcess",
+                            "save",
+                            "load"
+                        ]
+                    }
                 },
                 "doProcess": {
                     "type": "codemirror",
@@ -748,95 +842,76 @@
                     "model_type": "Code",
                     "model": "widget"
                 },
-                "makeEventJS": {
+                "AlFua52G": {
+                    "type": "group",
+                    "slots": {
+                        "children": [
+                            "processData",
+                            "validateData"
+                        ]
+                    }
+                },
+                "pseudo_names": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "label": "pseudo_names",
+                        "field_type": "Code"
+                    },
+                    "field": "pseudo_names",
+                    "model_type": "Code",
+                    "model": "widget"
+                },
+                "processData": {
                     "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "",
                         "height": null,
                         "args": [
-                            "selector",
-                            "code"
+                            "data",
+                            "old",
+                            "user"
                         ],
-                        "label": "makeEventJS",
+                        "label": "processData",
                         "field_type": "Code"
                     },
-                    "field": "makeEventJS",
+                    "field": "processData",
                     "model_type": "Code",
                     "model": "widget"
                 },
-                "init": {
+                "validateData": {
                     "type": "codemirror",
                     "slots": {},
                     "settings": {
-                        "lang": "css",
+                        "lang": "",
                         "height": null,
-                        "data": "",
                         "args": [
-                            ""
+                            "data",
+                            "callback"
                         ],
-                        "label": "init",
+                        "label": "validateData",
                         "field_type": "Code"
                     },
-                    "field": "init",
+                    "field": "validateData",
                     "model_type": "Code",
                     "model": "widget"
                 },
-                "style": {
-                    "type": "codemirror",
+                "tags": {
+                    "type": "textbox",
                     "slots": {},
                     "settings": {
-                        "lang": "css",
-                        "height": null,
-                        "args": [],
-                        "label": "style",
-                        "field_type": "Code"
+                        "label": "tags",
+                        "field_type": "Text"
                     },
-                    "field": "style",
-                    "model_type": "Code",
-                    "model": "widget"
-                },
-                "weight": {
-                    "type": "numeric_textbox",
-                    "slots": {},
-                    "settings": {
-                        "label": "weight",
-                        "field_type": "Number"
-                    },
-                    "field": "weight",
-                    "model_type": "Number",
+                    "field": "tags",
+                    "model_type": "Text",
                     "model": "widget"
                 }
             },
             "slotAssignments": {
                 "body": [
-                    "name",
-                    "settingsModel",
-                    "settings_unfiltered",
-                    "htmlTemplate",
-                    "toHTML",
-                    "deps",
-                    "head",
-                    "tags",
-                    "slots",
-                    "slot_tags",
-                    "setup",
-                    "children",
-                    "processData",
-                    "validateData",
-                    "wrapper",
-                    "wrapperClass",
-                    "script",
-                    "action",
-                    "makeActionJS",
-                    "pseudo_names",
-                    "doProcess",
-                    "save",
-                    "load",
-                    "makeEventJS",
-                    "init",
-                    "style",
-                    "weight"
+                    "P8qet6hN"
                 ]
             }
         }

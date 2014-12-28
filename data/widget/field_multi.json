@@ -50,5 +50,5 @@
         "args": [],
         "javascript": "return 'nw.counter[\"' + this.id + '\"] = ' + (this.count) + ';';"
     },
-    "weight": null
+    "weight": ""
 }
