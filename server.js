@@ -608,6 +608,13 @@ cms.migrate8 = function() {
   });
 }
 
+cms.migrate9 = function() {
+  _.forEach(cms.model_data.model, function(model, index) {
+    delete model.fields;
+    cms.functions.saveRecord('model', index, model);
+  });
+}
+
 cms.funcsToString = function(object) {
   var object2 = {};
   var widgetModel = cms.models['widget'];

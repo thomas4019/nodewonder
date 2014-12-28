@@ -57,7 +57,7 @@
     "setup": {
         "_is_func": true,
         "args": [],
-        "javascript": "if (!this.settings.field) {\n    this.settings.field = 'fields';\n}\n\nif (this.settings.fields) {\n    if (typeof this.settings.fields === 'string')\n        this.fields = JSON.parse(this.settings.fields);\n    else\n        this.fields = this.settings.fields;\n} else if (this.settings.model) {\n    if (!cms.model_data[this.settings.model]) {\n        console.trace('Unknown model type: ' + this.settings.model);\n    }\n    if (!cms.model_data[this.settings.model][this.settings.record]) {\n        console.trace('Unknown record: ' + this.settings.record);\n    }\n    this.fields = cms.model_data[this.settings.model][this.settings.record][this.settings.field];\n}\n\nif (typeof this.settings.data == 'string') {\n    this.settings.data = JSON.parse(this.settings.data);\n}"
+        "javascript": "if (!this.settings.field) {\n    this.settings.field = 'fields';\n}\n\nif (this.settings.fields) {\n    if (typeof this.settings.fields === 'string')\n        this.fields = JSON.parse(this.settings.fields);\n    else\n        this.fields = this.settings.fields;\n} else if (this.settings.model) {\n    if (!cms.model_data[this.settings.model]) {\n        console.trace('Unknown model type: ' + this.settings.model);\n    }\n    if (!cms.model_data[this.settings.model][this.settings.record]) {\n        console.trace('Unknown record: ' + this.settings.record);\n    }\n    this.fields = cms.model_data[this.settings.model][this.settings.record].fields;\n}\n\nif (typeof this.settings.data == 'string') {\n    this.settings.data = JSON.parse(this.settings.data);\n}"
     },
     "children": {
         "_is_func": true,

@@ -47,6 +47,14 @@
             "C": {
                 "type": "widget_instance",
                 "quantity": "2+"
+            },
+            "D": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "E": {
+                "type": "Boolean",
+                "quantity": ""
             }
         },
         "display": {
@@ -87,51 +95,40 @@
                     "field": "C",
                     "model_type": "widget_instance",
                     "model": "test2"
+                },
+                "D": {
+                    "type": "textbox",
+                    "settings": {
+                        "label": "D",
+                        "field_type": "Text"
+                    },
+                    "slots": {},
+                    "field": "D",
+                    "model_type": "Text",
+                    "model": "test2"
+                },
+                "E": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "field": "E",
+                    "model_type": "Boolean",
+                    "model": "Model",
+                    "settings": {
+                        "label": "E"
+                    }
                 }
             },
             "slotAssignments": {
                 "body": [
                     "A",
                     "B",
-                    "C"
+                    "C",
+                    "D",
+                    "E"
                 ]
             }
         }
     },
     "index": "",
-    "views": {
-        "default": {
-            "widgets": {
-                "KtKaE16Q": {
-                    "type": "checkbox",
-                    "slots": {},
-                    "field": "B",
-                    "model_type": "Boolean",
-                    "model": "Model"
-                },
-                "Yd4t6Kn1": {
-                    "type": "textbox",
-                    "slots": {},
-                    "field": "A",
-                    "model_type": "Text",
-                    "model": "Model"
-                },
-                "lJccEWQH": {
-                    "type": "model_form",
-                    "slots": {},
-                    "field": "C",
-                    "model_type": "field",
-                    "model": "Model"
-                }
-            },
-            "slotAssignments": {
-                "body": [
-                    "KtKaE16Q",
-                    "Yd4t6Kn1",
-                    "lJccEWQH"
-                ]
-            }
-        }
-    },
     "storage": "disk+memory"
 }

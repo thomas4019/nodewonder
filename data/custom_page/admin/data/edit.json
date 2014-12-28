@@ -1,7 +1,7 @@
 {
     "URL": "",
     "parent": "admin",
-    "controller": "if (args.record != 'create') { widgets.wyobn3bP.settings.schema = load('model', args.model).schema; widgets.wyobn3bP.settings.data = load(args.model, args.record); } callback();",
+    "controller": "widgets.wyobn3bP.settings.schema = load('model', args.model).schema; if (args.record != 'create') { widgets.wyobn3bP.settings.data = load(args.model, args.record); } callback();",
     "code": {
         "widgets": {
             "wyobn3bP": {

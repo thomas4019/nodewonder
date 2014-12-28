@@ -10,16 +10,24 @@ function setupWidgetSelector(id) {
 			if ( $('#wyobn3bP-fields') ) {
 				var model = {text: 'Model', children: []};
 				data.results.push(model);
-				var fields = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#wyobn3bP-fields :input').serializeArray())).fields;
-				_.each(fields, function(kv) {
+				var fields = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#wyobn3bP-schema-fields :input').serializeArray())).schema.fields;
+				_.each(fields, function(kv, index) {
+					console.log(kv);
 					field = kv.value;
-					if (field.name) {
-						if(!query.term || field.name.toUpperCase().indexOf(query.term.toUpperCase()	) !== -1) {
-							var w = JSON.parse(JSON.stringify(nw.widgets[field.widget]));
+					var name = kv.key;
+					if (name) {
+						console.log(query);
+						console.log(name);
+						if (!query.term || name.toUpperCase().indexOf(query.term.toUpperCase()	) !== -1) {
+							//var w = JSON.parse(JSON.stringify(nw.widgets[field.widget]));
+							var w = nw.widgets[nw.edit_widgets[field.type][0]];
 							w.field = field.type;
-							w.text = field.name;
-							w.name = field.name;
+							w.text = name;
+							w.name = name;
 							w.model = 'Model';
+							w.settings = w.settings || {};
+							w.settings.label = name;
+							w.settings.field_type = field.type;
 							model.children.push(w);
 						}
 					}
@@ -57,6 +65,7 @@ function stateController($scope) {
 		w.has_form = nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.type].settings;
 	});
 
+	$scope.edit_widgets = nw.edit_widgets;
 	$scope.field_widgets = {};
 
 	for (type in $scope.edit_widgets) {
@@ -94,7 +103,7 @@ function stateController($scope) {
 		//var slots = JSON.parse()
 		var new_id = selected.model ? selected.name : nw.functions.makeid(8);
 		if (selected.model)
-			$scope.widgets[new_id] = {type: selected.widget, slots: slots, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, slot_tags: selected.slot_tags};
+			$scope.widgets[new_id] = {type: selected.widget, slots: slots, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, slot_tags: selected.slot_tags, settings: {label: selected.name, field_type: selected.model_type}};
 		else
 			$scope.widgets[new_id] = {type: selected.widget, slots: slots, has_form: selected.settings, slot_tags: selected.slot_tags};
 
