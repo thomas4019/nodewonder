@@ -4,11 +4,12 @@
         "name",
         "htmlTemplate",
         "toHTML",
-        "style",
-        "children",
-        "deps"
+        null,
+        null,
+        null,
+        "script"
     ],
     "where": "",
     "orderby": "",
-    "limit": null
+    "limit": ""
 }

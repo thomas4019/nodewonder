@@ -3,12 +3,30 @@
     "description": "",
     "schema": {
         "fields": {
-            "name": [],
-            "description": [],
-            "schema": [],
-            "index": [],
-            "views": [],
-            "storage": []
+            "name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "description": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "schema": {
+                "type": "schema",
+                "quantity": ""
+            },
+            "index": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "views": {
+                "type": "",
+                "quantity": "key1+"
+            },
+            "storage": {
+                "type": "Text",
+                "quantity": ""
+            }
         },
         "display": {
             "widgets": {
@@ -43,17 +61,6 @@
                     },
                     "field": "description",
                     "model_type": "Text",
-                    "model": "model"
-                },
-                "fields": {
-                    "type": "model_form",
-                    "slots": {},
-                    "settings": {
-                        "label": "fields",
-                        "field_type": "field"
-                    },
-                    "field": "fields",
-                    "model_type": "field",
                     "model": "model"
                 },
                 "schema": {

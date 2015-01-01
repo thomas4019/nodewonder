@@ -11,7 +11,9 @@
         }
     ],
     "settings_unfiltered": [],
-    "deps": {},
+    "deps": {
+        "underscore": []
+        },
     "head": [],
     "tags": [
         "action",
