@@ -129,17 +129,6 @@
                     "field": "settings",
                     "model_type": "Text",
                     "model": "field"
-                },
-                "required": {
-                    "type": "checkbox",
-                    "slots": {},
-                    "settings": {
-                        "label": "required",
-                        "field_type": "Boolean"
-                    },
-                    "field": "required",
-                    "model_type": "Boolean",
-                    "model": "field"
                 }
             },
             "slotAssignments": {
@@ -148,9 +137,7 @@
                     "type",
                     "quantity",
                     "widget",
-                    "settings",
-                    "required"
-                ]
+                    "settings"                ]
             }
         }
     }
