@@ -1,95 +1,14 @@
 {
     "name": "Model",
     "description": "",
-    "fields": [
-        {
-            "name": "name",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "description",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "fields",
-            "type": "field",
-            "quantity": "2+",
-            "widget": "model_form",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "schema",
-            "type": "schema",
-            "quantity": "",
-            "widget": "model_form",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "index",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "storage",
-            "type": "Text",
-            "quantity": "",
-            "widget": "select",
-            "settings": {
-                "choices": [
-                    "disk+memory",
-                    "memory",
-                    ""
-                ],
-                "label": "storage",
-                "data": "disk+memory",
-                "field_type": "Text"
-            },
-            "required": false
-        }
-    ],
     "schema": {
         "fields": {
-            "name": {
-                "type": "Text",
-                "quantity": ""
-            },
-            "description": {
-                "type": "Text",
-                "quantity": ""
-            },
-            "fields": {
-                "type": "field",
-                "quantity": "2+"
-            },
-            "schema": {
-                "type": "schema",
-                "quantity": ""
-            },
-            "index": {
-                "type": "Text",
-                "quantity": ""
-            },
-            "views": {
-                "type": "",
-                "quantity": "key1+"
-            },
-            "storage": {
-                "type": "Text",
-                "quantity": ""
-            }
+            "name": [],
+            "description": [],
+            "schema": [],
+            "index": [],
+            "views": [],
+            "storage": []
         },
         "display": {
             "widgets": {
@@ -201,5 +120,11 @@
         }
     },
     "index": "name",
+    "views": {
+        "widgets": {},
+        "slotAssignments": {
+            "body": []
+        }
+    },
     "storage": "disk+memory"
 }

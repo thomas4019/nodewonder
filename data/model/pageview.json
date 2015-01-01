@@ -1,31 +1,6 @@
 {
     "name": "pageview",
     "description": "",
-    "fields": [
-        {
-            "name": "url",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "datetime",
-            "type": "Date",
-            "quantity": "",
-            "widget": "date",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "required": false
-        }
-    ],
     "index": "",
     "views": [
         {

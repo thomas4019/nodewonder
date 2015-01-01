@@ -1,52 +1,6 @@
 {
     "name": "query",
     "description": "",
-    "fields": [
-        {
-            "name": "from",
-            "type": "Record",
-            "quantity": "",
-            "widget": "model_record_reference",
-            "settings": {
-                "label": "from",
-                "model": "model",
-                "field_type": "Record"
-            },
-            "required": false
-        },
-        {
-            "name": "select",
-            "type": "Text",
-            "quantity": "2+",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "where",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "orderby",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "limit",
-            "type": "Number",
-            "quantity": "",
-            "widget": "numeric_textbox",
-            "settings": "",
-            "required": false
-        }
-    ],
     "index": "",
     "views": {},
     "storage": "disk+memory",

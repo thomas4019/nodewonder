@@ -1,50 +1,6 @@
 {
     "name": "middleware",
     "description": "",
-    "fields": [
-        {
-            "name": "name",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "code",
-            "type": "Code",
-            "quantity": "",
-            "widget": "codemirror",
-            "settings": {
-                "lang": "",
-                "height": null,
-                "args": [
-                    "req",
-                    "res",
-                    "next"
-                ],
-                "label": "code",
-                "field_type": "Code"
-            },
-            "required": false
-        },
-        {
-            "name": "priority",
-            "type": "Number",
-            "quantity": "",
-            "widget": "numeric_textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "base",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        }
-    ],
     "index": "",
     "views": {},
     "storage": "disk+memory",

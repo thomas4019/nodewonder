@@ -1,42 +1,6 @@
 {
     "name": "Task",
     "description": "Something to be done",
-    "fields": [
-        {
-            "name": "Title",
-            "type": "Text",
-            "quantity": "",
-            "widget": "",
-            "input": "",
-            "required": false
-        },
-        {
-            "name": "description",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "input": {
-                "label": "Desc"
-            },
-            "required": false
-        },
-        {
-            "name": "Completed",
-            "type": "Boolean",
-            "quantity": "",
-            "widget": "",
-            "input": "",
-            "required": false
-        },
-        {
-            "name": "Due",
-            "type": "Date",
-            "quantity": "",
-            "widget": "",
-            "input": "",
-            "required": false
-        }
-    ],
     "key": "task",
     "schema": {
         "fields": {

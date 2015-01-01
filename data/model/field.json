@@ -1,50 +1,6 @@
 {
     "name": "Field",
     "description": "",
-    "fields": [
-        {
-            "name": "name",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "required": true
-        },
-        {
-            "name": "type",
-            "type": "Text",
-            "quantity": "",
-            "widget": "model_type_selector",
-            "required": false
-        },
-        {
-            "name": "quantity",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "required": false
-        },
-        {
-            "name": "widget",
-            "type": "Text",
-            "quantity": "",
-            "widget": "model_widget_selector",
-            "required": false
-        },
-        {
-            "name": "settings",
-            "type": "Text",
-            "quantity": "",
-            "widget": "widget_input_config",
-            "required": false
-        },
-        {
-            "name": "required",
-            "type": "Boolean",
-            "quantity": "",
-            "widget": "checkbox",
-            "required": false
-        }
-    ],
     "key": "field",
     "schema": {
         "fields": {
@@ -137,7 +93,8 @@
                     "type",
                     "quantity",
                     "widget",
-                    "settings"                ]
+                    "settings"
+                ]
             }
         }
     }

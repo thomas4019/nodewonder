@@ -1,24 +1,6 @@
 {
     "name": "Field",
     "description": "",
-    "fields": [
-        {
-            "name": "type",
-            "type": "Text",
-            "quantity": "",
-            "widget": "model_type_selector",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "quantity",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        }
-    ],
     "index": "",
     "storage": "disk+memory",
     "schema": {

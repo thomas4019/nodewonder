@@ -1,32 +1,6 @@
 {
     "name": "model_meta",
     "description": "",
-    "fields": [
-        {
-            "name": "created",
-            "type": "Date",
-            "quantity": "",
-            "widget": "date",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "update",
-            "type": "Date",
-            "quantity": "",
-            "widget": "date",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "author",
-            "type": "Record",
-            "quantity": "",
-            "widget": "model_record_reference",
-            "settings": "",
-            "required": false
-        }
-    ],
     "index": "",
     "views": [
         {

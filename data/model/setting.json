@@ -1,24 +1,6 @@
 {
     "name": "setting",
     "description": "",
-    "fields": [
-        {
-            "name": "name",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "fields",
-            "type": "field",
-            "quantity": "1+",
-            "widget": "model_form",
-            "settings": "",
-            "required": false
-        }
-    ],
     "index": "name",
     "views": [
         {

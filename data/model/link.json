@@ -1,29 +1,6 @@
 {
     "name": "Link",
     "description": "",
-    "fields": [
-        {
-            "name": "url",
-            "type": "Text",
-            "quantity": "",
-            "widget": "",
-            "required": false
-        },
-        {
-            "name": "title",
-            "type": "Text",
-            "quantity": "",
-            "widget": "",
-            "required": false
-        },
-        {
-            "name": "alt",
-            "type": "Text",
-            "quantity": "",
-            "widget": "",
-            "required": false
-        }
-    ],
     "schema": {
         "fields": {
             "url": {

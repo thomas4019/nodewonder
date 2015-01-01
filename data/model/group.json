@@ -1,50 +1,6 @@
 {
     "name": "group",
     "description": "",
-    "fields": [
-        {
-            "name": "Name",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "Members",
-            "type": "Record",
-            "quantity": "+",
-            "widget": "model_record_reference",
-            "settings": {
-                "label": "Members",
-                "model": "user",
-                "data": [
-                    "abc",
-                    "pkbZuncyCbiaz5bl"
-                ],
-                "quantity": "+",
-                "field_type": "Record"
-            },
-            "required": false
-        },
-        {
-            "name": "Type",
-            "type": "Text",
-            "quantity": "",
-            "widget": "radio",
-            "settings": {
-                "data": "Open",
-                "choices": [
-                    "Open",
-                    "Invite-Only",
-                    "Closed"
-                ],
-                "label": "Type",
-                "field_type": "Text"
-            },
-            "required": false
-        }
-    ],
     "index": "",
     "views": [
         {

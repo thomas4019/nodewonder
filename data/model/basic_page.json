@@ -1,29 +1,6 @@
 {
     "name": "Page",
     "description": "",
-    "fields": [
-        {
-            "name": "Title",
-            "type": "Text",
-            "quantity": "",
-            "widget": "",
-            "required": false
-        },
-        {
-            "name": "Content",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "required": false
-        },
-        {
-            "name": "Published",
-            "type": "Boolean",
-            "quantity": "",
-            "widget": "",
-            "required": false
-        }
-    ],
     "schema": {
         "fields": {
             "Title": {

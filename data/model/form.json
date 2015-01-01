@@ -1,32 +1,6 @@
 {
     "name": "form",
     "description": "",
-    "fields": [
-        {
-            "name": "name",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "Form",
-            "type": "field",
-            "quantity": "2+",
-            "widget": "model_form",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "Actions",
-            "type": "Widgets",
-            "quantity": "",
-            "widget": "widget_code_editor",
-            "settings": "",
-            "required": false
-        }
-    ],
     "index": "name",
     "views": [
         {

@@ -1,40 +1,6 @@
 {
     "name": "custom_widget",
     "description": "",
-    "fields": [
-        {
-            "name": "Name",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "Settings",
-            "type": "field",
-            "quantity": "+",
-            "widget": "model_form",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "Code",
-            "type": "Widgets",
-            "quantity": "",
-            "widget": "widget_code_editor",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "controller",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textarea",
-            "settings": "",
-            "required": false
-        }
-    ],
     "index": "Name",
     "views": [
         {

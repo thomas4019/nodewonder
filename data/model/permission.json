@@ -1,34 +1,6 @@
 {
     "name": "permission",
     "description": "",
-    "fields": [
-        {
-            "name": "role",
-            "type": "Record",
-            "quantity": "+",
-            "widget": "model_record_reference",
-            "settings": {
-                "label": "role",
-                "model": "role",
-                "field_type": "Record"
-            },
-            "required": false
-        },
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "required": false
-        }
-    ],
     "index": "",
     "views": {},
     "storage": "disk+memory",

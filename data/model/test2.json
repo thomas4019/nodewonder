@@ -1,39 +1,6 @@
 {
     "name": "test2",
     "description": "",
-    "fields": [
-        {
-            "name": "A",
-            "type": "Number",
-            "quantity": "",
-            "widget": "numeric_textbox",
-            "settings": {
-                "inline": false,
-                "data": null,
-                "min": 10,
-                "max": 20,
-                "label": "A",
-                "field_type": "Number"
-            },
-            "required": false
-        },
-        {
-            "name": "B",
-            "type": "Boolean",
-            "quantity": "2+",
-            "widget": "checkbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "C",
-            "type": "widget_instance",
-            "quantity": "2+",
-            "widget": "model_form",
-            "settings": "",
-            "required": false
-        }
-    ],
     "schema": {
         "fields": {
             "A": {

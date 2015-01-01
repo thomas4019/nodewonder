@@ -1,35 +1,6 @@
 {
     "name": "Model View",
     "description": "",
-    "fields": [
-        {
-            "name": "Name",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "Code",
-            "type": "Widgets",
-            "quantity": "",
-            "widget": "widget_code_editor",
-            "settings": {
-                "label": "Code",
-                "model": "menu",
-                "name": "Model",
-                "data": {
-                    "widgets": {},
-                    "slotAssignments": {
-                        "body": []
-                    }
-                },
-                "field_type": "Widgets"
-            },
-            "required": false
-        }
-    ],
     "index": "Name",
     "views": [
         {

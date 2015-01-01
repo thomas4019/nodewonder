@@ -1,24 +1,6 @@
 {
     "name": "menu",
     "description": "",
-    "fields": [
-        {
-            "name": "name",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "link",
-            "type": "link",
-            "quantity": "5+",
-            "widget": "model_form",
-            "settings": "",
-            "required": false
-        }
-    ],
     "index": "name",
     "views": [
         {

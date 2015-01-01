@@ -1,24 +1,6 @@
 {
     "name": "widget_code",
     "description": "",
-    "fields": [
-        {
-            "name": "widgets",
-            "type": "widget_instance",
-            "quantity": "identifier1+",
-            "widget": "model_form",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "slotAssignments",
-            "type": "Text",
-            "quantity": "slot1+:1+",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        }
-    ],
     "index": "",
     "views": {},
     "storage": "disk+memory",

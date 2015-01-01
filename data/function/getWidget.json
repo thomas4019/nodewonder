@@ -12,7 +12,7 @@
             "input",
             "widget_instance"
         ],
-        "javascript": "if (input.quantity) {\n    if (_.contains(cms.widgets[type].tags, 'field_edit_multiple')) {\n        //widget itself will do multiple\n    } else {\n        input['widget'] = type;\n        type = 'field_multi';\n    }\n}\n\n  console.log('----------////123');\nif (type == 'model_form') {\n  input['model'] = 'model';\n  input['inline'] = 'model';\n  console.log('----------////');\n  if (input['field_type']) {\n    input['record'] = input['field_type'];\n  }\n  if (widget_instance && widget_instance['model_type']) {\n    input['record'] = widget_instance['model_type']\n  }\n}\n\nif (input && input.data && input.data._func_override) {\n    console.log('!!!!!!!!!!!!!!');\n    type = 'codemirror';\n    input['lang'] = 'javascript';\n}\n\nreturn type;"
+        "javascript": "if (type == 'model_form') {\n  input['model'] = 'model';\n  input['inline'] = 'model';\n  console.log('----------////');\n  if (input['field_type']) {\n    input['record'] = input['field_type'];\n  }\n  if (widget_instance && widget_instance['model_type']) {\n    input['record'] = widget_instance['model_type']\n  }\n}\n\nif (input.quantity) {\n    if (_.contains(cms.widgets[type].tags, 'field_edit_multiple')) {\n        //widget itself will do multiple\n    } else {\n        input['widget'] = type;\n        type = 'field_multi';\n    }\n}\n\nif (input && input.data && input.data._func_override) {\n    console.log('!!!!!!!!!!!!!!');\n    type = 'codemirror';\n    input['lang'] = 'javascript';\n}\n\nreturn type;"
     },
     "calls": [],
     "callers": [

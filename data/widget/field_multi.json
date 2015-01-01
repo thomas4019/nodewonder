@@ -1,14 +1,6 @@
 {
     "name": "field_multi",
-    "settingsModel": [
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "required": false
-        }
-    ],
+    "settingsModel": [],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
@@ -25,7 +17,7 @@
     "setup": {
         "_is_func": true,
         "args": [],
-        "javascript": "this.w_input = deep.clone(this.settings);\n\n//console.log(this.w_input);\n\nthis.settings.quantity = this.settings.quantity || '';\nvar re = /([a-zA-Z_-]*)([0-9]*)-?([0-9]*)(\\+?):?(.*)/g;\n// 1=key, 2=min, 3=max, 4=add, 5=remainder\ntokens = re.exec(this.settings.quantity);\n//console.log(tokens);\n\nthis.can_add = false;\nthis.map = false;\nif (tokens[1]) {\n  this.map = tokens[1];\n  this.w_input.map = tokens[1];\n}\nthis.w_input.quantity = tokens[5];\nthis.w_type = 'key_value';\n\nthis.w_input.widget = this.settings.widget; this.w_input.kvwidget = this.settings.kvwidget = cms.functions.getWidget(this.w_input.widget, this.w_input);\n    \nvar ndata = [];\n_.each(this.settings.data, function(value, key) {\n    ndata.push({\n        key: key,\n        value: value\n    });\n});\nthis.settings.data = ndata;\n\nif (tokens[4]) {\n    this.can_add = true;\n}\nthis.settings.quantity = tokens[2];\n\ndelete this.w_input['label'];\nthis.w_input['inline'] = 'multi';"
+        "javascript": "this.w_input = deep.clone(this.settings);\n\n//console.log(this.w_input);\n\nthis.settings.quantity = this.settings.quantity || '';\nvar re = /([a-zA-Z_-]*)([0-9]*)-?([0-9]*)(\\+?):?(.*)/g;\n// 1=key, 2=min, 3=max, 4=add, 5=remainder\ntokens = re.exec(this.settings.quantity);\nconsole.log(tokens);\n\nthis.can_add = false;\nthis.map = false;\nif (tokens[1]) {\n  this.map = tokens[1];\n  this.w_input.map = tokens[1];\n}\nthis.w_input.quantity = tokens[5];\nthis.w_type = 'key_value';\n\nthis.w_input.widget = this.settings.widget; this.w_input.kvwidget = this.settings.kvwidget = cms.functions.getWidget(this.w_input.widget, this.w_input);\n    \nvar ndata = [];\n_.each(this.settings.data, function(value, key) {\n    ndata.push({\n        key: key,\n        value: value\n    });\n});\nthis.settings.data = ndata;\n\nif (tokens[4]) {\n    this.can_add = true;\n}\nthis.settings.quantity = tokens[2];\n\ndelete this.w_input['label'];\nthis.w_input['inline'] = 'multi';"
     },
     "children": {
         "_is_func": true,

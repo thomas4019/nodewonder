@@ -1,60 +1,6 @@
 {
     "name": "user",
     "description": "",
-    "fields": [
-        {
-            "name": "clientID",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "username",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "password",
-            "type": "Text",
-            "quantity": "",
-            "widget": "password",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "captcha",
-            "type": "Captcha",
-            "quantity": "",
-            "widget": "recaptcha",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "email",
-            "type": "Email",
-            "quantity": "",
-            "widget": "email_textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "roles",
-            "type": "Record",
-            "quantity": "+",
-            "widget": "model_record_reference",
-            "settings": {
-                "label": "roles",
-                "model": "role",
-                "field_type": "Record"
-            },
-            "required": false
-        }
-    ],
     "index": "clientID",
     "views": {},
     "storage": "disk+memory",

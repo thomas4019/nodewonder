@@ -1,8 +1,25 @@
 {
-    "A": "",
+    "A": 76514,
     "B": [],
     "C": [
-        {},
-        {}
-    ]
+        {
+            "type": "123",
+            "slots": {
+                "aoeu2": [
+                    "aoeu4",
+                    "aoeu2",
+                    "aoeu",
+                    "aoeue"
+                ]
+            },
+            "settings": {}
+        },
+        {
+            "type": "aoeu",
+            "slots": [],
+            "settings": {}
+        }
+    ],
+    "D": "12345a/l8ftg",
+    "E": false
 }

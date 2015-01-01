@@ -1,31 +1,6 @@
 {
     "name": "job",
     "description": "",
-    "fields": [
-        {
-            "name": "name",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "Code",
-            "type": "Code",
-            "quantity": "",
-            "widget": "codemirror",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "required": false
-        }
-    ],
     "index": "",
     "views": {},
     "storage": "disk+memory",
