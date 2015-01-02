@@ -1,13 +1,28 @@
 {
-    "toHTML": {
-        "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "return 'Hello World';"
-    },
     "name": "hello_world",
+    "settingsModel": [
+        {
+            "name": "",
+            "type": "",
+            "quantity": "",
+            "settings": "",
+            "undefined": false
+        }
+    ],
+    "settings_unfiltered": [],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "Hello World"
+    },
+    "deps": {},
+    "head": [],
     "tags": [
         "view"
-    ]
+    ],
+    "slots": [],
+    "slot_tags": {},
+    "wrapper": "",
+    "wrapperClass": "",
+    "weight": ""
 }

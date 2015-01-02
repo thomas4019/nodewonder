@@ -7,7 +7,7 @@
             "quantity": "",
             "widget": "ckeditor",
             "settings": "",
-            "required": false
+            "undefined": false
         },
         {
             "name": "data",
@@ -15,7 +15,7 @@
             "quantity": "",
             "widget": "widget_code_editor",
             "settings": "",
-            "required": false
+            "undefined": false
         }
     ],
     "settings_unfiltered": [
@@ -26,7 +26,7 @@
         "args": [
             "label"
         ],
-        "javascript": "var v = JSON.stringify(this.settings.data || {});\nv = v.replace(/'/g, \"&#39;\");\nreturn this.renderSlot('body') +\n    '<textarea style=\"display: none;\" class=\"widget-code-editor\" name=\"' + this.id + '\"></textarea>' +\n    label +\n    '<div class=\"ng\" ng-init=\\'edit_widgets = nw.edit_widgets; view_widgets = ' + JSON.stringify(cms.view_widgets) + ';view_widgets = ' + JSON.stringify(cms.view_widgets) + ';state = ' + v + ';field_id=\"' + this.id + '\";\\' >' +\n    '<div ng-controller=\"stateController\">' +\n    '<div class=\"widget-menu\" ng-if=\"menu || cut\" ng-include=\"\\'/modules/admin/widget-menu.html\\'\"></div>' +\n    '<ul id=\"state-ctrl\">' +\n    '<li ng-init=\"id = \\'body\\'; slot_name = \\'body\\';\" id=\"{{ id }}-{{ slot_name }}\" ng-include=\"\\'/modules/admin/slot.html\\'\"></li>' +\n    '<li ng-repeat=\"id in slotAssignments[\\'body\\']\" id=\"{{ id }}\" ng-include=\"\\'/modules/admin/widget.html\\'\"></li>' +\n    '</div>' +\n    '</div>' + '<input type=\"hidden\" class=\"slot-selector\">';"
+        "javascript": "var v = JSON.stringify(this.settings.data || {});\nv = v.replace(/'/g, \"&#39;\");\nreturn this.renderSlot('body') +\n    '<textarea style=\"display: none;\" class=\"widget-code-editor\" name=\"' + this.id + '\"></textarea>' +\n    label +\n    '<div class=\"ng\" ng-init=\\'edit_widgets = nw.edit_widgets; view_widgets = nw.view_widgets; state = ' + v + ';field_id=\"' + this.id + '\";\\' >' +\n    '<div ng-controller=\"stateController\">' +\n    '<div class=\"widget-menu\" ng-if=\"menu || cut\" ng-include=\"\\'/modules/admin/widget-menu.html\\'\"></div>' +\n    '<ul id=\"state-ctrl\">' +\n    '<li ng-init=\"id = \\'body\\'; slot_name = \\'body\\';\" id=\"{{ id }}-{{ slot_name }}\" ng-include=\"\\'/modules/admin/slot.html\\'\"></li>' +\n    '<li ng-repeat=\"id in slotAssignments[\\'body\\']\" id=\"{{ id }}\" ng-include=\"\\'/modules/admin/widget.html\\'\"></li>' +\n    '</div>' +\n    '</div>' + '<input type=\"hidden\" class=\"slot-selector\">';"
     },
     "deps": {
         "jquery": [],
@@ -70,7 +70,7 @@
     "script": {
         "_is_func": true,
         "args": [],
-        "javascript": "return 'angular.bootstrap(\"#' + this.id + '\"); nw.edit_widgets = ' + JSON.stringify(cms.edit_widgets) + ';';"
+        "javascript": "return 'nw.edit_widgets = ' + JSON.stringify(cms.edit_widgets) + ';' +\n  'nw.view_widgets = ' + JSON.stringify(cms.view_widgets) + ';' +\n  'angular.bootstrap(\"#' + this.id + '\");';"
     },
     "weight": ""
 }

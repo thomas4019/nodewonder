@@ -1,21 +1,30 @@
 {
-    "wrapper": "p",
+    "name": "plaintext",
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "Text",
+            "quantity": "",
+            "widget": "",
+            "settings": "",
+            "undefined": false
+        }
+    ],
+    "settings_unfiltered": [],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "{{{settings.data}}}"
+    },
+    "deps": {},
+    "head": [],
     "tags": [
         "field_view",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Text"
-        }
-    ],
-    "toHTML": {
-        "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "return this.settings.data;"
-    },
-    "name": "plaintext"
+    "slots": [],
+    "slot_tags": {},
+    "wrapper": "p",
+    "wrapperClass": "",
+    "weight": ""
 }

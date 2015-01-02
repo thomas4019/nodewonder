@@ -1,20 +1,20 @@
 {
+    "name": "if_display",
     "settingsModel": [
         {
             "name": "condition",
-            "type": "Text"
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "undefined": false
         }
     ],
-    "slots": [
-        "then",
-        "else"
-    ],
-    "load": {
+    "settings_unfiltered": [],
+    "htmlTemplate": {
         "_is_func": true,
-        "args": [
-            "callback"
-        ],
-        "javascript": "var user = this.user;\nthis.display = eval(this.settings.condition);\ncallback();"
+        "args": [],
+        "htmlmixed": "{{#if display}} {{{ renderSlot \"then\" }}} {{else}} {{{ renderSlot \"else\" }}} {{/if}}\n"
     },
     "toHTML": {
         "_is_func": true,
@@ -23,9 +23,24 @@
         ],
         "javascript": "if (this.display) {\n    return this.renderSlot('then');\n} else {\n    return this.renderSlot('else');\n}"
     },
-    "name": "if_display",
+    "deps": {},
+    "head": [],
     "tags": [
         "view"
     ],
-    "settings_unfiltered": []
+    "slots": [
+        "then",
+        "else"
+    ],
+    "slot_tags": {},
+    "wrapper": "",
+    "wrapperClass": "",
+    "load": {
+        "_is_func": true,
+        "args": [
+            "callback"
+        ],
+        "javascript": "var user = this.user;\nthis.display = eval(this.settings.condition);\ncallback();"
+    },
+    "weight": ""
 }

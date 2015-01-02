@@ -6,16 +6,14 @@
             "type": "",
             "quantity": "",
             "settings": "",
-            "required": false
+            "undefined": false
         }
     ],
     "settings_unfiltered": [],
-    "toHTML": {
+    "htmlTemplate": {
         "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "return this.renderSlot('body');"
+        "args": [],
+        "htmlmixed": "{{{ renderSlot \"body\" }}}"
     },
     "deps": {},
     "head": [],
@@ -52,5 +50,5 @@
         "args": [],
         "css": ".widget-key_value {\n\tdisplay: table;\n}\n\n.widget-key_value > div {\n\tdisplay: table-cell;\n\tvertical-align: middle;\n\tpadding: 5px;\n}"
     },
-    "weight": null
+    "weight": ""
 }

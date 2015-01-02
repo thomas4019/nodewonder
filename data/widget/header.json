@@ -1,30 +1,43 @@
 {
-    "wrapper": {
+    "name": "header",
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "undefined": false
+        },
+        {
+            "name": "type",
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "undefined": false
+        }
+    ],
+    "settings_unfiltered": [],
+    "htmlTemplate": {
         "_is_func": true,
         "args": [],
-        "javascript": "return this.settings.type || 'h1';",
-        "_func_override": true
+        "htmlmixed": "{{{settings.data}}}"
     },
+    "deps": {},
+    "head": [],
     "tags": [
         "field_view",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Text"
-        },
-        {
-            "name": "type",
-            "type": "Text"
-        }
-    ],
-    "toHTML": {
+    "slots": [],
+    "slot_tags": {},
+    "wrapper": {
         "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "return this.settings.data;"
+        "args": [],
+        "_func_override": true,
+        "javascript": "return this.settings.type || 'h1';"
     },
-    "name": "header"
+    "wrapperClass": "",
+    "weight": ""
 }

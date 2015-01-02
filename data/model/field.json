@@ -43,15 +43,21 @@
                     "model": "field"
                 },
                 "type": {
-                    "type": "model_type_selector",
+                    "type": "select",
                     "slots": {},
                     "settings": {
                         "label": "type",
-                        "field_type": "Text"
+                        "field_type": "Text",
+                        "choices": {
+                            "_is_func": true,
+                            "args": [],
+                            "_func_override": true,
+                            "javascript": "return Object.keys(cms.model_widgets).concat(Object.keys(cms.model_data['model']));"
+                        }
                     },
                     "field": "type",
                     "model_type": "Text",
-                    "model": "field"
+                    "model": "field2"
                 },
                 "quantity": {
                     "type": "textbox",
@@ -65,7 +71,7 @@
                     "model": "field"
                 },
                 "widget": {
-                    "type": "model_widget_selector",
+                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "widget",

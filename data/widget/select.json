@@ -1,25 +1,45 @@
 {
-    "tags": [
-        "field_edit",
-        "view"
-    ],
+    "name": "select",
     "settingsModel": [
         {
             "name": "data",
-            "type": "Text"
+            "type": "Text",
+            "quantity": "",
+            "widget": "",
+            "settings": "",
+            "undefined": false
         },
         {
             "name": "choices",
             "type": "Text",
-            "quantity": "+"
+            "quantity": "+",
+            "widget": "",
+            "settings": "",
+            "undefined": false
         }
     ],
-    "toHTML": {
+    "settings_unfiltered": [
+        "data"
+    ],
+    "htmlTemplate": {
         "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "var choices = this.settings.choices;\nif (Array.isArray(choices)) {\n    choices = _.object(choices, choices);\n}\n\nvar element = '<select class=\"form-control\" name=\"' + this.id + '\">';\n\nfor (choice in choices) {\n    element += '<option value=\"' + choice + '\" ' + (choice == this.settings.data ? 'selected=\"selected\"' : '') + ' >' + choice + '</option>';\n}\n\nelement += '</select>';\n\nreturn label + element;"
+        "args": [],
+        "htmlmixed": "{{{label}}}\n<select class=\"sel form-control\" {{#if settings.quantity}}multiple{{/if}} name=\"{{id}}\">\n    {{#unless settings.quantity}}\n    <option value=\"\">- Select -</option>\n    {{/unless}} {{#each choicesCombined}}\n    <option value=\"{{this.[0]}}\" {{this.[2]}}>{{this.[1]}}</option>\n    {{/each}}\n</select>"
     },
-    "name": "select"
+    "deps": {},
+    "head": [],
+    "tags": [
+        "field_edit",
+        "view"
+    ],
+    "slots": [],
+    "slot_tags": {},
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "this.settings = cms.functions.evalFunctions('select', this.settings);\nvar choices = this.settings.choices;\nvar data = this.settings.data;\nif (typeof choices == 'function') {\n  choices = choices();\n}\nif (Array.isArray(choices)) {\n    choices = _.object(choices, choices);\n}\nthis.choicesCombined = [];\n_.each(choices, function(choice, key) {\n  if ( (this.settings.quantity && _.contains(data, choice)) || \n       (!this.settings.quantity && data == choice) )\n    this.choicesCombined.push([key, choice, 'selected']);\n  else\n    this.choicesCombined.push([key, choice, '']);\n}.bind(this));"
+    },
+    "wrapper": "",
+    "wrapperClass": "",
+    "weight": ""
 }

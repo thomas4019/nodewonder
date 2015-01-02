@@ -7,7 +7,7 @@
             "quantity": "",
             "widget": "jsoneditor",
             "settings": "",
-            "required": false
+            "undefined": false
         },
         {
             "name": "width",
@@ -15,7 +15,7 @@
             "quantity": "",
             "widget": "numeric_textbox",
             "settings": "",
-            "required": false
+            "undefined": false
         },
         {
             "name": "height",
@@ -23,18 +23,16 @@
             "quantity": "",
             "widget": "numeric_textbox",
             "settings": "",
-            "required": false
+            "undefined": false
         }
     ],
     "settings_unfiltered": [
         "data"
     ],
-    "toHTML": {
+    "htmlTemplate": {
         "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "var element = '<div class=\"json\" style=\"width: ' + (this.settings.width ? this.settings.width + 'px' : 'auto') + '; height: ' + (this.settings.height || 200) + 'px;\"></div>';\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + element;\n}"
+        "args": [],
+        "htmlmixed": "{{#if settings.inline}}\n<div class=\"controls form-inline\">{{/if}} {{{label}}}\n    <div class=\"json\" style=\"width: {{#if settings.width}} {{settings.width}}px {{else}} auto {{/if}}; height: {{#if settings.height}} {{settings.height}}px {{else}} 200px {{/if}}\"></div>\n    {{#if settings.inline}}</div>{{/if}}"
     },
     "deps": {
         "jsoneditor": [
@@ -64,11 +62,6 @@
     },
     "wrapper": "",
     "wrapperClass": "",
-    "script": {
-        "_is_func": true,
-        "args": [],
-        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
-    },
     "action": {
         "_is_func": true,
         "args": [
@@ -84,5 +77,5 @@
         "args": [],
         "css": ".poweredBy {\n  display: none;\n}"
     },
-    "weight": null
+    "weight": ""
 }

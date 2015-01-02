@@ -1,30 +1,60 @@
 {
-    "deps": {
-        "jquery": [],
-        "select2": []
-    },
-    "tags": [
-        "field_edit",
-        "field_edit_multiple",
-        "view"
-    ],
+    "name": "model_record_reference",
     "settingsModel": [
         {
             "name": "label",
-            "type": "Text"
+            "type": "Text",
+            "quantity": "",
+            "widget": "ckeditor",
+            "settings": "",
+            "undefined": false
         },
         {
             "name": "model",
             "type": "Record",
+            "quantity": "",
+            "widget": "model_record_reference",
             "settings": {
                 "model": "model"
-            }
+            },
+            "undefined": false
         },
         {
             "name": "data",
-            "type": "Record"
+            "type": "Record",
+            "quantity": "",
+            "widget": "model_record_reference",
+            "settings": "",
+            "undefined": false
         }
     ],
+    "settings_unfiltered": [
+        "data"
+    ],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "{{{label}}}\n<select class=\"sel\" {{#if settings.quantity}}multiple{{/if}} name=\"{{id}}\">\n    {{#unless settings.quantity}}\n    <option value=\"\">- Select -</option>\n    {{/unless}} {{#each choicesCombined}}\n    <option value=\"{{this.[0]}}\" {{this.[1]}}>{{this.[0]}}</option>\n    {{/each}}\n</select>"
+    },
+    "deps": {
+        "jquery": [],
+        "select2": []
+    },
+    "head": [],
+    "tags": [
+        "field_edit",
+        "field_edit_multiple",
+        "view",
+        "action",
+        "local-action"
+    ],
+    "slots": [],
+    "slot_tags": {},
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "var data = this.settings.data;\nthis.choices = Object.keys(cms.model_data[this.settings.model||'model']);\nthis.selected = [];\n_.each(this.choices, function(choice) {\n  if ( (this.settings.quantity && _.contains(data, choice)) || \n       (!this.settings.quantity && data == choice) )\n    this.selected.push('selected');\n  else\n    this.selected.push('');\n}.bind(this));\nthis.choicesCombined = _.zip(this.choices, this.selected);"
+    },
     "processData": {
         "_is_func": true,
         "args": [
@@ -34,17 +64,22 @@
         ],
         "javascript": "if (this.settings.quantity) {\n    if (!data) {\n        return [];\n    }\n    if (typeof data == 'string')\n        return [data];\n    return data;\n}\nreturn data;"
     },
-    "toHTML": {
+    "wrapper": "",
+    "wrapperClass": "",
+    "action": {
         "_is_func": true,
         "args": [
-            "label"
+            "settings",
+            "id",
+            "scope",
+            "handlers"
         ],
-        "javascript": "var data = this.settings.data;\nvar choices = [];\nchoices = choices.concat(Object.keys(cms.model_data[this.settings.model]));\n\nvar html = label + '<select class=\"sel\" ' + (this.settings.quantity ? 'multiple' : '') + ' style=\"width: 100%;height: 34px;\" name=\"' + this.id + '\">';\nif (!this.settings.quantity) {\n    html += '<option value=\"\"> - Select - </option>';\n}\nif (this.settings.quantity) {\n    _.each(choices, function(choice) {\n        html += '<option value=\"' + choice + '\" ' + (_.contains(data, choice) ? 'selected' : '') + '>' + choice + '</option>';\n    });\n} else {\n    _.each(choices, function(choice) {\n        html += '<option value=\"' + choice + '\" ' + (data == choice ? 'selected' : '') + '>' + choice + '</option>';\n    });\n}\nhtml += '</select>';\nreturn html;"
+        "javascript": "$(\"#\" + id + \" .sel\").select2();"
     },
-    "script": {
+    "style": {
         "_is_func": true,
         "args": [],
-        "javascript": "return '$(\"#' + this.id + ' .sel\").select2();';"
+        "css": ".sel {\n  width: 100%;\n  height: 34px;\n}"
     },
-    "name": "model_record_reference"
+    "weight": ""
 }

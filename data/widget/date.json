@@ -1,31 +1,40 @@
 {
+    "name": "date",
+    "settingsModel": [
+        {
+            "name": "data",
+            "type": "Date",
+            "quantity": "",
+            "widget": "date",
+            "settings": "",
+            "undefined": false
+        }
+    ],
+    "settings_unfiltered": [
+        "data"
+    ],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "{{#if settings.inline}}\n<div class=\"controls form-inline\">{{/if}} {{{label}}}\n    <input id=\"{{id}}-textbox\" class=\"form-control input-small\" type=\"text\" name=\"{{this.id}}\" value=\"{{value}}\" />{{#if settings.inline}}</div>{{/if}}"
+    },
     "deps": {
-        "jquery": {},
+        "jquery": [],
         "jquery-ui": [
             "themes/smoothness/jquery-ui.min.css"
         ]
     },
+    "head": [],
     "tags": [
         "field_edit",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Date"
-        }
-    ],
-    "script": {
+    "slots": [],
+    "slot_tags": {},
+    "setup": {
         "_is_func": true,
         "args": [],
-        "javascript": "return '$(\"#' + this.id + ' input\").datepicker();';"
-    },
-    "toHTML": {
-        "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "var value = this.settings.data ? moment(this.settings.data).format('MM/DD/YYYY') : '';\n\nif (!value || _.isEmpty(value))\n    value = '';\n\nvar element = '<input id=\"' + this.id + '-textbox\" class=\"form-control input-small\" type=\"text\" name=\"' + this.id + '\"' + (this.settings.data ? ' value=\"' + cms.functions.htmlEscape(this.settings.data) + '\"' : '') + ' />';\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + label + element + '</div>';\n} else {\n    return label + element;\n}"
+        "javascript": "this.value = this.settings.data ? moment(this.settings.data).format('MM/DD/YYYY') : '';\nif (!this.value || _.isEmpty(this.value))\n    this.value = '';"
     },
     "processData": {
         "_is_func": true,
@@ -36,5 +45,17 @@
         ],
         "javascript": "return new Date(data).getTime();"
     },
-    "name": "date"
+    "wrapper": "",
+    "wrapperClass": "",
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "$(\"#\"+id+\" input\").datepicker();"
+    },
+    "weight": ""
 }

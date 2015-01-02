@@ -17,11 +17,17 @@
         "display": {
             "widgets": {
                 "type": {
-                    "type": "model_type_selector",
+                    "type": "select",
                     "slots": {},
                     "settings": {
                         "label": "type",
-                        "field_type": "Text"
+                        "field_type": "Text",
+                        "choices": {
+                            "_is_func": true,
+                            "args": [],
+                            "_func_override": true,
+                            "javascript": "return Object.keys(cms.model_widgets).concat(Object.keys(cms.model_data['model']));"
+                        }
                     },
                     "field": "type",
                     "model_type": "Text",

@@ -16,11 +16,15 @@
                 "quantity": "2+"
             },
             "D": {
-                "type": "Text",
+                "type": "JSON",
                 "quantity": ""
             },
             "E": {
                 "type": "Boolean",
+                "quantity": ""
+            },
+            "F22": {
+                "type": "Date",
                 "quantity": ""
             }
         },
@@ -63,17 +67,6 @@
                     "model_type": "widget_instance",
                     "model": "test2"
                 },
-                "D": {
-                    "type": "textbox",
-                    "settings": {
-                        "label": "D",
-                        "field_type": "Text"
-                    },
-                    "slots": {},
-                    "field": "D",
-                    "model_type": "Text",
-                    "model": "test2"
-                },
                 "E": {
                     "type": "checkbox",
                     "slots": {},
@@ -83,6 +76,28 @@
                     "settings": {
                         "label": "E"
                     }
+                },
+                "F22": {
+                    "type": "date",
+                    "slots": {},
+                    "field": "F22",
+                    "model_type": "Date",
+                    "model": "Model",
+                    "settings": {
+                        "label": "F22"
+                    }
+                },
+                "D": {
+                    "type": "jsoneditor",
+                    "slots": {},
+                    "field": "D",
+                    "model_type": "JSON",
+                    "model": "Model",
+                    "settings": {
+                        "data": {},
+                        "width": "",
+                        "height": 80
+                    }
                 }
             },
             "slotAssignments": {
@@ -90,8 +105,9 @@
                     "A",
                     "B",
                     "C",
-                    "D",
-                    "E"
+                    "E",
+                    "F22",
+                    "D"
                 ]
             }
         }

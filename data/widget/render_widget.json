@@ -1,5 +1,28 @@
 {
-    "wrapper": "none",
+    "name": "render_widget",
+    "settingsModel": [
+        {
+            "name": "",
+            "type": "",
+            "quantity": "",
+            "widget": "",
+            "settings": "",
+            "undefined": false
+        }
+    ],
+    "settings_unfiltered": [],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "{{{ renderSlot \"body\" }}}"
+    },
+    "deps": {},
+    "head": [],
+    "tags": [
+        "view"
+    ],
+    "slots": [],
+    "slot_tags": {},
     "children": {
         "_is_func": true,
         "args": [
@@ -7,15 +30,7 @@
         ],
         "javascript": "var widget_input = (this.settings.input) ? JSON.parse(this.settings.input) : {};\n\nvar values = {};\nif (input.values) {\n    values = JSON.parse(this.settings.values);\n}\n\nvar body = {};\nbody['sel'] = {\n    'type': this.settings.widget_type,\n    'settings': widget_input\n}\ncallback({\n    'body': body\n});"
     },
-    "toHTML": {
-        "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "return this.renderSlot('body');"
-    },
-    "name": "render_widget",
-    "tags": [
-        "view"
-    ]
+    "wrapper": "none",
+    "wrapperClass": "",
+    "weight": ""
 }

@@ -146,7 +146,8 @@
                             "name",
                             "htmlTemplate",
                             "action",
-                            "style"
+                            "style",
+                            "setup"
                         ]
                     }
                 },
@@ -360,7 +361,6 @@
                     "slots": {
                         "children": [
                             "toHTML",
-                            "setup",
                             "script",
                             "makeActionJS",
                             "makeEventJS",
@@ -383,17 +383,6 @@
                         "field_type": "Code"
                     },
                     "field": "toHTML",
-                    "model_type": "Code",
-                    "model": "widget"
-                },
-                "setup": {
-                    "type": "codemirror",
-                    "slots": {},
-                    "settings": {
-                        "label": "setup",
-                        "field_type": "Code"
-                    },
-                    "field": "setup",
                     "model_type": "Code",
                     "model": "widget"
                 },
@@ -582,6 +571,17 @@
                     "field": "tags",
                     "model_type": "Text",
                     "model": "widget"
+                },
+                "setup": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "label": "setup",
+                        "field_type": "Code"
+                    },
+                    "field": "setup",
+                    "model_type": "Code",
+                    "model": "widget"
                 }
             },
             "slotAssignments": {
@@ -592,6 +592,5 @@
         }
     },
     "index": "name",
-    "storage": "disk+memory",
-    "key": "widget"
+    "storage": "disk+memory"
 }

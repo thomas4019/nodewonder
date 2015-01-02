@@ -234,6 +234,12 @@ var nw = function() {
 		    $("#widgetForm .save").click(function() {
 					var settings_raw = $( '#start :input').serializeArray();
 					var settings_post = nw.functions.serializedArrayToValues(settings_raw);
+
+					_.forEach(nw.fieldGetters, function(get, id) {
+					    var value = get();
+					    settings_post[id] = value;
+					});
+
 					delete settings_post['start-form_token'];
 					var settings = nw.functions.expandPostValues(settings_post);
 					console.log(settings);
