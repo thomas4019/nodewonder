@@ -1,107 +1,133 @@
 {
     "name": "register",
-    "Form": [
-        {
-            "name": "email",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "password",
-            "type": "Text",
-            "quantity": "",
-            "widget": "password",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "Captcha",
-            "type": "Captcha",
-            "quantity": "",
-            "widget": "recaptcha",
-            "settings": "",
-            "required": false
-        }
-    ],
-    "Actions": {
-        "widgets": {
-            "3wNX8plY": {
-                "type": "form_button",
-                "slots": {
-                    "onclick": [
-                        "1azcxtaH"
-                    ],
-                    "events": []
-                },
-                "settings": {
-                    "label": "Register",
-                    "button_type": "primary"
-                }
+    "schema": {
+        "fields": {
+            "email": {
+                "type": "Text",
+                "quantity": ""
             },
-            "1azcxtaH": {
-                "type": "if_record_exists",
-                "slots": {
-                    "then": [
-                        "v6fPki9T"
-                    ],
-                    "else": [
-                        "miER7wwT"
-                    ]
-                },
-                "settings": {
-                    "model": "user",
-                    "field": "email",
-                    "value": "{{form.email}}"
-                }
+            "password": {
+                "type": "Text",
+                "quantity": ""
             },
-            "v6fPki9T": {
-                "type": "message",
-                "slots": {},
-                "settings": {
-                    "message": "There is already a user with this email registered.",
-                    "type": "error"
-                }
-            },
-            "miER7wwT": {
-                "type": "save_record",
-                "slots": {
-                    "success": [
-                        "WruqZida"
-                    ],
-                    "failure": [
-                        "Tf1nKGIg"
-                    ]
-                },
-                "settings": {
-                    "model": "user",
-                    "record": "create",
-                    "data_name": "form",
-                    "record_id_dest": "record"
-                }
-            },
-            "WruqZida": {
-                "type": "goto_page",
-                "slots": {},
-                "settings": {
-                    "URL": ""
-                }
-            },
-            "Tf1nKGIg": {
-                "type": "message",
-                "slots": {},
-                "settings": {
-                    "message": "Failed to register user.",
-                    "type": "error"
-                }
+            "Captcha": {
+                "type": "Captcha",
+                "quantity": ""
             }
         },
-        "slotAssignments": {
-            "body": [
-                "3wNX8plY"
-            ]
+        "display": {
+            "widgets": {
+                "1azcxtaH": {
+                    "type": "if_record_exists",
+                    "slots": {
+                        "then": [
+                            "v6fPki9T"
+                        ],
+                        "else": [
+                            "miER7wwT"
+                        ]
+                    },
+                    "settings": {
+                        "model": "user",
+                        "field": "email",
+                        "value": "{{form.email}}"
+                    }
+                },
+                "v6fPki9T": {
+                    "type": "message",
+                    "slots": {},
+                    "settings": {
+                        "message": "There is already a user with this email registered.",
+                        "type": "error"
+                    }
+                },
+                "miER7wwT": {
+                    "type": "save_record",
+                    "slots": {
+                        "success": [
+                            "WruqZida"
+                        ],
+                        "failure": [
+                            "Tf1nKGIg"
+                        ]
+                    },
+                    "settings": {
+                        "model": "user",
+                        "record": "create",
+                        "data_name": "form",
+                        "record_id_dest": "record"
+                    }
+                },
+                "WruqZida": {
+                    "type": "goto_page",
+                    "slots": {},
+                    "settings": {
+                        "URL": ""
+                    }
+                },
+                "Tf1nKGIg": {
+                    "type": "message",
+                    "slots": {},
+                    "settings": {
+                        "message": "Failed to register user.",
+                        "type": "error"
+                    }
+                },
+                "email": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "email",
+                        "field_type": "Text"
+                    },
+                    "field": "email",
+                    "model_type": "Text",
+                    "model": "register"
+                },
+                "password": {
+                    "type": "password",
+                    "slots": {},
+                    "settings": {
+                        "label": "password",
+                        "field_type": "Text"
+                    },
+                    "field": "password",
+                    "model_type": "Text",
+                    "model": "register"
+                },
+                "Captcha": {
+                    "type": "recaptcha",
+                    "slots": {},
+                    "settings": {
+                        "label": "Captcha",
+                        "field_type": "Captcha"
+                    },
+                    "field": "Captcha",
+                    "model_type": "Captcha",
+                    "model": "register"
+                },
+                "3wNX8plY": {
+                    "type": "form_button",
+                    "slots": {
+                        "onclick": [
+                            "1azcxtaH"
+                        ],
+                        "events": []
+                    },
+                    "settings": {
+                        "label": "Register",
+                        "button_type": "primary"
+                    }
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "email",
+                    "password",
+                    "Captcha",
+                    "3wNX8plY"
+                ]
+            }
         }
     }
 }

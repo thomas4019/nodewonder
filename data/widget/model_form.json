@@ -5,7 +5,7 @@
             "name": "model",
             "type": "Text",
             "quantity": "",
-            "widget": "ckeditor",
+            "widget": "textbox",
             "settings": {},
             "undefined": false
         },
@@ -13,7 +13,7 @@
             "name": "record",
             "type": "Text",
             "quantity": "",
-            "widget": "ckeditor",
+            "widget": "textbox",
             "settings": {},
             "undefined": false
         },
@@ -21,7 +21,7 @@
             "name": "field",
             "type": "Text",
             "quantity": "",
-            "widget": "ckeditor",
+            "widget": "textbox",
             "settings": {},
             "undefined": false
         },

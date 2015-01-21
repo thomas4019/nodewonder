@@ -11,56 +11,20 @@
                 "model": "form"
             },
             "required": false
-        },
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "required": false
         }
     ],
     "Code": {
         "widgets": {
-            "cnYf4KVm": {
-                "type": "model_form",
-                "slots": {
-                    "events": [],
-                    "body": []
-                },
-                "settings": {
-                    "model": "form",
-                    "record": "login",
-                    "field": "Form"
-                }
-            },
-            "h8bIxXQW": {
-                "type": "widgets_view",
-                "slots": {
-                    "body": [
-                        "Zj1oqcgr-h8bIxXQW-rNk1T5WJ"
-                    ]
-                },
-                "settings": {
-                    "model": "form",
-                    "record": "login",
-                    "field": "Actions"
-                }
+            "c5z4csJy": {
+                "type": "model_renderer",
+                "slots": {}
             }
         },
         "slotAssignments": {
             "body": [
-                "cnYf4KVm",
-                "h8bIxXQW"
+                "c5z4csJy"
             ]
         }
     },
-    "controller": "widgets['cnYf4KVm'].settings.record = settings.form; widgets['h8bIxXQW'].settings.record = settings.form;  widgets['h8bIxXQW'].settings.form = this.id+'-cnYf4KVm'; callback();"
+    "controller": "widgets['c5z4csJy'].settings = {schema: load('form', settings.form).schema}; widgets['c5z4csJy'].settings.form = id+'-cnYf4KVm'; callback();"
 }

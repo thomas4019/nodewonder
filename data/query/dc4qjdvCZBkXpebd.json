@@ -1,0 +1,10 @@
+{
+    "from": "widget",
+    "select": [
+        "name",
+        "children"
+    ],
+    "where": "",
+    "orderby": "",
+    "limit": ""
+}

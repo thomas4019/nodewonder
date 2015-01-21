@@ -302,7 +302,7 @@ var nw = function() {
 	  exclude = exclude || ['data'];
 	  for(key in settings) {
 	  	var value = settings[key];
-	    if (value && (typeof value === 'string') && value.indexOf("{{") != -1 && (!_.contains(exclude, key))) {
+	    if (value && (typeof value === 'string') && value.indexOf("{{") != -1 && (exclude.indexOf(key) == -1)) {
 	      var template = Handlebars.compile(value);
 	      settings[key] = template(scope);
 	    }

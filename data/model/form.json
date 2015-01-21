@@ -1,40 +1,14 @@
 {
     "name": "form",
     "description": "",
-    "index": "name",
-    "views": [
-        {
-            "Name": "",
-            "Code": {
-                "widgets": {
-                    "8RlClimI": {
-                        "type": "header",
-                        "slots": {},
-                        "field": "name2",
-                        "model_type": "Text",
-                        "model": "Model"
-                    }
-                },
-                "slotAssignments": {
-                    "body": [
-                        "8RlClimI"
-                    ]
-                }
-            }
-        }
-    ],
     "schema": {
         "fields": {
             "name": {
                 "type": "Text",
                 "quantity": ""
             },
-            "Form": {
-                "type": "field",
-                "quantity": "2+"
-            },
-            "Actions": {
-                "type": "Widgets",
+            "schema": {
+                "type": "schema",
                 "quantity": ""
             }
         },
@@ -43,45 +17,32 @@
                 "name": {
                     "type": "textbox",
                     "slots": {},
-                    "settings": {
-                        "label": "name",
-                        "field_type": "Text"
-                    },
                     "field": "name",
                     "model_type": "Text",
-                    "model": "form"
+                    "model": "Model",
+                    "settings": {
+                        "label": "name"
+                    }
                 },
-                "Form": {
+                "schema": {
                     "type": "model_form",
                     "slots": {},
+                    "field": "schema",
+                    "model_type": "schema",
+                    "model": "Model",
                     "settings": {
-                        "label": "Form",
-                        "field_type": "field"
-                    },
-                    "field": "Form",
-                    "model_type": "field",
-                    "model": "form"
-                },
-                "Actions": {
-                    "type": "widget_code_editor",
-                    "slots": {},
-                    "settings": {
-                        "label": "Actions",
-                        "field_type": "Widgets"
-                    },
-                    "field": "Actions",
-                    "model_type": "Widgets",
-                    "model": "form"
+                        "label": "schema"
+                    }
                 }
             },
             "slotAssignments": {
                 "body": [
                     "name",
-                    "Form",
-                    "Actions"
+                    "schema"
                 ]
             }
         }
     },
-    "key": "form"
+    "index": "name",
+    "storage": "disk+memory"
 }

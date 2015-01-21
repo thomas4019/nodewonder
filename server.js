@@ -377,6 +377,9 @@ function sortWidgets(callback) {
   cms.model_widgets['Text'].sort(function (a, b) {
     return a.weight || 0 < b.weight || 0;
   });
+  cms.edit_widgets['Text'].sort(function (a, b) {
+    return a.weight || 0 < b.weight || 0;
+  });
   //console.log(cms.model_widgets['Text']);
   callback();
 }
@@ -612,6 +615,35 @@ cms.migrate9 = function() {
   _.forEach(cms.model_data.model, function(model, index) {
     delete model.fields;
     cms.functions.saveRecord('model', index, model);
+  });
+}
+
+cms.migrate10 = function() {
+  _.forEach(cms.model_data.form, function(model, index) {
+    model.schema = {
+      fields: {},
+      display: 
+        model.Actions,
+    };
+    model.Form.forEach(function(field) {
+      model.schema.fields[field.name] = {
+        type: field.type,
+        quantity: field.quantity
+      }
+      var id = field.name; //cms.functions.makeid(8);
+      model.schema.display.widgets[id] = {
+        type: field.widget,
+        slots: {},
+        settings: field.settings || {},
+        field: field.name,  
+        model_type: field.type,
+        model: index,
+      };
+      model.schema.display.widgets[id].settings.label = field.name;
+      model.schema.display.widgets[id].settings.field_type = field.type;
+      model.schema.display.slotAssignments.body.push(id);
+    });
+    cms.functions.saveRecord('form2', index, model);
   });
 }
 

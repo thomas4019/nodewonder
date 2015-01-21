@@ -1,21 +1,18 @@
 {
-    "wrapper": "span",
-    "slots": [
-        "onclick"
-    ],
-    "slot_tags": {
-        "onclick": [
-            "action"
-        ]
-    },
+    "name": "form_button",
     "settingsModel": [
         {
             "name": "label",
-            "type": "Text"
+            "type": "Text",
+            "quantity": "",
+            "widget": "",
+            "settings": "",
+            "required": false
         },
         {
             "name": "button_type",
             "type": "Text",
+            "quantity": "",
             "widget": "select",
             "settings": {
                 "label": "Button Type",
@@ -27,12 +24,42 @@
                     "warning",
                     "danger"
                 ]
-            }
+            },
+            "required": false
         }
     ],
+    "settings_unfiltered": [],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return '<input type=\"button\" class=\"btn btn-' + this.settings.button_type + '\" value=\"' + this.settings.label + '\" >';"
+    },
     "deps": {
         "jquery": [],
         "bootstrap": []
+    },
+    "head": [],
+    "tags": [
+        "view",
+        "action",
+        "local-action"
+    ],
+    "slots": [
+        "onclick"
+    ],
+    "slot_tags": {
+        "onclick": [
+            "action"
+        ]
+    },
+    "wrapper": "span",
+    "wrapperClass": "",
+    "script": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
     },
     "action": {
         "_is_func": true,
@@ -42,25 +69,16 @@
             "scope",
             "handlers"
         ],
-        "javascript": "$(\"#\" + id).on(\"click\", function() {\n    var form_id = settings.form;\n    var form_values_id = form_id.split('-').pop();\n    var model = nw.model[id];\n    var data = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#' + form_id + ' :input').serializeArray()));\n    scope['form'] = data[form_values_id];\n    console.log(scope);\n\n    handlers.onclick();\n});"
+        "javascript": "$(\"#\" + id).on(\"click\", function() {\n    var form_id = id.substring(0, id.lastIndexOf('-'));\n    var form_values_id = form_id.split('-').pop();\n    var model = nw.model[id];\n    var data = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#' + form_id + ' :input').serializeArray()));\n    scope['form'] = data[form_values_id];\n    console.log(scope);\n\n    handlers.onclick();\n});"
     },
-    "toHTML": {
-        "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "return '<input type=\"button\" class=\"btn btn-' + this.settings.button_type + '\" value=\"' + this.settings.label + '\" >';"
-    },
-    "name": "form_button",
-    "tags": [
-        "view",
-        "action",
-        "local-action"
-    ],
-    "script": {
-        "_is_func": true,
-        "args": [],
-        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
-    },
-    "settings_unfiltered": []
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

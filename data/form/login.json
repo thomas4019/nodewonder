@@ -1,90 +1,108 @@
 {
     "name": "login",
-    "Form": [
-        {
-            "name": "Email",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "Password",
-            "type": "Text",
-            "quantity": "",
-            "widget": "password",
-            "settings": "",
-            "required": false
-        }
-    ],
-    "Actions": {
-        "widgets": {
-            "OMNSLqTk": {
-                "type": "message",
-                "slots": {},
-                "settings": {
-                    "message": "Username or password is incorrect.",
-                    "type": "warning"
-                }
+    "schema": {
+        "fields": {
+            "Email": {
+                "type": "Text",
+                "quantity": ""
             },
-            "RVrkuDTk": {
-                "type": "form_button",
-                "slots": {
-                    "onclick": [
-                        "JDmgi6Xq"
-                    ],
-                    "events": []
-                },
-                "settings": {
-                    "label": "Login",
-                    "button_type": "primary"
-                }
-            },
-            "JDmgi6Xq": {
-                "type": "user_login",
-                "slots": {
-                    "success": [
-                        "vzNvbPnm",
-                        "dyJQoUZW"
-                    ],
-                    "failure": [
-                        "OMNSLqTk"
-                    ]
-                },
-                "settings": {
-                    "email": "{{form.Email}}",
-                    "password": "{{form.Password}}"
-                }
-            },
-            "vzNvbPnm": {
-                "type": "flash_set",
-                "slots": {
-                    "actions": [
-                        "7SmPqdB6"
-                    ]
-                }
-            },
-            "7SmPqdB6": {
-                "type": "message",
-                "slots": {},
-                "settings": {
-                    "message": "Logged in sucessfully!",
-                    "type": "success"
-                }
-            },
-            "dyJQoUZW": {
-                "type": "goto_page",
-                "slots": {},
-                "settings": {
-                    "URL": ""
-                }
+            "Password": {
+                "type": "Text",
+                "quantity": ""
             }
         },
-        "slotAssignments": {
-            "body": [
-                "RVrkuDTk"
-            ]
+        "display": {
+            "widgets": {
+                "OMNSLqTk": {
+                    "type": "message",
+                    "slots": {},
+                    "settings": {
+                        "message": "Username or password is incorrect.",
+                        "type": "warning"
+                    }
+                },
+                "JDmgi6Xq": {
+                    "type": "user_login",
+                    "slots": {
+                        "success": [
+                            "vzNvbPnm",
+                            "dyJQoUZW"
+                        ],
+                        "failure": [
+                            "OMNSLqTk"
+                        ]
+                    },
+                    "settings": {
+                        "email": "{{form.Email}}",
+                        "password": "{{form.Password}}"
+                    }
+                },
+                "vzNvbPnm": {
+                    "type": "flash_set",
+                    "slots": {
+                        "actions": [
+                            "7SmPqdB6"
+                        ]
+                    }
+                },
+                "7SmPqdB6": {
+                    "type": "message",
+                    "slots": {},
+                    "settings": {
+                        "message": "Logged in sucessfully!",
+                        "type": "success"
+                    }
+                },
+                "dyJQoUZW": {
+                    "type": "goto_page",
+                    "slots": {},
+                    "settings": {
+                        "URL": ""
+                    }
+                },
+                "Email": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "Email",
+                        "field_type": "Text"
+                    },
+                    "field": "Email",
+                    "model_type": "Text",
+                    "model": "login"
+                },
+                "Password": {
+                    "type": "password",
+                    "slots": {},
+                    "settings": {
+                        "label": "Password",
+                        "field_type": "Text"
+                    },
+                    "field": "Password",
+                    "model_type": "Text",
+                    "model": "login"
+                },
+                "RVrkuDTk": {
+                    "type": "form_button",
+                    "slots": {
+                        "onclick": [
+                            "JDmgi6Xq"
+                        ],
+                        "events": []
+                    },
+                    "settings": {
+                        "label": "Login",
+                        "button_type": "primary"
+                    }
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "Email",
+                    "Password",
+                    "RVrkuDTk"
+                ]
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 {
     "name": "Field",
     "description": "",
-    "key": "field",
     "schema": {
         "fields": {
             "name": {
@@ -91,6 +90,16 @@
                     "field": "settings",
                     "model_type": "Text",
                     "model": "field"
+                },
+                "required": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "field": "required",
+                    "model_type": "Boolean",
+                    "model": "Model",
+                    "settings": {
+                        "label": "required"
+                    }
                 }
             },
             "slotAssignments": {
@@ -99,9 +108,12 @@
                     "type",
                     "quantity",
                     "widget",
-                    "settings"
+                    "settings",
+                    "required"
                 ]
             }
         }
-    }
+    },
+    "index": "",
+    "storage": ""
 }

@@ -1,0 +1,22 @@
+{
+    "name": "model_widget_selector",
+    "settingsModel": [],
+    "settings_unfiltered": [],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "var data = this.settings.data;\nvar that = this;\nvar html = label + '<select class=\"form-control\" name=\"' + this.id + '\">';\nhtml += '<option value=\"\"> - Select - </option>';\nfor (name in cms.widgets) {\n  html += '<option value=\"' + name + '\" ' + (data == name ? ' selected=\"selected\" ' : '') + '>' + name + '</option>'\n}\nhtml += '</select>';\nreturn html;"
+    },
+    "deps": {},
+    "head": [],
+    "tags": [
+        "view"
+    ],
+    "slots": [],
+    "slot_tags": {},
+    "wrapper": "",
+    "wrapperClass": "",
+    "weight": null
+}

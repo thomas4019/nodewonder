@@ -7,7 +7,7 @@ function setupWidgetSelector(id) {
 			var data = {more: false, results: []};
 			var groups = {};
 
-			if ( $('#wyobn3bP-fields') ) {
+			if ( $('#wyobn3bP-schema-fields').length ) {
 				var model = {text: 'Model', children: []};
 				data.results.push(model);
 				var fields = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#wyobn3bP-schema-fields :input').serializeArray())).schema.fields;

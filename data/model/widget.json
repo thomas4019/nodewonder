@@ -110,6 +110,10 @@
             "weight": {
                 "type": "Number",
                 "quantity": ""
+            },
+            "content": {
+                "type": "schema",
+                "quantity": ""
             }
         },
         "display": {
@@ -215,7 +219,8 @@
                         "children": [
                             "slots",
                             "slot_tags",
-                            "children"
+                            "children",
+                            "content"
                         ]
                     }
                 },
@@ -582,6 +587,16 @@
                     "field": "setup",
                     "model_type": "Code",
                     "model": "widget"
+                },
+                "content": {
+                    "type": "model_form",
+                    "slots": {},
+                    "field": "content",
+                    "model_type": "schema",
+                    "model": "Model",
+                    "settings": {
+                        "label": "content"
+                    }
                 }
             },
             "slotAssignments": {

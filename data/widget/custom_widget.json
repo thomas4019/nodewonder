@@ -1,15 +1,26 @@
 {
-    "pseudo_names": {
-        "_is_func": true,
-        "args": [],
-        "javascript": "return Object.keys(cms.model_data['custom_widget']);"
-    },
+    "name": "custom_widget",
     "settingsModel": {
         "_is_func": true,
-        "args": ["pseudo_name"],
-        "javascript": "if (pseudo_name)\n    return cms.model_data['custom_widget'][pseudo_name].Settings;\nelse\n    return [{\n        \"name\": \"pseudo_widget\",\n        \"type\": \"Record\",\n        \"settings\": {\n            \"model\": \"custom_widget\"\n        }\n    }];",
-        "_func_override": true
+        "args": [],
+        "_func_override": true,
+        "javascript": "/*if (pseudo_name)\n    return cms.model_data['custom_widget'][pseudo_name].Settings;\nelse\n    return [{\n        \"name\": \"pseudo_widget\",\n        \"type\": \"Record\",\n        \"settings\": {\n            \"model\": \"custom_widget\"\n        }\n    }];*/"
     },
+    "settings_unfiltered": [],
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "return this.renderSlot('body');"
+    },
+    "deps": {},
+    "head": [],
+    "tags": [
+        "view"
+    ],
+    "slots": [],
+    "slot_tags": {},
     "setup": {
         "_is_func": true,
         "args": [],
@@ -20,18 +31,23 @@
         "args": [
             "callback"
         ],
-        "javascript": "var widgets = this.custom.Code.widgets;\nvar slotAssignments = this.custom.Code.slotAssignments;\nvar settings = this.settings;\n\nvar callback2 = callback;\n\nvar callback = function() {\n    callback2({\n        'body': widgets\n    }, slotAssignments);\n}\n\neval(this.custom.controller);"
+        "javascript": "var widgets = this.custom.Code.widgets;\nvar slotAssignments = this.custom.Code.slotAssignments;\nvar settings = this.settings;\n\nvar callback2 = callback;\n\nvar callback = function() {\n    callback2({\n        'body': widgets\n    }, slotAssignments);\n}\nc = _.clone(context);\nc = _.extend(c, {\n  settings: this.settings,\n  widgets: this.custom.Code.widgets,\n  slotAssignments: this.custom.Code.slotAssignments,\n  callback: callback,\n  id: this.id\n});\nvm.runInContext(this.custom.controller, c);\n//id = this.id;\n//eval(this.custom.controller);"
     },
-    "toHTML": {
+    "wrapper": "",
+    "wrapperClass": "",
+    "pseudo_names": {
         "_is_func": true,
-        "args": [
-            "label"
-        ],
-        "javascript": "return this.renderSlot('body');"
+        "args": [],
+        "javascript": "return Object.keys(cms.model_data['custom_widget']);"
     },
-    "name": "custom_widget",
-    "tags": [
-        "view"
-    ],
-    "settings_unfiltered": []
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }
