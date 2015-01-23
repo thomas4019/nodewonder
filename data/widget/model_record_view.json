@@ -1,34 +1,5 @@
 {
     "name": "model_record_view",
-    "settingsModel": [
-        {
-            "name": "model",
-            "type": "Record",
-            "quantity": "",
-            "widget": "model_record_reference",
-            "settings": {
-                "label": "",
-                "model": "model"
-            },
-            "required": false
-        },
-        {
-            "name": "record",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "view",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
@@ -53,5 +24,66 @@
     },
     "wrapper": "",
     "wrapperClass": "",
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "model": {
+                "type": "Record",
+                "quantity": ""
+            },
+            "record": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "view": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "model": {
+                    "type": "model_record_reference",
+                    "slots": {},
+                    "settings": {
+                        "label": "model",
+                        "model": "model",
+                        "field_type": "Record"
+                    },
+                    "field": "model",
+                    "model_type": "Record",
+                    "model": "model_record_view"
+                },
+                "record": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "record",
+                        "field_type": "Text"
+                    },
+                    "field": "record",
+                    "model_type": "Text",
+                    "model": "model_record_view"
+                },
+                "view": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "view",
+                        "field_type": "Text"
+                    },
+                    "field": "view",
+                    "model_type": "Text",
+                    "model": "model_record_view"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "model",
+                    "record",
+                    "view"
+                ]
+            }
+        }
+    }
 }

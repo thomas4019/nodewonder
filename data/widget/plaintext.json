@@ -1,15 +1,5 @@
 {
     "name": "plaintext",
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Text",
-            "quantity": "",
-            "widget": "",
-            "settings": "",
-            "undefined": false
-        }
-    ],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
@@ -26,5 +16,33 @@
     "slot_tags": {},
     "wrapper": "p",
     "wrapperClass": "",
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Text"
+                    },
+                    "field": "data",
+                    "model_type": "Text",
+                    "model": "plaintext"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data"
+                ]
+            }
+        }
+    }
 }

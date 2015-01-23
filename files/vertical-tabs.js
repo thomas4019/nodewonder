@@ -42,7 +42,7 @@ Drupal.theme = {};
           title: $('> legend', this).text(),
           fieldset: $(this)
         });
-        console.log(vertical_tab);
+        //console.log(vertical_tab);
         tab_list.append(vertical_tab.item);
         $(this)
           .removeClass('collapsible collapsed')
@@ -81,10 +81,10 @@ Drupal.theme = {};
  */
 Drupal.verticalTab = function (settings) {
   var self = this;
-  console.log(self);
+  //console.log(self);
   $.extend(this, settings, themeVerticalTab(settings));
 
-  console.log(this);
+  //console.log(this);
 
   this.link.click(function () {
     self.focus();
@@ -131,7 +131,7 @@ Drupal.verticalTab.prototype = {
     this.link.append('<span id="active-vertical-tab" class="element-invisible">' + /*'(active tab)' +*/ '</span>');
     
     $(this.fieldset).find('.onTabFocus').each(function() {
-      console.log(this);
+      //console.log(this);
       $(this).data('onTabFocus')();
     });
   },

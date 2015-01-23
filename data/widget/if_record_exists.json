@@ -1,18 +1,4 @@
 {
-    "settingsModel": [
-        {
-            "name": "model",
-            "type": "Text"
-        },
-        {
-            "name": "field",
-            "type": "Text"
-        },
-        {
-            "name": "value",
-            "type": "Text"
-        }
-    ],
     "slots": [
         "then",
         "else"
@@ -47,7 +33,8 @@
     "tags": [
         "action",
         "local-action",
-        "process"
+        "process",
+        "view"
     ],
     "makeActionJS": {
         "_is_func": true,
@@ -58,5 +45,62 @@
         "_is_func": true,
         "args": [],
         "javascript": "cms.functions.setupProcess(this.name, this.settings);"
+    },
+    "settings": {
+        "fields": {
+            "model": {
+                "type": "Text"
+            },
+            "field": {
+                "type": "Text"
+            },
+            "value": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "model": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "model",
+                        "field_type": "Text"
+                    },
+                    "field": "model",
+                    "model_type": "Text",
+                    "model": "if_record_exists"
+                },
+                "field": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "field",
+                        "field_type": "Text"
+                    },
+                    "field": "field",
+                    "model_type": "Text",
+                    "model": "if_record_exists"
+                },
+                "value": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "value",
+                        "field_type": "Text"
+                    },
+                    "field": "value",
+                    "model_type": "Text",
+                    "model": "if_record_exists"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "model",
+                    "field",
+                    "value"
+                ]
+            }
+        }
     }
 }

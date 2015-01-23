@@ -1,10 +1,4 @@
 {
-    "settingsModel": [
-        {
-            "name": "selector",
-            "type": "Text"
-        }
-    ],
     "makeActionJS": {
         "_is_func": true,
         "args": [],
@@ -12,6 +6,34 @@
     },
     "name": "hide_bootstrap_popup",
     "tags": [
-        "action"
-    ]
+        "action",
+        "view"
+    ],
+    "settings": {
+        "fields": {
+            "selector": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "selector": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "selector",
+                        "field_type": "Text"
+                    },
+                    "field": "selector",
+                    "model_type": "Text",
+                    "model": "hide_bootstrap_popup"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "selector"
+                ]
+            }
+        }
+    }
 }

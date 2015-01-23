@@ -1,15 +1,5 @@
 {
     "name": "table",
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "JSON",
-            "quantity": "",
-            "widget": "jsoneditor",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
@@ -32,5 +22,33 @@
     },
     "wrapper": "",
     "wrapperClass": "",
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "JSON",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "jsoneditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "JSON"
+                    },
+                    "field": "data",
+                    "model_type": "JSON",
+                    "model": "table"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data"
+                ]
+            }
+        }
+    }
 }

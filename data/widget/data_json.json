@@ -1,14 +1,5 @@
 {
     "name": "data_json",
-    "settingsModel": [
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [
         ""
     ],
@@ -35,5 +26,19 @@
     "slot_tags": {},
     "wrapper": "none",
     "wrapperClass": "",
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "": {
+                "type": "",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

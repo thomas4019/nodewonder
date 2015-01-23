@@ -9,20 +9,6 @@
             "themes/smoothness/jquery-ui.css"
         ]
     },
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Number"
-        },
-        {
-            "name": "min",
-            "type": "Number"
-        },
-        {
-            "name": "max",
-            "type": "Number"
-        }
-    ],
     "script": {
         "_is_func": true,
         "args": [],
@@ -35,5 +21,62 @@
         ],
         "javascript": "var label = '<label for=\"' + this.id + '\" style=\"padding-right: 5px;\">' + (this.settings.label ? this.settings.label : '') + ':' + '</label><input name=\"' + this.id + '\" type=\"textbox\" style=\"border:0; color:#f6931f; font-weight:bold;\" ' + (this.settings.data ? 'value=\"' + this.settings.data : '') + '\" />';\nvar element = '<div class=\"slider\" />';\nreturn label + element;"
     },
-    "name": "slider"
+    "name": "slider",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "Number"
+            },
+            "min": {
+                "type": "Number"
+            },
+            "max": {
+                "type": "Number"
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Number"
+                    },
+                    "field": "data",
+                    "model_type": "Number",
+                    "model": "slider"
+                },
+                "min": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "min",
+                        "field_type": "Number"
+                    },
+                    "field": "min",
+                    "model_type": "Number",
+                    "model": "slider"
+                },
+                "max": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "max",
+                        "field_type": "Number"
+                    },
+                    "field": "max",
+                    "model_type": "Number",
+                    "model": "slider"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data",
+                    "min",
+                    "max"
+                ]
+            }
+        }
+    }
 }

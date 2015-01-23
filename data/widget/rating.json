@@ -3,12 +3,6 @@
         "field_edit",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "vote"
-        }
-    ],
     "processData": {
         "_is_func": true,
         "args": [
@@ -25,5 +19,32 @@
         ],
         "javascript": "var label = '<label class=\"control-label\" for=\"' + this.id + '-textbox\" style=\"padding-right: 5px;\">' + this.settings.label + ':' + '</label>';\nvar element = '<input id=\"' + this.id + '-textbox\" class=\"form-control input-small\" type=\"number\" name=\"' + this.id + '\" ' + (this.settings.data ? 'value=\"' + cms.functions.htmlEscape(this.settings.data) + '\"' : '') + '/>';\n\nreturn (this.settings.label ? label : '') + element;"
     },
-    "name": "rating"
+    "name": "rating",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "vote"
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "vote"
+                    },
+                    "field": "data",
+                    "model_type": "vote",
+                    "model": "rating"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data"
+                ]
+            }
+        }
+    }
 }

@@ -7,10 +7,6 @@
                 "type": "Text",
                 "quantity": ""
             },
-            "settingsModel": {
-                "type": "field",
-                "quantity": "1+"
-            },
             "settings_unfiltered": {
                 "type": "Text",
                 "quantity": "1+"
@@ -112,6 +108,10 @@
                 "quantity": ""
             },
             "content": {
+                "type": "schema",
+                "quantity": ""
+            },
+            "settings": {
                 "type": "schema",
                 "quantity": ""
             }
@@ -321,45 +321,12 @@
                     "type": "group",
                     "slots": {
                         "children": [
-                            "settingsModel",
+                            "settings",
                             "settings_unfiltered",
                             "weight",
                             "tags"
                         ]
                     }
-                },
-                "settingsModel": {
-                    "type": "model_form",
-                    "slots": {},
-                    "settings": {
-                        "label": "settingsModel",
-                        "field_type": "field"
-                    },
-                    "field": "settingsModel",
-                    "model_type": "field",
-                    "model": "widget"
-                },
-                "settings_unfiltered": {
-                    "type": "textbox",
-                    "slots": {},
-                    "settings": {
-                        "label": "settings_unfiltered",
-                        "field_type": "Text"
-                    },
-                    "field": "settings_unfiltered",
-                    "model_type": "Text",
-                    "model": "widget"
-                },
-                "weight": {
-                    "type": "numeric_textbox",
-                    "slots": {},
-                    "settings": {
-                        "label": "weight",
-                        "field_type": "Number"
-                    },
-                    "field": "weight",
-                    "model_type": "Number",
-                    "model": "widget"
                 },
                 "VlH5CYfb": {
                     "type": "group",
@@ -566,17 +533,6 @@
                     "model_type": "Code",
                     "model": "widget"
                 },
-                "tags": {
-                    "type": "textbox",
-                    "slots": {},
-                    "settings": {
-                        "label": "tags",
-                        "field_type": "Text"
-                    },
-                    "field": "tags",
-                    "model_type": "Text",
-                    "model": "widget"
-                },
                 "setup": {
                     "type": "codemirror",
                     "slots": {},
@@ -597,6 +553,49 @@
                     "settings": {
                         "label": "content"
                     }
+                },
+                "settings": {
+                    "type": "model_form",
+                    "slots": {},
+                    "field": "settings",
+                    "model_type": "schema",
+                    "model": "Model",
+                    "settings": {
+                        "label": "settings"
+                    }
+                },
+                "settings_unfiltered": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "settings_unfiltered",
+                        "field_type": "Text"
+                    },
+                    "field": "settings_unfiltered",
+                    "model_type": "Text",
+                    "model": "widget"
+                },
+                "weight": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "weight",
+                        "field_type": "Number"
+                    },
+                    "field": "weight",
+                    "model_type": "Number",
+                    "model": "widget"
+                },
+                "tags": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "tags",
+                        "field_type": "Text"
+                    },
+                    "field": "tags",
+                    "model_type": "Text",
+                    "model": "widget"
                 }
             },
             "slotAssignments": {

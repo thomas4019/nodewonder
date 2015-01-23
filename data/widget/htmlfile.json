@@ -1,10 +1,4 @@
 {
-    "settingsModel": [
-        {
-            "name": "path",
-            "type": "Text"
-        }
-    ],
     "load": {
         "_is_func": true,
         "args": [
@@ -22,5 +16,32 @@
     "name": "htmlfile",
     "tags": [
         "view"
-    ]
+    ],
+    "settings": {
+        "fields": {
+            "path": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "path": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "path",
+                        "field_type": "Text"
+                    },
+                    "field": "path",
+                    "model_type": "Text",
+                    "model": "htmlfile"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "path"
+                ]
+            }
+        }
+    }
 }

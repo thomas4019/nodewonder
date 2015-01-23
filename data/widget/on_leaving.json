@@ -22,5 +22,14 @@
     "name": "on_leaving",
     "tags": [
         "view"
-    ]
+    ],
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

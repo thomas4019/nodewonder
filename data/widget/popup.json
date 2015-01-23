@@ -2,12 +2,15 @@
     "slots": [
         "container"
     ],
-    "settings": [
-        {
-            "name": "resizable",
-            "type": "Boolean"
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
         }
-    ],
+    },
     "deps": {
         "jquery": [],
         "jquery-ui": [

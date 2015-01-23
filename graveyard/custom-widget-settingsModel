@@ -1,0 +1,6 @@
+{ name: 'custom_widget',
+  settingsModel: 
+   { _is_func: true,
+     args: [],
+     _func_override: true,
+     javascript: '/*if (pseudo_name)\n    return cms.model_data[\'custom_widget\'][pseudo_name].Settings;\nelse\n    return [{\n        "name": "pseudo_widget",\n        "type": "Record",\n        "settings": {\n            "model": "custom_widget"\n        }\n    }];*/' },

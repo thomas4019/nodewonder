@@ -3,20 +3,6 @@
         "field_edit",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Number"
-        },
-        {
-            "name": "min",
-            "type": "Number"
-        },
-        {
-            "name": "max",
-            "type": "Number"
-        }
-    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -24,5 +10,62 @@
         ],
         "javascript": "var element = this.settings.min + '<input type=\"range\" style=\"width: 300px; display: inline;\" name=\"' + this.id + '\" value=\"' + this.settings.data + '\" min=\"' + this.settings.min + '\" max=\"' + this.settings.max + '\">' + this.settings.max;\nreturn label + element;"
     },
-    "name": "range"
+    "name": "range",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "Number"
+            },
+            "min": {
+                "type": "Number"
+            },
+            "max": {
+                "type": "Number"
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Number"
+                    },
+                    "field": "data",
+                    "model_type": "Number",
+                    "model": "range"
+                },
+                "min": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "min",
+                        "field_type": "Number"
+                    },
+                    "field": "min",
+                    "model_type": "Number",
+                    "model": "range"
+                },
+                "max": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "max",
+                        "field_type": "Number"
+                    },
+                    "field": "max",
+                    "model_type": "Number",
+                    "model": "range"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data",
+                    "min",
+                    "max"
+                ]
+            }
+        }
+    }
 }

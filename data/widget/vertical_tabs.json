@@ -1,15 +1,5 @@
 {
     "name": "vertical_tabs",
-    "settingsModel": [
-        {
-            "name": "tabs",
-            "type": "Text",
-            "quantity": "2+",
-            "widget": "textbox",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
@@ -39,5 +29,33 @@
     "slot_tags": {},
     "wrapper": "",
     "wrapperClass": "",
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "tabs": {
+                "type": "Text",
+                "quantity": "2+"
+            }
+        },
+        "display": {
+            "widgets": {
+                "tabs": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "tabs",
+                        "field_type": "Text"
+                    },
+                    "field": "tabs",
+                    "model_type": "Text",
+                    "model": "vertical_tabs"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "tabs"
+                ]
+            }
+        }
+    }
 }

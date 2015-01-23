@@ -3,16 +3,6 @@
         "field_edit",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "vote"
-        },
-        {
-            "name": "star_count",
-            "type": "Number"
-        }
-    ],
     "deps": {
         "raty": [
             "lib/jquery.raty.js"
@@ -39,5 +29,47 @@
         "args": [],
         "javascript": "return '$(\"#' + this.id + '-stars\").raty({ click: function(score) { $(\"#' + this.id + '-score\").val(score); }, ' +\n    (this.settings.data ? ' score: ' + this.settings.data.average + ',' : '') +\n    (this.settings.star_count ? ' number: ' + this.settings.star_count + ',' : '') +\n    ' path: \"/bower_components/raty/lib/img\", half: true });';"
     },
-    "name": "fivestar"
+    "name": "fivestar",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "vote"
+            },
+            "star_count": {
+                "type": "Number"
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "vote"
+                    },
+                    "field": "data",
+                    "model_type": "vote",
+                    "model": "fivestar"
+                },
+                "star_count": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "star_count",
+                        "field_type": "Number"
+                    },
+                    "field": "star_count",
+                    "model_type": "Number",
+                    "model": "fivestar"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data",
+                    "star_count"
+                ]
+            }
+        }
+    }
 }

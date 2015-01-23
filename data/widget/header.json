@@ -1,23 +1,5 @@
 {
     "name": "header",
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "undefined": false
-        },
-        {
-            "name": "type",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "undefined": false
-        }
-    ],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
@@ -39,5 +21,58 @@
         "javascript": "return this.settings.type || 'h1';"
     },
     "wrapperClass": "",
-    "weight": ""
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "type": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "textarea",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Text"
+                    },
+                    "field": "data",
+                    "model_type": "Text",
+                    "model": "header"
+                },
+                "type": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "type",
+                        "field_type": "Text"
+                    },
+                    "field": "type",
+                    "model_type": "Text",
+                    "model": "header"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data",
+                    "type"
+                ]
+            }
+        }
+    }
 }

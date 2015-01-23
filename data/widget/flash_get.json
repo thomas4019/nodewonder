@@ -7,5 +7,14 @@
         "args": [],
         "javascript": "return 'eval(JSON.parse(sessionStorage.getItem(\"flash\")))';"
     },
-    "name": "flash_get"
+    "name": "flash_get",
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

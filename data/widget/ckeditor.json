@@ -1,37 +1,5 @@
 {
     "name": "ckeditor",
-    "settingsModel": [
-        {
-            "name": "label",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "toolbar",
-            "type": "Text",
-            "quantity": "",
-            "widget": "select",
-            "settings": {
-                "label": "Button Type",
-                "choices": [
-                    "Basic",
-                    "Advanced"
-                ]
-            },
-            "required": false
-        },
-        {
-            "name": "data",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [
         "data"
     ],
@@ -67,5 +35,69 @@
         ],
         "javascript": "CKEDITOR.replace(id + '-Editor',{toolbar:\"Basic\"});"
     },
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "label": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "toolbar": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "data": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "label": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "label",
+                        "field_type": "Text"
+                    },
+                    "field": "label",
+                    "model_type": "Text",
+                    "model": "ckeditor"
+                },
+                "toolbar": {
+                    "type": "select",
+                    "slots": {},
+                    "settings": {
+                        "label": "toolbar",
+                        "choices": [
+                            "Basic",
+                            "Advanced"
+                        ],
+                        "field_type": "Text"
+                    },
+                    "field": "toolbar",
+                    "model_type": "Text",
+                    "model": "ckeditor"
+                },
+                "data": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Text"
+                    },
+                    "field": "data",
+                    "model_type": "Text",
+                    "model": "ckeditor"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "label",
+                    "toolbar",
+                    "data"
+                ]
+            }
+        }
+    }
 }

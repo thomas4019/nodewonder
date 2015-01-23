@@ -1,14 +1,5 @@
 {
     "name": "group",
-    "settingsModel": [
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
@@ -17,12 +8,28 @@
     },
     "deps": {},
     "head": [],
-    "tags": [],
+    "tags": [
+        "view"
+    ],
     "slots": [
         "children"
     ],
     "slot_tags": {},
     "wrapper": "",
     "wrapperClass": "",
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "": {
+                "type": "",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

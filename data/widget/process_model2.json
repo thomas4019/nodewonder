@@ -1,5 +1,5 @@
 {
-    "name": "process_model",
+    "name": "process_model2",
     "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
@@ -22,9 +22,18 @@
         "args": [
             "callback"
         ],
-        "javascript": "var model_widget = cms.functions.newWidget('model_form', {\n    'fields': this.settings.fields\n});\nvar old = {};\nvar user = {};\nuser.clientID = 'unknownID';\nuser.ip = '0.0.0.0';\n\nthis.processed = model_widget.processData(this.settings.data, old);\nmodel_widget.validateData(this.processed, function(c_errors) {\n    console.log('validation finished');\n    console.log(c_errors);\n    this.errors = c_errors;\n    callback();\n}.bind(this));"
+        "javascript": "var model_widget = cms.functions.newWidget('model_form', {\n    'model': this.settings.model,\n    'record': this.settings.record,\n    'field': this.settings.field\n});\nvar old = {};\nvar user = {};\nuser.clientID = 'unknownID';\nuser.ip = '0.0.0.0';\n\nthis.processed = model_widget.processData(this.settings.data, old);\nmodel_widget.validateData(this.processed, function(c_errors) {\n    console.log('validation finished');\n    console.log(c_errors);\n    this.errors = c_errors;\n    callback();\n}.bind(this));"
     },
-    "weight": null,
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
     "settings": {
         "fields": {
             "model": {
@@ -33,6 +42,10 @@
             },
             "data": {
                 "type": "JSON",
+                "quantity": ""
+            },
+            "record": {
+                "type": "Text",
                 "quantity": ""
             }
         },
@@ -47,7 +60,7 @@
                     },
                     "field": "model",
                     "model_type": "Text",
-                    "model": "process_model"
+                    "model": "process_model2"
                 },
                 "data": {
                     "type": "jsoneditor",
@@ -58,13 +71,25 @@
                     },
                     "field": "data",
                     "model_type": "JSON",
-                    "model": "process_model"
+                    "model": "process_model2"
+                },
+                "record": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "record",
+                        "field_type": "Text"
+                    },
+                    "field": "record",
+                    "model_type": "Text",
+                    "model": "process_model2"
                 }
             },
             "slotAssignments": {
                 "body": [
                     "model",
-                    "data"
+                    "data",
+                    "record"
                 ]
             }
         }

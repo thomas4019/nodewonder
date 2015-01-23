@@ -3,12 +3,6 @@
         "field_edit",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Captcha"
-        }
-    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -29,5 +23,32 @@
         "args": [],
         "javascript": "return '';"
     },
-    "name": "captchagen"
+    "name": "captchagen",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "Captcha"
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "captchagen",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Captcha"
+                    },
+                    "field": "data",
+                    "model_type": "Captcha",
+                    "model": "captchagen"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data"
+                ]
+            }
+        }
+    }
 }

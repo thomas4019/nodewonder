@@ -1,39 +1,5 @@
 {
     "name": "model_data_listing",
-    "settingsModel": [
-        {
-            "name": "row_template",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textarea",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "model",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "manual_list",
-            "type": "Boolean",
-            "quantity": "",
-            "widget": "checkbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "add_button",
-            "type": "Boolean",
-            "quantity": "",
-            "widget": "checkbox",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [
         "row_template"
     ],
@@ -56,5 +22,81 @@
     "slot_tags": {},
     "wrapper": "",
     "wrapperClass": "",
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "row_template": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "model": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "manual_list": {
+                "type": "Boolean",
+                "quantity": ""
+            },
+            "add_button": {
+                "type": "Boolean",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "row_template": {
+                    "type": "textarea",
+                    "slots": {},
+                    "settings": {
+                        "label": "row_template",
+                        "field_type": "Text"
+                    },
+                    "field": "row_template",
+                    "model_type": "Text",
+                    "model": "model_data_listing"
+                },
+                "model": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "model",
+                        "field_type": "Text"
+                    },
+                    "field": "model",
+                    "model_type": "Text",
+                    "model": "model_data_listing"
+                },
+                "manual_list": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "manual_list",
+                        "field_type": "Boolean"
+                    },
+                    "field": "manual_list",
+                    "model_type": "Boolean",
+                    "model": "model_data_listing"
+                },
+                "add_button": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "add_button",
+                        "field_type": "Boolean"
+                    },
+                    "field": "add_button",
+                    "model_type": "Boolean",
+                    "model": "model_data_listing"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "row_template",
+                    "model",
+                    "manual_list",
+                    "add_button"
+                ]
+            }
+        }
+    }
 }

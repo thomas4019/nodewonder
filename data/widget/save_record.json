@@ -1,26 +1,4 @@
 {
-    "settingsModel": [
-        {
-            "name": "model",
-            "type": "Text"
-        },
-        {
-            "name": "record",
-            "type": "Text"
-        },
-        {
-            "name": "data_name",
-            "type": "Text"
-        },
-        {
-            "name": "data",
-            "type": "JSON"
-        },
-        {
-            "name": "record_id_dest",
-            "type": "Text"
-        }
-    ],
     "slots": [
         "success",
         "failure"
@@ -37,7 +15,8 @@
         "filtered",
         "action",
         "local-action",
-        "process"
+        "process",
+        "view"
     ],
     "action": {
         "_is_func": true,
@@ -67,5 +46,92 @@
         "_is_func": true,
         "args": [],
         "javascript": "cms.functions.setupProcess(this.name, this.settings);"
+    },
+    "settings": {
+        "fields": {
+            "model": {
+                "type": "Text"
+            },
+            "record": {
+                "type": "Text"
+            },
+            "data_name": {
+                "type": "Text"
+            },
+            "data": {
+                "type": "JSON"
+            },
+            "record_id_dest": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "model": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "model",
+                        "field_type": "Text"
+                    },
+                    "field": "model",
+                    "model_type": "Text",
+                    "model": "save_record"
+                },
+                "record": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "record",
+                        "field_type": "Text"
+                    },
+                    "field": "record",
+                    "model_type": "Text",
+                    "model": "save_record"
+                },
+                "data_name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "data_name",
+                        "field_type": "Text"
+                    },
+                    "field": "data_name",
+                    "model_type": "Text",
+                    "model": "save_record"
+                },
+                "data": {
+                    "type": "jsoneditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "JSON"
+                    },
+                    "field": "data",
+                    "model_type": "JSON",
+                    "model": "save_record"
+                },
+                "record_id_dest": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "record_id_dest",
+                        "field_type": "Text"
+                    },
+                    "field": "record_id_dest",
+                    "model_type": "Text",
+                    "model": "save_record"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "model",
+                    "record",
+                    "data_name",
+                    "data",
+                    "record_id_dest"
+                ]
+            }
+        }
     }
 }

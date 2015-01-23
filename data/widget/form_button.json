@@ -1,33 +1,5 @@
 {
     "name": "form_button",
-    "settingsModel": [
-        {
-            "name": "label",
-            "type": "Text",
-            "quantity": "",
-            "widget": "",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "button_type",
-            "type": "Text",
-            "quantity": "",
-            "widget": "select",
-            "settings": {
-                "label": "Button Type",
-                "choices": [
-                    "default",
-                    "primary",
-                    "success",
-                    "info",
-                    "warning",
-                    "danger"
-                ]
-            },
-            "required": false
-        }
-    ],
     "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
@@ -78,6 +50,58 @@
             "widgets": {},
             "slotAssignments": {
                 "body": []
+            }
+        }
+    },
+    "settings": {
+        "fields": {
+            "label": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "button_type": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "label": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "label",
+                        "field_type": "Text"
+                    },
+                    "field": "label",
+                    "model_type": "Text",
+                    "model": "form_button"
+                },
+                "button_type": {
+                    "type": "select",
+                    "slots": {},
+                    "settings": {
+                        "label": "button_type",
+                        "choices": [
+                            "default",
+                            "primary",
+                            "success",
+                            "info",
+                            "warning",
+                            "danger"
+                        ],
+                        "field_type": "Text"
+                    },
+                    "field": "button_type",
+                    "model_type": "Text",
+                    "model": "form_button"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "label",
+                    "button_type"
+                ]
             }
         }
     }

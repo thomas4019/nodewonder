@@ -1,11 +1,4 @@
 {
-    "settingsModel": [
-        {
-            "name": "id",
-            "type": "Text",
-            "label": "Video ID"
-        }
-    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -16,5 +9,32 @@
     "name": "youtube_video",
     "tags": [
         "view"
-    ]
+    ],
+    "settings": {
+        "fields": {
+            "id": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "id": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "id",
+                        "field_type": "Text"
+                    },
+                    "field": "id",
+                    "model_type": "Text",
+                    "model": "youtube_video"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "id"
+                ]
+            }
+        }
+    }
 }

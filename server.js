@@ -343,7 +343,8 @@ function initFuncs(callback) {
     load: cms.functions.loadRecord,
     loadPage: cms.functions.loadPageState,
     query: cms.functions.executeQueryLocally,
-    log: console.log
+    log: console.log,
+    JSON: JSON
   };
   context = vm.createContext(initSandbox);
 
@@ -378,7 +379,7 @@ function sortWidgets(callback) {
     return a.weight || 0 < b.weight || 0;
   });
   cms.edit_widgets['Text'].sort(function (a, b) {
-    return a.weight || 0 < b.weight || 0;
+    return cms.widgets[a].weight || 0 < cms.widgets[b].weight || 0;
   });
   //console.log(cms.model_widgets['Text']);
   callback();
@@ -644,6 +645,51 @@ cms.migrate10 = function() {
       model.schema.display.slotAssignments.body.push(id);
     });
     cms.functions.saveRecord('form2', index, model);
+  });
+}
+
+cms.migrate11 = function() {
+  _.forEach(cms.model_data.widget, function(model, index) {
+    if (index == 'custom_widget')
+      return;
+    model.settings = {
+      fields: {},
+      display: {
+        "widgets": {
+            
+        },
+        "slotAssignments": {
+            "body": [
+               
+            ]
+        }
+      }
+    };
+    console.log(model);
+    if (model.settingsModel) {
+      model.settingsModel.forEach(function(field) {
+        model.settings.fields[field.name] = {
+          type: field.type,
+          quantity: field.quantity
+        }
+        var id = field.name; //cms.functions.makeid(8);
+        if (field.type || field.widget) {
+          model.settings.display.widgets[id] = {
+            type: field.widget || cms.edit_widgets[field.type][0],
+            slots: {},
+            settings: field.settings || {},
+            field: field.name,  
+            model_type: field.type,
+            model: index
+          };
+          model.settings.display.widgets[id].settings.label = field.name;
+          model.settings.display.widgets[id].settings.field_type = field.type;
+          model.settings.display.slotAssignments.body.push(id);
+        }
+      });
+    }
+    delete model.settingsModel;
+    cms.functions.saveRecord('widget', index, model);
   });
 }
 

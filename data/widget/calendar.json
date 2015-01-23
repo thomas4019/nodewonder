@@ -1,14 +1,5 @@
 {
     "name": "calendar",
-    "settingsModel": [
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": {},
-            "required": false
-        }
-    ],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
@@ -36,5 +27,19 @@
         "args": [],
         "javascript": "return \"$('#fcalendar').fullCalendar({ header: { left: 'prev,next today', center: 'title', \" +\n    \"right: 'month,agendaWeek,agendaDay' }, editable: true});\";"
     },
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "": {
+                "type": "",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

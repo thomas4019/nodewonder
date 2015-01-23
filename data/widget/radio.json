@@ -3,17 +3,6 @@
         "field_edit",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Text"
-        },
-        {
-            "name": "choices",
-            "type": "Text",
-            "quantity": "+"
-        }
-    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -21,5 +10,48 @@
         ],
         "javascript": "var choices = this.settings.choices;\nif (Array.isArray(choices)) {\n    choices = _.object(choices, choices);\n}\n\nvar element = '';\nvar count = 0;\nfor (choice in choices) {\n    element += '<div class=\"radio\"><label>';\n    element += '<input type=\"radio\" name=\"' + this.id + '\" id=\"' + this.id + '-' + count + '\" value=\"' + choice + '\" ' + (choice == this.settings.data ? 'checked' : '') + ' >';\n    element += choice;\n    element += '</label></div>';\n    count++\n}\n\nreturn label + element;"
     },
-    "name": "radio"
+    "name": "radio",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "Text"
+            },
+            "choices": {
+                "type": "Text",
+                "quantity": "+"
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Text"
+                    },
+                    "field": "data",
+                    "model_type": "Text",
+                    "model": "radio"
+                },
+                "choices": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "choices",
+                        "field_type": "Text"
+                    },
+                    "field": "choices",
+                    "model_type": "Text",
+                    "model": "radio"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data",
+                    "choices"
+                ]
+            }
+        }
+    }
 }

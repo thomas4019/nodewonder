@@ -1,39 +1,5 @@
 {
     "name": "codemirror",
-    "settingsModel": [
-        {
-            "name": "lang",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": {},
-            "required": false
-        },
-        {
-            "name": "height",
-            "type": "Number",
-            "quantity": "",
-            "widget": "numeric_textbox",
-            "settings": {},
-            "required": false
-        },
-        {
-            "name": "data",
-            "type": "Code",
-            "quantity": "",
-            "widget": "codemirror",
-            "settings": {},
-            "required": false
-        },
-        {
-            "name": "args",
-            "type": "Text",
-            "quantity": "+",
-            "widget": "textbox",
-            "settings": {},
-            "required": false
-        }
-    ],
     "settings_unfiltered": [
         "data"
     ],
@@ -96,5 +62,81 @@
         "_func_override": true,
         "javascript": "return {css: this.settings.height ? (this.id + ' .CodeMirror {height: ' + this.settings.height + 'px;} ') : '' +\n  '.CodeMirror {  border: 1px solid #eee;  height: auto;} ' +\n        '.CodeMirror-scroll {  overflow-y: hidden;  overflow-x: auto; }'};"
     },
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "lang": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "height": {
+                "type": "Number",
+                "quantity": ""
+            },
+            "data": {
+                "type": "Code",
+                "quantity": ""
+            },
+            "args": {
+                "type": "Text",
+                "quantity": "+"
+            }
+        },
+        "display": {
+            "widgets": {
+                "lang": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "lang",
+                        "field_type": "Text"
+                    },
+                    "field": "lang",
+                    "model_type": "Text",
+                    "model": "codemirror"
+                },
+                "height": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "height",
+                        "field_type": "Number"
+                    },
+                    "field": "height",
+                    "model_type": "Number",
+                    "model": "codemirror"
+                },
+                "data": {
+                    "type": "codemirror",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Code"
+                    },
+                    "field": "data",
+                    "model_type": "Code",
+                    "model": "codemirror"
+                },
+                "args": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "args",
+                        "field_type": "Text"
+                    },
+                    "field": "args",
+                    "model_type": "Text",
+                    "model": "codemirror"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "lang",
+                    "height",
+                    "data",
+                    "args"
+                ]
+            }
+        }
+    }
 }

@@ -4,12 +4,6 @@
         "field_view",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Text"
-        }
-    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -17,5 +11,32 @@
         ],
         "javascript": "return this.settings.data;"
     },
-    "name": "filtered_html"
+    "name": "filtered_html",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Text"
+                    },
+                    "field": "data",
+                    "model_type": "Text",
+                    "model": "filtered_html"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data"
+                ]
+            }
+        }
+    }
 }

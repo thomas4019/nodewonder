@@ -1,23 +1,5 @@
 {
     "name": "widget_code_editor",
-    "settingsModel": [
-        {
-            "name": "label",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "undefined": false
-        },
-        {
-            "name": "data",
-            "type": "widget_code",
-            "quantity": "",
-            "widget": "widget_code_editor",
-            "settings": "",
-            "undefined": false
-        }
-    ],
     "settings_unfiltered": [
         "data"
     ],
@@ -72,5 +54,49 @@
         "args": [],
         "javascript": "return 'nw.edit_widgets = ' + JSON.stringify(cms.edit_widgets) + ';' +\n  'nw.view_widgets = ' + JSON.stringify(cms.view_widgets) + ';' +\n  'angular.bootstrap(\"#' + this.id + '\");';"
     },
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "label": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "data": {
+                "type": "widget_code",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "label": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "label",
+                        "field_type": "Text"
+                    },
+                    "field": "label",
+                    "model_type": "Text",
+                    "model": "widget_code_editor"
+                },
+                "data": {
+                    "type": "widget_code_editor",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "widget_code"
+                    },
+                    "field": "data",
+                    "model_type": "widget_code",
+                    "model": "widget_code_editor"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "label",
+                    "data"
+                ]
+            }
+        }
+    }
 }

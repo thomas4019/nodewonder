@@ -12,5 +12,14 @@
         "args": [],
         "javascript": "var slots = this.slotAssignments;\nvar selector = '#' + this.parent.id;\nvar code = cms.functions.createActionCode(slots.actions);\n//var code = cms.functions.concatActions(slots.actions);\nreturn this.makeEventJS(selector, code);"
     },
-    "name": "onmousedown"
+    "name": "onmousedown",
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

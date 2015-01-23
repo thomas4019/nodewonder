@@ -1,19 +1,9 @@
 {
     "name": "get_form_data",
-    "settingsModel": [
-        {
-            "name": "selector",
-            "type": "Text"
-        },
-        {
-            "name": "dest",
-            "type": "Text"
-        }
-    ],
     "settings_unfiltered": [],
     "deps": {
         "underscore": []
-        },
+    },
     "head": [],
     "tags": [
         "action",
@@ -34,5 +24,47 @@
         ],
         "javascript": "var id = settings.selector ? settings.selector.substr(1) : '';\n//console.log(settings.selector);\nvar model = nw.model[id];\n\nvar values = nw.functions.serializedArrayToValues($('#' + id + ' :input').serializeArray());\n\n_.forEach(nw.fieldGetters, function(get, id) {\n    var value = get();\n    values[id] = value;\n});\n\nvar data = nw.functions.expandPostValues(values);\n\nscope[settings.dest] = data;\n//console.log(scope);"
     },
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "selector": {
+                "type": "Text"
+            },
+            "dest": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "selector": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "selector",
+                        "field_type": "Text"
+                    },
+                    "field": "selector",
+                    "model_type": "Text",
+                    "model": "get_form_data"
+                },
+                "dest": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "dest",
+                        "field_type": "Text"
+                    },
+                    "field": "dest",
+                    "model_type": "Text",
+                    "model": "get_form_data"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "selector",
+                    "dest"
+                ]
+            }
+        }
+    }
 }

@@ -7,16 +7,6 @@
         "jquery": [],
         "bootstrap": []
     },
-    "settingsModel": [
-        {
-            "name": "inline",
-            "type": "Boolean"
-        },
-        {
-            "name": "data",
-            "type": "Email"
-        }
-    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -24,5 +14,47 @@
         ],
         "javascript": "var element = '<input class=\"form-control input-small\" type=\"email\" name=\"' + this.id + '\"' + (this.settings.data ? ' value=\"' + cms.functions.htmlEscape(this.settings.data) + '\"' : '') + ' />';\n\nif (this.settings.inline) {\n    return '<div class=\"controls form-inline\">' + (this.settings.label ? label : '') + element + '</div>';\n} else {\n    return (this.settings.label ? label : '') + element;\n}"
     },
-    "name": "email_textbox"
+    "name": "email_textbox",
+    "settings": {
+        "fields": {
+            "inline": {
+                "type": "Boolean"
+            },
+            "data": {
+                "type": "Email"
+            }
+        },
+        "display": {
+            "widgets": {
+                "inline": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "inline",
+                        "field_type": "Boolean"
+                    },
+                    "field": "inline",
+                    "model_type": "Boolean",
+                    "model": "email_textbox"
+                },
+                "data": {
+                    "type": "email_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Email"
+                    },
+                    "field": "data",
+                    "model_type": "Email",
+                    "model": "email_textbox"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "inline",
+                    "data"
+                ]
+            }
+        }
+    }
 }

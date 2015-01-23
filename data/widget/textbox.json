@@ -1,23 +1,5 @@
 {
     "name": "textbox",
-    "settingsModel": [
-        {
-            "name": "inline",
-            "type": "Boolean",
-            "quantity": "",
-            "widget": "checkbox",
-            "settings": {},
-            "required": false
-        },
-        {
-            "name": "data",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": {},
-            "required": false
-        }
-    ],
     "settings_unfiltered": [
         "data"
     ],
@@ -46,5 +28,58 @@
         "args": [],
         "css": "#{{id}} {\n  {{#if settings.width}}\n  width: {{settings.width}}px;\n  {{/if}}\n}"
     },
-    "weight": 10
+    "weight": 10,
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
+    "settings": {
+        "fields": {
+            "inline": {
+                "type": "Boolean",
+                "quantity": ""
+            },
+            "data": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "inline": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "inline",
+                        "field_type": "Boolean"
+                    },
+                    "field": "inline",
+                    "model_type": "Boolean",
+                    "model": "textbox"
+                },
+                "data": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Text"
+                    },
+                    "field": "data",
+                    "model_type": "Text",
+                    "model": "textbox"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "inline",
+                    "data"
+                ]
+            }
+        }
+    }
 }

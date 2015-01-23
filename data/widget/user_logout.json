@@ -38,11 +38,21 @@
     "tags": [
         "action",
         "local-action",
-        "process"
+        "process",
+        "view"
     ],
     "makeActionJS": {
         "_is_func": true,
         "args": [],
         "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    },
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
     }
 }

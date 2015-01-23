@@ -1,15 +1,5 @@
 {
     "name": "date",
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Date",
-            "quantity": "",
-            "widget": "date",
-            "settings": "",
-            "undefined": false
-        }
-    ],
     "settings_unfiltered": [
         "data"
     ],
@@ -27,7 +17,9 @@
     "head": [],
     "tags": [
         "field_edit",
-        "view"
+        "view",
+        "action",
+        "local-action"
     ],
     "slots": [],
     "slot_tags": {},
@@ -57,5 +49,33 @@
         ],
         "javascript": "$(\"#\"+id+\" input\").datepicker();"
     },
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "Date",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "date",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Date"
+                    },
+                    "field": "data",
+                    "model_type": "Date",
+                    "model": "date"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data"
+                ]
+            }
+        }
+    }
 }

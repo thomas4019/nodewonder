@@ -1,10 +1,4 @@
 {
-    "settingsModel": [
-        {
-            "name": "message",
-            "type": "Text"
-        }
-    ],
     "makeActionJS": {
         "_is_func": true,
         "args": [],
@@ -12,6 +6,34 @@
     },
     "name": "alert",
     "tags": [
-        "action"
-    ]
+        "action",
+        "view"
+    ],
+    "settings": {
+        "fields": {
+            "message": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "message": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "message",
+                        "field_type": "Text"
+                    },
+                    "field": "message",
+                    "model_type": "Text",
+                    "model": "alert"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "message"
+                ]
+            }
+        }
+    }
 }

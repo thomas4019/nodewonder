@@ -17,5 +17,14 @@
     "name": "two_col",
     "tags": [
         "view"
-    ]
+    ],
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

@@ -1,24 +1,4 @@
 {
-    "settingsModel": [
-        {
-            "name": "message",
-            "type": "Text"
-        },
-        {
-            "name": "type",
-            "type": "Text",
-            "widget": "select",
-            "settings": {
-                "label": "Message Type",
-                "choices": [
-                    "info",
-                    "success",
-                    "warning",
-                    "error"
-                ]
-            }
-        }
-    ],
     "deps": {
         "jquery": [],
         "toastr": [],
@@ -37,12 +17,61 @@
     "name": "message",
     "tags": [
         "action",
-        "local-action"
+        "local-action",
+        "view"
     ],
     "makeActionJS": {
         "_is_func": true,
         "args": [],
         "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
     },
-    "settings_unfiltered": []
+    "settings_unfiltered": [],
+    "settings": {
+        "fields": {
+            "message": {
+                "type": "Text"
+            },
+            "type": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "message": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "message",
+                        "field_type": "Text"
+                    },
+                    "field": "message",
+                    "model_type": "Text",
+                    "model": "message"
+                },
+                "type": {
+                    "type": "select",
+                    "slots": {},
+                    "settings": {
+                        "label": "type",
+                        "choices": [
+                            "info",
+                            "success",
+                            "warning",
+                            "error"
+                        ],
+                        "field_type": "Text"
+                    },
+                    "field": "type",
+                    "model_type": "Text",
+                    "model": "message"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "message",
+                    "type"
+                ]
+            }
+        }
+    }
 }

@@ -1,0 +1,28 @@
+{
+    "URL": "7",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "6DhWO4Xh": {
+                "type": "hello_world",
+                "slots": {}
+            },
+            "l0re0CZb": {
+                "type": "numeric_textbox",
+                "slots": {}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "6DhWO4Xh",
+                "l0re0CZb"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

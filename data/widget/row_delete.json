@@ -1,14 +1,5 @@
 {
     "name": "row_delete",
-    "settingsModel": [
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
@@ -40,5 +31,19 @@
         ],
         "javascript": "$('#'+id).on('click', function() { console.log('removing'); $('#'+id).parent().remove() });"
     },
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "": {
+                "type": "",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

@@ -1,14 +1,5 @@
 {
     "name": "field_multi",
-    "settingsModel": [
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "undefined": false
-        }
-    ],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
@@ -18,7 +9,9 @@
     "deps": {},
     "head": [],
     "tags": [
-        "view"
+        "view",
+        "action",
+        "local-action"
     ],
     "slots": [],
     "slot_tags": {},
@@ -55,5 +48,19 @@
         ],
         "javascript": "nw.counter[id] = settings.count;"
     },
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "": {
+                "type": "",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

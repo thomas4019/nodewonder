@@ -1,4 +1,15 @@
 {
     "name": "echo",
-    "tags": []
+    "tags": [
+        "view"
+    ],
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

@@ -14,6 +14,16 @@
     },
     "name": "onclick",
     "tags": [
-        "event"
-    ]
+        "event",
+        "view"
+    ],
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

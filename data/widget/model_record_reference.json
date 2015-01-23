@@ -1,33 +1,5 @@
 {
     "name": "model_record_reference",
-    "settingsModel": [
-        {
-            "name": "label",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "undefined": false
-        },
-        {
-            "name": "model",
-            "type": "Record",
-            "quantity": "",
-            "widget": "model_record_reference",
-            "settings": {
-                "model": "model"
-            },
-            "undefined": false
-        },
-        {
-            "name": "data",
-            "type": "Record",
-            "quantity": "",
-            "widget": "model_record_reference",
-            "settings": "",
-            "undefined": false
-        }
-    ],
     "settings_unfiltered": [
         "data"
     ],
@@ -81,5 +53,66 @@
         "args": [],
         "css": ".sel {\n  width: 100%;\n  height: 34px;\n}"
     },
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "label": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "model": {
+                "type": "Record",
+                "quantity": ""
+            },
+            "data": {
+                "type": "Record",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "label": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "label",
+                        "field_type": "Text"
+                    },
+                    "field": "label",
+                    "model_type": "Text",
+                    "model": "model_record_reference"
+                },
+                "model": {
+                    "type": "model_record_reference",
+                    "slots": {},
+                    "settings": {
+                        "model": "model",
+                        "label": "model",
+                        "field_type": "Record"
+                    },
+                    "field": "model",
+                    "model_type": "Record",
+                    "model": "model_record_reference"
+                },
+                "data": {
+                    "type": "model_record_reference",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Record"
+                    },
+                    "field": "data",
+                    "model_type": "Record",
+                    "model": "model_record_reference"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "label",
+                    "model",
+                    "data"
+                ]
+            }
+        }
+    }
 }

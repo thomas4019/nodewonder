@@ -1,15 +1,5 @@
 {
     "name": "render_widget",
-    "settingsModel": [
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "widget": "",
-            "settings": "",
-            "undefined": false
-        }
-    ],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
@@ -32,5 +22,19 @@
     },
     "wrapper": "none",
     "wrapperClass": "",
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "": {
+                "type": "",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

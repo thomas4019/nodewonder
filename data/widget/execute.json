@@ -1,11 +1,4 @@
 {
-    "settingsModel": [
-        {
-            "name": "js",
-            "type": "Javascript",
-            "widget": "textarea"
-        }
-    ],
     "makeActionJS": {
         "_is_func": true,
         "args": [],
@@ -13,6 +6,34 @@
     },
     "name": "execute",
     "tags": [
-        "action"
-    ]
+        "action",
+        "view"
+    ],
+    "settings": {
+        "fields": {
+            "js": {
+                "type": "Javascript"
+            }
+        },
+        "display": {
+            "widgets": {
+                "js": {
+                    "type": "textarea",
+                    "slots": {},
+                    "settings": {
+                        "label": "js",
+                        "field_type": "Javascript"
+                    },
+                    "field": "js",
+                    "model_type": "Javascript",
+                    "model": "execute"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "js"
+                ]
+            }
+        }
+    }
 }

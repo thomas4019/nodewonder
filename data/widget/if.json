@@ -1,10 +1,4 @@
 {
-    "settingsModel": [
-        {
-            "name": "condition",
-            "type": "Text"
-        }
-    ],
     "slots": [
         "then",
         "else"
@@ -30,11 +24,39 @@
     "name": "if",
     "tags": [
         "action",
-        "local-action"
+        "local-action",
+        "view"
     ],
     "makeActionJS": {
         "_is_func": true,
         "args": [],
         "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+    },
+    "settings": {
+        "fields": {
+            "condition": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "condition": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "condition",
+                        "field_type": "Text"
+                    },
+                    "field": "condition",
+                    "model_type": "Text",
+                    "model": "if"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "condition"
+                ]
+            }
+        }
     }
 }

@@ -189,7 +189,7 @@ var nw = function() {
 		});
 	}
 
-	function configureWidget(id, settings_model, settings, callback) {
+	function configureWidget(id, type, settings, callback) {
 		//var widget_id = id.replace('-input', '-widget')
 		//var widget_type = $('#' + widget_id + ' select').val();
 
@@ -202,10 +202,11 @@ var nw = function() {
 		$('body').append(ne);
 
 		var data = {};
-		data['fields'] = JSON.stringify(settings_model);
-		data['values'] = JSON.stringify(settings);
+		//data['fields'] = JSON.stringify(settings_model);
+		data['widget'] = type;
+		data['values'] = JSON.stringify(settings || {});
 
-		$.getJSON('/internal/render_model?raw', data, function(result) {
+		$.getJSON('/internal/widget_settings?raw', data, function(result) {
 			console.log(result);
 	    if (result.error) {
 	    	$("#widgetForm").remove();
@@ -276,6 +277,22 @@ var nw = function() {
 		});
 	}
 
+	function processModel2(model, record, field, model_data, callback) {
+		var data = {};
+		data = {
+			model: model,
+			record: record,
+			field: field,
+			data: JSON.stringify(model_data)
+		};
+		console.log('pm2');
+		$.getJSON('/internal/process_model2', data, function(result) {
+			console.log(result);
+			console.log('processed');
+			callback(result);
+		});
+	}
+
 	function getID() {
 		if (!(docCookies.hasItem('clientID'))) {
 			var id = makeid(16);
@@ -333,6 +350,7 @@ var nw = function() {
 			getWidgetSettingsModel: getWidgetSettingsModel,
 			doProcess: doProcess,
 			processModel: processModel,
+			processModel2: processModel2,
 			cleanErrors: cleanErrors,
 			showErrors: showErrors,
 			fillSettings: fillSettings,

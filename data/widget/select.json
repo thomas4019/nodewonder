@@ -1,23 +1,5 @@
 {
     "name": "select",
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Text",
-            "quantity": "",
-            "widget": "",
-            "settings": "",
-            "undefined": false
-        },
-        {
-            "name": "choices",
-            "type": "Text",
-            "quantity": "+",
-            "widget": "",
-            "settings": "",
-            "undefined": false
-        }
-    ],
     "settings_unfiltered": [
         "data"
     ],
@@ -41,5 +23,49 @@
     },
     "wrapper": "",
     "wrapperClass": "",
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "choices": {
+                "type": "Text",
+                "quantity": "+"
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Text"
+                    },
+                    "field": "data",
+                    "model_type": "Text",
+                    "model": "select"
+                },
+                "choices": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "choices",
+                        "field_type": "Text"
+                    },
+                    "field": "choices",
+                    "model_type": "Text",
+                    "model": "select"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data",
+                    "choices"
+                ]
+            }
+        }
+    }
 }

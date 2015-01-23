@@ -1,14 +1,5 @@
 {
     "name": "widget_settings_model",
-    "settingsModel": [
-        {
-            "name": "",
-            "type": "",
-            "quantity": "",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
@@ -26,5 +17,19 @@
     "slot_tags": {},
     "wrapper": "none",
     "wrapperClass": "",
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "": {
+                "type": "",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

@@ -1,23 +1,5 @@
 {
     "name": "user_login",
-    "settingsModel": [
-        {
-            "name": "email",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "password",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [],
     "deps": {},
     "head": [],
@@ -65,5 +47,49 @@
         ],
         "javascript": "var cookies = new Cookies(this.req, this.res, COOKIE_KEYS);\ncms.functions.findOneByField('user', 'email', input.data.email, function(err, data) {\n    if (err) {\n        callback('invalid');\n        return\n    }\n    if (data.password == input.data.password) {\n        cookies.set('clientID', data.clientID, {\n            signed: true,\n            overwrite: true\n        });\n        console.log(data.clientID + ' logged in');\n        callback(undefined, data);\n        return;\n    } else {\n        callback('invalid p');\n    }\n});"
     },
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "email": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "password": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "email": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "email",
+                        "field_type": "Text"
+                    },
+                    "field": "email",
+                    "model_type": "Text",
+                    "model": "user_login"
+                },
+                "password": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "password",
+                        "field_type": "Text"
+                    },
+                    "field": "password",
+                    "model_type": "Text",
+                    "model": "user_login"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "email",
+                    "password"
+                ]
+            }
+        }
+    }
 }

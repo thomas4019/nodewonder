@@ -3,12 +3,6 @@
         "field_edit",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "File"
-        }
-    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -16,5 +10,32 @@
         ],
         "javascript": "return '<input type=\"file\" name=\"' + this.id + '\" />'"
     },
-    "name": "upload"
+    "name": "upload",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "File"
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "upload",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "File"
+                    },
+                    "field": "data",
+                    "model_type": "File",
+                    "model": "upload"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data"
+                ]
+            }
+        }
+    }
 }

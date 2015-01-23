@@ -10,7 +10,8 @@
                 "settings": {
                     "model": "model",
                     "record": "{{args.model}}",
-                    "field": "fields"
+                    "field": "schema",
+                    "inline": false
                 }
             },
             "ZA56joXJ": {

@@ -3,12 +3,6 @@
         "field_edit",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "Captcha"
-        }
-    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -29,5 +23,32 @@
         "args": [],
         "javascript": "return 'setTimeout(function() {' +\n    '$(\"input[name=\\'recaptcha_response_field\\']\").attr(\"name\", \"' + this.id + '-recaptcha_response_field\");' +\n    '$(\"input[name=\\'recaptcha_challenge_field\\']\").attr(\"name\", \"' + this.id + '-recaptcha_challenge_field\");' +\n    '}, 500);';"
     },
-    "name": "recaptcha"
+    "name": "recaptcha",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "Captcha"
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "captchagen",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Captcha"
+                    },
+                    "field": "data",
+                    "model_type": "Captcha",
+                    "model": "recaptcha"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data"
+                ]
+            }
+        }
+    }
 }

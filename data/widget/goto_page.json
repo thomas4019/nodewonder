@@ -1,10 +1,4 @@
 {
-    "settingsModel": [
-        {
-            "name": "URL",
-            "type": "Text"
-        }
-    ],
     "deps": {
         "handlebars": []
     },
@@ -21,12 +15,40 @@
     "name": "goto_page",
     "tags": [
         "action",
-        "local-action"
+        "local-action",
+        "view"
     ],
     "makeActionJS": {
         "_is_func": true,
         "args": [],
         "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
     },
-    "settings_unfiltered": []
+    "settings_unfiltered": [],
+    "settings": {
+        "fields": {
+            "URL": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "URL": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "URL",
+                        "field_type": "Text"
+                    },
+                    "field": "URL",
+                    "model_type": "Text",
+                    "model": "goto_page"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "URL"
+                ]
+            }
+        }
+    }
 }

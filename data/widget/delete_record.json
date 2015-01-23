@@ -1,14 +1,4 @@
 {
-    "settingsModel": [
-        {
-            "name": "model",
-            "type": "Text"
-        },
-        {
-            "name": "record",
-            "type": "Text"
-        }
-    ],
     "slots": [
         "success",
         "failure"
@@ -17,7 +7,8 @@
         "filtered",
         "action",
         "local-action",
-        "process"
+        "process",
+        "view"
     ],
     "slot_tags": {
         "success": [
@@ -55,5 +46,47 @@
         "_is_func": true,
         "args": [],
         "javascript": "cms.functions.setupProcess(this.name, this.settings);"
+    },
+    "settings": {
+        "fields": {
+            "model": {
+                "type": "Text"
+            },
+            "record": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "model": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "model",
+                        "field_type": "Text"
+                    },
+                    "field": "model",
+                    "model_type": "Text",
+                    "model": "delete_record"
+                },
+                "record": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "record",
+                        "field_type": "Text"
+                    },
+                    "field": "record",
+                    "model_type": "Text",
+                    "model": "delete_record"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "model",
+                    "record"
+                ]
+            }
+        }
     }
 }

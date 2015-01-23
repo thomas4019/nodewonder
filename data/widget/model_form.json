@@ -1,39 +1,5 @@
 {
     "name": "model_form",
-    "settingsModel": [
-        {
-            "name": "model",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": {},
-            "undefined": false
-        },
-        {
-            "name": "record",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": {},
-            "undefined": false
-        },
-        {
-            "name": "field",
-            "type": "Text",
-            "quantity": "",
-            "widget": "textbox",
-            "settings": {},
-            "undefined": false
-        },
-        {
-            "name": "inline",
-            "type": "Boolean",
-            "quantity": "",
-            "widget": "checkbox",
-            "settings": {},
-            "undefined": false
-        }
-    ],
     "settings_unfiltered": [
         "data"
     ],
@@ -55,7 +21,7 @@
     "setup": {
         "_is_func": true,
         "args": [],
-        "javascript": "if (!this.settings.field) {\n    this.settings.field = 'fields';\n}\n\nif (typeof this.settings.data == 'string') {\n    this.settings.data = JSON.parse(this.settings.data);\n}\n\nif (this.settings.fields) {\n    if (typeof this.settings.fields === 'string')\n        this.fields = JSON.parse(this.settings.fields);\n    else\n        this.fields = this.settings.fields;\n} else if (this.settings.model) {\n    if (!cms.model_data[this.settings.model]) {\n        console.trace('Unknown model type: ' + this.settings.model);\n    }\n    if (!cms.model_data[this.settings.model][this.settings.record]) {\n        console.trace('Unknown record: ' + this.settings.record);\n    }\n     this.settings.schema = cms.functions.mergeSchema(cms.model_data[this.settings.model][this.settings.record].schema, this.settings.data);\n    //this.fields = this.settings.fields = cms.model_data[this.settings.model][this.settings.record].fields;\nthis.fields = this.settings.fields = this.settings.schema.fields;\n}"
+        "javascript": "if (!this.settings.field) {\n    this.settings.field = 'schema';\n}\n\nif (typeof this.settings.data == 'string') {\n    this.settings.data = JSON.parse(this.settings.data);\n}\n\nif (this.settings.fields) {\n    if (typeof this.settings.fields === 'string')\n        this.fields = JSON.parse(this.settings.fields);\n    else\n        this.fields = this.settings.fields;\n} else if (this.settings.model) {\n    if (!cms.model_data[this.settings.model]) {\n        console.trace('Unknown model type: ' + this.settings.model);\n    }\n    if (!cms.model_data[this.settings.model][this.settings.record]) {\n        console.trace('Unknown record: ' + this.settings.record);\n    }\n     this.settings.schema = cms.functions.mergeSchema(cms.model_data[this.settings.model][this.settings.record][this.settings.field], this.settings.data);\n    //this.fields = this.settings.fields = cms.model_data[this.settings.model][this.settings.record].fields;\nthis.fields = this.settings.fields = this.settings.schema.fields;\n}"
     },
     "children": {
         "_is_func": true,
@@ -79,7 +45,7 @@
             "data",
             "callback"
         ],
-        "javascript": "console.log('model processing data');\nvar that = this;\nvar errors = {};\n\nvar total = Object.keys(this.fields).length;\nvar count = 0;\n\n_.each(this.fields, function(field) {\n    if (field.type == '') {\n        console.error('empty field');\n        return;\n    }\n\n    var field_data = data[field.name];\n    var input = field.settings || {};\n  \n    var widget_type = field.widget || cms.functions.getDefaultWidget(field.type);\n\n    if (widget_type == 'model_form') {\n        input['model'] = 'model';\n        input['record'] = field.type;\n        input['inline'] = 'model';\n    }\n    /*if (field.quantity) {\n      input.quantity = field.quantity;\n    }*/\n    //var widget_type = cms.functions.getWidget(type, input);\n\n    function handle(error) {\n        count++;\n        if (error)\n            errors[field.name] = error;\n        if (count == total)\n            callback(errors);\n    }\n\n    var widget = cms.functions.newWidget(widget_type, input);\n    var error = widget.validateData(field_data, handle);\n    if (error != undefined) {\n        handle(error);\n    }\n});"
+        "javascript": "console.log('model processing data');\nvar that = this;\nvar errors = {};\n\nconsole.log(this.fields);\nvar total = Object.keys(this.fields).length;\nvar count = 0;\n\n_.each(this.fields, function(field) {\n    if (field.type == '') {\n        console.error('empty field');\n        return;\n    }\n\n    var field_data = data[field.name];\n    var input = field.settings || {};\n  \n    var widget_type = field.widget || cms.functions.getDefaultWidget(field.type);\n\n    if (widget_type == 'model_form') {\n        input['model'] = 'model';\n        input['record'] = field.type;\n        input['inline'] = 'model';\n    }\n    /*if (field.quantity) {\n      input.quantity = field.quantity;\n    }*/\n    //var widget_type = cms.functions.getWidget(type, input);\n\n    function handle(error) {\n        count++;\n        if (error)\n            errors[field.name] = error;\n        if (count == total)\n            callback(errors);\n    }\n\n    var widget = cms.functions.newWidget(widget_type, input);\n    var error = widget.validateData(field_data, handle);\n    if (error != undefined) {\n        handle(error);\n    }\n});"
     },
     "wrapper": "",
     "wrapperClass": {
@@ -98,5 +64,90 @@
         "args": [],
         "css": ".inline-model-form {\n\tdisplay: table;\n}\n.inline-model-form > div {\n\tdisplay: table-cell;\n\tpadding: 5px;\n}"
     },
-    "weight": ""
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
+    "settings": {
+        "fields": {
+            "model": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "record": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "field": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "inline": {
+                "type": "Boolean",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "model": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "model",
+                        "field_type": "Text"
+                    },
+                    "field": "model",
+                    "model_type": "Text",
+                    "model": "model_form"
+                },
+                "record": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "record",
+                        "field_type": "Text"
+                    },
+                    "field": "record",
+                    "model_type": "Text",
+                    "model": "model_form"
+                },
+                "field": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "field",
+                        "field_type": "Text"
+                    },
+                    "field": "field",
+                    "model_type": "Text",
+                    "model": "model_form"
+                },
+                "inline": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "inline",
+                        "field_type": "Boolean"
+                    },
+                    "field": "inline",
+                    "model_type": "Boolean",
+                    "model": "model_form"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "model",
+                    "record",
+                    "field",
+                    "inline"
+                ]
+            }
+        }
+    }
 }

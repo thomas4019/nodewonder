@@ -1,0 +1,24 @@
+{
+    "URL": "internal/widget_settings",
+    "parent": "",
+    "controller": "var w = load('widget', args.widget); widgets.start.settings.schema = w.settings; widgets.start.settings.data = JSON.parse(args.values); callback();",
+    "code": {
+        "widgets": {
+            "start": {
+                "type": "model_renderer",
+                "slots": {},
+                "settings": {}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "start"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

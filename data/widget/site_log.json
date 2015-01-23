@@ -13,5 +13,14 @@
     "name": "site_log",
     "tags": [
         "view"
-    ]
+    ],
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

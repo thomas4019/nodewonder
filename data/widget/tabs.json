@@ -2,12 +2,15 @@
     "slots": [
         "tabs"
     ],
-    "settings": [
-        {
-            "name": "onmouseover",
-            "type": "Boolean"
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
         }
-    ],
+    },
     "deps": {
         "jquery": [],
         "jquery-ui": [

@@ -3,20 +3,6 @@
         "field_view",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "true_text",
-            "type": "Text"
-        },
-        {
-            "name": "false_text",
-            "type": "Text"
-        },
-        {
-            "name": "data",
-            "type": "Boolean"
-        }
-    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -24,5 +10,62 @@
         ],
         "javascript": "return this.settings.data ? (this.settings.true_text || 'Yes') : (this.settings.false_text || 'No');"
     },
-    "name": "yes_no"
+    "name": "yes_no",
+    "settings": {
+        "fields": {
+            "true_text": {
+                "type": "Text"
+            },
+            "false_text": {
+                "type": "Text"
+            },
+            "data": {
+                "type": "Boolean"
+            }
+        },
+        "display": {
+            "widgets": {
+                "true_text": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "true_text",
+                        "field_type": "Text"
+                    },
+                    "field": "true_text",
+                    "model_type": "Text",
+                    "model": "yes_no"
+                },
+                "false_text": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "false_text",
+                        "field_type": "Text"
+                    },
+                    "field": "false_text",
+                    "model_type": "Text",
+                    "model": "yes_no"
+                },
+                "data": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Boolean"
+                    },
+                    "field": "data",
+                    "model_type": "Boolean",
+                    "model": "yes_no"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "true_text",
+                    "false_text",
+                    "data"
+                ]
+            }
+        }
+    }
 }

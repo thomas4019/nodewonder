@@ -10,11 +10,21 @@
     "name": "get_record",
     "tags": [
         "action",
-        "process"
+        "process",
+        "view"
     ],
     "setup": {
         "_is_func": true,
         "args": [],
         "javascript": "cms.functions.setupProcess(this.name, this.settings);"
+    },
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
     }
 }

@@ -1,31 +1,5 @@
 {
     "name": "checkbox",
-    "settingsModel": [
-        {
-            "name": "label",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "name",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "data",
-            "type": "Boolean",
-            "quantity": "",
-            "widget": "checkbox",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [
         "data"
     ],
@@ -53,5 +27,65 @@
     },
     "wrapper": "",
     "wrapperClass": "",
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "label": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "data": {
+                "type": "Boolean",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "label": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "label",
+                        "field_type": "Text"
+                    },
+                    "field": "label",
+                    "model_type": "Text",
+                    "model": "checkbox"
+                },
+                "name": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "name",
+                        "field_type": "Text"
+                    },
+                    "field": "name",
+                    "model_type": "Text",
+                    "model": "checkbox"
+                },
+                "data": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Boolean"
+                    },
+                    "field": "data",
+                    "model_type": "Boolean",
+                    "model": "checkbox"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "label",
+                    "name",
+                    "data"
+                ]
+            }
+        }
+    }
 }

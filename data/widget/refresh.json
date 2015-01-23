@@ -6,6 +6,16 @@
     },
     "name": "refresh",
     "tags": [
-        "action"
-    ]
+        "action",
+        "view"
+    ],
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

@@ -1,29 +1,5 @@
 {
     "name": "button",
-    "settingsModel": [
-        {
-            "name": "label",
-            "type": "Text",
-            "settings": {},
-            "widget": ""
-        },
-        {
-            "name": "button_type",
-            "type": "Text",
-            "settings": {
-                "label": "Button Type",
-                "choices": [
-                    "default",
-                    "primary",
-                    "success",
-                    "info",
-                    "warning",
-                    "danger"
-                ]
-            },
-            "widget": "select"
-        }
-    ],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
@@ -42,5 +18,55 @@
     "slot_tags": {},
     "wrapper": "span",
     "wrapperClass": "",
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "label": {
+                "type": "Text"
+            },
+            "button_type": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "label": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "label",
+                        "field_type": "Text"
+                    },
+                    "field": "label",
+                    "model_type": "Text",
+                    "model": "button"
+                },
+                "button_type": {
+                    "type": "select",
+                    "slots": {},
+                    "settings": {
+                        "label": "button_type",
+                        "choices": [
+                            "default",
+                            "primary",
+                            "success",
+                            "info",
+                            "warning",
+                            "danger"
+                        ],
+                        "field_type": "Text"
+                    },
+                    "field": "button_type",
+                    "model_type": "Text",
+                    "model": "button"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "label",
+                    "button_type"
+                ]
+            }
+        }
+    }
 }

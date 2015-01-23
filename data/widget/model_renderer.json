@@ -1,23 +1,5 @@
 {
     "name": "model_renderer",
-    "settingsModel": [
-        {
-            "name": "schema",
-            "type": "schema",
-            "quantity": "",
-            "widget": "model_form",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "data",
-            "type": "JSON",
-            "quantity": "",
-            "widget": "jsoneditor",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [],
     "htmlTemplate": {
         "_is_func": true,
@@ -57,5 +39,49 @@
         ],
         "javascript": "nw.model[id] = {\n    \"fields\": settings.fields\n};"
     },
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "schema": {
+                "type": "schema",
+                "quantity": ""
+            },
+            "data": {
+                "type": "JSON",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "schema": {
+                    "type": "model_form",
+                    "slots": {},
+                    "settings": {
+                        "label": "schema",
+                        "field_type": "schema"
+                    },
+                    "field": "schema",
+                    "model_type": "schema",
+                    "model": "model_renderer"
+                },
+                "data": {
+                    "type": "jsoneditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "JSON"
+                    },
+                    "field": "data",
+                    "model_type": "JSON",
+                    "model": "model_renderer"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "schema",
+                    "data"
+                ]
+            }
+        }
+    }
 }

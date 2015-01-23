@@ -12,5 +12,14 @@
     "name": "centered",
     "tags": [
         "view"
-    ]
+    ],
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

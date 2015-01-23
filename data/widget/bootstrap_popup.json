@@ -1,23 +1,5 @@
 {
     "name": "bootstrap_popup",
-    "settingsModel": [
-        {
-            "name": "resizable",
-            "type": "Boolean",
-            "quantity": "",
-            "widget": "checkbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "title",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
@@ -49,5 +31,49 @@
         "args": [],
         "javascript": "return '$( \"#dialog-confirm\" ).modal({ show: { effect: \"blind\", duration: 1000 }, hide: { effect: \"explode\", duration: 1000}, resizable: false, modal: true, autoOpen: false, minHeight:\"350\", height:\"auto\", minWidth: \"500px\", width: \"auto\", buttons: {' +\n    '\"Ok\": function () { $(this).modal(\"close\"); }, \"Cancel\": function () { $(this).modal(\"close\"); }' +\n    '}});';"
     },
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "resizable": {
+                "type": "Boolean",
+                "quantity": ""
+            },
+            "title": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "resizable": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "resizable",
+                        "field_type": "Boolean"
+                    },
+                    "field": "resizable",
+                    "model_type": "Boolean",
+                    "model": "bootstrap_popup"
+                },
+                "title": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "title",
+                        "field_type": "Text"
+                    },
+                    "field": "title",
+                    "model_type": "Text",
+                    "model": "bootstrap_popup"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "resizable",
+                    "title"
+                ]
+            }
+        }
+    }
 }

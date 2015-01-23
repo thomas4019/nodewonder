@@ -13,6 +13,17 @@
         "javascript": "return 'sessionStorage.setItem(\"flash\", \\'' + JSON.stringify(cms.functions.concatActions(this.slotAssignments.actions)) + '\\');'"
     },
     "name": "flash_set",
-    "tags": [],
-    "settings_unfiltered": []
+    "tags": [
+        "view"
+    ],
+    "settings_unfiltered": [],
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

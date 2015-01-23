@@ -1,41 +1,5 @@
 {
     "name": "numeric_textbox",
-    "settingsModel": [
-        {
-            "name": "inline",
-            "type": "Boolean",
-            "quantity": "",
-            "widget": "checkbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "data",
-            "type": "Number",
-            "quantity": "",
-            "widget": "numeric_textbox",
-            "settings": "",
-            "required": false
-        },
-        {
-            "name": "min",
-            "type": "Number",
-            "quantity": "",
-            "widget": "numeric_textbox",
-            "settings": {
-                "min": 2
-            },
-            "required": false
-        },
-        {
-            "name": "max",
-            "type": "Number",
-            "quantity": "",
-            "widget": "numeric_textbox",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [
         "data"
     ],
@@ -76,5 +40,91 @@
     },
     "wrapper": "",
     "wrapperClass": "",
-    "weight": ""
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
+    "settings": {
+        "fields": {
+            "inline": {
+                "type": "Boolean",
+                "quantity": ""
+            },
+            "data": {
+                "type": "Number",
+                "quantity": ""
+            },
+            "min": {
+                "type": "Number",
+                "quantity": ""
+            },
+            "max": {
+                "type": "Number",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "inline": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "inline",
+                        "field_type": "Boolean"
+                    },
+                    "field": "inline",
+                    "model_type": "Boolean",
+                    "model": "numeric_textbox"
+                },
+                "data": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Number"
+                    },
+                    "field": "data",
+                    "model_type": "Number",
+                    "model": "numeric_textbox"
+                },
+                "min": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "min": 2,
+                        "label": "min",
+                        "field_type": "Number"
+                    },
+                    "field": "min",
+                    "model_type": "Number",
+                    "model": "numeric_textbox"
+                },
+                "max": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "max",
+                        "field_type": "Number"
+                    },
+                    "field": "max",
+                    "model_type": "Number",
+                    "model": "numeric_textbox"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "inline",
+                    "data",
+                    "min",
+                    "max"
+                ]
+            }
+        }
+    }
 }

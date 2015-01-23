@@ -1,10 +1,4 @@
 {
-    "settingsModel": [
-        {
-            "name": "url",
-            "type": "Text"
-        }
-    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -15,5 +9,32 @@
     "name": "iframe",
     "tags": [
         "view"
-    ]
+    ],
+    "settings": {
+        "fields": {
+            "url": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "url": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "url",
+                        "field_type": "Text"
+                    },
+                    "field": "url",
+                    "model_type": "Text",
+                    "model": "iframe"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "url"
+                ]
+            }
+        }
+    }
 }

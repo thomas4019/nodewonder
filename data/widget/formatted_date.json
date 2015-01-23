@@ -3,16 +3,6 @@
         "field_view",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "format",
-            "type": "Text"
-        },
-        {
-            "name": "data",
-            "type": "Date"
-        }
-    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -20,5 +10,47 @@
         ],
         "javascript": "return moment(this.settings.data).format(this.settings.format || 'MMMM Do YYYY');"
     },
-    "name": "formatted_date"
+    "name": "formatted_date",
+    "settings": {
+        "fields": {
+            "format": {
+                "type": "Text"
+            },
+            "data": {
+                "type": "Date"
+            }
+        },
+        "display": {
+            "widgets": {
+                "format": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "format",
+                        "field_type": "Text"
+                    },
+                    "field": "format",
+                    "model_type": "Text",
+                    "model": "formatted_date"
+                },
+                "data": {
+                    "type": "date",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Date"
+                    },
+                    "field": "data",
+                    "model_type": "Date",
+                    "model": "formatted_date"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "format",
+                    "data"
+                ]
+            }
+        }
+    }
 }

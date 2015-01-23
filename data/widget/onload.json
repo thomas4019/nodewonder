@@ -23,5 +23,14 @@
     "tags": [
         "view"
     ],
-    "settings_unfiltered": []
+    "settings_unfiltered": [],
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

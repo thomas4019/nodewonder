@@ -1,15 +1,5 @@
 {
     "name": "up_down",
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "vote",
-            "quantity": "",
-            "widget": "fivestar",
-            "settings": "",
-            "required": false
-        }
-    ],
     "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
@@ -51,5 +41,33 @@
         "args": [],
         "css": ".up-vote.selected, .down-vote.selected {\n\tcolor: rgb(255, 150, 0);\n\ttext-shadow:\n   -2px -2px 1px #FCA,  \n    2px -2px 1px #FCA,\n    -2px 2px 1px #FCA,\n     2px 2px 1px #FCA;\n}"
     },
-    "weight": null
+    "weight": null,
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "vote",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "fivestar",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "vote"
+                    },
+                    "field": "data",
+                    "model_type": "vote",
+                    "model": "up_down"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data"
+                ]
+            }
+        }
+    }
 }

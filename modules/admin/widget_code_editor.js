@@ -7,10 +7,23 @@ function setupWidgetSelector(id) {
 			var data = {more: false, results: []};
 			var groups = {};
 
+			model_form_id = false;
+
 			if ( $('#wyobn3bP-schema-fields').length ) {
+				model_form_id = '#wyobn3bP-schema-fields';
+				field_name = 'schema';
+			}
+			if ( $('#wyobn3bP-settings-fields').length ) {
+				model_form_id = '#wyobn3bP-settings-fields';
+				field_name = 'settings';
+			}
+
+			console.log(model_form_id);
+
+			if ( model_form_id ) {
 				var model = {text: 'Model', children: []};
 				data.results.push(model);
-				var fields = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($('#wyobn3bP-schema-fields :input').serializeArray())).schema.fields;
+				var fields = nw.functions.expandPostValues(nw.functions.serializedArrayToValues($(model_form_id + ' :input').serializeArray()))[field_name].fields;
 				_.each(fields, function(kv, index) {
 					console.log(kv);
 					field = kv.value;
@@ -193,12 +206,12 @@ function stateController($scope) {
 		var settings = $scope.widgets[id].settings;
 		var settings_model = nw.widgets[pseudo_widget ? pseudo_widget : type].settings;
 
-		nw.functions.configureWidget(id, settings_model, settings, function(new_settings) {
+		nw.functions.configureWidget(id, type, settings, function(new_settings) {
 			console.log(new_settings);
 			console.log('configure finished');
 
 			nw.functions.cleanErrors('start');
-			nw.functions.processModel(settings_model, new_settings, function(results) {
+			nw.functions.processModel2('widget', type, 'settings', new_settings, function(results) {
 				console.log(results);
 				if (results.validationErrors && Object.keys(results.validationErrors).length) {
 					console.log('model has errors');

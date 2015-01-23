@@ -1,31 +1,5 @@
 {
     "name": "jsoneditor",
-    "settingsModel": [
-        {
-            "name": "data",
-            "type": "JSON",
-            "quantity": "",
-            "widget": "jsoneditor",
-            "settings": "",
-            "undefined": false
-        },
-        {
-            "name": "width",
-            "type": "Number",
-            "quantity": "",
-            "widget": "numeric_textbox",
-            "settings": "",
-            "undefined": false
-        },
-        {
-            "name": "height",
-            "type": "Number",
-            "quantity": "",
-            "widget": "numeric_textbox",
-            "settings": "",
-            "undefined": false
-        }
-    ],
     "settings_unfiltered": [
         "data"
     ],
@@ -77,5 +51,65 @@
         "args": [],
         "css": ".poweredBy {\n  display: none;\n}"
     },
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "data": {
+                "type": "JSON",
+                "quantity": ""
+            },
+            "width": {
+                "type": "Number",
+                "quantity": ""
+            },
+            "height": {
+                "type": "Number",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "data": {
+                    "type": "jsoneditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "JSON"
+                    },
+                    "field": "data",
+                    "model_type": "JSON",
+                    "model": "jsoneditor"
+                },
+                "width": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "width",
+                        "field_type": "Number"
+                    },
+                    "field": "width",
+                    "model_type": "Number",
+                    "model": "jsoneditor"
+                },
+                "height": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "height",
+                        "field_type": "Number"
+                    },
+                    "field": "height",
+                    "model_type": "Number",
+                    "model": "jsoneditor"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "data",
+                    "width",
+                    "height"
+                ]
+            }
+        }
+    }
 }

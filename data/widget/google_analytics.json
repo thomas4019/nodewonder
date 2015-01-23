@@ -1,23 +1,5 @@
 {
     "name": "google_analytics",
-    "settingsModel": [
-        {
-            "name": "code",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "undefined": false
-        },
-        {
-            "name": "url",
-            "type": "Text",
-            "quantity": "",
-            "widget": "ckeditor",
-            "settings": "",
-            "undefined": false
-        }
-    ],
     "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
@@ -47,5 +29,49 @@
         ],
         "javascript": "(function(i, s, o, g, r, a, m) {\n    i['GoogleAnalyticsObject'] = r;\n    i[r] = i[r] || function() {\n        (i[r].q = i[r].q || []).push(arguments)\n    }, i[r].l = 1 * new Date();\n    a = s.createElement(o),\n    m = s.getElementsByTagName(o)[0];\n    a.async = 1;\n    a.src = g;\n    m.parentNode.insertBefore(a, m)\n})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');\n\nga('create', settings.code, settings.url);\nga('send', 'pageview');"
     },
-    "weight": ""
+    "weight": "",
+    "settings": {
+        "fields": {
+            "code": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "url": {
+                "type": "Text",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "code": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "code",
+                        "field_type": "Text"
+                    },
+                    "field": "code",
+                    "model_type": "Text",
+                    "model": "google_analytics"
+                },
+                "url": {
+                    "type": "ckeditor",
+                    "slots": {},
+                    "settings": {
+                        "label": "url",
+                        "field_type": "Text"
+                    },
+                    "field": "url",
+                    "model_type": "Text",
+                    "model": "google_analytics"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "code",
+                    "url"
+                ]
+            }
+        }
+    }
 }

@@ -11,5 +11,16 @@
         "javascript": "var token = values['token'];\nvar input = JSON.parse(values['input']);\nvar related = cms.pending_processes[token];\nif (related) {\n    if (cms.widgets[related.process]) {\n        var process = cms.functions.newWidget(related.process, related.settings);\n        process.user = user;\n        process.req = req;\n        process.res = res;\n\n        process.doProcess(input, function(err, result) {\n            callback(err, result);\n        });\n    } else {\n        callback('missing widget: ' + related.process);\n    }\n} else {\n    callback('process token not found');\n}"
     },
     "name": "process",
-    "tags": []
+    "tags": [
+        "view"
+    ],
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
 }

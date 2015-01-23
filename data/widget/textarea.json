@@ -3,20 +3,6 @@
         "field_edit",
         "view"
     ],
-    "settingsModel": [
-        {
-            "name": "label",
-            "type": "Text"
-        },
-        {
-            "name": "name",
-            "type": "Text"
-        },
-        {
-            "name": "data",
-            "type": "Text"
-        }
-    ],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -24,5 +10,62 @@
         ],
         "javascript": "var element = '<textarea class=\"form-control input-small\"  name=\"' + this.id + '\" >' + (this.settings.data || '') + '</textarea>';\nreturn label + element;"
     },
-    "name": "textarea"
+    "name": "textarea",
+    "settings": {
+        "fields": {
+            "label": {
+                "type": "Text"
+            },
+            "name": {
+                "type": "Text"
+            },
+            "data": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "label": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "label",
+                        "field_type": "Text"
+                    },
+                    "field": "label",
+                    "model_type": "Text",
+                    "model": "textarea"
+                },
+                "name": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "name",
+                        "field_type": "Text"
+                    },
+                    "field": "name",
+                    "model_type": "Text",
+                    "model": "textarea"
+                },
+                "data": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "data",
+                        "field_type": "Text"
+                    },
+                    "field": "data",
+                    "model_type": "Text",
+                    "model": "textarea"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "label",
+                    "name",
+                    "data"
+                ]
+            }
+        }
+    }
 }

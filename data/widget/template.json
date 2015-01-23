@@ -3,12 +3,6 @@
         "body"
     ],
     "wrapper": "none",
-    "settingsModel": [
-        {
-            "name": "path",
-            "type": "Text"
-        }
-    ],
     "load": {
         "_is_func": true,
         "args": [
@@ -27,5 +21,32 @@
     "tags": [
         "view"
     ],
-    "settings_unfiltered": []
+    "settings_unfiltered": [],
+    "settings": {
+        "fields": {
+            "path": {
+                "type": "Text"
+            }
+        },
+        "display": {
+            "widgets": {
+                "path": {
+                    "type": "textbox",
+                    "slots": {},
+                    "settings": {
+                        "label": "path",
+                        "field_type": "Text"
+                    },
+                    "field": "path",
+                    "model_type": "Text",
+                    "model": "template"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "path"
+                ]
+            }
+        }
+    }
 }
