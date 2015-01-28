@@ -75,7 +75,11 @@ function stateController($scope) {
 	}
 
 	_.each($scope.widgets, function(w) {
-		w.has_form = nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.type].settings;
+		if (nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.type]) {
+			w.has_form = nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.type].settings;
+		} else {
+			console.log('missing widget ' + w.type);
+		}
 	});
 
 	$scope.edit_widgets = nw.edit_widgets;

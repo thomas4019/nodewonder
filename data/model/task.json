@@ -1,7 +1,6 @@
 {
     "name": "Task",
     "description": "Something to be done",
-    "key": "task",
     "schema": {
         "fields": {
             "Title": {
@@ -12,19 +11,19 @@
                 "type": "Text",
                 "quantity": ""
             },
-            "Completed": {
-                "type": "Boolean",
+            "Completion Date": {
+                "type": "Date",
                 "quantity": ""
             },
-            "Due": {
-                "type": "Date",
+            "Type": {
+                "type": "Text",
                 "quantity": ""
             }
         },
         "display": {
             "widgets": {
                 "Title": {
-                    "type": "",
+                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "Title",
@@ -35,7 +34,7 @@
                     "model": "task"
                 },
                 "description": {
-                    "type": "textbox",
+                    "type": "textarea",
                     "slots": {},
                     "settings": {
                         "label": "description",
@@ -45,37 +44,43 @@
                     "model_type": "Text",
                     "model": "task"
                 },
-                "Completed": {
-                    "type": "",
+                "Completion Date": {
+                    "type": "date",
                     "slots": {},
-                    "settings": {
-                        "label": "Completed",
-                        "field_type": "Boolean"
-                    },
-                    "field": "Completed",
-                    "model_type": "Boolean",
-                    "model": "task"
-                },
-                "Due": {
-                    "type": "",
-                    "slots": {},
-                    "settings": {
-                        "label": "Due",
-                        "field_type": "Date"
-                    },
-                    "field": "Due",
+                    "field": "Completion Date",
                     "model_type": "Date",
-                    "model": "task"
+                    "model": "Model",
+                    "settings": {
+                        "label": "Completion Date"
+                    }
+                },
+                "Type": {
+                    "type": "select",
+                    "slots": {},
+                    "field": "Type",
+                    "model_type": "Text",
+                    "model": "Model",
+                    "settings": {
+                        "data": "",
+                        "choices": [
+                            "Bug",
+                            "Feature",
+                            "Possible Idea",
+                            "Refactoring"
+                        ]
+                    }
                 }
             },
             "slotAssignments": {
                 "body": [
                     "Title",
                     "description",
-                    "Completed",
-                    "Due"
+                    "Completion Date",
+                    "Type"
                 ]
             }
         }
-    }
+    },
+    "index": "Title",
+    "storage": ""
 }

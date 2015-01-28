@@ -1,9 +1,21 @@
 {
+    "name": "message",
+    "settings_unfiltered": [],
     "deps": {
         "jquery": [],
         "toastr": [],
         "handlebars": []
     },
+    "head": [],
+    "tags": [
+        "action",
+        "local-action",
+        "view"
+    ],
+    "slots": [],
+    "slot_tags": {},
+    "wrapper": "",
+    "wrapperClass": "",
     "action": {
         "_is_func": true,
         "args": [
@@ -14,25 +26,30 @@
         ],
         "javascript": "toastr[settings.type](settings.message);"
     },
-    "name": "message",
-    "tags": [
-        "action",
-        "local-action",
-        "view"
-    ],
     "makeActionJS": {
         "_is_func": true,
         "args": [],
-        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + '(nw.functions.fillSettings(' + JSON.stringify(this.settings) + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+        "javascript": "return 'nw.functions.processActionResult(\"'+this.id+'\", new '+this.action+'(nw.functions.fillSettings('+JSON.stringify(this.settings)+', scope, []), ' +\n        '\"'+this.id+'\", scope,'+cms.functions.createHandlersCode(this)+'));';"
     },
-    "settings_unfiltered": [],
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
     "settings": {
         "fields": {
             "message": {
-                "type": "Text"
+                "type": "Text",
+                "quantity": ""
             },
             "type": {
-                "type": "Text"
+                "type": "Text",
+                "quantity": ""
             }
         },
         "display": {

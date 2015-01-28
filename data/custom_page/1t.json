@@ -1,0 +1,40 @@
+{
+    "URL": "1t",
+    "parent": "",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "elEQdMoX": {
+                "type": "onload",
+                "slots": {
+                    "actions": [
+                        "8TK9kqfb",
+                        "5pZiYdKr"
+                    ]
+                }
+            },
+            "8TK9kqfb": {
+                "type": "message",
+                "slots": {},
+                "settings": {
+                    "message": "123",
+                    "type": "info"
+                }
+            },
+            "5pZiYdKr": {
+                "type": "timeout",
+                "slots": {}
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "elEQdMoX"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

@@ -8,7 +8,7 @@
         "args": [
             "label"
         ],
-        "javascript": "var row_template;\nif (this.settings.row_template) {\n    row_template = Handlebars.compile(this.settings.row_template);\n}\n\nvar html = '';\n\nhtml += '<h1>' + (this.settings.title ? this.settings.title : ('<a href=\"/admin/list/model\">Models</a> : ' + this.settings.model)) + '</h1>';\n\nif (this.settings.add_button) {\n    html += '<a class=\"btn btn-primary\" href=\"/admin/data/edit?model=' + this.settings.model + '&record=create\">Create new</a></li>';\n}\n\nif (!this.settings.manual_list) {\n    html += '<ul class=\"list-group\">'\n}\n\nvar data = cms.model_data[this.settings.model];\nfor (key in data) {\n    var list = data[key];\n    if (!this.settings.manual_list) {\n        html += '<li class=\"list-group-item\" >';\n    }\n    if (!this.settings.row_template) {\n        html += '<a href=\"/admin/data/edit?model=' + this.settings.model + '&record=' + key + '\">' + key + '</a>';\n    } else {\n        list['key'] = key;\n        html += row_template(list);\n    }\n    if (!this.settings.manual_list) {\n        html += '</li>';\n    }\n}\n\nif (!this.settings.manual_list) {\n    html += '</ul>';\n}\n\nif (this.settings.add_button) {\n    html += '<a class=\"btn btn-primary\" href=\"/admin/data/?model=' + this.settings.model + '&record=create\">Create new</a></li>';\n}\n\nreturn html;"
+        "javascript": "var row_template;\nif (this.settings.row_template) {\n    row_template = Handlebars.compile(this.settings.row_template);\n}\n\nvar html = '';\n\nhtml += '<h1>' + (this.settings.title ? this.settings.title : ('<a href=\"/admin/list/model\">Models</a> : ' + this.settings.model)) + '</h1>';\n\nif (this.settings.add_button) {\n    html += '<a class=\"btn btn-primary\" href=\"/admin/data/edit?model=' + this.settings.model + '&record=create\">Create new</a></li>';\n}\n\nif (!this.settings.manual_list) {\n    html += '<ul class=\"list-group\">'\n}\n\nvar data = cms.model_data[this.settings.model];\nfor (key in data) {\n    var list = data[key];\n    if (!this.settings.manual_list) {\n        html += '<li class=\"list-group-item\" >';\n    }\n    if (!this.settings.row_template) {\n        html += '<a href=\"/admin/data/edit?model=' + this.settings.model + '&record=' + key + '\">' + key + '</a>';\n    } else {\n        list['key'] = key;\n        html += row_template(list);\n    }\n    if (!this.settings.manual_list) {\n        html += '</li>';\n    }\n}\n\nif (!this.settings.manual_list) {\n    html += '</ul>';\n}\n\nif (this.settings.add_button) {\n    html += '<a class=\"btn btn-primary\" href=\"/admin/data/edit?model=' + this.settings.model + '&record=create\">Create new</a></li>';\n}\n\nreturn html;"
     },
     "deps": {
         "jquery": [],
@@ -23,6 +23,15 @@
     "wrapper": "",
     "wrapperClass": "",
     "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
     "settings": {
         "fields": {
             "row_template": {

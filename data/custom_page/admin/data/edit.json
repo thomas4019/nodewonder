@@ -53,6 +53,7 @@
                 "type": "onclick",
                 "slots": {
                     "actions": [
+                        "9ADRDy4Z",
                         "kyKLGO7q"
                     ]
                 }
@@ -138,22 +139,6 @@
                     "dest": "record"
                 }
             },
-            "kyKLGO7q": {
-                "type": "save_record",
-                "slots": {
-                    "success": [
-                        "ARm2WD2e"
-                    ],
-                    "failure": [
-                        "HFuYWHvO"
-                    ]
-                },
-                "settings": {
-                    "data_name": "record",
-                    "model": "{{args.model}}",
-                    "record": "{{args.record}}"
-                }
-            },
             "HFuYWHvO": {
                 "type": "message",
                 "slots": {},
@@ -161,10 +146,6 @@
                     "message": "Save failed! Please copy important data to avoid data loss.",
                     "type": "error"
                 }
-            },
-            "ARm2WD2e": {
-                "type": "go_back",
-                "slots": {}
             },
             "yD4LXiuv": {
                 "type": "save_record",
@@ -218,6 +199,47 @@
                 "settings": {
                     "URL": "admin/data/?model={{args.model}}&record={{new_record}}"
                 }
+            },
+            "9ADRDy4Z": {
+                "type": "get_form_data",
+                "slots": {},
+                "settings": {
+                    "selector": "#wyobn3bP",
+                    "dest": "record"
+                }
+            },
+            "kyKLGO7q": {
+                "type": "save_record",
+                "slots": {
+                    "success": [
+                        "YzEo1MSR"
+                    ],
+                    "failure": [
+                        "HFuYWHvO"
+                    ]
+                },
+                "settings": {
+                    "model": "{{args.model}}",
+                    "record": "{{args.record}}",
+                    "data_name": "record",
+                    "data": {},
+                    "record_id_dest": "new_record"
+                }
+            },
+            "YzEo1MSR": {
+                "type": "timeout",
+                "slots": {
+                    "do": [
+                        "gW0NwLj0"
+                    ]
+                },
+                "settings": {
+                    "milliseconds": 250
+                }
+            },
+            "gW0NwLj0": {
+                "type": "go_back",
+                "slots": {}
             }
         },
         "slotAssignments": {

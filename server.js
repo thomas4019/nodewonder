@@ -359,8 +359,11 @@ function initWidgets(callback) {
     }
   }
 
+  console.log('initWidgets');
   _.each(cms.model_data['widget'], function(wData, type) {
     var widget = cms.functions.loadWidget(wData);
+    console.log('addingWidget ' + type);
+    console.log(cms.edit_widgets);
     cms.functions.addWidgetType(widget);
   });
 
@@ -375,9 +378,10 @@ function initWidgets(callback) {
 
 function sortWidgets(callback) {
   //console.log('sorting widgets');
-  cms.model_widgets['Text'].sort(function (a, b) {
+  /*cms.model_widgets['Text'].sort(function (a, b) {
     return a.weight || 0 < b.weight || 0;
-  });
+  });*/
+  //console.log(cms.edit_widgets);
   cms.edit_widgets['Text'].sort(function (a, b) {
     return cms.widgets[a].weight || 0 < cms.widgets[b].weight || 0;
   });

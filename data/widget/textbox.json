@@ -63,7 +63,7 @@
                     "model": "textbox"
                 },
                 "data": {
-                    "type": "ckeditor",
+                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "data",

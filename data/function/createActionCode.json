@@ -8,7 +8,7 @@
         "args": [
             "actions"
         ],
-        "javascript": "var code = '';\nactions.forEach(function(action) {\n    if (action.makeActionJS) {\n        code += action.makeActionJS() + '\\n';\n    }\n});\nreturn code;"
+        "javascript": "var code = '';\nactions.forEach(function(action) {\n    if (action.makeActionJS) {\n        code += action.makeActionJS() + '\\n';\n    }\n  if (action.script) {\n        code += action.script() + '\\n';\n    }\n});\nreturn code;"
     },
     "calls": [],
     "callers": [

@@ -1,0 +1,68 @@
+{
+    "name": "timeout",
+    "settings_unfiltered": [],
+    "deps": {},
+    "head": [],
+    "tags": [
+        "view",
+        "action",
+        "local-action"
+    ],
+    "slots": [
+        "do"
+    ],
+    "slot_tags": {
+        "do": [
+            "action"
+        ]
+    },
+    "wrapper": "",
+    "wrapperClass": "",
+    "action": {
+        "_is_func": true,
+        "args": [
+            "settings",
+            "id",
+            "scope",
+            "handlers"
+        ],
+        "javascript": "setTimeout(function() {handlers.do(); }, settings.milliseconds);"
+    },
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
+    "settings": {
+        "fields": {
+            "milliseconds": {
+                "type": "Number",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "milliseconds": {
+                    "type": "numeric_textbox",
+                    "slots": {},
+                    "field": "milliseconds",
+                    "model_type": "Number",
+                    "model": "Model",
+                    "settings": {
+                        "label": "milliseconds"
+                    }
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "milliseconds"
+                ]
+            }
+        }
+    }
+}
