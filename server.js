@@ -343,6 +343,7 @@ function initFuncs(callback) {
     load: cms.functions.loadRecord,
     loadPage: cms.functions.loadPageState,
     query: cms.functions.executeQueryLocally,
+    linkify: cms.functions.linkify,
     log: console.log,
     JSON: JSON
   };

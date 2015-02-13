@@ -9,7 +9,7 @@
         "htmlmixed": "{{{renderSlot \"body\" }}}"
     },
     "deps": {
-        "underscore": []
+        "lodash": []
     },
     "head": [],
     "tags": [

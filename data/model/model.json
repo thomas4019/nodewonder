@@ -26,6 +26,10 @@
             "storage": {
                 "type": "Text",
                 "quantity": ""
+            },
+            "adminFields": {
+                "type": "Text",
+                "quantity": "2+"
             }
         },
         "display": {
@@ -112,6 +116,16 @@
                     "field": "storage",
                     "model_type": "Text",
                     "model": "model"
+                },
+                "adminFields": {
+                    "type": "textbox",
+                    "slots": {},
+                    "field": "adminFields",
+                    "model_type": "Text",
+                    "model": "Model",
+                    "settings": {
+                        "label": "adminFields"
+                    }
                 }
             },
             "slotAssignments": {
@@ -121,17 +135,17 @@
                     "schema",
                     "index",
                     "views",
-                    "storage"
+                    "storage",
+                    "adminFields"
                 ]
             }
         }
     },
     "index": "name",
-    "views": {
-        "widgets": {},
-        "slotAssignments": {
-            "body": []
-        }
-    },
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "adminFields": [
+        "name",
+        "description",
+        "storage"
+    ]
 }

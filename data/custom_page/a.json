@@ -1,0 +1,33 @@
+{
+    "URL": "a",
+    "parent": "admin",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "guOj0u3O": {
+                "type": "eval",
+                "slots": {
+                    "code": [
+                        "W66n1Bsl"
+                    ]
+                }
+            },
+            "W66n1Bsl": {
+                "type": "_.shuffle",
+                "slots": {
+                    "collection": []
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "guOj0u3O"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

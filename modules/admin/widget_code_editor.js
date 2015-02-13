@@ -60,6 +60,28 @@ function setupWidgetSelector(id) {
 					}
 				});
 			});
+
+			_.each(nw.funcs, function(func, name) {
+				var tag = 'code';
+				func.text = name;
+				func.id = name;
+				func.widget = name;
+				func.slots = func.args;
+				func.slot_tags = {};
+				func.args.forEach(function(arg) {
+					func.slot_tags[arg] = ['code'];
+				});
+				if (_.contains(slot_tag_targets, tag)) {
+					if (!groups[tag]) {
+						groups[tag] = {text: tag, children: []}
+						data.results.push(groups[tag]);
+					}
+					if(!query.term || func.text.toUpperCase().indexOf(query.term.toUpperCase()) !== -1) {
+						groups[tag].children.push(func);
+					}
+				}
+			});
+
 			query.callback(data);
 		}
 	});
@@ -237,8 +259,11 @@ function stateController($scope) {
 		x = $('#'+id+'-'+slot+' .add').offset().left;
 		y = $('#'+id+'-'+slot+' .add').offset().top;
 		var select = $('#' + $scope.field_id + ' .widget-selector')
+		console.log(id);
 		if ($scope.widgets[id] && nw.widgets[$scope.widgets[id].type]) {
 			slot_tag_targets = nw.widgets[$scope.widgets[id].type].slot_tags[slot] || ['view', 'field_view'];
+		} else if (nw.funcs[$scope.widgets[id].type]) {
+			slot_tag_targets = ['code'];
 		} else {
 			slot_tag_targets = ['view', 'field_view'];
 		}

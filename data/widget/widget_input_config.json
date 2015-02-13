@@ -14,7 +14,7 @@
         "font-awesome": [
             "css/font-awesome.css"
         ],
-        "underscore": []
+        "lodash": []
     },
     "head": [
         "/modules/models/widget_config.js"
@@ -35,7 +35,16 @@
     },
     "wrapper": "",
     "wrapperClass": "",
-    "weight": null,
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
     "settings": {
         "fields": {
             "data": {

@@ -2,7 +2,7 @@
     "name": "get_form_data",
     "settings_unfiltered": [],
     "deps": {
-        "underscore": []
+        "lodash": []
     },
     "head": [],
     "tags": [
@@ -24,14 +24,25 @@
         ],
         "javascript": "var id = settings.selector ? settings.selector.substr(1) : '';\n//console.log(settings.selector);\nvar model = nw.model[id];\n\nvar values = nw.functions.serializedArrayToValues($('#' + id + ' :input').serializeArray());\n\n_.forEach(nw.fieldGetters, function(get, id) {\n    var value = get();\n    values[id] = value;\n});\n\nvar data = nw.functions.expandPostValues(values);\n\nscope[settings.dest] = data;\n//console.log(scope);"
     },
-    "weight": null,
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
     "settings": {
         "fields": {
             "selector": {
-                "type": "Text"
+                "type": "Text",
+                "quantity": ""
             },
             "dest": {
-                "type": "Text"
+                "type": "Text",
+                "quantity": ""
             }
         },
         "display": {

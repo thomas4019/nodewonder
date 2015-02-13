@@ -1,0 +1,36 @@
+{
+    "URL": "admin/list2/%",
+    "parent": "admin",
+    "controller": "var m = load('model', args['arg2']); widgets['00t6fCBy'].settings.data = args['arg2']; widgets.HaFlgC99.settings.data = linkify(query({from: args['arg2'], select: m.adminFields}), args['arg2']); callback();",
+    "code": {
+        "widgets": {
+            "HaFlgC99": {
+                "type": "table",
+                "slots": {},
+                "settings": {
+                    "data": {},
+                    "html": true
+                }
+            },
+            "00t6fCBy": {
+                "type": "header",
+                "slots": {},
+                "settings": {
+                    "data": "",
+                    "type": "h1"
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "HaFlgC99",
+                "00t6fCBy"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

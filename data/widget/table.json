@@ -4,7 +4,7 @@
     "htmlTemplate": {
         "_is_func": true,
         "args": [],
-        "htmlmixed": "<table class=\"table table-bordered table-striped\">\n    <thead>\n        <tr>\n            {{#each this.cols}}\n            <th>{{this}}</th>\n            {{/each}}\n        </tr>\n    </thead>\n    <tbody>\n        {{#each this.data}}\n        <tr>\n            {{#each this}}\n            <td>{{ json this }}</td>\n            {{/each}}\n        </tr>\n        {{/each}}\n    </tbody>"
+        "htmlmixed": "<table class=\"table table-bordered table-striped\">\n    <thead>\n        <tr>\n            {{#each this.cols}}\n            <th>{{this}}</th>\n            {{/each}}\n        </tr>\n    </thead>\n    <tbody>\n        {{#each this.data}}\n        <tr>\n            {{#each this}}\n            <td>{{{ this }}}</td>\n            {{/each}}\n        </tr>\n        {{/each}}\n    </tbody>"
     },
     "deps": {
         "bootstrap": []
@@ -22,11 +22,24 @@
     },
     "wrapper": "",
     "wrapperClass": "",
-    "weight": null,
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
     "settings": {
         "fields": {
             "data": {
                 "type": "JSON",
+                "quantity": ""
+            },
+            "html": {
+                "type": "Boolean",
                 "quantity": ""
             }
         },
@@ -42,11 +55,22 @@
                     "field": "data",
                     "model_type": "JSON",
                     "model": "table"
+                },
+                "html": {
+                    "type": "checkbox",
+                    "slots": {},
+                    "field": "html",
+                    "model_type": "Boolean",
+                    "model": "Model",
+                    "settings": {
+                        "label": "html"
+                    }
                 }
             },
             "slotAssignments": {
                 "body": [
-                    "data"
+                    "data",
+                    "html"
                 ]
             }
         }

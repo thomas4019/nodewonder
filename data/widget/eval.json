@@ -1,0 +1,41 @@
+{
+    "name": "eval",
+    "settings_unfiltered": [],
+    "htmlTemplate": {
+        "_is_func": true,
+        "args": [],
+        "htmlmixed": "123"
+    },
+    "deps": {},
+    "head": [],
+    "tags": [],
+    "slots": [
+        "code"
+    ],
+    "slot_tags": {
+        "code": [
+            "code"
+        ]
+    },
+    "wrapper": "",
+    "wrapperClass": "",
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
+    "settings": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    }
+}

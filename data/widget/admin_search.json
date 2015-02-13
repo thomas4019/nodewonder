@@ -43,21 +43,25 @@
             "scope",
             "handlers"
         ],
-        "javascript": "var search = angular.module('search',[]);\nsearch.controller('SearchController', ['$scope', function($scope) {\n  $scope.greeting = 'Hola!';\n}]);\n\nwindow['SearchController'] = function ($scope) {\n  this.greeting = 'Hola123!';\n  this.query = '';\n  \n  this.search = function() {\n    this.results = nw.indexes.model.search(this.query);\n    this.results = this.results.map(function(entry) {\n      return nw.indexes.modelTerms[entry.ref];\n    });\n    console.log(this.results);\n  }\n  \n  Mousetrap.bind('enter', function(e) {\n    if (nw.inSearch) {\n      window.location = this.results[0].href;\n    }\n    return false;\n  }.bind(this));\n  Mousetrap.bind('alt+enter', function(e) {\n    if (nw.inSearch) {\n      window.open(this.results[0].href, '_blank');\n    }\n    return false;\n  }.bind(this));\n}\n\nfunction updateIndices(ctrl) {\n  nw.indexes = {};  \n  nw.indexes.model = lunr(function () {\n     this.field('name')\n  });\n  nw.indexes.modelTerms = {};\n  Object.keys(nw.data).forEach(function(model) {\n    var key = 'list-'+model;\n    var name = 'list ' + model;\n    nw.indexes.modelTerms[key] = {\n      href: '/admin/list/' + model,\n      text: name,\n    };\n    nw.indexes.model.add({id: key, name: name});\n    \n    var key = 'edit-'+model;\n    var name = 'edit ' + model;\n    nw.indexes.modelTerms[key] = {\n      href: '/admin/data/?model=model&record=' + model,\n      text: name,\n    };\n    nw.indexes.model.add({id: key, name: name});\n    \n    var key = 'add-'+model;\n    var name = 'add ' + model;\n    nw.indexes.modelTerms[key] = {\n      href: '/admin/data/?model='+model+'&record=create',\n      text: name,\n    };\n    nw.indexes.model.add({id: key, name: name});\n    \n    Object.keys(nw.data[model]).forEach(function(id) {\n      var key = 'edit-'+model+'-'+id;\n      var name = 'edit ' + id + ' (' + model + ')';\n      nw.indexes.modelTerms[key] = {\n        href: '/admin/data/?model='+model+'&record=' + id,\n        text: name,\n      };\n      nw.indexes.model.add({id: key, name: name});\n    });\n  });\n}\n\nnw.inSearch = false;\nMousetrap.bind(['ctrl+enter', 'ctrl+space'], function(e) {\n  $('.widget-admin_search').toggle();\n  nw.inSearch = !nw.inSearch;\n  $('.widget-admin_search input').focus();\n  if (!nw.data) {\n    $.getJSON(\"/internal/all_data\", function(result) {\n      nw.data = result;\n      updateIndices(this);\n    });\n  }\n  return false;\n});\nMousetrap.bind('escape', function(e) {\n  if (nw.inSearch) {\n    nw.inSearch = false;\n    $('.widget-admin_search').hide();\n  }\n  return false;\n});\nangular.bootstrap(\"#\" + id);"
+        "javascript": "var search = angular.module('search',[]);\nsearch.controller('SearchController', ['$scope', function($scope) {\n  $scope.greeting = 'Hola!';\n}]);\n\nwindow['SearchController'] = function ($scope) {\n  this.greeting = 'Hola123!';\n  this.query = '';\n  \n  this.search = function() {\n    this.results = nw.indexes.model.search(this.query);\n    this.results = this.results.map(function(entry) {\n      return nw.indexes.modelTerms[entry.ref];\n    });\n    console.log(this.results);\n  }\n  \n  Mousetrap.bind('enter', function(e) {\n    if (nw.inSearch) {\n      window.location = this.results[0].href;\n    }\n    return false;\n  }.bind(this));\n  Mousetrap.bind('alt+enter', function(e) {\n    if (nw.inSearch) {\n      window.open(this.results[0].href, '_blank');\n    }\n    return false;\n  }.bind(this));\n}\n\nfunction updateIndices(ctrl) {\n  nw.indexes = {};  \n  nw.indexes.model = lunr(function () {\n     this.field('name')\n  });\n  nw.indexes.modelTerms = {};\n  Object.keys(nw.data).forEach(function(model) {\n    var key = 'list-'+model;\n    var name = 'list ' + model;\n    nw.indexes.modelTerms[key] = {\n      href: '/admin/list/' + model,\n      text: name,\n    };\n    nw.indexes.model.add({id: key, name: name});\n    \n    /*var key = 'edit-'+model;\n    var name = 'edit ' + model;\n    nw.indexes.modelTerms[key] = {\n      href: '/admin/data/?model=model&record=' + model,\n      text: name,\n    };\n    nw.indexes.model.add({id: key, name: name});*/\n    \n    var key = 'add-'+model;\n    var name = 'add ' + model;\n    nw.indexes.modelTerms[key] = {\n      href: '/admin/data/?model='+model+'&record=create',\n      text: name,\n    };\n    nw.indexes.model.add({id: key, name: name});\n    \n    Object.keys(nw.data[model]).forEach(function(id) {\n      var key = 'edit-'+model+'-'+id;\n      var name = 'edit ' + id + ' (' + model + ')';\n      nw.indexes.modelTerms[key] = {\n        href: '/admin/data/?model='+model+'&record=' + id,\n        text: name,\n      };\n      nw.indexes.model.add({id: key, name: name});\n    });\n  });\n}\n\nnw.inSearch = false;\nMousetrap.bind(['ctrl+enter', 'ctrl+space'], function(e) {\n  $('.widget-admin_search').toggle();\n  nw.inSearch = !nw.inSearch;\n  $('.widget-admin_search input').focus();\n  if (!nw.data) {\n    $.getJSON(\"/internal/all_data\", function(result) {\n      nw.data = result;\n      updateIndices(this);\n    });\n  }\n  return false;\n});\nMousetrap.bind('escape', function(e) {\n  if (nw.inSearch) {\n    nw.inSearch = false;\n    $('.widget-admin_search').hide();\n  }\n  return false;\n});\nangular.bootstrap(\"#\" + id);"
     },
     "style": {
         "_is_func": true,
         "args": [],
         "css": ".widget-admin_search {\n  display: none;\n  position: fixed;\n  top: 10%;\n  left: 20%;\n  width: 60%;\n  height: 80%;\n  background: white;\n  border: 1px solid black;\n  border-radius: 15px;\n  box-shadow: 0px 0px 10px #aaa;\n  padding: 2px 15px 2px 15px;\n  z-index: 10;\n  padding: 10px;\n}\n\n.widget-admin_search .list-group-item {\n  padding: 5px 15px;\n}"
     },
-    "weight": null,
-    "settings": {
-        "fields": {
-            "": {
-                "type": "",
-                "quantity": ""
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
             }
-        },
+        }
+    },
+    "settings": {
+        "fields": {},
         "display": {
             "widgets": {},
             "slotAssignments": {

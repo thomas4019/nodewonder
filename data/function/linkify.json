@@ -1,0 +1,17 @@
+{
+    "name": "linkify",
+    "args": [
+        "data",
+        "model"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "data",
+            "model"
+        ],
+        "javascript": "_.each(data, function(record) {\n  record.Title = '<a href=\"/admin/data/?model='+model+'&record='+record.Title+'\">' + record.Title + '</a>';\n});\nreturn data;"
+    },
+    "calls": [],
+    "callers": []
+}

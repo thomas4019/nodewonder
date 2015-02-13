@@ -14,9 +14,7 @@
         "jquery": [],
         "bootstrap": [],
         "angular": [],
-        "underscore": [
-            "underscore.js"
-        ],
+        "lodash": [],
         "font-awesome": [
             "css/font-awesome.css"
         ]
@@ -55,6 +53,15 @@
         "javascript": "return 'nw.edit_widgets = ' + JSON.stringify(cms.edit_widgets) + ';' +\n  'nw.view_widgets = ' + JSON.stringify(cms.view_widgets) + ';' +\n  'angular.bootstrap(\"#' + this.id + '\");';"
     },
     "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
     "settings": {
         "fields": {
             "label": {

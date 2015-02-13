@@ -606,5 +606,10 @@
         }
     },
     "index": "name",
-    "storage": "disk+memory"
+    "storage": "disk+memory",
+    "adminFields": [
+        "name",
+        "tags",
+        "slots"
+    ]
 }

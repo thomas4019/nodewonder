@@ -31,7 +31,7 @@
         "args": [
             "callback"
         ],
-        "javascript": "var widgets = this.custom.Code.widgets;\nvar slotAssignments = this.custom.Code.slotAssignments;\nvar settings = this.settings;\n\nvar callback2 = callback;\n\nvar callback = function() {\n    callback2({\n        'body': widgets\n    }, slotAssignments);\n}\nc = _.clone(context);\nc = _.extend(c, {\n  settings: this.settings,\n  widgets: this.custom.Code.widgets,\n  slotAssignments: this.custom.Code.slotAssignments,\n  callback: callback,\n  id: this.id\n});\nvm.runInContext(this.custom.controller, c);\n//id = this.id;\n//eval(this.custom.controller);"
+        "javascript": "var widgets = this.custom.Code.widgets;\nvar slotAssignments = this.custom.Code.slotAssignments;\nvar settings = this.settings;\n\nvar callback2 = callback;\n\nvar callback = function() {\n    callback2({\n        'body': widgets\n    }, slotAssignments);\n}\nc = _.clone(initSandbox);\nc = _.extend(c, {\n  settings: this.settings,\n  widgets: this.custom.Code.widgets,\n  slotAssignments: this.custom.Code.slotAssignments,\n  callback: callback,\n  id: this.id\n});\nvm.runInNewContext(this.custom.controller, c);\n//id = this.id;\n//eval(this.custom.controller);"
     },
     "wrapper": "",
     "wrapperClass": "",

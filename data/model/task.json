@@ -82,5 +82,9 @@
         }
     },
     "index": "Title",
-    "storage": ""
+    "storage": "",
+    "adminFields": [
+        "Title",
+        "Type"
+    ]
 }
