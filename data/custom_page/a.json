@@ -8,15 +8,14 @@
                 "type": "eval",
                 "slots": {
                     "code": [
-                        "W66n1Bsl"
+                        "RUe0ZYm9"
                     ]
                 }
             },
-            "W66n1Bsl": {
-                "type": "_.shuffle",
-                "slots": {
-                    "collection": []
-                }
+            "RUe0ZYm9": {
+                "type": "literal",
+                "slots": {},
+                "data": "1234"
             }
         },
         "slotAssignments": {

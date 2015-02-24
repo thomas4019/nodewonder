@@ -82,6 +82,16 @@ function setupWidgetSelector(id) {
 				}
 			});
 
+			var tag = 'code';
+			var name = query.term;
+			var func = {};
+			func.text = '"' + name + '"';
+			func.id = 'literal';
+			func.widget = 'literal';
+			func.data = name;
+			groups[tag].children.push(func);
+
+
 			query.callback(data);
 		}
 	});
@@ -145,6 +155,9 @@ function stateController($scope) {
 			$scope.widgets[new_id] = {type: selected.widget, slots: slots, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, slot_tags: selected.slot_tags, settings: {label: selected.name, field_type: selected.model_type}};
 		else
 			$scope.widgets[new_id] = {type: selected.widget, slots: slots, has_form: selected.settings, slot_tags: selected.slot_tags};
+
+		if (selected.data)
+			$scope.widgets[new_id].data = selected.data;			
 
 		if (selected.id != selected.widget) {
 			$scope.widgets[new_id]['pseudo_widget'] = selected.id;
