@@ -19,11 +19,11 @@
         "",
         "view"
     ],
-    "slots": [
-        "",
-        ""
-    ],
-    "slot_tags": {},
+    "slots": {
+        "": [
+            "view"
+        ]
+    },
     "wrapper": "none",
     "wrapperClass": "",
     "weight": null,

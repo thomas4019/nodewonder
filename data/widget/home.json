@@ -1,19 +1,45 @@
 {
-    "slots": [
-        "header",
-        "featured",
-        "sidebar_first",
-        "highlighted",
-        "title",
-        "tabs",
-        "help",
-        "action_links",
-        "content",
-        "sidebar_second",
-        "triptych",
-        "footer_above",
-        "footer"
-    ],
+    "slots": {
+        "header": [
+            "view"
+        ],
+        "featured": [
+            "view"
+        ],
+        "sidebar_first": [
+            "view"
+        ],
+        "highlighted": [
+            "view"
+        ],
+        "title": [
+            "view"
+        ],
+        "tabs": [
+            "view"
+        ],
+        "help": [
+            "view"
+        ],
+        "action_links": [
+            "view"
+        ],
+        "content": [
+            "view"
+        ],
+        "sidebar_second": [
+            "view"
+        ],
+        "triptych": [
+            "view"
+        ],
+        "footer_above": [
+            "view"
+        ],
+        "footer": [
+            "view"
+        ]
+    },
     "head": [
         "/themes/bartik/css/colors.css",
         "/themes/bartik/css/layout.css",

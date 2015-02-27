@@ -31,8 +31,7 @@
         "action",
         "local-action"
     ],
-    "slots": [],
-    "slot_tags": {},
+    "slots": {},
     "wrapper": "div ng-controller=\"SearchController as ctrl\"",
     "wrapperClass": "",
     "action": {

@@ -11,10 +11,11 @@
     "tags": [
         "view"
     ],
-    "slots": [
-        "children"
-    ],
-    "slot_tags": {},
+    "slots": {
+        "children": [
+            "view"
+        ]
+    },
     "wrapper": "",
     "wrapperClass": "",
     "weight": "",

@@ -1,7 +1,9 @@
 {
-    "slots": [
-        "body"
-    ],
+    "slots": {
+        "body": [
+            "view"
+        ]
+    },
     "wrapper": "none",
     "load": {
         "_is_func": true,

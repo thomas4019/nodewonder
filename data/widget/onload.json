@@ -1,8 +1,5 @@
 {
-    "slots": [
-        "actions"
-    ],
-    "slot_tags": {
+    "slots": {
         "actions": [
             "action"
         ]

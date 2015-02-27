@@ -33,11 +33,7 @@
             },
             "slots": {
                 "type": "Text",
-                "quantity": "2+"
-            },
-            "slot_tags": {
-                "type": "Text",
-                "quantity": "key2+:1+"
+                "quantity": "slot1+:2+"
             },
             "setup": {
                 "type": "Code",
@@ -218,7 +214,6 @@
                     "slots": {
                         "children": [
                             "slots",
-                            "slot_tags",
                             "children",
                             "content"
                         ]
@@ -228,21 +223,9 @@
                     "type": "textbox",
                     "slots": {},
                     "settings": {
-                        "label": "slots",
-                        "field_type": "Text"
+                        "label": "slots"
                     },
                     "field": "slots",
-                    "model_type": "Text",
-                    "model": "widget"
-                },
-                "slot_tags": {
-                    "type": "textbox",
-                    "slots": {},
-                    "settings": {
-                        "label": "slot_tags",
-                        "field_type": "Text"
-                    },
-                    "field": "slot_tags",
                     "model_type": "Text",
                     "model": "widget"
                 },

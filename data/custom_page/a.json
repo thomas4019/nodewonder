@@ -8,14 +8,22 @@
                 "type": "eval",
                 "slots": {
                     "code": [
-                        "RUe0ZYm9"
+                        "J3T9o3JH",
+                        "07lXVqar"
                     ]
                 }
             },
-            "RUe0ZYm9": {
+            "J3T9o3JH": {
                 "type": "literal",
                 "slots": {},
-                "data": "1234"
+                "data": "123",
+                "label": "\"123\""
+            },
+            "07lXVqar": {
+                "type": "literal",
+                "slots": {},
+                "data": "abc",
+                "label": "\"abc\""
             }
         },
         "slotAssignments": {

@@ -1,7 +1,9 @@
 {
-    "slots": [
-        "container"
-    ],
+    "slots": {
+        "container": [
+            "view"
+        ]
+    },
     "settings": {
         "fields": {},
         "display": {

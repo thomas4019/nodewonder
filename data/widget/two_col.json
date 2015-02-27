@@ -1,12 +1,6 @@
 {
-    "deps": {
-        "jquery": [],
-        "bootstrap": []
-    },
-    "slots": [
-        "left",
-        "right"
-    ],
+    "name": "two_col",
+    "settings_unfiltered": [],
     "toHTML": {
         "_is_func": true,
         "args": [
@@ -14,10 +8,34 @@
         ],
         "javascript": "var template = Handlebars.compile('<div class=\"row\"><div class=\"col-sm-6\">{{{ renderSlot \"left\" }}} ' +\n    '</div><div class=\"col-sm-6\">{{{ renderSlot \"right\" }}}</div></div>');\nreturn template(this);"
     },
-    "name": "two_col",
+    "deps": {
+        "jquery": [],
+        "bootstrap": []
+    },
+    "head": [],
     "tags": [
         "view"
     ],
+    "slots": {
+        "left": [
+            "view"
+        ],
+        "right": [
+            "view"
+        ]
+    },
+    "wrapper": "",
+    "wrapperClass": "",
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
     "settings": {
         "fields": {},
         "display": {

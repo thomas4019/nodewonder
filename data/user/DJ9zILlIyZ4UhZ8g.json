@@ -2,9 +2,6 @@
     "clientID": "DJ9zILlIyZ4UhZ8g",
     "username": "test4",
     "password": "123",
-    "captcha": {
-        "recaptcha_challenge_field": "03AHJ_VuuvjunuZGcLQURyWYaO_x32NGSbXMra1RFsYOEmUf6kZX26qNa6C9pu6nGLnVOWkkd3a3E_fzLVhHIbHbdt-ICxKoBMJfECa8hdThY8skAoDQGxemWL4hh5za_fnVCDHwjfbvJ4Vu9GTTI35Rp4M4Up7Tt4vMiNkc63bMW1TtNRfKuJ4z6YX_0v6lnuZqpXl-QlNQeNgIhNZBeoYtR5Ex_QFaGYXg",
-        "recaptcha_response_field": ""
-    },
-    "email": ""
+    "email": "",
+    "roles": []
 }

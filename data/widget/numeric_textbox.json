@@ -19,8 +19,7 @@
         "field_edit",
         "view"
     ],
-    "slots": [],
-    "slot_tags": {},
+    "slots": {},
     "processData": {
         "_is_func": true,
         "args": [

@@ -1,9 +1,6 @@
 {
     "name": "user",
     "description": "",
-    "index": "clientID",
-    "views": {},
-    "storage": "disk+memory",
     "schema": {
         "fields": {
             "clientID": {
@@ -113,5 +110,7 @@
             }
         }
     },
-    "key": "user"
+    "index": "clientID",
+    "storage": "disk+memory",
+    "adminFields": []
 }

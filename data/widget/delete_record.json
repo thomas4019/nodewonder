@@ -1,16 +1,5 @@
 {
-    "slots": [
-        "success",
-        "failure"
-    ],
-    "tags": [
-        "filtered",
-        "action",
-        "local-action",
-        "process",
-        "view"
-    ],
-    "slot_tags": {
+    "slots": {
         "success": [
             "action"
         ],
@@ -18,6 +7,13 @@
             "action"
         ]
     },
+    "tags": [
+        "filtered",
+        "action",
+        "local-action",
+        "process",
+        "view"
+    ],
     "action": {
         "_is_func": true,
         "args": [

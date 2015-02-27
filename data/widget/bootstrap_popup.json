@@ -19,11 +19,14 @@
     "tags": [
         "view"
     ],
-    "slots": [
-        "container",
-        "buttons"
-    ],
-    "slot_tags": {},
+    "slots": {
+        "container": [
+            "view"
+        ],
+        "buttons": [
+            "view"
+        ]
+    },
     "wrapper": "",
     "wrapperClass": "",
     "script": {

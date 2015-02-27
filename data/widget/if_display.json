@@ -18,11 +18,14 @@
     "tags": [
         "view"
     ],
-    "slots": [
-        "then",
-        "else"
-    ],
-    "slot_tags": {},
+    "slots": {
+        "then": [
+            "view"
+        ],
+        "else": [
+            "view"
+        ]
+    },
     "wrapper": "",
     "wrapperClass": "",
     "load": {

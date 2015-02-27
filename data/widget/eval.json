@@ -4,18 +4,29 @@
     "htmlTemplate": {
         "_is_func": true,
         "args": [],
-        "htmlmixed": "123"
+        "htmlmixed": "12345"
+    },
+    "toHTML": {
+        "_is_func": true,
+        "args": [
+            "label"
+        ],
+        "javascript": "console.log('MRAL');\nvar r = this.slotAssignments.code[0].eval();\nconsole.log(r);\nreturn r;\n//return 'begin<br>' + this.slotAssignments.code[0].type + ' ' + this.slotAssignments.code[0].name;"
     },
     "deps": {},
     "head": [],
-    "tags": [],
-    "slots": [
-        "code"
+    "tags": [
+        "view"
     ],
-    "slot_tags": {
+    "slots": {
         "code": [
             "code"
         ]
+    },
+    "setup": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "console.log('MRAK'); console.log(this);"
     },
     "wrapper": "",
     "wrapperClass": "",

@@ -2,7 +2,9 @@
     "from": "widget",
     "select": [
         "name",
-        "children"
+        "children",
+        "slots",
+        "slot_tags"
     ],
     "where": "",
     "orderby": "",

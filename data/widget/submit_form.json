@@ -3,11 +3,7 @@
         "jquery": [],
         "jquery-form": []
     },
-    "slots": [
-        "success",
-        "failure"
-    ],
-    "slot_tags": {
+    "slots": {
         "success": [
             "action"
         ],

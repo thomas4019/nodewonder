@@ -1,0 +1,25 @@
+{
+    "name": "slot",
+    "description": "",
+    "schema": {
+        "fields": {
+            "name": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "type": {
+                "type": "Text",
+                "quantity": "1+"
+            }
+        },
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
+    "index": "",
+    "storage": "disk+memory",
+    "adminFields": []
+}

@@ -9,11 +9,7 @@
         "process",
         "view"
     ],
-    "slots": [
-        "success",
-        "failure"
-    ],
-    "slot_tags": {
+    "slots": {
         "success": "action",
         "failure": "action"
     },

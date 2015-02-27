@@ -16,8 +16,7 @@
         "field_edit",
         "view"
     ],
-    "slots": [],
-    "slot_tags": {},
+    "slots": {},
     "setup": {
         "_is_func": true,
         "args": [],

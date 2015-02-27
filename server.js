@@ -187,6 +187,14 @@ Widget.prototype.html = function () {
   }
 }
 
+Widget.prototype.eval = function() {
+  console.log(this.name);
+  if (this.name == 'literal') {
+    return this.data;
+  }
+  return '----';
+}
+
 Widget.prototype.renderSlot = function(slotName) {
   var zone_html = '';
   _.each(this.slotAssignments[slotName], function(w, i) {
@@ -383,9 +391,9 @@ function sortWidgets(callback) {
     return a.weight || 0 < b.weight || 0;
   });*/
   //console.log(cms.edit_widgets);
-  cms.edit_widgets['Text'].sort(function (a, b) {
+  /*cms.edit_widgets['Text'].sort(function (a, b) {
     return cms.widgets[a].weight || 0 < cms.widgets[b].weight || 0;
-  });
+  });*/
   //console.log(cms.model_widgets['Text']);
   callback();
 }
@@ -695,6 +703,39 @@ cms.migrate11 = function() {
     }
     delete model.settingsModel;
     cms.functions.saveRecord('widget', index, model);
+  });
+}
+
+cms.migrate12 = function() {
+  _.forEach(cms.model_data['widget'], function(widget) {
+    /*widget.slots = _.map(widget.slots, function(name) {
+      var o = {name: name};
+      if (widget.slot_tags && widget.slot_tags[name]) {
+        o['tag'] = widget.slot_tags[name];
+      } else {
+        o['tag'] = ['view'];
+      }
+      return o;
+    });*/
+    var old = widget.slots;
+
+    widget.slots = {};
+    _.forEach(old, function(slot) {
+      widget.slots[slot.name] = slot.tag;
+      //delete slot['name'];
+    });
+
+    if (Object.keys(widget.slots).length > 0) {
+      console.log(widget);
+    }
+    cms.functions.saveRecord('widget', widget.name, widget);
+  });
+}
+
+cms.migrate13 = function() {
+  _.forEach(cms.model_data['widget'], function(widget) {
+    delete widget.slot_tags;
+    cms.functions.saveRecord('widget', widget.name, widget);
   });
 }
 

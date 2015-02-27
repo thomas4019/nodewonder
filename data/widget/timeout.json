@@ -8,10 +8,7 @@
         "action",
         "local-action"
     ],
-    "slots": [
-        "do"
-    ],
-    "slot_tags": {
+    "slots": {
         "do": [
             "action"
         ]

@@ -18,10 +18,7 @@
         "action",
         "local-action"
     ],
-    "slots": [
-        "onclick"
-    ],
-    "slot_tags": {
+    "slots": {
         "onclick": [
             "action"
         ]

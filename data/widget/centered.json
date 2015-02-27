@@ -1,7 +1,9 @@
 {
-    "slots": [
-        "content"
-    ],
+    "slots": {
+        "content": [
+            "view"
+        ]
+    },
     "toHTML": {
         "_is_func": true,
         "args": [

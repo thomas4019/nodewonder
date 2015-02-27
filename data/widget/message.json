@@ -12,8 +12,7 @@
         "local-action",
         "view"
     ],
-    "slots": [],
-    "slot_tags": {},
+    "slots": {},
     "wrapper": "",
     "wrapperClass": "",
     "action": {

@@ -12,8 +12,7 @@
         "field_view",
         "view"
     ],
-    "slots": [],
-    "slot_tags": {},
+    "slots": {},
     "wrapper": "p",
     "wrapperClass": "",
     "weight": "",

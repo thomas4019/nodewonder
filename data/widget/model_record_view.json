@@ -13,8 +13,7 @@
     "tags": [
         "view"
     ],
-    "slots": [],
-    "slot_tags": {},
+    "slots": {},
     "children": {
         "_is_func": true,
         "args": [

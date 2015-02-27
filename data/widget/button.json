@@ -14,8 +14,7 @@
     "tags": [
         "view"
     ],
-    "slots": [],
-    "slot_tags": {},
+    "slots": {},
     "wrapper": "span",
     "wrapperClass": "",
     "weight": null,

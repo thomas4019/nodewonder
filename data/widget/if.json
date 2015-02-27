@@ -1,9 +1,5 @@
 {
-    "slots": [
-        "then",
-        "else"
-    ],
-    "slot_tags": {
+    "slots": {
         "then": [
             "action"
         ],

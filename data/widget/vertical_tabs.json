@@ -23,10 +23,11 @@
     "tags": [
         "view"
     ],
-    "slots": [
-        "tabs"
-    ],
-    "slot_tags": {},
+    "slots": {
+        "tabs": [
+            "view"
+        ]
+    },
     "wrapper": "",
     "wrapperClass": "",
     "weight": "",
