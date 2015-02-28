@@ -19,6 +19,10 @@
     ],
     "callers": [
         "loadWidget",
+        "saveRecord",
+        "saveRecord",
+        "loadWidget",
+        "saveRecord",
         "saveRecord"
     ]
 }

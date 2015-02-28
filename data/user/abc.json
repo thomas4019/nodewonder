@@ -6,8 +6,8 @@
         "recaptcha_challenge_field": "03AHJ_VusiKBNtaxTUZFOI2jqvxmztBauFEdlPNNKBqSO9QBDgWyjwszL9ImOGDWW98PgBwRuFuaqsaeOEq4VJXxJwCUNSviuoLkEDNqwzH8lxbzOguX0tBAX__xQIBr9AH0h-q-K_RdRXrTEchJAn_SUKQUvNVVW2we4w4g6QwyEjXZINbH0eV_FHFF_arEKV0pK--UZVm4Ufyn4agZaBMmmwhB8lSoEpOKXxldnhW272zMQln_Ms0dU",
         "recaptcha_response_field": ""
     },
-    "email": "th4019@gmail.com",
     "roles": [
         "super"
-    ]
+    ],
+    "email": "th4019@gmail.com"
 }

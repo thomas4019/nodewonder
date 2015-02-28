@@ -6,8 +6,8 @@
         "recaptcha_challenge_field": "03AHJ_VusJcGDRIBdyJGtWduNN91DvrWORzQclfMPaTiiTHHwKHY8xVL7aNKt_u6Sy4Z0-TObShGDOSW2-3ZEPFo8kT9nQPe0jkYx91JB1uIY_pWYKbyHx2xJV_gjusBS6HRurJa9V71cjd1UvcmHkDYTyM7e1YlvK5E3v5nrPIvHp1keK2XvuHV4C0qDY--pusgNPVY0dOAn9cVyHhXjaw7oy2-Jm23kQDgxfCKSbFaODHv0ci7hK8dY",
         "recaptcha_response_field": ""
     },
-    "email": "",
     "roles": [
         "super"
-    ]
+    ],
+    "email": ""
 }
