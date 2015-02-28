@@ -10,7 +10,7 @@
             "oldSchema",
             "data"
         ],
-        "javascript": "var schema = _.cloneDeep(oldSchema);\nvar fields = schema.fields;\n_.each(schema.display.widgets, function(widget, id) {\n  //console.log(widget);\n  if (widget.field && fields[widget.field] ) {\n    if (data) {\n      widget.settings.data = data[widget.field];\n    }\n    //console.log(fields[widget.field]);\n    if (fields[widget.field].quantity) {\n      widget.settings.quantity = fields[widget.field].quantity;\n    }\n    //fields[widget.field].widget = widget.type;\n    widget.type = cms.functions.getWidget(widget.type, widget.settings, widget);\n    fields[widget.field].widget = widget.type;\n    fields[widget.field].settings = widget.settings;\n    fields[widget.field].name = widget.field;\n}\n}.bind(this));\nreturn schema;"
+        "javascript": "var schema = _.cloneDeep(oldSchema);\nvar fields = schema.fields;\n_.each(schema.display.widgets, function(widget, id) {\n  //console.log(widget);\n  if (widget.field && fields[widget.field] ) {\n    if (data) {\n      widget.settings.data = data[widget.field];\n    }\n    //console.log(fields[widget.field]);\n    if (fields[widget.field].quantity) {\n      widget.settings.quantity = fields[widget.field].quantity;\n    }\n    //fields[widget.field].widget = widget.type;\n    widget.widget = cms.functions.getWidget(widget.widget || widget.type, widget.settings, widget);\n    fields[widget.field].widget = widget.widget;\n    fields[widget.field].settings = widget.settings;\n    fields[widget.field].name = widget.field;\n}\n}.bind(this));\nreturn schema;"
     },
     "calls": [
         "getWidget"
