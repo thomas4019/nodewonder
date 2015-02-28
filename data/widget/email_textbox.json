@@ -27,7 +27,6 @@
         "display": {
             "widgets": {
                 "inline": {
-                    "type": "checkbox",
                     "slots": {},
                     "settings": {
                         "label": "inline",
@@ -35,10 +34,10 @@
                     },
                     "field": "inline",
                     "model_type": "Boolean",
-                    "model": "email_textbox"
+                    "model": "email_textbox",
+                    "widget": "checkbox"
                 },
                 "data": {
-                    "type": "email_textbox",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -46,7 +45,8 @@
                     },
                     "field": "data",
                     "model_type": "Email",
-                    "model": "email_textbox"
+                    "model": "email_textbox",
+                    "widget": "email_textbox"
                 }
             },
             "slotAssignments": {

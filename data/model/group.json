@@ -31,7 +31,6 @@
         "display": {
             "widgets": {
                 "Name": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "Name",
@@ -39,10 +38,10 @@
                     },
                     "field": "Name",
                     "model_type": "Text",
-                    "model": "group"
+                    "model": "group",
+                    "widget": "textbox"
                 },
                 "Members": {
-                    "type": "model_record_reference",
                     "slots": {},
                     "settings": {
                         "label": "Members",
@@ -56,10 +55,10 @@
                     },
                     "field": "Members",
                     "model_type": "Record",
-                    "model": "group"
+                    "model": "group",
+                    "widget": "model_record_reference"
                 },
                 "Type": {
-                    "type": "radio",
                     "slots": {},
                     "settings": {
                         "data": "Open",
@@ -73,7 +72,8 @@
                     },
                     "field": "Type",
                     "model_type": "Text",
-                    "model": "group"
+                    "model": "group",
+                    "widget": "radio"
                 }
             },
             "slotAssignments": {

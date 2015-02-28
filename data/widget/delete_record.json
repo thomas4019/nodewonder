@@ -55,7 +55,6 @@
         "display": {
             "widgets": {
                 "model": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "model",
@@ -63,10 +62,10 @@
                     },
                     "field": "model",
                     "model_type": "Text",
-                    "model": "delete_record"
+                    "model": "delete_record",
+                    "widget": "textbox"
                 },
                 "record": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "record",
@@ -74,7 +73,8 @@
                     },
                     "field": "record",
                     "model_type": "Text",
-                    "model": "delete_record"
+                    "model": "delete_record",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

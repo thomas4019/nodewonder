@@ -5,10 +5,10 @@
     "code": {
         "widgets": {
             "cSCu9s8R": {
-                "type": "analytics_pageviews",
                 "slots": {
                     "events": []
-                }
+                },
+                "widget": "analytics_pageviews"
             }
         },
         "slotAssignments": {

@@ -37,7 +37,6 @@
         "display": {
             "widgets": {
                 "condition": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "condition",
@@ -45,7 +44,8 @@
                     },
                     "field": "condition",
                     "model_type": "Text",
-                    "model": "if"
+                    "model": "if",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

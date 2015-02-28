@@ -4,17 +4,15 @@
     "C": [
         {
             "name": "123",
-            "type": "Captcha",
             "quantity": "aoeu",
-            "widget": "captchagen",
+            "widget": "Captcha",
             "settings": "",
             "required": false
         },
         {
             "name": "aoeu",
-            "type": "Code",
             "quantity": "123",
-            "widget": "codemirror",
+            "widget": "Code",
             "settings": "",
             "required": false
         }

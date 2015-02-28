@@ -5,7 +5,6 @@
     "code": {
         "widgets": {
             "0qKWRbe6": {
-                "type": "vertical_tabs",
                 "slots": {
                     "tabs": [
                         "GIRBdr6A",
@@ -17,19 +16,20 @@
                         "123",
                         "456"
                     ]
-                }
+                },
+                "widget": "vertical_tabs"
             },
             "GIRBdr6A": {
-                "type": "calendar",
                 "slots": {},
-                "settings": {}
+                "settings": {},
+                "widget": "calendar"
             },
             "qOwaQCHS": {
-                "type": "youtube_video",
                 "slots": {},
                 "settings": {
                     "id": "mUBf5rRSyO0"
-                }
+                },
+                "widget": "youtube_video"
             }
         },
         "slotAssignments": {

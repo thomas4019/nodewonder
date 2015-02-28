@@ -5,7 +5,6 @@
     "code": {
         "widgets": {
             "AOdQ4sW3": {
-                "type": "two_col",
                 "slots": {
                     "left": [
                         "BgXPLo7O"
@@ -15,25 +14,26 @@
                         "jyvvKykT"
                     ],
                     "events": []
-                }
+                },
+                "widget": "two_col"
             },
             "BgXPLo7O": {
-                "type": "hello_world",
                 "slots": {
                     "events": []
-                }
+                },
+                "widget": "hello_world"
             },
             "VmFad9OH": {
-                "type": "hello_world",
                 "slots": {
                     "events": []
-                }
+                },
+                "widget": "hello_world"
             },
             "jyvvKykT": {
-                "type": "youtube_video",
                 "slots": {
                     "events": []
-                }
+                },
+                "widget": "youtube_video"
             }
         },
         "slotAssignments": {

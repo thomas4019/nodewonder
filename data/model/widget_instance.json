@@ -22,7 +22,6 @@
         "display": {
             "widgets": {
                 "type": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "type",
@@ -30,10 +29,10 @@
                     },
                     "field": "type",
                     "model_type": "Text",
-                    "model": "widget_instance"
+                    "model": "widget_instance",
+                    "widget": "textbox"
                 },
                 "slots": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "slots",
@@ -41,10 +40,10 @@
                     },
                     "field": "slots",
                     "model_type": "Text",
-                    "model": "widget_instance"
+                    "model": "widget_instance",
+                    "widget": "textbox"
                 },
                 "settings": {
-                    "type": "jsoneditor",
                     "slots": {},
                     "settings": {
                         "label": "settings",
@@ -52,7 +51,8 @@
                     },
                     "field": "settings",
                     "model_type": "JSON",
-                    "model": "widget_instance"
+                    "model": "widget_instance",
+                    "widget": "jsoneditor"
                 }
             },
             "slotAssignments": {

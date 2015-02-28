@@ -27,7 +27,6 @@
         "display": {
             "widgets": {
                 "Name": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "Name",
@@ -35,10 +34,10 @@
                     },
                     "field": "Name",
                     "model_type": "Text",
-                    "model": "model_view"
+                    "model": "model_view",
+                    "widget": "textbox"
                 },
                 "Code": {
-                    "type": "widget_code_editor",
                     "slots": {},
                     "settings": {
                         "label": "Code",
@@ -54,7 +53,8 @@
                     },
                     "field": "Code",
                     "model_type": "Widgets",
-                    "model": "model_view"
+                    "model": "model_view",
+                    "widget": "widget_code_editor"
                 }
             },
             "slotAssignments": {

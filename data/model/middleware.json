@@ -26,7 +26,6 @@
         "display": {
             "widgets": {
                 "name": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "name",
@@ -34,10 +33,10 @@
                     },
                     "field": "name",
                     "model_type": "Text",
-                    "model": "middleware"
+                    "model": "middleware",
+                    "widget": "textbox"
                 },
                 "code": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "",
@@ -52,10 +51,10 @@
                     },
                     "field": "code",
                     "model_type": "Code",
-                    "model": "middleware"
+                    "model": "middleware",
+                    "widget": "codemirror"
                 },
                 "priority": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "priority",
@@ -63,10 +62,10 @@
                     },
                     "field": "priority",
                     "model_type": "Number",
-                    "model": "middleware"
+                    "model": "middleware",
+                    "widget": "numeric_textbox"
                 },
                 "base": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "base",
@@ -74,7 +73,8 @@
                     },
                     "field": "base",
                     "model_type": "Text",
-                    "model": "middleware"
+                    "model": "middleware",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

@@ -31,7 +31,6 @@
         "display": {
             "widgets": {
                 "created": {
-                    "type": "date",
                     "slots": {},
                     "settings": {
                         "label": "created",
@@ -39,10 +38,10 @@
                     },
                     "field": "created",
                     "model_type": "Date",
-                    "model": "model_meta"
+                    "model": "model_meta",
+                    "widget": "date"
                 },
                 "update": {
-                    "type": "date",
                     "slots": {},
                     "settings": {
                         "label": "update",
@@ -50,10 +49,10 @@
                     },
                     "field": "update",
                     "model_type": "Date",
-                    "model": "model_meta"
+                    "model": "model_meta",
+                    "widget": "date"
                 },
                 "author": {
-                    "type": "model_record_reference",
                     "slots": {},
                     "settings": {
                         "label": "author",
@@ -61,7 +60,8 @@
                     },
                     "field": "author",
                     "model_type": "Record",
-                    "model": "model_meta"
+                    "model": "model_meta",
+                    "widget": "model_record_reference"
                 }
             },
             "slotAssignments": {

@@ -1,12 +1,12 @@
 <input type="checkbox" ng-model="widgets[id]['selected']" ng-change="check()" >
 <span  class="" ng-if="!(widgets[id]['field'])">
-{{ widgets[id]['type'] }}
+{{ widgets[id]['widget'] }}
 </span>
 <span  class="" ng-if="(widgets[id]['label'])">
 {{ widgets[id]['label'] }}
 </span>
 <span ng-class="{selected: widgets[id]['selected'], cut: widgets[id]['cut']}" ng-if="widgets[id]['field']">
-{{ widgets[id]['field'] }} [{{ widgets[id]['model'] }}] ({{ widgets[id]['model_type'] }}) <select ng-change="exportState()" ng-model="widgets[id]['type']"
+{{ widgets[id]['field'] }} [{{ widgets[id]['model'] }}] ({{ widgets[id]['model_type'] }}) <select ng-change="exportState()" ng-model="widgets[id]['widget']"
 ng-options="w for w in field_widgets[widgets[id]['model_type']]"></select>
 </span>
 <!--<a href="" ng-click="deleteWidgetRecur(id)"><i class="fa fa-trash-o fa-lg"></i></a>!-->

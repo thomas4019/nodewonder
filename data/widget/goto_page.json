@@ -33,7 +33,6 @@
         "display": {
             "widgets": {
                 "URL": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "URL",
@@ -41,7 +40,8 @@
                     },
                     "field": "URL",
                     "model_type": "Text",
-                    "model": "goto_page"
+                    "model": "goto_page",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

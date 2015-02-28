@@ -51,7 +51,6 @@
         "display": {
             "widgets": {
                 "inline": {
-                    "type": "checkbox",
                     "slots": {},
                     "settings": {
                         "label": "inline",
@@ -59,10 +58,10 @@
                     },
                     "field": "inline",
                     "model_type": "Boolean",
-                    "model": "textbox"
+                    "model": "textbox",
+                    "widget": "checkbox"
                 },
                 "data": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -70,7 +69,8 @@
                     },
                     "field": "data",
                     "model_type": "Text",
-                    "model": "textbox"
+                    "model": "textbox",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

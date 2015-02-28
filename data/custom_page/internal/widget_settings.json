@@ -5,9 +5,9 @@
     "code": {
         "widgets": {
             "start": {
-                "type": "model_renderer",
                 "slots": {},
-                "settings": {}
+                "settings": {},
+                "widget": "model_renderer"
             }
         },
         "slotAssignments": {

@@ -5,10 +5,10 @@
     "code": {
         "widgets": {
             "52xpJloT": {
-                "type": "middleware_listing",
                 "slots": {
                     "events": []
-                }
+                },
+                "widget": "middleware_listing"
             }
         },
         "slotAssignments": {

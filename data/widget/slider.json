@@ -37,7 +37,6 @@
         "display": {
             "widgets": {
                 "data": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -45,10 +44,10 @@
                     },
                     "field": "data",
                     "model_type": "Number",
-                    "model": "slider"
+                    "model": "slider",
+                    "widget": "numeric_textbox"
                 },
                 "min": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "min",
@@ -56,10 +55,10 @@
                     },
                     "field": "min",
                     "model_type": "Number",
-                    "model": "slider"
+                    "model": "slider",
+                    "widget": "numeric_textbox"
                 },
                 "max": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "max",
@@ -67,7 +66,8 @@
                     },
                     "field": "max",
                     "model_type": "Number",
-                    "model": "slider"
+                    "model": "slider",
+                    "widget": "numeric_textbox"
                 }
             },
             "slotAssignments": {

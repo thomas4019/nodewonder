@@ -5,7 +5,6 @@
     "code": {
         "widgets": {
             "bvTyarV2": {
-                "type": "model_renderer",
                 "slots": {},
                 "settings": {
                     "schema": {
@@ -17,7 +16,8 @@
                             }
                         }
                     }
-                }
+                },
+                "widget": "model_renderer"
             }
         },
         "slotAssignments": {

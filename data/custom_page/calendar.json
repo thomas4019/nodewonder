@@ -2,11 +2,11 @@
     "code": {
         "widgets": {
             "DNKKuofB": {
-                "type": "calendar",
                 "slots": {},
                 "settings": {
                     "has_form": false
-                }
+                },
+                "widget": "calendar"
             }
         },
         "slotAssignments": {

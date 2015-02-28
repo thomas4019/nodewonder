@@ -30,7 +30,6 @@
         "display": {
             "widgets": {
                 "deps": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "deps",
@@ -38,10 +37,10 @@
                     },
                     "field": "deps",
                     "model_type": "Text",
-                    "model": "test"
+                    "model": "test",
+                    "widget": "textbox"
                 },
                 "deps2": {
-                    "type": "password",
                     "slots": {},
                     "settings": {
                         "label": "deps2",
@@ -49,10 +48,10 @@
                     },
                     "field": "deps2",
                     "model_type": "Text",
-                    "model": "test"
+                    "model": "test",
+                    "widget": "password"
                 },
                 "deps3": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "deps3",
@@ -60,10 +59,10 @@
                     },
                     "field": "deps3",
                     "model_type": "Text",
-                    "model": "test"
+                    "model": "test",
+                    "widget": "textbox"
                 },
                 "deps4": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "deps4",
@@ -71,10 +70,10 @@
                     },
                     "field": "deps4",
                     "model_type": "Text",
-                    "model": "test"
+                    "model": "test",
+                    "widget": "textbox"
                 },
                 "deps5": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "deps5",
@@ -82,7 +81,8 @@
                     },
                     "field": "deps5",
                     "model_type": "Text",
-                    "model": "test"
+                    "model": "test",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

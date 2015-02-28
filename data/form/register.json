@@ -18,7 +18,6 @@
         "display": {
             "widgets": {
                 "1azcxtaH": {
-                    "type": "if_record_exists",
                     "slots": {
                         "then": [
                             "v6fPki9T"
@@ -31,18 +30,18 @@
                         "model": "user",
                         "field": "email",
                         "value": "{{form.email}}"
-                    }
+                    },
+                    "widget": "if_record_exists"
                 },
                 "v6fPki9T": {
-                    "type": "message",
                     "slots": {},
                     "settings": {
                         "message": "There is already a user with this email registered.",
                         "type": "error"
-                    }
+                    },
+                    "widget": "message"
                 },
                 "miER7wwT": {
-                    "type": "save_record",
                     "slots": {
                         "success": [
                             "WruqZida"
@@ -56,25 +55,25 @@
                         "record": "create",
                         "data_name": "form",
                         "record_id_dest": "record"
-                    }
+                    },
+                    "widget": "save_record"
                 },
                 "WruqZida": {
-                    "type": "goto_page",
                     "slots": {},
                     "settings": {
                         "URL": ""
-                    }
+                    },
+                    "widget": "goto_page"
                 },
                 "Tf1nKGIg": {
-                    "type": "message",
                     "slots": {},
                     "settings": {
                         "message": "Failed to register user.",
                         "type": "error"
-                    }
+                    },
+                    "widget": "message"
                 },
                 "email": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "email",
@@ -82,10 +81,10 @@
                     },
                     "field": "email",
                     "model_type": "Text",
-                    "model": "register"
+                    "model": "register",
+                    "widget": "textbox"
                 },
                 "password": {
-                    "type": "password",
                     "slots": {},
                     "settings": {
                         "label": "password",
@@ -93,10 +92,10 @@
                     },
                     "field": "password",
                     "model_type": "Text",
-                    "model": "register"
+                    "model": "register",
+                    "widget": "password"
                 },
                 "Captcha": {
-                    "type": "recaptcha",
                     "slots": {},
                     "settings": {
                         "label": "Captcha",
@@ -104,10 +103,10 @@
                     },
                     "field": "Captcha",
                     "model_type": "Captcha",
-                    "model": "register"
+                    "model": "register",
+                    "widget": "recaptcha"
                 },
                 "3wNX8plY": {
-                    "type": "form_button",
                     "slots": {
                         "onclick": [
                             "1azcxtaH"
@@ -117,7 +116,8 @@
                     "settings": {
                         "label": "Register",
                         "button_type": "primary"
-                    }
+                    },
+                    "widget": "form_button"
                 }
             },
             "slotAssignments": {

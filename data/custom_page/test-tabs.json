@@ -5,109 +5,109 @@
     "code": {
         "widgets": {
             "7rLFXuot": {
-                "type": "youtube_video",
                 "slots": {},
                 "settings": {
                     "has_form": true
-                }
+                },
+                "widget": "youtube_video"
             },
             "fDp0qouK": {
-                "type": "ckeditor",
                 "slots": {},
                 "settings": {
                     "has_form": true
-                }
+                },
+                "widget": "ckeditor"
             },
             "rSB6JUEy": {
-                "type": "hello_world",
                 "slots": {},
                 "settings": {
                     "has_form": false
-                }
+                },
+                "widget": "hello_world"
             },
             "HGTEBBZj": {
-                "type": "calendar",
                 "slots": {},
                 "settings": {
                     "has_form": false
-                }
+                },
+                "widget": "calendar"
             },
             "ZvmIMUkZ": {
-                "type": "youtube_video",
                 "slots": {},
                 "settings": {
                     "id": "ZuC69YEyyTQ",
                     "has_form": true
-                }
+                },
+                "widget": "youtube_video"
             },
             "dT92MyT0": {
-                "type": "textarea",
                 "slots": {},
                 "settings": {
                     "has_form": false
-                }
+                },
+                "widget": "textarea"
             },
             "cj5BtEKb": {
-                "type": "button",
                 "slots": {
                     "events": [
                         "np83Aq8Q",
                         "LduaiOwr",
                         "9kAfkFis"
                     ]
-                }
+                },
+                "widget": "button"
             },
             "ul5kdPUv": {
-                "type": "bootstrap_popup",
                 "slots": {
                     "container": [
                         "GTINlKbL"
                     ],
                     "buttons": [],
                     "events": []
-                }
+                },
+                "widget": "bootstrap_popup"
             },
             "GTINlKbL": {
-                "type": "calendar",
                 "slots": {
                     "events": []
-                }
+                },
+                "widget": "calendar"
             },
             "np83Aq8Q": {
-                "type": "onmouseenter",
                 "slots": {
                     "actions": []
-                }
+                },
+                "widget": "onmouseenter"
             },
             "LduaiOwr": {
-                "type": "onmouseover",
                 "slots": {
                     "actions": []
-                }
+                },
+                "widget": "onmouseover"
             },
             "9kAfkFis": {
-                "type": "onclick",
                 "slots": {
                     "actions": [
                         "BZAWRATu",
                         "EiViPoys"
                     ]
-                }
+                },
+                "widget": "onclick"
             },
             "BZAWRATu": {
-                "type": "show_bootstrap_popup",
                 "slots": {},
                 "settings": {
                     "selector": "#ul5kdPUv .modal"
-                }
+                },
+                "widget": "show_bootstrap_popup"
             },
             "EiViPoys": {
-                "type": "message",
                 "slots": {},
                 "settings": {
                     "message": "test",
                     "type": "info"
-                }
+                },
+                "widget": "message"
             }
         },
         "slotAssignments": {

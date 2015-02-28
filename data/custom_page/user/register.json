@@ -5,7 +5,6 @@
     "code": {
         "widgets": {
             "x2UZwiTB": {
-                "type": "custom_widget",
                 "slots": {
                     "events": []
                 },
@@ -13,7 +12,8 @@
                 "settings": {
                     "form": "register",
                     "pseudo_widget": "Form"
-                }
+                },
+                "widget": "custom_widget"
             }
         },
         "slotAssignments": {

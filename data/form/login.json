@@ -14,15 +14,14 @@
         "display": {
             "widgets": {
                 "OMNSLqTk": {
-                    "type": "message",
                     "slots": {},
                     "settings": {
                         "message": "Username or password is incorrect.",
                         "type": "warning"
-                    }
+                    },
+                    "widget": "message"
                 },
                 "JDmgi6Xq": {
-                    "type": "user_login",
                     "slots": {
                         "success": [
                             "vzNvbPnm",
@@ -35,33 +34,33 @@
                     "settings": {
                         "email": "{{form.Email}}",
                         "password": "{{form.Password}}"
-                    }
+                    },
+                    "widget": "user_login"
                 },
                 "vzNvbPnm": {
-                    "type": "flash_set",
                     "slots": {
                         "actions": [
                             "7SmPqdB6"
                         ]
-                    }
+                    },
+                    "widget": "flash_set"
                 },
                 "7SmPqdB6": {
-                    "type": "message",
                     "slots": {},
                     "settings": {
                         "message": "Logged in sucessfully!",
                         "type": "success"
-                    }
+                    },
+                    "widget": "message"
                 },
                 "dyJQoUZW": {
-                    "type": "goto_page",
                     "slots": {},
                     "settings": {
                         "URL": ""
-                    }
+                    },
+                    "widget": "goto_page"
                 },
                 "Email": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "Email",
@@ -69,10 +68,10 @@
                     },
                     "field": "Email",
                     "model_type": "Text",
-                    "model": "login"
+                    "model": "login",
+                    "widget": "textbox"
                 },
                 "Password": {
-                    "type": "password",
                     "slots": {},
                     "settings": {
                         "label": "Password",
@@ -80,10 +79,10 @@
                     },
                     "field": "Password",
                     "model_type": "Text",
-                    "model": "login"
+                    "model": "login",
+                    "widget": "password"
                 },
                 "RVrkuDTk": {
-                    "type": "form_button",
                     "slots": {
                         "onclick": [
                             "JDmgi6Xq"
@@ -93,7 +92,8 @@
                     "settings": {
                         "label": "Login",
                         "button_type": "primary"
-                    }
+                    },
+                    "widget": "form_button"
                 }
             },
             "slotAssignments": {

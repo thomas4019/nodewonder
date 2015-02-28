@@ -5,7 +5,6 @@
     "code": {
         "widgets": {
             "zwB0WX5T": {
-                "type": "tabs",
                 "slots": {
                     "tabs": [
                         "zJWbHAt1",
@@ -13,23 +12,24 @@
                         "YFTYAWMZ",
                         "PxiMYJix"
                     ]
-                }
+                },
+                "widget": "tabs"
             },
             "zJWbHAt1": {
-                "type": "calendar",
-                "slots": {}
+                "slots": {},
+                "widget": "calendar"
             },
             "yOiXfhox": {
-                "type": "button",
-                "slots": {}
+                "slots": {},
+                "widget": "button"
             },
             "YFTYAWMZ": {
-                "type": "hello_world",
-                "slots": {}
+                "slots": {},
+                "widget": "hello_world"
             },
             "PxiMYJix": {
-                "type": "test",
-                "slots": {}
+                "slots": {},
+                "widget": "test"
             }
         },
         "slotAssignments": {

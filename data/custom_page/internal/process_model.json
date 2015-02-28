@@ -6,13 +6,13 @@
     "code": {
         "widgets": {
             "xgJEctKf": {
-                "type": "process_model",
                 "slots": {
                     "events": []
                 },
                 "settings": {
                     "model": ""
-                }
+                },
+                "widget": "process_model"
             }
         },
         "slotAssignments": {

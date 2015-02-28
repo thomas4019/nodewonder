@@ -5,16 +5,15 @@
     "code": {
         "widgets": {
             "X6To5YJ3": {
-                "type": "onload",
                 "slots": {
                     "actions": [
                         "czDwoYYS"
                     ],
                     "events": []
-                }
+                },
+                "widget": "onload"
             },
             "czDwoYYS": {
-                "type": "user_logout",
                 "slots": {
                     "success": [
                         "jipilWfy",
@@ -23,30 +22,31 @@
                     "failure": [
                         "5OEGObxk"
                     ]
-                }
+                },
+                "widget": "user_logout"
             },
             "jipilWfy": {
-                "type": "message",
                 "slots": {},
                 "settings": {
                     "message": "You are now logged out",
                     "type": "success"
-                }
+                },
+                "widget": "message"
             },
             "5OEGObxk": {
-                "type": "message",
                 "slots": {},
                 "settings": {
                     "message": "failed to logout.",
                     "type": "error"
-                }
+                },
+                "widget": "message"
             },
             "DC6Jag3F": {
-                "type": "goto_page",
                 "slots": {},
                 "settings": {
                     "URL": ""
-                }
+                },
+                "widget": "goto_page"
             }
         },
         "slotAssignments": {

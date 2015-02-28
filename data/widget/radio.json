@@ -24,7 +24,6 @@
         "display": {
             "widgets": {
                 "data": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -32,10 +31,10 @@
                     },
                     "field": "data",
                     "model_type": "Text",
-                    "model": "radio"
+                    "model": "radio",
+                    "widget": "textbox"
                 },
                 "choices": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "choices",
@@ -43,7 +42,8 @@
                     },
                     "field": "choices",
                     "model_type": "Text",
-                    "model": "radio"
+                    "model": "radio",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

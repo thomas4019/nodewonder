@@ -5,8 +5,8 @@
     "code": {
         "widgets": {
             "xxixWNHl": {
-                "type": "table",
-                "slots": {}
+                "slots": {},
+                "widget": "table"
             }
         },
         "slotAssignments": {

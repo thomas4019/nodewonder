@@ -57,7 +57,6 @@
         "display": {
             "widgets": {
                 "model": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "model",
@@ -65,10 +64,10 @@
                     },
                     "field": "model",
                     "model_type": "Text",
-                    "model": "if_record_exists"
+                    "model": "if_record_exists",
+                    "widget": "textbox"
                 },
                 "field": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "field",
@@ -76,10 +75,10 @@
                     },
                     "field": "field",
                     "model_type": "Text",
-                    "model": "if_record_exists"
+                    "model": "if_record_exists",
+                    "widget": "textbox"
                 },
                 "value": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "value",
@@ -87,7 +86,8 @@
                     },
                     "field": "value",
                     "model_type": "Text",
-                    "model": "if_record_exists"
+                    "model": "if_record_exists",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

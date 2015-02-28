@@ -5,20 +5,20 @@
     "code": {
         "widgets": {
             "HaFlgC99": {
-                "type": "table",
                 "slots": {},
                 "settings": {
                     "data": {},
                     "html": true
-                }
+                },
+                "widget": "table"
             },
             "00t6fCBy": {
-                "type": "header",
                 "slots": {},
                 "settings": {
                     "data": "",
                     "type": "h1"
-                }
+                },
+                "widget": "header"
             }
         },
         "slotAssignments": {

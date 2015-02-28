@@ -19,7 +19,6 @@
         "display": {
             "widgets": {
                 "url": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "url",
@@ -27,7 +26,8 @@
                     },
                     "field": "url",
                     "model_type": "Text",
-                    "model": "iframe"
+                    "model": "iframe",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

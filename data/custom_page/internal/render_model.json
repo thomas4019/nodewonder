@@ -4,11 +4,11 @@
     "code": {
         "widgets": {
             "start": {
-                "type": "model_form",
                 "settings": {
                     "fields": "[ {\"name\": \"path\", \"type\": \"String\"}]",
                     "submit": false
-                }
+                },
+                "widget": "model_form"
             }
         },
         "slotAssignments": {

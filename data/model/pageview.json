@@ -32,7 +32,6 @@
         "display": {
             "widgets": {
                 "url": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "url",
@@ -40,10 +39,10 @@
                     },
                     "field": "url",
                     "model_type": "Text",
-                    "model": "pageview"
+                    "model": "pageview",
+                    "widget": "textbox"
                 },
                 "datetime": {
-                    "type": "date",
                     "slots": {},
                     "settings": {
                         "label": "datetime",
@@ -51,7 +50,8 @@
                     },
                     "field": "datetime",
                     "model_type": "Date",
-                    "model": "pageview"
+                    "model": "pageview",
+                    "widget": "date"
                 },
                 "": {
                     "slots": {},

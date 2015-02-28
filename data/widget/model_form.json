@@ -95,7 +95,6 @@
         "display": {
             "widgets": {
                 "model": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "model",
@@ -103,10 +102,10 @@
                     },
                     "field": "model",
                     "model_type": "Text",
-                    "model": "model_form"
+                    "model": "model_form",
+                    "widget": "textbox"
                 },
                 "record": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "record",
@@ -114,10 +113,10 @@
                     },
                     "field": "record",
                     "model_type": "Text",
-                    "model": "model_form"
+                    "model": "model_form",
+                    "widget": "textbox"
                 },
                 "field": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "field",
@@ -125,10 +124,10 @@
                     },
                     "field": "field",
                     "model_type": "Text",
-                    "model": "model_form"
+                    "model": "model_form",
+                    "widget": "textbox"
                 },
                 "inline": {
-                    "type": "checkbox",
                     "slots": {},
                     "settings": {
                         "label": "inline",
@@ -136,7 +135,8 @@
                     },
                     "field": "inline",
                     "model_type": "Boolean",
-                    "model": "model_form"
+                    "model": "model_form",
+                    "widget": "checkbox"
                 }
             },
             "slotAssignments": {

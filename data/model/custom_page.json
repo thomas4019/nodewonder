@@ -38,7 +38,6 @@
         "display": {
             "widgets": {
                 "URL": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "URL",
@@ -46,10 +45,10 @@
                     },
                     "field": "URL",
                     "model_type": "Text",
-                    "model": "custom_page"
+                    "model": "custom_page",
+                    "widget": "textbox"
                 },
                 "parent": {
-                    "type": "model_record_reference",
                     "slots": {},
                     "settings": {
                         "label": "parent",
@@ -59,10 +58,10 @@
                     },
                     "field": "parent",
                     "model_type": "Record",
-                    "model": "custom_page"
+                    "model": "custom_page",
+                    "widget": "model_record_reference"
                 },
                 "controller": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "controller",
@@ -70,10 +69,10 @@
                     },
                     "field": "controller",
                     "model_type": "Text",
-                    "model": "custom_page"
+                    "model": "custom_page",
+                    "widget": "textbox"
                 },
                 "code": {
-                    "type": "widget_code_editor",
                     "slots": {},
                     "settings": {
                         "label": "code",
@@ -98,10 +97,10 @@
                     },
                     "field": "code",
                     "model_type": "widget_code",
-                    "model": "custom_page"
+                    "model": "custom_page",
+                    "widget": "widget_code_editor"
                 },
                 "Title": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "Title",
@@ -109,10 +108,10 @@
                     },
                     "field": "Title",
                     "model_type": "Text",
-                    "model": "custom_page"
+                    "model": "custom_page",
+                    "widget": "textbox"
                 },
                 "contentType": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "contentType",
@@ -120,10 +119,10 @@
                     },
                     "field": "contentType",
                     "model_type": "Text",
-                    "model": "custom_page"
+                    "model": "custom_page",
+                    "widget": "textbox"
                 },
                 "permission": {
-                    "type": "model_form",
                     "slots": {},
                     "settings": {
                         "label": "permission",
@@ -131,7 +130,8 @@
                     },
                     "field": "permission",
                     "model_type": "permission",
-                    "model": "custom_page"
+                    "model": "custom_page",
+                    "widget": "model_form"
                 }
             },
             "slotAssignments": {

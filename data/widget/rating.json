@@ -29,7 +29,6 @@
         "display": {
             "widgets": {
                 "data": {
-                    "type": "model_form",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -37,7 +36,8 @@
                     },
                     "field": "data",
                     "model_type": "vote",
-                    "model": "rating"
+                    "model": "rating",
+                    "widget": "model_form"
                 }
             },
             "slotAssignments": {

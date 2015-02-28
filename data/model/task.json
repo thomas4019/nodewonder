@@ -23,7 +23,6 @@
         "display": {
             "widgets": {
                 "Title": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "Title",
@@ -31,10 +30,10 @@
                     },
                     "field": "Title",
                     "model_type": "Text",
-                    "model": "task"
+                    "model": "task",
+                    "widget": "textbox"
                 },
                 "description": {
-                    "type": "textarea",
                     "slots": {},
                     "settings": {
                         "label": "description",
@@ -42,20 +41,20 @@
                     },
                     "field": "description",
                     "model_type": "Text",
-                    "model": "task"
+                    "model": "task",
+                    "widget": "textarea"
                 },
                 "Completion Date": {
-                    "type": "date",
                     "slots": {},
                     "field": "Completion Date",
                     "model_type": "Date",
                     "model": "Model",
                     "settings": {
                         "label": "Completion Date"
-                    }
+                    },
+                    "widget": "date"
                 },
                 "Type": {
-                    "type": "select",
                     "slots": {},
                     "field": "Type",
                     "model_type": "Text",
@@ -68,7 +67,8 @@
                             "Possible Idea",
                             "Refactoring"
                         ]
-                    }
+                    },
+                    "widget": "select"
                 }
             },
             "slotAssignments": {

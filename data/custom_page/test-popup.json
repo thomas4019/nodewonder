@@ -6,28 +6,28 @@
     "code": {
         "widgets": {
             "gD3Hmuwm": {
-                "type": "button",
                 "slots": {
                     "events": [
                         "RamV9DCc"
                     ]
-                }
+                },
+                "widget": "button"
             },
             "RamV9DCc": {
-                "type": "onclick",
                 "slots": {
                     "actions": [
                         "GRtRvZIP"
                     ]
-                }
+                },
+                "widget": "onclick"
             },
             "GRtRvZIP": {
-                "type": "message",
                 "slots": {},
                 "settings": {
                     "message": "Hello",
                     "type": "info"
-                }
+                },
+                "widget": "message"
             }
         },
         "slotAssignments": {

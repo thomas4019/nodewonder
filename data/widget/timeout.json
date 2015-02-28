@@ -45,14 +45,14 @@
         "display": {
             "widgets": {
                 "milliseconds": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "field": "milliseconds",
                     "model_type": "Number",
                     "model": "Model",
                     "settings": {
                         "label": "milliseconds"
-                    }
+                    },
+                    "widget": "numeric_textbox"
                 }
             },
             "slotAssignments": {

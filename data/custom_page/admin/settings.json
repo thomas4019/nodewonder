@@ -5,14 +5,14 @@
     "code": {
         "widgets": {
             "rWYLXNcz": {
-                "type": "model_data_listing",
                 "slots": {
                     "events": []
                 },
                 "settings": {
                     "row_template": "<a href=\"/admin/settings/{{name}}\">{{name}}</a>",
                     "model": "setting"
-                }
+                },
+                "widget": "model_data_listing"
             }
         },
         "slotAssignments": {

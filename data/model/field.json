@@ -31,7 +31,6 @@
         "display": {
             "widgets": {
                 "name": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "name",
@@ -39,10 +38,10 @@
                     },
                     "field": "name",
                     "model_type": "Text",
-                    "model": "field"
+                    "model": "field",
+                    "widget": "textbox"
                 },
                 "type": {
-                    "type": "select",
                     "slots": {},
                     "settings": {
                         "label": "type",
@@ -56,10 +55,10 @@
                     },
                     "field": "type",
                     "model_type": "Text",
-                    "model": "field2"
+                    "model": "field2",
+                    "widget": "select"
                 },
                 "quantity": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "quantity",
@@ -67,10 +66,10 @@
                     },
                     "field": "quantity",
                     "model_type": "Text",
-                    "model": "field"
+                    "model": "field",
+                    "widget": "textbox"
                 },
                 "widget": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "widget",
@@ -78,10 +77,10 @@
                     },
                     "field": "widget",
                     "model_type": "Text",
-                    "model": "field"
+                    "model": "field",
+                    "widget": "textbox"
                 },
                 "settings": {
-                    "type": "widget_input_config",
                     "slots": {},
                     "settings": {
                         "label": "settings",
@@ -89,17 +88,18 @@
                     },
                     "field": "settings",
                     "model_type": "Text",
-                    "model": "field"
+                    "model": "field",
+                    "widget": "widget_input_config"
                 },
                 "required": {
-                    "type": "checkbox",
                     "slots": {},
                     "field": "required",
                     "model_type": "Boolean",
                     "model": "Model",
                     "settings": {
                         "label": "required"
-                    }
+                    },
+                    "widget": "checkbox"
                 }
             },
             "slotAssignments": {

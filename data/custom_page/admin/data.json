@@ -5,12 +5,12 @@
     "code": {
         "widgets": {
             "bSTlkYv9": {
-                "type": "model_data_listing",
                 "slots": {},
                 "settings": {
                     "row_template": "<a href=\"/admin/data/?model=model&record={{ key }}\"><span class=\"glyphicon glyphicon-cog\"></span></a> <a href=\"/admin/list/{{ key }}/\"><span class=\"glyphicon glyphicon-list\"></span> {{ key }}</a>",
                     "model": "model"
-                }
+                },
+                "widget": "model_data_listing"
             }
         },
         "slotAssignments": {

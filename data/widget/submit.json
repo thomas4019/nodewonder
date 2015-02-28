@@ -25,7 +25,6 @@
         "display": {
             "widgets": {
                 "label": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "label",
@@ -33,10 +32,10 @@
                     },
                     "field": "label",
                     "model_type": "Text",
-                    "model": "submit"
+                    "model": "submit",
+                    "widget": "textbox"
                 },
                 "button_type": {
-                    "type": "select",
                     "slots": {},
                     "settings": {
                         "label": "button_type",
@@ -52,7 +51,8 @@
                     },
                     "field": "button_type",
                     "model_type": "Text",
-                    "model": "submit"
+                    "model": "submit",
+                    "widget": "select"
                 }
             },
             "slotAssignments": {

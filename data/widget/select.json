@@ -37,7 +37,6 @@
         "display": {
             "widgets": {
                 "data": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -45,10 +44,10 @@
                     },
                     "field": "data",
                     "model_type": "Text",
-                    "model": "select"
+                    "model": "select",
+                    "widget": "textbox"
                 },
                 "choices": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "choices",
@@ -56,7 +55,8 @@
                     },
                     "field": "choices",
                     "model_type": "Text",
-                    "model": "select"
+                    "model": "select",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

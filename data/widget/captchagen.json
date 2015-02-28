@@ -33,7 +33,6 @@
         "display": {
             "widgets": {
                 "data": {
-                    "type": "captchagen",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -41,7 +40,8 @@
                     },
                     "field": "data",
                     "model_type": "Captcha",
-                    "model": "captchagen"
+                    "model": "captchagen",
+                    "widget": "captchagen"
                 }
             },
             "slotAssignments": {

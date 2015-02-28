@@ -17,7 +17,6 @@
         "display": {
             "widgets": {
                 "type": {
-                    "type": "select",
                     "slots": {},
                     "settings": {
                         "label": "type",
@@ -31,10 +30,10 @@
                     },
                     "field": "type",
                     "model_type": "Text",
-                    "model": "field2"
+                    "model": "field2",
+                    "widget": "select"
                 },
                 "quantity": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "quantity",
@@ -42,7 +41,8 @@
                     },
                     "field": "quantity",
                     "model_type": "Text",
-                    "model": "field2"
+                    "model": "field2",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

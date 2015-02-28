@@ -31,7 +31,6 @@
         "display": {
             "widgets": {
                 "A": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "inline": false,
@@ -43,10 +42,10 @@
                     },
                     "field": "A",
                     "model_type": "Number",
-                    "model": "test2"
+                    "model": "test2",
+                    "widget": "numeric_textbox"
                 },
                 "B": {
-                    "type": "checkbox",
                     "slots": {},
                     "settings": {
                         "label": "B",
@@ -54,10 +53,10 @@
                     },
                     "field": "B",
                     "model_type": "Boolean",
-                    "model": "test2"
+                    "model": "test2",
+                    "widget": "checkbox"
                 },
                 "C": {
-                    "type": "model_form",
                     "slots": {},
                     "settings": {
                         "label": "C",
@@ -65,30 +64,30 @@
                     },
                     "field": "C",
                     "model_type": "widget_instance",
-                    "model": "test2"
+                    "model": "test2",
+                    "widget": "model_form"
                 },
                 "E": {
-                    "type": "checkbox",
                     "slots": {},
                     "field": "E",
                     "model_type": "Boolean",
                     "model": "Model",
                     "settings": {
                         "label": "E"
-                    }
+                    },
+                    "widget": "checkbox"
                 },
                 "F22": {
-                    "type": "date",
                     "slots": {},
                     "field": "F22",
                     "model_type": "Date",
                     "model": "Model",
                     "settings": {
                         "label": "F22"
-                    }
+                    },
+                    "widget": "date"
                 },
                 "D": {
-                    "type": "jsoneditor",
                     "slots": {},
                     "field": "D",
                     "model_type": "JSON",
@@ -97,7 +96,8 @@
                         "data": {},
                         "width": "",
                         "height": 80
-                    }
+                    },
+                    "widget": "jsoneditor"
                 }
             },
             "slotAssignments": {

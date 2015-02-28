@@ -19,7 +19,6 @@
         "display": {
             "widgets": {
                 "url": {
-                    "type": "",
                     "slots": {},
                     "settings": {
                         "label": "url",
@@ -27,10 +26,10 @@
                     },
                     "field": "url",
                     "model_type": "Text",
-                    "model": "link"
+                    "model": "link",
+                    "widget": ""
                 },
                 "title": {
-                    "type": "",
                     "slots": {},
                     "settings": {
                         "label": "title",
@@ -38,10 +37,10 @@
                     },
                     "field": "title",
                     "model_type": "Text",
-                    "model": "link"
+                    "model": "link",
+                    "widget": ""
                 },
                 "alt": {
-                    "type": "",
                     "slots": {},
                     "settings": {
                         "label": "alt",
@@ -49,7 +48,8 @@
                     },
                     "field": "alt",
                     "model_type": "Text",
-                    "model": "link"
+                    "model": "link",
+                    "widget": ""
                 }
             },
             "slotAssignments": {

@@ -3,8 +3,8 @@
     "code": {
         "widgets": {
             "start": {
-                "type": "page_widget_form",
-                "settings": {}
+                "settings": {},
+                "widget": "page_widget_form"
             }
         },
         "slotAssignments": {

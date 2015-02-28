@@ -36,7 +36,6 @@
         "display": {
             "widgets": {
                 "Name": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "Name",
@@ -44,10 +43,10 @@
                     },
                     "field": "Name",
                     "model_type": "Text",
-                    "model": "custom_widget"
+                    "model": "custom_widget",
+                    "widget": "textbox"
                 },
                 "Settings": {
-                    "type": "model_form",
                     "slots": {},
                     "settings": {
                         "label": "Settings",
@@ -55,10 +54,10 @@
                     },
                     "field": "Settings",
                     "model_type": "field",
-                    "model": "custom_widget"
+                    "model": "custom_widget",
+                    "widget": "model_form"
                 },
                 "Code": {
-                    "type": "widget_code_editor",
                     "slots": {},
                     "settings": {
                         "label": "Code",
@@ -66,10 +65,10 @@
                     },
                     "field": "Code",
                     "model_type": "Widgets",
-                    "model": "custom_widget"
+                    "model": "custom_widget",
+                    "widget": "widget_code_editor"
                 },
                 "controller": {
-                    "type": "textarea",
                     "slots": {},
                     "settings": {
                         "label": "controller",
@@ -77,7 +76,8 @@
                     },
                     "field": "controller",
                     "model_type": "Text",
-                    "model": "custom_widget"
+                    "model": "custom_widget",
+                    "widget": "textarea"
                 }
             },
             "slotAssignments": {

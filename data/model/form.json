@@ -15,24 +15,24 @@
         "display": {
             "widgets": {
                 "name": {
-                    "type": "textbox",
                     "slots": {},
                     "field": "name",
                     "model_type": "Text",
                     "model": "Model",
                     "settings": {
                         "label": "name"
-                    }
+                    },
+                    "widget": "textbox"
                 },
                 "schema": {
-                    "type": "model_form",
                     "slots": {},
                     "field": "schema",
                     "model_type": "schema",
                     "model": "Model",
                     "settings": {
                         "label": "schema"
-                    }
+                    },
+                    "widget": "model_form"
                 }
             },
             "slotAssignments": {

@@ -45,7 +45,6 @@
         "display": {
             "widgets": {
                 "data": {
-                    "type": "jsoneditor",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -53,17 +52,18 @@
                     },
                     "field": "data",
                     "model_type": "JSON",
-                    "model": "table"
+                    "model": "table",
+                    "widget": "jsoneditor"
                 },
                 "html": {
-                    "type": "checkbox",
                     "slots": {},
                     "field": "html",
                     "model_type": "Boolean",
                     "model": "Model",
                     "settings": {
                         "label": "html"
-                    }
+                    },
+                    "widget": "checkbox"
                 }
             },
             "slotAssignments": {

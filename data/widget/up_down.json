@@ -51,7 +51,6 @@
         "display": {
             "widgets": {
                 "data": {
-                    "type": "fivestar",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -59,7 +58,8 @@
                     },
                     "field": "data",
                     "model_type": "vote",
-                    "model": "up_down"
+                    "model": "up_down",
+                    "widget": "fivestar"
                 }
             },
             "slotAssignments": {

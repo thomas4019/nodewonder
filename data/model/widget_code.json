@@ -18,7 +18,6 @@
         "display": {
             "widgets": {
                 "widgets": {
-                    "type": "model_form",
                     "slots": {},
                     "settings": {
                         "label": "widgets",
@@ -26,10 +25,10 @@
                     },
                     "field": "widgets",
                     "model_type": "widget_instance",
-                    "model": "widget_code"
+                    "model": "widget_code",
+                    "widget": "model_form"
                 },
                 "slotAssignments": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "slotAssignments",
@@ -37,7 +36,8 @@
                     },
                     "field": "slotAssignments",
                     "model_type": "Text",
-                    "model": "widget_code"
+                    "model": "widget_code",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

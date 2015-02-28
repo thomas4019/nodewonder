@@ -5,30 +5,35 @@
     "code": {
         "widgets": {
             "guOj0u3O": {
-                "type": "eval",
                 "slots": {
                     "code": [
                         "J3T9o3JH",
                         "07lXVqar"
                     ]
-                }
+                },
+                "widget": "eval"
             },
             "J3T9o3JH": {
-                "type": "literal",
                 "slots": {},
                 "data": "123",
-                "label": "\"123\""
+                "label": "\"123\"",
+                "type": "literal"
             },
             "07lXVqar": {
-                "type": "literal",
                 "slots": {},
                 "data": "abc",
-                "label": "\"abc\""
+                "label": "\"abc\"",
+                "type": "literal"
+            },
+            "leL28bau": {
+                "widget": "hello_world",
+                "slots": {}
             }
         },
         "slotAssignments": {
             "body": [
-                "guOj0u3O"
+                "guOj0u3O",
+                "leL28bau"
             ]
         }
     },

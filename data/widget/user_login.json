@@ -58,7 +58,6 @@
         "display": {
             "widgets": {
                 "email": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "email",
@@ -66,10 +65,10 @@
                     },
                     "field": "email",
                     "model_type": "Text",
-                    "model": "user_login"
+                    "model": "user_login",
+                    "widget": "ckeditor"
                 },
                 "password": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "password",
@@ -77,7 +76,8 @@
                     },
                     "field": "password",
                     "model_type": "Text",
-                    "model": "user_login"
+                    "model": "user_login",
+                    "widget": "ckeditor"
                 }
             },
             "slotAssignments": {

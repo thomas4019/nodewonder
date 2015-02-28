@@ -22,7 +22,6 @@
         "display": {
             "widgets": {
                 "Title": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "Title",
@@ -30,10 +29,10 @@
                     },
                     "field": "Title",
                     "model_type": "Text",
-                    "model": "blog_post"
+                    "model": "blog_post",
+                    "widget": "textbox"
                 },
                 "Body": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "Body",
@@ -41,10 +40,10 @@
                     },
                     "field": "Body",
                     "model_type": "Text",
-                    "model": "blog_post"
+                    "model": "blog_post",
+                    "widget": "ckeditor"
                 },
                 "Comments": {
-                    "type": "model_form",
                     "slots": {},
                     "settings": {
                         "label": "Comments",
@@ -52,7 +51,8 @@
                     },
                     "field": "Comments",
                     "model_type": "comment",
-                    "model": "blog_post"
+                    "model": "blog_post",
+                    "widget": "model_form"
                 }
             },
             "slotAssignments": {

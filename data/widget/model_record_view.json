@@ -42,7 +42,6 @@
         "display": {
             "widgets": {
                 "model": {
-                    "type": "model_record_reference",
                     "slots": {},
                     "settings": {
                         "label": "model",
@@ -51,10 +50,10 @@
                     },
                     "field": "model",
                     "model_type": "Record",
-                    "model": "model_record_view"
+                    "model": "model_record_view",
+                    "widget": "model_record_reference"
                 },
                 "record": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "record",
@@ -62,10 +61,10 @@
                     },
                     "field": "record",
                     "model_type": "Text",
-                    "model": "model_record_view"
+                    "model": "model_record_view",
+                    "widget": "textbox"
                 },
                 "view": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "view",
@@ -73,7 +72,8 @@
                     },
                     "field": "view",
                     "model_type": "Text",
-                    "model": "model_record_view"
+                    "model": "model_record_view",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

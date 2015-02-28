@@ -18,7 +18,6 @@
         "display": {
             "widgets": {
                 "name": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "name",
@@ -26,7 +25,8 @@
                     },
                     "field": "name",
                     "model_type": "Text",
-                    "model": "role"
+                    "model": "role",
+                    "widget": "textbox"
                 },
                 "": {
                     "slots": {},

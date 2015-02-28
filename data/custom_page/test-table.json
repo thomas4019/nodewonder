@@ -5,14 +5,22 @@
     "code": {
         "widgets": {
             "KHrCJjFY": {
-                "type": "table",
                 "slots": {},
                 "settings": {
-                    "data": [{"a":1},
-{"b":2},
-{"a":3, "c": "3a"}
-]
-                }
+                    "data": [
+                        {
+                            "a": 1
+                        },
+                        {
+                            "b": 2
+                        },
+                        {
+                            "a": 3,
+                            "c": "3a"
+                        }
+                    ]
+                },
+                "widget": "table"
             }
         },
         "slotAssignments": {

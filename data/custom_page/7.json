@@ -5,12 +5,12 @@
     "code": {
         "widgets": {
             "6DhWO4Xh": {
-                "type": "hello_world",
-                "slots": {}
+                "slots": {},
+                "widget": "hello_world"
             },
             "l0re0CZb": {
-                "type": "numeric_textbox",
-                "slots": {}
+                "slots": {},
+                "widget": "numeric_textbox"
             }
         },
         "slotAssignments": {

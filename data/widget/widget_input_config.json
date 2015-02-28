@@ -54,7 +54,6 @@
         "display": {
             "widgets": {
                 "data": {
-                    "type": "jsoneditor",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -62,7 +61,8 @@
                     },
                     "field": "data",
                     "model_type": "JSON",
-                    "model": "widget_input_config"
+                    "model": "widget_input_config",
+                    "widget": "jsoneditor"
                 }
             },
             "slotAssignments": {

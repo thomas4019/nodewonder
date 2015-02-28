@@ -47,7 +47,6 @@
         "display": {
             "widgets": {
                 "selector": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "selector",
@@ -55,10 +54,10 @@
                     },
                     "field": "selector",
                     "model_type": "Text",
-                    "model": "get_form_data"
+                    "model": "get_form_data",
+                    "widget": "textbox"
                 },
                 "dest": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "dest",
@@ -66,7 +65,8 @@
                     },
                     "field": "dest",
                     "model_type": "Text",
-                    "model": "get_form_data"
+                    "model": "get_form_data",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

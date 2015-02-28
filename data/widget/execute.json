@@ -18,7 +18,6 @@
         "display": {
             "widgets": {
                 "js": {
-                    "type": "textarea",
                     "slots": {},
                     "settings": {
                         "label": "js",
@@ -26,7 +25,8 @@
                     },
                     "field": "js",
                     "model_type": "Javascript",
-                    "model": "execute"
+                    "model": "execute",
+                    "widget": "textarea"
                 }
             },
             "slotAssignments": {

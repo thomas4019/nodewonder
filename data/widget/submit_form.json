@@ -41,7 +41,6 @@
         "display": {
             "widgets": {
                 "selector": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "selector",
@@ -49,7 +48,8 @@
                     },
                     "field": "selector",
                     "model_type": "Text",
-                    "model": "submit_form"
+                    "model": "submit_form",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

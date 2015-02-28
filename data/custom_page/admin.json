@@ -5,7 +5,6 @@
     "code": {
         "widgets": {
             "YxOICjag": {
-                "type": "if_display",
                 "slots": {
                     "then": [
                         "menu"
@@ -16,24 +15,25 @@
                 },
                 "settings": {
                     "condition": "user.roles.indexOf('super') != -1"
-                }
+                },
+                "widget": "if_display"
             },
             "menu": {
-                "type": "template",
                 "settings": {
                     "path": "modules/admin/menu.html",
                     "username": "{{user.email}}"
-                }
+                },
+                "widget": "template"
             },
             "8LcE4GTX": {
-                "type": "hello_world",
-                "slots": {}
+                "slots": {},
+                "widget": "hello_world"
             },
             "87s6pqg6": {
-                "type": "admin_search",
                 "slots": {
                     "": []
-                }
+                },
+                "widget": "admin_search"
             }
         },
         "slotAssignments": {

@@ -5,13 +5,13 @@
     "code": {
         "widgets": {
             "M8s5f55z": {
-                "type": "model_record_view",
                 "slots": {},
                 "settings": {
                     "model": "widget",
                     "record": "bootstrap_popup",
                     "view": "default"
-                }
+                },
+                "widget": "model_record_view"
             }
         },
         "slotAssignments": {

@@ -45,7 +45,6 @@
         "display": {
             "widgets": {
                 "label": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "label",
@@ -53,10 +52,10 @@
                     },
                     "field": "label",
                     "model_type": "Text",
-                    "model": "checkbox"
+                    "model": "checkbox",
+                    "widget": "ckeditor"
                 },
                 "name": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "name",
@@ -64,10 +63,10 @@
                     },
                     "field": "name",
                     "model_type": "Text",
-                    "model": "checkbox"
+                    "model": "checkbox",
+                    "widget": "ckeditor"
                 },
                 "data": {
-                    "type": "checkbox",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -75,7 +74,8 @@
                     },
                     "field": "data",
                     "model_type": "Boolean",
-                    "model": "checkbox"
+                    "model": "checkbox",
+                    "widget": "checkbox"
                 }
             },
             "slotAssignments": {

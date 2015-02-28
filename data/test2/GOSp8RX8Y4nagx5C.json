@@ -3,7 +3,6 @@
     "B": [],
     "C": [
         {
-            "type": "aoeu",
             "slots": {
                 "aa": [
                     "ddduiu",
@@ -12,12 +11,13 @@
             },
             "settings": {
                 "1": 123
-            }
+            },
+            "widget": "aoeu"
         },
         {
-            "type": "",
             "slots": {},
-            "settings": {}
+            "settings": {},
+            "widget": ""
         }
     ]
 }

@@ -113,10 +113,10 @@ function stateController($scope) {
 	}
 
 	_.each($scope.widgets, function(w) {
-		if (nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.type]) {
-			w.has_form = nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.type].settings;
+		if (nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.widget]) {
+			w.has_form = nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.widget].settings;
 		} else {
-			console.log('missing widget ' + w.type);
+			console.log('missing widget ' + w.widget);
 		}
 	});
 
@@ -158,9 +158,9 @@ function stateController($scope) {
 		//var slots = JSON.parse()
 		var new_id = selected.model ? selected.name : nw.functions.makeid(8);
 		if (selected.model)
-			$scope.widgets[new_id] = {type: selected.widget, slots: slots, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, settings: {label: selected.name, field_type: selected.model_type}};
+			$scope.widgets[new_id] = {widget: selected.widget, slots: slots, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, settings: {label: selected.name, field_type: selected.model_type}};
 		else
-			$scope.widgets[new_id] = {type: selected.widget, slots: slots, has_form: selected.settings};
+			$scope.widgets[new_id] = {widget: selected.widget, slots: slots, has_form: selected.settings};
 
 		if (selected.data)
 			$scope.widgets[new_id].data = selected.data;			
@@ -193,7 +193,7 @@ function stateController($scope) {
 		width: 300,
 		query: function (query) {
 			var data = {more: false, results: []};
-			_.each(widgets[$scope.widgets[_id].type].slots, function(slot) {
+			_.each(widgets[$scope.widgets[_id].widget].slots, function(slot) {
 				data.results.push({"id":slot, "text": slot});
 			});
 			query.callback(data);
@@ -246,21 +246,21 @@ function stateController($scope) {
 	}
 
 	$scope.configureWidget = function(id) {
-		var type = $scope.widgets[id].type;
-		if (typeof type == 'object') {
-			type = type.widget;
+		var widget = $scope.widgets[id].widget;
+		if (typeof widget == 'object') {
+			widget = widget.widget;
 		}
-		console.log(type);
+		console.log(widget);
 		var pseudo_widget = $scope.widgets[id].pseudo_widget;
 		var settings = $scope.widgets[id].settings;
-		var settings_model = nw.widgets[pseudo_widget ? pseudo_widget : type].settings;
+		var settings_model = nw.widgets[pseudo_widget ? pseudo_widget : widget].settings;
 
-		nw.functions.configureWidget(id, type, settings, function(new_settings) {
+		nw.functions.configureWidget(id, widget, settings, function(new_settings) {
 			console.log(new_settings);
 			console.log('configure finished');
 
 			nw.functions.cleanErrors('start');
-			nw.functions.processModel2('widget', type, 'settings', new_settings, function(results) {
+			nw.functions.processModel2('widget', widget, 'settings', new_settings, function(results) {
 				console.log(results);
 				if (results.validationErrors && Object.keys(results.validationErrors).length) {
 					console.log('model has errors');
@@ -285,9 +285,9 @@ function stateController($scope) {
 		console.log(id);
 		if (id == 'body') {
 			slot_tag_targets = ['view', 'field_view'];
-		} else if ($scope.widgets[id] && nw.widgets[$scope.widgets[id].type]) {
-			slot_tag_targets = nw.widgets[$scope.widgets[id].type].slots[slot] || ['view', 'field_view'];
-		} else if (nw.funcs[$scope.widgets[id].type]) {
+		} else if ($scope.widgets[id] && nw.widgets[$scope.widgets[id].widget]) {
+			slot_tag_targets = nw.widgets[$scope.widgets[id].widget].slots[slot] || ['view', 'field_view'];
+		} else if (nw.funcs[$scope.widgets[id].widget]) {
 			slot_tag_targets = ['code'];
 		} else {
 			slot_tag_targets = ['view', 'field_view'];
@@ -303,8 +303,8 @@ function stateController($scope) {
 		x = $('#'+id+' .addSlot').offset().left;
 		y = $('#'+id+' .addSlot').offset().top;
 		var select = $('#' + $scope.field_id + ' .slot-selector')
-		if ($scope.widgets[id] && widgets[$scope.widgets[id].type]) {
-			slot_tag_targets = widgets[$scope.widgets[id].type].slots[slot] || ['view'];
+		if ($scope.widgets[id] && widgets[$scope.widgets[id].widget]) {
+			slot_tag_targets = widgets[$scope.widgets[id].widget].slots[slot] || ['view'];
 		} else {
 			slot_tag_targets = ['view'];
 		}

@@ -5,7 +5,6 @@
     "code": {
         "widgets": {
             "P9YzJ0sx": {
-                "type": "if_display",
                 "slots": {
                     "then": [
                         "Ox5dCAVT"
@@ -14,16 +13,17 @@
                 },
                 "settings": {
                     "condition": "user.roles && user.roles.indexOf('super') != -1"
-                }
+                },
+                "widget": "if_display"
             },
             "Ox5dCAVT": {
-                "type": "template",
                 "slots": {
                     "body": []
                 },
                 "settings": {
                     "path": "modules/admin/menu.html"
-                }
+                },
+                "widget": "template"
             }
         },
         "slotAssignments": {

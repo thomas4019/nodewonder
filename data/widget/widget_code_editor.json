@@ -75,7 +75,6 @@
         "display": {
             "widgets": {
                 "label": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "label",
@@ -83,10 +82,10 @@
                     },
                     "field": "label",
                     "model_type": "Text",
-                    "model": "widget_code_editor"
+                    "model": "widget_code_editor",
+                    "widget": "ckeditor"
                 },
                 "data": {
-                    "type": "widget_code_editor",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -94,7 +93,8 @@
                     },
                     "field": "data",
                     "model_type": "widget_code",
-                    "model": "widget_code_editor"
+                    "model": "widget_code_editor",
+                    "widget": "widget_code_editor"
                 }
             },
             "slotAssignments": {

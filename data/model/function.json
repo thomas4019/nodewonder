@@ -30,7 +30,6 @@
         "display": {
             "widgets": {
                 "name": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "name",
@@ -38,10 +37,10 @@
                     },
                     "field": "name",
                     "model_type": "Text",
-                    "model": "function"
+                    "model": "function",
+                    "widget": "textbox"
                 },
                 "args": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "args",
@@ -49,10 +48,10 @@
                     },
                     "field": "args",
                     "model_type": "Text",
-                    "model": "function"
+                    "model": "function",
+                    "widget": "textbox"
                 },
                 "code": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "label": "code",
@@ -60,10 +59,10 @@
                     },
                     "field": "code",
                     "model_type": "Code",
-                    "model": "function"
+                    "model": "function",
+                    "widget": "codemirror"
                 },
                 "calls": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "calls",
@@ -71,10 +70,10 @@
                     },
                     "field": "calls",
                     "model_type": "Text",
-                    "model": "function"
+                    "model": "function",
+                    "widget": "textbox"
                 },
                 "callers": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "callers",
@@ -82,7 +81,8 @@
                     },
                     "field": "callers",
                     "model_type": "Text",
-                    "model": "function"
+                    "model": "function",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

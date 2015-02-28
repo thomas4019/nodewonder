@@ -19,7 +19,6 @@
         "display": {
             "widgets": {
                 "id": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "id",
@@ -27,7 +26,8 @@
                     },
                     "field": "id",
                     "model_type": "Text",
-                    "model": "youtube_video"
+                    "model": "youtube_video",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

@@ -5,10 +5,10 @@
     "code": {
         "widgets": {
             "UsftHfOS": {
-                "type": "data_json",
                 "slots": {
                     "": []
-                }
+                },
+                "widget": "data_json"
             }
         },
         "slotAssignments": {

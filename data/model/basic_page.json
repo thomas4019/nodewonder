@@ -19,7 +19,6 @@
         "display": {
             "widgets": {
                 "Title": {
-                    "type": "",
                     "slots": {},
                     "settings": {
                         "label": "Title",
@@ -27,10 +26,10 @@
                     },
                     "field": "Title",
                     "model_type": "Text",
-                    "model": "basic_page"
+                    "model": "basic_page",
+                    "widget": ""
                 },
                 "Content": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "Content",
@@ -38,10 +37,10 @@
                     },
                     "field": "Content",
                     "model_type": "Text",
-                    "model": "basic_page"
+                    "model": "basic_page",
+                    "widget": "ckeditor"
                 },
                 "Published": {
-                    "type": "",
                     "slots": {},
                     "settings": {
                         "label": "Published",
@@ -49,7 +48,8 @@
                     },
                     "field": "Published",
                     "model_type": "Boolean",
-                    "model": "basic_page"
+                    "model": "basic_page",
+                    "widget": ""
                 }
             },
             "slotAssignments": {

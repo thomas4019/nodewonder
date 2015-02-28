@@ -59,7 +59,6 @@
         "display": {
             "widgets": {
                 "data": {
-                    "type": "date",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -67,7 +66,8 @@
                     },
                     "field": "data",
                     "model_type": "Date",
-                    "model": "date"
+                    "model": "date",
+                    "widget": "date"
                 }
             },
             "slotAssignments": {

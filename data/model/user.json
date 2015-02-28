@@ -31,7 +31,6 @@
         "display": {
             "widgets": {
                 "clientID": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "clientID",
@@ -39,10 +38,10 @@
                     },
                     "field": "clientID",
                     "model_type": "Text",
-                    "model": "user"
+                    "model": "user",
+                    "widget": "textbox"
                 },
                 "username": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "username",
@@ -50,10 +49,10 @@
                     },
                     "field": "username",
                     "model_type": "Text",
-                    "model": "user"
+                    "model": "user",
+                    "widget": "textbox"
                 },
                 "password": {
-                    "type": "password",
                     "slots": {},
                     "settings": {
                         "label": "password",
@@ -61,10 +60,10 @@
                     },
                     "field": "password",
                     "model_type": "Text",
-                    "model": "user"
+                    "model": "user",
+                    "widget": "password"
                 },
                 "captcha": {
-                    "type": "recaptcha",
                     "slots": {},
                     "settings": {
                         "label": "captcha",
@@ -72,10 +71,10 @@
                     },
                     "field": "captcha",
                     "model_type": "Captcha",
-                    "model": "user"
+                    "model": "user",
+                    "widget": "recaptcha"
                 },
                 "email": {
-                    "type": "email_textbox",
                     "slots": {},
                     "settings": {
                         "label": "email",
@@ -83,10 +82,10 @@
                     },
                     "field": "email",
                     "model_type": "Email",
-                    "model": "user"
+                    "model": "user",
+                    "widget": "email_textbox"
                 },
                 "roles": {
-                    "type": "model_record_reference",
                     "slots": {},
                     "settings": {
                         "label": "roles",
@@ -95,7 +94,8 @@
                     },
                     "field": "roles",
                     "model_type": "Record",
-                    "model": "user"
+                    "model": "user",
+                    "widget": "model_record_reference"
                 }
             },
             "slotAssignments": {

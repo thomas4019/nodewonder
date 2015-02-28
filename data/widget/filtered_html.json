@@ -21,7 +21,6 @@
         "display": {
             "widgets": {
                 "data": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -29,7 +28,8 @@
                     },
                     "field": "data",
                     "model_type": "Text",
-                    "model": "filtered_html"
+                    "model": "filtered_html",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

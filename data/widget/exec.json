@@ -47,7 +47,6 @@
         "display": {
             "widgets": {
                 "Code": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "label": "Code",
@@ -55,7 +54,8 @@
                     },
                     "field": "Code",
                     "model_type": "Code",
-                    "model": "exec"
+                    "model": "exec",
+                    "widget": "codemirror"
                 }
             },
             "slotAssignments": {

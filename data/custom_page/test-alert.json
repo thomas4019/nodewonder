@@ -5,27 +5,27 @@
     "code": {
         "widgets": {
             "GPdxEmBz": {
-                "type": "button",
                 "slots": {},
                 "settings": {
                     "label": "123",
                     "button_type": "default"
-                }
+                },
+                "widget": "button"
             },
             "USWTuQ2l": {
-                "type": "onclick",
                 "slots": {
                     "actions": [
                         "hbVqkAOy"
                     ]
-                }
+                },
+                "widget": "onclick"
             },
             "hbVqkAOy": {
-                "type": "alert",
                 "slots": {},
                 "settings": {
                     "message": "123"
-                }
+                },
+                "widget": "alert"
             }
         },
         "slotAssignments": {

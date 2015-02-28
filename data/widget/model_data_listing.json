@@ -53,7 +53,6 @@
         "display": {
             "widgets": {
                 "row_template": {
-                    "type": "textarea",
                     "slots": {},
                     "settings": {
                         "label": "row_template",
@@ -61,10 +60,10 @@
                     },
                     "field": "row_template",
                     "model_type": "Text",
-                    "model": "model_data_listing"
+                    "model": "model_data_listing",
+                    "widget": "textarea"
                 },
                 "model": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "model",
@@ -72,10 +71,10 @@
                     },
                     "field": "model",
                     "model_type": "Text",
-                    "model": "model_data_listing"
+                    "model": "model_data_listing",
+                    "widget": "ckeditor"
                 },
                 "manual_list": {
-                    "type": "checkbox",
                     "slots": {},
                     "settings": {
                         "label": "manual_list",
@@ -83,10 +82,10 @@
                     },
                     "field": "manual_list",
                     "model_type": "Boolean",
-                    "model": "model_data_listing"
+                    "model": "model_data_listing",
+                    "widget": "checkbox"
                 },
                 "add_button": {
-                    "type": "checkbox",
                     "slots": {},
                     "settings": {
                         "label": "add_button",
@@ -94,7 +93,8 @@
                     },
                     "field": "add_button",
                     "model_type": "Boolean",
-                    "model": "model_data_listing"
+                    "model": "model_data_listing",
+                    "widget": "checkbox"
                 }
             },
             "slotAssignments": {

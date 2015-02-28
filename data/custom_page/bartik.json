@@ -6,7 +6,6 @@
     "code": {
         "widgets": {
             "hiIn4zSc": {
-                "type": "bartik/home",
                 "slots": {
                     "header": [
                         "2ipe1ISs"
@@ -31,40 +30,41 @@
                 },
                 "settings": {
                     "has_form": false
-                }
+                },
+                "widget": "bartik/home"
             },
             "9Hmb0Mcn": {
-                "type": "ckeditor",
                 "slots": {},
                 "settings": {
                     "has_form": true
-                }
+                },
+                "widget": "ckeditor"
             },
             "2ipe1ISs": {
-                "type": "hello_world",
                 "slots": {
                     "events": []
-                }
+                },
+                "widget": "hello_world"
             },
             "ykQkNrK2": {
-                "type": "model_form",
                 "slots": {
                     "events": []
                 },
                 "settings": {
                     "model": "",
                     "record": ""
-                }
+                },
+                "widget": "model_form"
             },
             "UImHb3Sd": {
-                "type": "button",
                 "slots": {
                     "events": []
                 },
                 "settings": {
                     "label": "Save",
                     "button_type": "primary"
-                }
+                },
+                "widget": "button"
             }
         },
         "slotAssignments": {

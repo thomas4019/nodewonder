@@ -6,14 +6,14 @@
     "code": {
         "widgets": {
             "vlb3rn7L": {
-                "type": "model_record_view",
                 "slots": {},
                 "zone_tags": [],
                 "settings": {
                     "model": "user",
                     "record": "abc",
                     "view": "default"
-                }
+                },
+                "widget": "model_record_view"
             }
         },
         "slotAssignments": {

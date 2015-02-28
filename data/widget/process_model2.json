@@ -51,7 +51,6 @@
         "display": {
             "widgets": {
                 "model": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "model",
@@ -59,10 +58,10 @@
                     },
                     "field": "model",
                     "model_type": "Text",
-                    "model": "process_model2"
+                    "model": "process_model2",
+                    "widget": "ckeditor"
                 },
                 "data": {
-                    "type": "jsoneditor",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -70,10 +69,10 @@
                     },
                     "field": "data",
                     "model_type": "JSON",
-                    "model": "process_model2"
+                    "model": "process_model2",
+                    "widget": "jsoneditor"
                 },
                 "record": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "record",
@@ -81,7 +80,8 @@
                     },
                     "field": "record",
                     "model_type": "Text",
-                    "model": "process_model2"
+                    "model": "process_model2",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

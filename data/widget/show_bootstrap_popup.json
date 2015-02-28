@@ -18,7 +18,6 @@
         "display": {
             "widgets": {
                 "selector": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "selector",
@@ -26,7 +25,8 @@
                     },
                     "field": "selector",
                     "model_type": "Text",
-                    "model": "show_bootstrap_popup"
+                    "model": "show_bootstrap_popup",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

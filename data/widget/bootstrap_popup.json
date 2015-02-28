@@ -49,7 +49,6 @@
         "display": {
             "widgets": {
                 "resizable": {
-                    "type": "checkbox",
                     "slots": {},
                     "settings": {
                         "label": "resizable",
@@ -57,10 +56,10 @@
                     },
                     "field": "resizable",
                     "model_type": "Boolean",
-                    "model": "bootstrap_popup"
+                    "model": "bootstrap_popup",
+                    "widget": "checkbox"
                 },
                 "title": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "title",
@@ -68,7 +67,8 @@
                     },
                     "field": "title",
                     "model_type": "Text",
-                    "model": "bootstrap_popup"
+                    "model": "bootstrap_popup",
+                    "widget": "ckeditor"
                 }
             },
             "slotAssignments": {

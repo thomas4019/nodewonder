@@ -53,7 +53,6 @@
         "display": {
             "widgets": {
                 "label": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "label",
@@ -61,10 +60,10 @@
                     },
                     "field": "label",
                     "model_type": "Text",
-                    "model": "ckeditor"
+                    "model": "ckeditor",
+                    "widget": "ckeditor"
                 },
                 "toolbar": {
-                    "type": "select",
                     "slots": {},
                     "settings": {
                         "label": "toolbar",
@@ -76,10 +75,10 @@
                     },
                     "field": "toolbar",
                     "model_type": "Text",
-                    "model": "ckeditor"
+                    "model": "ckeditor",
+                    "widget": "select"
                 },
                 "data": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -87,7 +86,8 @@
                     },
                     "field": "data",
                     "model_type": "Text",
-                    "model": "ckeditor"
+                    "model": "ckeditor",
+                    "widget": "ckeditor"
                 }
             },
             "slotAssignments": {

@@ -115,7 +115,6 @@
         "display": {
             "widgets": {
                 "P8qet6hN": {
-                    "type": "vertical_tabs",
                     "slots": {
                         "tabs": [
                             "wqf5Ke01",
@@ -137,10 +136,10 @@
                             "Process",
                             "Data"
                         ]
-                    }
+                    },
+                    "widget": "vertical_tabs"
                 },
                 "wqf5Ke01": {
-                    "type": "group",
                     "slots": {
                         "children": [
                             "name",
@@ -149,10 +148,10 @@
                             "style",
                             "setup"
                         ]
-                    }
+                    },
+                    "widget": "group"
                 },
                 "name": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "name",
@@ -160,10 +159,10 @@
                     },
                     "field": "name",
                     "model_type": "Text",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "textbox"
                 },
                 "htmlTemplate": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "htmlmixed",
@@ -174,10 +173,10 @@
                     },
                     "field": "htmlTemplate",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "action": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "",
@@ -193,10 +192,10 @@
                     },
                     "field": "action",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "style": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "css",
@@ -207,30 +206,30 @@
                     },
                     "field": "style",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "VVsxIVVv": {
-                    "type": "group",
                     "slots": {
                         "children": [
                             "slots",
                             "children",
                             "content"
                         ]
-                    }
+                    },
+                    "widget": "group"
                 },
                 "slots": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "slots"
                     },
                     "field": "slots",
                     "model_type": "Text",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "textbox"
                 },
                 "children": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "",
@@ -243,10 +242,10 @@
                     },
                     "field": "children",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "DapvwhYw": {
-                    "type": "group",
                     "slots": {
                         "children": [
                             "deps",
@@ -254,10 +253,10 @@
                             "wrapper",
                             "wrapperClass"
                         ]
-                    }
+                    },
+                    "widget": "group"
                 },
                 "deps": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "deps",
@@ -265,10 +264,10 @@
                     },
                     "field": "deps",
                     "model_type": "Text",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "textbox"
                 },
                 "head": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "head",
@@ -276,10 +275,10 @@
                     },
                     "field": "head",
                     "model_type": "Text",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "textbox"
                 },
                 "wrapper": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "wrapper",
@@ -287,10 +286,10 @@
                     },
                     "field": "wrapper",
                     "model_type": "Text",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "textbox"
                 },
                 "wrapperClass": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "wrapperClass",
@@ -298,10 +297,10 @@
                     },
                     "field": "wrapperClass",
                     "model_type": "Text",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "textbox"
                 },
                 "KbfleboJ": {
-                    "type": "group",
                     "slots": {
                         "children": [
                             "settings",
@@ -309,10 +308,10 @@
                             "weight",
                             "tags"
                         ]
-                    }
+                    },
+                    "widget": "group"
                 },
                 "VlH5CYfb": {
-                    "type": "group",
                     "slots": {
                         "children": [
                             "toHTML",
@@ -322,10 +321,10 @@
                             "init",
                             "pseudo_names"
                         ]
-                    }
+                    },
+                    "widget": "group"
                 },
                 "toHTML": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "",
@@ -339,10 +338,10 @@
                     },
                     "field": "toHTML",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "script": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "label": "script",
@@ -350,10 +349,10 @@
                     },
                     "field": "script",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "makeActionJS": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "label": "makeActionJS",
@@ -361,10 +360,10 @@
                     },
                     "field": "makeActionJS",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "makeEventJS": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "",
@@ -378,10 +377,10 @@
                     },
                     "field": "makeEventJS",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "init": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "css",
@@ -395,20 +394,20 @@
                     },
                     "field": "init",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "Sbxc559U": {
-                    "type": "group",
                     "slots": {
                         "children": [
                             "doProcess",
                             "save",
                             "load"
                         ]
-                    }
+                    },
+                    "widget": "group"
                 },
                 "doProcess": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "",
@@ -422,10 +421,10 @@
                     },
                     "field": "doProcess",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "save": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "",
@@ -442,10 +441,10 @@
                     },
                     "field": "save",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "load": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "",
@@ -459,19 +458,19 @@
                     },
                     "field": "load",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "AlFua52G": {
-                    "type": "group",
                     "slots": {
                         "children": [
                             "processData",
                             "validateData"
                         ]
-                    }
+                    },
+                    "widget": "group"
                 },
                 "pseudo_names": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "label": "pseudo_names",
@@ -479,10 +478,10 @@
                     },
                     "field": "pseudo_names",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "processData": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "",
@@ -497,10 +496,10 @@
                     },
                     "field": "processData",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "validateData": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "lang": "",
@@ -514,10 +513,10 @@
                     },
                     "field": "validateData",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "setup": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "label": "setup",
@@ -525,30 +524,30 @@
                     },
                     "field": "setup",
                     "model_type": "Code",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "codemirror"
                 },
                 "content": {
-                    "type": "model_form",
                     "slots": {},
                     "field": "content",
                     "model_type": "schema",
                     "model": "Model",
                     "settings": {
                         "label": "content"
-                    }
+                    },
+                    "widget": "model_form"
                 },
                 "settings": {
-                    "type": "model_form",
                     "slots": {},
                     "field": "settings",
                     "model_type": "schema",
                     "model": "Model",
                     "settings": {
                         "label": "settings"
-                    }
+                    },
+                    "widget": "model_form"
                 },
                 "settings_unfiltered": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "settings_unfiltered",
@@ -556,10 +555,10 @@
                     },
                     "field": "settings_unfiltered",
                     "model_type": "Text",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "textbox"
                 },
                 "weight": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "weight",
@@ -567,10 +566,10 @@
                     },
                     "field": "weight",
                     "model_type": "Number",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "numeric_textbox"
                 },
                 "tags": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "tags",
@@ -578,7 +577,8 @@
                     },
                     "field": "tags",
                     "model_type": "Text",
-                    "model": "widget"
+                    "model": "widget",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

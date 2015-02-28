@@ -41,7 +41,6 @@
         "display": {
             "widgets": {
                 "tabs": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "tabs",
@@ -49,7 +48,8 @@
                     },
                     "field": "tabs",
                     "model_type": "Text",
-                    "model": "vertical_tabs"
+                    "model": "vertical_tabs",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

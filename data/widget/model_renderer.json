@@ -53,7 +53,6 @@
         "display": {
             "widgets": {
                 "schema": {
-                    "type": "model_form",
                     "slots": {},
                     "settings": {
                         "label": "schema",
@@ -61,10 +60,10 @@
                     },
                     "field": "schema",
                     "model_type": "schema",
-                    "model": "model_renderer"
+                    "model": "model_renderer",
+                    "widget": "model_form"
                 },
                 "data": {
-                    "type": "jsoneditor",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -72,7 +71,8 @@
                     },
                     "field": "data",
                     "model_type": "JSON",
-                    "model": "model_renderer"
+                    "model": "model_renderer",
+                    "widget": "jsoneditor"
                 }
             },
             "slotAssignments": {

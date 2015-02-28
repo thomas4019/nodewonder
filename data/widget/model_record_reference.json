@@ -71,7 +71,6 @@
         "display": {
             "widgets": {
                 "label": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "label",
@@ -79,10 +78,10 @@
                     },
                     "field": "label",
                     "model_type": "Text",
-                    "model": "model_record_reference"
+                    "model": "model_record_reference",
+                    "widget": "ckeditor"
                 },
                 "model": {
-                    "type": "model_record_reference",
                     "slots": {},
                     "settings": {
                         "model": "model",
@@ -91,10 +90,10 @@
                     },
                     "field": "model",
                     "model_type": "Record",
-                    "model": "model_record_reference"
+                    "model": "model_record_reference",
+                    "widget": "model_record_reference"
                 },
                 "data": {
-                    "type": "model_record_reference",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -102,7 +101,8 @@
                     },
                     "field": "data",
                     "model_type": "Record",
-                    "model": "model_record_reference"
+                    "model": "model_record_reference",
+                    "widget": "model_record_reference"
                 }
             },
             "slotAssignments": {

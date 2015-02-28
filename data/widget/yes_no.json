@@ -26,7 +26,6 @@
         "display": {
             "widgets": {
                 "true_text": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "true_text",
@@ -34,10 +33,10 @@
                     },
                     "field": "true_text",
                     "model_type": "Text",
-                    "model": "yes_no"
+                    "model": "yes_no",
+                    "widget": "textbox"
                 },
                 "false_text": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "false_text",
@@ -45,10 +44,10 @@
                     },
                     "field": "false_text",
                     "model_type": "Text",
-                    "model": "yes_no"
+                    "model": "yes_no",
+                    "widget": "textbox"
                 },
                 "data": {
-                    "type": "checkbox",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -56,7 +55,8 @@
                     },
                     "field": "data",
                     "model_type": "Boolean",
-                    "model": "yes_no"
+                    "model": "yes_no",
+                    "widget": "checkbox"
                 }
             },
             "slotAssignments": {

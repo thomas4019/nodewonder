@@ -43,7 +43,6 @@
         "display": {
             "widgets": {
                 "code": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "code",
@@ -51,10 +50,10 @@
                     },
                     "field": "code",
                     "model_type": "Text",
-                    "model": "google_analytics"
+                    "model": "google_analytics",
+                    "widget": "ckeditor"
                 },
                 "url": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "url",
@@ -62,7 +61,8 @@
                     },
                     "field": "url",
                     "model_type": "Text",
-                    "model": "google_analytics"
+                    "model": "google_analytics",
+                    "widget": "ckeditor"
                 }
             },
             "slotAssignments": {

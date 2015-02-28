@@ -18,7 +18,6 @@
         "display": {
             "widgets": {
                 "role": {
-                    "type": "model_record_reference",
                     "slots": {},
                     "settings": {
                         "label": "role",
@@ -27,7 +26,8 @@
                     },
                     "field": "role",
                     "model_type": "Record",
-                    "model": "permission"
+                    "model": "permission",
+                    "widget": "model_record_reference"
                 },
                 "": {
                     "slots": {},

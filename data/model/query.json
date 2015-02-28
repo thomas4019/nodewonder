@@ -30,7 +30,6 @@
         "display": {
             "widgets": {
                 "from": {
-                    "type": "model_record_reference",
                     "slots": {},
                     "settings": {
                         "label": "from",
@@ -39,10 +38,10 @@
                     },
                     "field": "from",
                     "model_type": "Record",
-                    "model": "query"
+                    "model": "query",
+                    "widget": "model_record_reference"
                 },
                 "select": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "select",
@@ -50,10 +49,10 @@
                     },
                     "field": "select",
                     "model_type": "Text",
-                    "model": "query"
+                    "model": "query",
+                    "widget": "textbox"
                 },
                 "where": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "where",
@@ -61,10 +60,10 @@
                     },
                     "field": "where",
                     "model_type": "Text",
-                    "model": "query"
+                    "model": "query",
+                    "widget": "textbox"
                 },
                 "orderby": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "orderby",
@@ -72,10 +71,10 @@
                     },
                     "field": "orderby",
                     "model_type": "Text",
-                    "model": "query"
+                    "model": "query",
+                    "widget": "textbox"
                 },
                 "limit": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "limit",
@@ -83,7 +82,8 @@
                     },
                     "field": "limit",
                     "model_type": "Number",
-                    "model": "query"
+                    "model": "query",
+                    "widget": "numeric_textbox"
                 }
             },
             "slotAssignments": {

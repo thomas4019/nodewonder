@@ -69,7 +69,6 @@
         "display": {
             "widgets": {
                 "data": {
-                    "type": "jsoneditor",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -77,10 +76,10 @@
                     },
                     "field": "data",
                     "model_type": "JSON",
-                    "model": "jsoneditor"
+                    "model": "jsoneditor",
+                    "widget": "jsoneditor"
                 },
                 "width": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "width",
@@ -88,10 +87,10 @@
                     },
                     "field": "width",
                     "model_type": "Number",
-                    "model": "jsoneditor"
+                    "model": "jsoneditor",
+                    "widget": "numeric_textbox"
                 },
                 "height": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "height",
@@ -99,7 +98,8 @@
                     },
                     "field": "height",
                     "model_type": "Number",
-                    "model": "jsoneditor"
+                    "model": "jsoneditor",
+                    "widget": "numeric_textbox"
                 }
             },
             "slotAssignments": {

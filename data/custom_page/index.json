@@ -5,14 +5,14 @@
     "code": {
         "widgets": {
             "start": {
-                "type": "template",
                 "slots": {
                     "title": [],
                     "top": []
                 },
                 "settings": {
                     "path": "themes/html5up-tessellate/template.html"
-                }
+                },
+                "widget": "template"
             }
         },
         "slotAssignments": {

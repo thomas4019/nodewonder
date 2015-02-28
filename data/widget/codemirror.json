@@ -84,7 +84,6 @@
         "display": {
             "widgets": {
                 "lang": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "lang",
@@ -92,10 +91,10 @@
                     },
                     "field": "lang",
                     "model_type": "Text",
-                    "model": "codemirror"
+                    "model": "codemirror",
+                    "widget": "textbox"
                 },
                 "height": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "height",
@@ -103,10 +102,10 @@
                     },
                     "field": "height",
                     "model_type": "Number",
-                    "model": "codemirror"
+                    "model": "codemirror",
+                    "widget": "numeric_textbox"
                 },
                 "data": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -114,10 +113,10 @@
                     },
                     "field": "data",
                     "model_type": "Code",
-                    "model": "codemirror"
+                    "model": "codemirror",
+                    "widget": "codemirror"
                 },
                 "args": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "args",
@@ -125,7 +124,8 @@
                     },
                     "field": "args",
                     "model_type": "Text",
-                    "model": "codemirror"
+                    "model": "codemirror",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

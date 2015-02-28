@@ -35,7 +35,6 @@
         "display": {
             "widgets": {
                 "total": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "total",
@@ -43,10 +42,10 @@
                     },
                     "field": "total",
                     "model_type": "Number",
-                    "model": "vote"
+                    "model": "vote",
+                    "widget": "numeric_textbox"
                 },
                 "count": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "count",
@@ -54,10 +53,10 @@
                     },
                     "field": "count",
                     "model_type": "Number",
-                    "model": "vote"
+                    "model": "vote",
+                    "widget": "numeric_textbox"
                 },
                 "average": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "average",
@@ -65,10 +64,10 @@
                     },
                     "field": "average",
                     "model_type": "Number",
-                    "model": "vote"
+                    "model": "vote",
+                    "widget": "numeric_textbox"
                 },
                 "ratings": {
-                    "type": "numeric_textbox",
                     "slots": {},
                     "settings": {
                         "label": "ratings",
@@ -76,7 +75,8 @@
                     },
                     "field": "ratings",
                     "model_type": "Number",
-                    "model": "vote"
+                    "model": "vote",
+                    "widget": "numeric_textbox"
                 }
             },
             "slotAssignments": {

@@ -22,7 +22,6 @@
         "display": {
             "widgets": {
                 "name": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "name",
@@ -30,10 +29,10 @@
                     },
                     "field": "name",
                     "model_type": "Text",
-                    "model": "job"
+                    "model": "job",
+                    "widget": "textbox"
                 },
                 "Code": {
-                    "type": "codemirror",
                     "slots": {},
                     "settings": {
                         "label": "Code",
@@ -41,7 +40,8 @@
                     },
                     "field": "Code",
                     "model_type": "Code",
-                    "model": "job"
+                    "model": "job",
+                    "widget": "codemirror"
                 },
                 "": {
                     "slots": {},

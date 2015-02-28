@@ -64,7 +64,6 @@
         "display": {
             "widgets": {
                 "model": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "model",
@@ -72,10 +71,10 @@
                     },
                     "field": "model",
                     "model_type": "Text",
-                    "model": "save_record"
+                    "model": "save_record",
+                    "widget": "textbox"
                 },
                 "record": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "record",
@@ -83,10 +82,10 @@
                     },
                     "field": "record",
                     "model_type": "Text",
-                    "model": "save_record"
+                    "model": "save_record",
+                    "widget": "textbox"
                 },
                 "data_name": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "data_name",
@@ -94,10 +93,10 @@
                     },
                     "field": "data_name",
                     "model_type": "Text",
-                    "model": "save_record"
+                    "model": "save_record",
+                    "widget": "textbox"
                 },
                 "data": {
-                    "type": "jsoneditor",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -105,10 +104,10 @@
                     },
                     "field": "data",
                     "model_type": "JSON",
-                    "model": "save_record"
+                    "model": "save_record",
+                    "widget": "jsoneditor"
                 },
                 "record_id_dest": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "record_id_dest",
@@ -116,7 +115,8 @@
                     },
                     "field": "record_id_dest",
                     "model_type": "Text",
-                    "model": "save_record"
+                    "model": "save_record",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

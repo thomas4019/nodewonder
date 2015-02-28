@@ -64,7 +64,6 @@
         "display": {
             "widgets": {
                 "label": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "label",
@@ -72,10 +71,10 @@
                     },
                     "field": "label",
                     "model_type": "Text",
-                    "model": "form_button"
+                    "model": "form_button",
+                    "widget": "textbox"
                 },
                 "button_type": {
-                    "type": "select",
                     "slots": {},
                     "settings": {
                         "label": "button_type",
@@ -91,7 +90,8 @@
                     },
                     "field": "button_type",
                     "model_type": "Text",
-                    "model": "form_button"
+                    "model": "form_button",
+                    "widget": "select"
                 }
             },
             "slotAssignments": {

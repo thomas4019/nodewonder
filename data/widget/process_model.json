@@ -38,7 +38,6 @@
         "display": {
             "widgets": {
                 "model": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "model",
@@ -46,10 +45,10 @@
                     },
                     "field": "model",
                     "model_type": "Text",
-                    "model": "process_model"
+                    "model": "process_model",
+                    "widget": "ckeditor"
                 },
                 "data": {
-                    "type": "jsoneditor",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -57,7 +56,8 @@
                     },
                     "field": "data",
                     "model_type": "JSON",
-                    "model": "process_model"
+                    "model": "process_model",
+                    "widget": "jsoneditor"
                 }
             },
             "slotAssignments": {

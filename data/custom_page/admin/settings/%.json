@@ -5,15 +5,14 @@
     "code": {
         "widgets": {
             "ajGGMkV3": {
-                "type": "header",
                 "slots": {},
                 "settings": {
                     "data": "Setting",
                     "type": ""
-                }
+                },
+                "widget": "header"
             },
             "UpmLvlaI": {
-                "type": "model_form",
                 "slots": {
                     "events": []
                 },
@@ -21,10 +20,10 @@
                     "model": "setting",
                     "record": "{{args.arg2}}",
                     "field": "fields"
-                }
+                },
+                "widget": "model_form"
             },
             "S0U0SO3r": {
-                "type": "button",
                 "slots": {
                     "events": [
                         "9M10es1L"
@@ -33,32 +32,33 @@
                 "settings": {
                     "label": "Save",
                     "button_type": "success"
-                }
+                },
+                "widget": "button"
             },
             "9M10es1L": {
-                "type": "onclick",
                 "slots": {
                     "actions": [
                         "XHgnsgpk",
                         "kO77sQTr"
                     ]
-                }
+                },
+                "widget": "onclick"
             },
             "XHgnsgpk": {
-                "type": "get_form_data",
                 "slots": {},
                 "settings": {
                     "selector": "#UpmLvlaI",
                     "dest": "form"
-                }
+                },
+                "widget": "get_form_data"
             },
             "kO77sQTr": {
-                "type": "message",
                 "slots": {},
                 "settings": {
                     "message": "Hello {{form.name}}",
                     "type": "info"
-                }
+                },
+                "widget": "message"
             }
         },
         "slotAssignments": {

@@ -33,7 +33,6 @@
         "display": {
             "widgets": {
                 "path": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "path",
@@ -41,7 +40,8 @@
                     },
                     "field": "path",
                     "model_type": "Text",
-                    "model": "template"
+                    "model": "template",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

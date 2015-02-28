@@ -5,24 +5,23 @@
     "code": {
         "widgets": {
             "wyobn3bP": {
-                "type": "model_form",
                 "slots": {},
                 "settings": {
                     "model": "model",
                     "record": "{{args.model}}",
                     "field": "schema",
                     "inline": false
-                }
+                },
+                "widget": "model_form"
             },
             "ZA56joXJ": {
-                "type": "header",
                 "slots": {},
                 "settings": {
                     "data": "<a href=\"/admin/list/model\">Models</a> : <a href=\"/admin/list/{{ args.model }}/\">{{ args.model }}</a> : {{ args.record }}"
-                }
+                },
+                "widget": "header"
             },
             "itYLXx13": {
-                "type": "button",
                 "slots": {
                     "events": [
                         "bZTNEhMs"
@@ -31,10 +30,10 @@
                 "settings": {
                     "label": "Save and Return",
                     "button_type": "success"
-                }
+                },
+                "widget": "button"
             },
             "RQWTNc59": {
-                "type": "button",
                 "slots": {
                     "events": [
                         "Obo9aJmx"
@@ -43,27 +42,27 @@
                 "settings": {
                     "label": "Save",
                     "button_type": "success"
-                }
+                },
+                "widget": "button"
             },
             "Obo9aJmx": {
-                "type": "onclick",
                 "slots": {
                     "actions": [
                         "kyKLGO72",
                         "yD4LXiuv"
                     ]
-                }
+                },
+                "widget": "onclick"
             },
             "bZTNEhMs": {
-                "type": "onclick",
                 "slots": {
                     "actions": [
                         "kyKLGO7q"
                     ]
-                }
+                },
+                "widget": "onclick"
             },
             "tMsJcZIG": {
-                "type": "button",
                 "slots": {
                     "events": [
                         "AkSI1UBk"
@@ -72,18 +71,18 @@
                 "settings": {
                     "label": "Delete",
                     "button_type": "danger"
-                }
+                },
+                "widget": "button"
             },
             "AkSI1UBk": {
-                "type": "onclick",
                 "slots": {
                     "actions": [
                         "NeLMCSUE"
                     ]
-                }
+                },
+                "widget": "onclick"
             },
             "3aU1BiZH": {
-                "type": "button",
                 "slots": {
                     "events": [
                         "yUxifCu0"
@@ -92,22 +91,22 @@
                 "settings": {
                     "label": "Cancel",
                     "button_type": "warning"
-                }
+                },
+                "widget": "button"
             },
             "yUxifCu0": {
-                "type": "onclick",
                 "slots": {
                     "actions": [
                         "L0nyeK66"
                     ]
-                }
+                },
+                "widget": "onclick"
             },
             "L0nyeK66": {
-                "type": "go_back",
-                "slots": {}
+                "slots": {},
+                "widget": "go_back"
             },
             "NeLMCSUE": {
-                "type": "delete_record",
                 "slots": {
                     "success": [
                         "eAVQMlk8"
@@ -119,32 +118,32 @@
                 "settings": {
                     "model": "{{args.model}}",
                     "record": "{{args.record}}"
-                }
+                },
+                "widget": "delete_record"
             },
             "KqnP5NVB": {
-                "type": "message",
                 "slots": {},
                 "settings": {
                     "message": "Failed to delete.",
                     "type": "error"
-                }
+                },
+                "widget": "message"
             },
             "eAVQMlk8": {
-                "type": "goto_page",
                 "slots": {},
                 "settings": {
                     "URL": "admin/list/{{args.model}}"
-                }
+                },
+                "widget": "goto_page"
             },
             "kyKLGO72": {
-                "type": "get_form_data",
                 "settings": {
                     "selector": "#wyobn3bP",
                     "dest": "record"
-                }
+                },
+                "widget": "get_form_data"
             },
             "kyKLGO7q": {
-                "type": "save_record",
                 "slots": {
                     "success": [
                         "ARm2WD2e"
@@ -157,22 +156,22 @@
                     "data_name": "record",
                     "model": "{{args.model}}",
                     "record": "{{args.record}}"
-                }
+                },
+                "widget": "save_record"
             },
             "HFuYWHvO": {
-                "type": "message",
                 "slots": {},
                 "settings": {
                     "message": "Save failed! Please copy important data to avoid data loss.",
                     "type": "error"
-                }
+                },
+                "widget": "message"
             },
             "ARm2WD2e": {
-                "type": "go_back",
-                "slots": {}
+                "slots": {},
+                "widget": "go_back"
             },
             "yD4LXiuv": {
-                "type": "save_record",
                 "slots": {
                     "success": [
                         "ACqorjKU",
@@ -187,26 +186,26 @@
                     "model": "{{args.model}}",
                     "record": "{{args.record}}",
                     "record_id_dest": "new_record"
-                }
+                },
+                "widget": "save_record"
             },
             "Clo3RorE": {
-                "type": "message",
                 "slots": {},
                 "settings": {
                     "message": "Save failed. Please copy important data to avoid data loss.",
                     "type": "error"
-                }
+                },
+                "widget": "message"
             },
             "ACqorjKU": {
-                "type": "message",
                 "slots": {},
                 "settings": {
                     "message": "Saved Successfully.",
                     "type": "success"
-                }
+                },
+                "widget": "message"
             },
             "zVJ1oSfo": {
-                "type": "if",
                 "slots": {
                     "then": [],
                     "else": [
@@ -215,14 +214,15 @@
                 },
                 "settings": {
                     "condition": "scope.new_record == scope.args.record"
-                }
+                },
+                "widget": "if"
             },
             "gQ2HqByO": {
-                "type": "goto_page",
                 "slots": {},
                 "settings": {
                     "URL": "admin/data/?model={{args.model}}&record={{new_record}}"
-                }
+                },
+                "widget": "goto_page"
             }
         },
         "slotAssignments": {

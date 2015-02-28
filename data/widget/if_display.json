@@ -46,7 +46,6 @@
         "display": {
             "widgets": {
                 "condition": {
-                    "type": "ckeditor",
                     "slots": {},
                     "settings": {
                         "label": "condition",
@@ -54,7 +53,8 @@
                     },
                     "field": "condition",
                     "model_type": "Text",
-                    "model": "if_display"
+                    "model": "if_display",
+                    "widget": "ckeditor"
                 }
             },
             "slotAssignments": {

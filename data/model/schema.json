@@ -17,7 +17,6 @@
         "display": {
             "widgets": {
                 "fields": {
-                    "type": "model_form",
                     "slots": {},
                     "settings": {
                         "label": "fields",
@@ -25,10 +24,10 @@
                     },
                     "field": "fields",
                     "model_type": "field2",
-                    "model": "schema"
+                    "model": "schema",
+                    "widget": "model_form"
                 },
                 "display": {
-                    "type": "widget_code_editor",
                     "slots": {},
                     "settings": {
                         "label": "display",
@@ -36,7 +35,8 @@
                     },
                     "field": "display",
                     "model_type": "widget_code",
-                    "model": "schema"
+                    "model": "schema",
+                    "widget": "widget_code_editor"
                 }
             },
             "slotAssignments": {

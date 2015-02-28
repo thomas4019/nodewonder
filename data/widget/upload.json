@@ -20,7 +20,6 @@
         "display": {
             "widgets": {
                 "data": {
-                    "type": "upload",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -28,7 +27,8 @@
                     },
                     "field": "data",
                     "model_type": "File",
-                    "model": "upload"
+                    "model": "upload",
+                    "widget": "upload"
                 }
             },
             "slotAssignments": {

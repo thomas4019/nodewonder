@@ -23,7 +23,6 @@
         "display": {
             "widgets": {
                 "format": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "format",
@@ -31,10 +30,10 @@
                     },
                     "field": "format",
                     "model_type": "Text",
-                    "model": "formatted_date"
+                    "model": "formatted_date",
+                    "widget": "textbox"
                 },
                 "data": {
-                    "type": "date",
                     "slots": {},
                     "settings": {
                         "label": "data",
@@ -42,7 +41,8 @@
                     },
                     "field": "data",
                     "model_type": "Date",
-                    "model": "formatted_date"
+                    "model": "formatted_date",
+                    "widget": "date"
                 }
             },
             "slotAssignments": {

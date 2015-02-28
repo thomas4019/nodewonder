@@ -27,7 +27,6 @@
         "display": {
             "widgets": {
                 "name": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "name",
@@ -35,10 +34,10 @@
                     },
                     "field": "name",
                     "model_type": "Text",
-                    "model": "menu"
+                    "model": "menu",
+                    "widget": "textbox"
                 },
                 "link": {
-                    "type": "model_form",
                     "slots": {},
                     "settings": {
                         "label": "link",
@@ -46,7 +45,8 @@
                     },
                     "field": "link",
                     "model_type": "link",
-                    "model": "menu"
+                    "model": "menu",
+                    "widget": "model_form"
                 }
             },
             "slotAssignments": {

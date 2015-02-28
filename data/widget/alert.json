@@ -18,7 +18,6 @@
         "display": {
             "widgets": {
                 "message": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "message",
@@ -26,7 +25,8 @@
                     },
                     "field": "message",
                     "model_type": "Text",
-                    "model": "alert"
+                    "model": "alert",
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

@@ -35,7 +35,6 @@
         "display": {
             "widgets": {
                 "CJQVF99G": {
-                    "type": "two_col",
                     "slots": {
                         "left": [
                             "name"
@@ -43,10 +42,10 @@
                         "right": [
                             "description"
                         ]
-                    }
+                    },
+                    "widget": "two_col"
                 },
                 "name": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "name",
@@ -54,10 +53,10 @@
                     },
                     "field": "name",
                     "model_type": "Text",
-                    "model": "model"
+                    "model": "model",
+                    "widget": "textbox"
                 },
                 "description": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "description",
@@ -65,10 +64,10 @@
                     },
                     "field": "description",
                     "model_type": "Text",
-                    "model": "model"
+                    "model": "model",
+                    "widget": "textbox"
                 },
                 "schema": {
-                    "type": "model_form",
                     "slots": {},
                     "settings": {
                         "label": "schema",
@@ -76,10 +75,10 @@
                     },
                     "field": "schema",
                     "model_type": "schema",
-                    "model": "model"
+                    "model": "model",
+                    "widget": "model_form"
                 },
                 "index": {
-                    "type": "textbox",
                     "slots": {},
                     "settings": {
                         "label": "index",
@@ -87,10 +86,10 @@
                     },
                     "field": "index",
                     "model_type": "Text",
-                    "model": "model"
+                    "model": "model",
+                    "widget": "textbox"
                 },
                 "views": {
-                    "type": "widget_code_editor",
                     "slots": {},
                     "settings": {
                         "label": "views",
@@ -98,10 +97,10 @@
                     },
                     "field": "views",
                     "model_type": "Widgets",
-                    "model": "model"
+                    "model": "model",
+                    "widget": "widget_code_editor"
                 },
                 "storage": {
-                    "type": "select",
                     "slots": {},
                     "settings": {
                         "choices": [
@@ -115,17 +114,18 @@
                     },
                     "field": "storage",
                     "model_type": "Text",
-                    "model": "model"
+                    "model": "model",
+                    "widget": "select"
                 },
                 "adminFields": {
-                    "type": "textbox",
                     "slots": {},
                     "field": "adminFields",
                     "model_type": "Text",
                     "model": "Model",
                     "settings": {
                         "label": "adminFields"
-                    }
+                    },
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {
