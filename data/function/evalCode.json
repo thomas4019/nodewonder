@@ -1,0 +1,22 @@
+{
+    "name": "evalCode",
+    "args": [
+        "code"
+    ],
+    "code": {
+        "_is_func": true,
+        "args": [
+            "code"
+        ],
+        "javascript": "if (code.constructor === Array) {\n  return cms.functions.evalCode(code[0]);\n}\nelse if (code.type == 'literal') {\n  return (typeof code.data == 'string') ? '\"' + code.data + '\"' : code.data;\n}\nelse if (code.type == 'regexp') {\n  return '/' + code.data + '/';\n} else if (code.func && code.func.length == 1) {\n  var slots = Object.keys(code.slotAssignments);\n  console.log(slots);\n    console.log(code.slotAssignments);\n  return cms.functions.evalCode(code.slotAssignments[slots[0]][0]) + \" \" + code.func + \" \" + cms.functions.evalCode(code.slotAssignments[slots[1]][0]);\n} /*else if (code.prefix) {\n  var argsV = _.map(code.args, function(arg) {\n    return cms.functions.evalCode(code.slotAssignments[arg]);\n  });\n  argsV[code.index] += code.func;\n  var text = code.prefix + argsV.join(code.join) + code.suffix;\n  return text;\n}*/ else if (code.infix) {\n  var argsV = _.map(code.args, function(arg) {\n    return cms.functions.evalCode(code.slotAssignments[arg]);\n  });\n  var text = argsV[0] + code.func.replace(new RegExp('\\\\[.*\\\\]'), '') + '(' + argsV.slice(1).join(',') + ') ';\n  return text;\n} else {\n  var argsV = _.map(code.args, function(arg) {\n    return cms.functions.evalCode(code.slotAssignments[arg]);\n  });\n  var text = code.func + '(' + argsV.join(',') + ') ';\n  return text;\n}"
+    },
+    "calls": [
+        "evalCode",
+        "evalCode",
+        "evalCode",
+        "evalCode",
+        "evalCode",
+        "evalCode"
+    ],
+    "callers": []
+}

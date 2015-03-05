@@ -34,11 +34,15 @@ function setupWidgetSelector(id) {
 						if (!query.term || name.toUpperCase().indexOf(query.term.toUpperCase()	) !== -1) {
 							//var w = JSON.parse(JSON.stringify(nw.widgets[field.widget]));
 							var w = _.clone(nw.widgets[nw.edit_widgets[field.type][0]]);
-							w.field = field.type;
+							w.model_type = field.type;
+							w.id = name;
 							w.text = name;
-							w.name = name;
+							w.field = name;
 							w.model = 'Model';
-							w.settings = w.settings || {};
+							if (w.settings)
+							w.settings = {};
+							else
+							w.settings = false;
 							w.settings.label = name;
 							w.settings.field_type = field.type;
 							model.children.push(w);
@@ -65,10 +69,10 @@ function setupWidgetSelector(id) {
 				var tag = 'code';
 				func.text = name;
 				func.id = name;
-				func.widget = name;
+				func.func = name;
 				func.slots = {};
 				_.forEach(func.args, function(arg) {
-					func.slots[arg] = ['code'];
+					func.slots[arg] = [];
 				});
 				if (_.contains(slot_tag_targets, tag)) {
 					if (!groups[tag]) {
@@ -87,7 +91,7 @@ function setupWidgetSelector(id) {
 			func.text = '"' + name + '"';
 			func.label = '"' + name + '"';
 			func.id = 'literal';
-			func.widget = 'literal';
+			func.type = 'literal';
 			func.data = name;
 			if (_.contains(slot_tag_targets, tag)) {
 				if (!groups[tag]) {
@@ -97,6 +101,38 @@ function setupWidgetSelector(id) {
 				groups[tag].children.push(func);
 			}
 
+			var tag = 'code';
+			var name = query.term;
+			var func = {};
+			func.text = name;
+			func.label = name;
+			func.id = 'literal';
+			func.type = 'literal';
+			func.data = parseFloat(name);
+			if (_.contains(slot_tag_targets, tag)) {
+				if (!groups[tag]) {
+					groups[tag] = {text: tag, children: []}
+					data.results.push(groups[tag]);
+				}
+				groups[tag].children.push(func);
+			}
+
+
+			var tag = 'code';
+			var name = query.term;
+			var func = {};
+			func.text = '/' + name + '/';
+			func.label = '/' + name + '/';
+			func.id = 'regexp';
+			func.type = 'regexp';
+			func.data = name;
+			if (_.contains(slot_tag_targets, tag)) {
+				if (!groups[tag]) {
+					groups[tag] = {text: tag, children: []}
+					data.results.push(groups[tag]);
+				}
+				groups[tag].children.push(func);
+			}
 
 			query.callback(data);
 		}
@@ -114,7 +150,7 @@ function stateController($scope) {
 
 	_.each($scope.widgets, function(w) {
 		if (nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.widget]) {
-			w.has_form = nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.widget].settings;
+			//w.settings = nw.widgets[w.pseudo_widget ? w.pseudo_widget : w.widget].settings;
 		} else {
 			console.log('missing widget ' + w.widget);
 		}
@@ -155,25 +191,18 @@ function stateController($scope) {
 		_.each(selected.slots, function(arr, slot_name) {
 			slots[slot_name] = [];
 		});
+		selected.slots = slots;
 		//var slots = JSON.parse()
-		var new_id = selected.model ? selected.name : nw.functions.makeid(8);
-		if (selected.model)
-			$scope.widgets[new_id] = {widget: selected.widget, slots: slots, has_form: selected.settings, field: selected.name, model_type: selected.field, model: selected.model, settings: {label: selected.name, field_type: selected.model_type}};
-		else
-			$scope.widgets[new_id] = {widget: selected.widget, slots: slots, has_form: selected.settings};
 
-		if (selected.data)
-			$scope.widgets[new_id].data = selected.data;			
+		var new_id = selected.model ? selected.field : nw.functions.makeid(8);
+		$scope.widgets[new_id] = selected;		
 
-		if (selected.label)
-			$scope.widgets[new_id].label = selected.label;			
-
-		if (selected.id != selected.widget) {
+		/*if (selected.widget && selected.id != selected.widget) {
 			$scope.widgets[new_id]['pseudo_widget'] = selected.id;
 			//$scope.widgets[new_id][text] = selected.text;
 			$scope.widgets[new_id].settings = $scope.widgets[new_id].settings || {};
 			$scope.widgets[new_id].settings['pseudo_widget']= selected.id;
-		}
+		}*/
 
 		if (_id == 'body') {
 			$scope.slotAssignments['body'].push(new_id);
@@ -287,7 +316,7 @@ function stateController($scope) {
 			slot_tag_targets = ['view', 'field_view'];
 		} else if ($scope.widgets[id] && nw.widgets[$scope.widgets[id].widget]) {
 			slot_tag_targets = nw.widgets[$scope.widgets[id].widget].slots[slot] || ['view', 'field_view'];
-		} else if (nw.funcs[$scope.widgets[id].widget]) {
+		} else if ($scope.widgets[id].func) {
 			slot_tag_targets = ['code'];
 		} else {
 			slot_tag_targets = ['view', 'field_view'];
@@ -320,16 +349,21 @@ function stateController($scope) {
 		};
 		cstate['widgets'] = JSON.parse(JSON.stringify(cstate['widgets'])); //deep clone
 		_.each(cstate['widgets'], function(widget, key) {
-			delete widget['has_form'];
+			//delete widget['settings'];
 			delete widget['cut'];
 			delete widget['selected'];
+			delete widget['id'];
+			delete widget['name'];
+			delete widget['text'];
+			delete widget['tags'];
+			//delete widget['args'];
 		});
 		$('#' + $scope.field_id + ' .widget-code-editor').html(JSON.stringify(cstate));
 	}
 
 	$scope.deleteSelected = function() {
 		_.each($scope.widgets, function(widget, index) {
-			if(widget.selected) {
+			if(widget && widget.selected) {
 				$scope.deleteWidgetRecur(index);
 			}
 		});

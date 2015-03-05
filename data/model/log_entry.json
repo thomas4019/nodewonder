@@ -1,0 +1,104 @@
+{
+    "name": "log_entry",
+    "description": "",
+    "schema": {
+        "fields": {
+            "Subject": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "Message": {
+                "type": "Text",
+                "quantity": ""
+            },
+            "Data": {
+                "type": "JSON",
+                "quantity": ""
+            },
+            "Date": {
+                "type": "Date",
+                "quantity": ""
+            },
+            "User": {
+                "type": "Record",
+                "quantity": ""
+            }
+        },
+        "display": {
+            "widgets": {
+                "Subject": {
+                    "widget": "textbox",
+                    "settings": {
+                        "label": "Subject",
+                        "field_type": "Text"
+                    },
+                    "slots": {},
+                    "model_type": "Text",
+                    "field": "Subject",
+                    "model": "Model"
+                },
+                "Message": {
+                    "widget": "ckeditor",
+                    "settings": {
+                        "label": "Message",
+                        "field_type": "Text"
+                    },
+                    "slots": {},
+                    "model_type": "Text",
+                    "field": "Message",
+                    "model": "Model"
+                },
+                "Data": {
+                    "widget": "jsoneditor",
+                    "settings": {
+                        "label": "Data",
+                        "field_type": "JSON"
+                    },
+                    "slots": {},
+                    "model_type": "JSON",
+                    "field": "Data",
+                    "model": "Model"
+                },
+                "Date": {
+                    "widget": "date",
+                    "settings": {
+                        "label": "Date",
+                        "field_type": "Date"
+                    },
+                    "slots": {},
+                    "model_type": "Date",
+                    "field": "Date",
+                    "model": "Model"
+                },
+                "User": {
+                    "widget": "model_record_reference",
+                    "settings": {
+                        "label": "User",
+                        "field_type": "Record"
+                    },
+                    "slots": {},
+                    "model_type": "Record",
+                    "field": "User",
+                    "model": "Model"
+                }
+            },
+            "slotAssignments": {
+                "body": [
+                    "Subject",
+                    "Message",
+                    "Data",
+                    "Date",
+                    "User"
+                ]
+            }
+        }
+    },
+    "index": "",
+    "storage": "disk+memory",
+    "adminFields": [
+        "Subject",
+        "Message",
+        "User",
+        "Date"
+    ]
+}

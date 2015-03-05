@@ -9,7 +9,7 @@ var npmMapping = {
 
 var modules = ['lodash','http','fs','url','connect','handlebars','querystring',
 'async','dive','diveSync','path','bower','bower-json','deep','deep-extend',
-'dextend','moment','vm','url','js-beautify','passport','cookies','phantom','mkdirp'];
+'dextend','moment','vm','url','js-beautify','passport','cookies','phantom','mkdirp', 'string'];
 
 modules.forEach(function(module) {
   alias = module;
@@ -60,6 +60,7 @@ processSetup = function() {
   cms.functions.setupProcess(this.name, this.settings);
 }
 
+stringjs = {};
 
 fs.readFile('page.html', 'utf8', function(err, data) {
   if (err) {
@@ -67,6 +68,32 @@ fs.readFile('page.html', 'utf8', function(err, data) {
   }
   page_template = Handlebars.compile(data);
 });
+
+
+cms.getFuncName = function(func) {
+  var code = func.toString();
+  var begin = code.indexOf('n ') + 1;
+  var end = code.indexOf('(');
+  return code.substring(begin, end).trim();
+}
+
+cms.getFuncBody = function(func) {
+  var code = func.toString();
+  var begin = code.indexOf('{') + 1;
+  var end = code.lastIndexOf('}');
+  return beautify_js(code.substring(begin, end).trim());
+}
+
+cms.getFuncArgs = function(func) {
+  var code = func.toString();
+  var begin = code.indexOf('(') + 1;
+  var end = code.indexOf(')');
+  var args = code.substring(begin, end).replace(/ /g, "").split(",");
+  console.log(args);
+  if (args.length == 1 && !args[0])
+    return []
+  return args;
+}
 
 cms.functions.loadModelIntoMemory = function(model, callback) {
   if (!fs.existsSync('data/' + model + '/'))
@@ -144,6 +171,19 @@ Widget.prototype.safeRetrieve = function(name, otherwise, args) {
   try {
     return ((typeof val === 'function') ? val.call(this, args) : val) || otherwise;
   } catch(err) {
+    var error_log = {
+      'Subject': "PROBLEM IN " + this.id + " " + this.name + "." + name + "()",
+      'Message': err.stack + val.toString().replace(/\n/g, "<br />"),
+      'Data': {'f': val.toString()},
+      'Date': new Date().getTime(),
+      'User': 'unknown'
+    };
+    console.log('-----------------');
+    cms.functions.saveRecord('log_entry', cms.functions.makeid(12), error_log, function() {
+      console.log('saved');
+      console.log(error_log);
+    });
+
     console.error("PROBLEM IN " + this.id + " " + this.name + "." + name + "()");
     console.error(err.stack);
     return otherwise;
@@ -243,7 +283,7 @@ async.series(
   initWidgets,
   sortWidgets,
   installAllDeps,
-  processDeps
+  processDeps,
   ],
   function() {
     console.log('the server is ready - running at http://127.0.0.1:3000/');
@@ -357,6 +397,37 @@ function initFuncs(callback) {
   };
   context = vm.createContext(initSandbox);
 
+  var stringMethods = {
+    'replace': ['string', 'regexp-substr', 'newSubStr'],
+    'indexOf': ['string', 'search', 'fromIndex'],
+    'lastIndexOf': ['string', 'search', 'fromIndex'],
+    'match': ['string', 'regexp'],
+    'substring': ['string', 'from', 'to'],
+    'substr': ['string', 'from', 'length'],
+  };
+
+  console.log('---/');
+  _.forIn(string(), function(func, name) {
+    if (func) {
+      stringjs[name] = function() {
+        var s = arguments[0]
+        var S = string(s);
+        var argsLength = arguments.length;
+        var args = [];
+        for (var i = 1; i < argsLength; i++) {
+          args.push(arguments[i]);
+        }
+
+        return S[name].apply(S, args).s;
+      }
+      stringjs[name].args = ['string'].concat(cms.getFuncArgs(func));
+    }
+  });
+  _.forEach(stringMethods, function(args, name) {
+    if (stringjs[name])
+      stringjs[name].args = args;
+  });
+
   callback();
 }
 
@@ -387,13 +458,13 @@ function initWidgets(callback) {
 
 function sortWidgets(callback) {
   //console.log('sorting widgets');
-  /*cms.model_widgets['Text'].sort(function (a, b) {
+  cms.model_widgets['Text'].sort(function (a, b) {
     return a.weight || 0 < b.weight || 0;
-  });*/
+  });
   //console.log(cms.edit_widgets);
-  /*cms.edit_widgets['Text'].sort(function (a, b) {
+  cms.edit_widgets['Text'].sort(function (a, b) {
     return cms.widgets[a].weight || 0 < cms.widgets[b].weight || 0;
-  });*/
+  });
   //console.log(cms.model_widgets['Text']);
   callback();
 }
@@ -739,6 +810,18 @@ cms.migrate13 = function() {
   });
 }
 
+cms.migrate14 = function() {
+  _.forEach(cms.model_data['custom_page'], function(page, id) {
+    page.controller = {
+        "_is_func": true,
+        "args": [],
+        "javascript": page.controller,
+    };
+    cms.functions.saveRecord('custom_page', id, page);
+  });
+}
+
+
 cms.funcsToString = function(object) {
   var object2 = {};
   var widgetModel = cms.models['widget'];
@@ -764,27 +847,6 @@ cms.funcsToString = function(object) {
     }
   }
   return object2
-}
-
-cms.getFuncName = function(func) {
-  var code = func.toString();
-  var begin = code.indexOf('n ') + 1;
-  var end = code.indexOf('(');
-  return code.substring(begin, end).trim();
-}
-
-cms.getFuncBody = function(func) {
-  var code = func.toString();
-  var begin = code.indexOf('{') + 1;
-  var end = code.lastIndexOf('}');
-  return beautify_js(code.substring(begin, end).trim());
-}
-
-cms.getFuncArgs = function(func) {
-  var code = func.toString();
-  var begin = code.indexOf('(') + 1;
-  var end = code.indexOf(')');
-  return code.substring(begin, end).replace(/ /g, "").split(",");
 }
 
 cms.test = function() {

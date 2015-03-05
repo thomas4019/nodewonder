@@ -43,7 +43,7 @@
     "script": {
         "_is_func": true,
         "args": [],
-        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + \n  '(nw.functions.fillSettings(' + JSON.stringify(this.settings).replace(/<\\/script/g, '</scr\"+\"ipt') + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
+        "javascript": "return 'nw.functions.processActionResult(\"' + this.id + '\", new ' + this.action + \n  '(nw.functions.fillSettings(' + JSON.stringify(this.settings).replace(/<\\/scr.pt/g, '</scr\"+\"ipt') + ', scope, []), ' +\n    '\"' + this.id + '\", scope,' + cms.functions.createHandlersCode(this) + '));';"
     },
     "action": {
         "_is_func": true,

@@ -34,7 +34,16 @@
         ],
         "javascript": "CKEDITOR.replace(id + '-Editor',{toolbar:\"Basic\"});"
     },
-    "weight": null,
+    "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
     "settings": {
         "fields": {
             "label": {
@@ -61,7 +70,7 @@
                     "field": "label",
                     "model_type": "Text",
                     "model": "ckeditor",
-                    "widget": "ckeditor"
+                    "widget": "textbox"
                 },
                 "toolbar": {
                     "slots": {},
@@ -87,7 +96,7 @@
                     "field": "data",
                     "model_type": "Text",
                     "model": "ckeditor",
-                    "widget": "ckeditor"
+                    "widget": "textbox"
                 }
             },
             "slotAssignments": {

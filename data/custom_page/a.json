@@ -7,26 +7,147 @@
             "guOj0u3O": {
                 "slots": {
                     "code": [
-                        "J3T9o3JH",
-                        "07lXVqar"
+                        "UzsAKvgb",
+                        "IkWscmay",
+                        "Z1BDWCZv",
+                        "jX8FsJgC"
                     ]
                 },
                 "widget": "eval"
             },
-            "J3T9o3JH": {
-                "slots": {},
-                "data": "123",
-                "label": "\"123\"",
-                "type": "literal"
-            },
-            "07lXVqar": {
-                "slots": {},
-                "data": "abc",
-                "label": "\"abc\"",
-                "type": "literal"
-            },
             "leL28bau": {
                 "widget": "hello_world",
+                "slots": {}
+            },
+            "Urrbjcgh": {
+                "label": "\"123\"",
+                "type": "literal",
+                "data": "123",
+                "slots": {}
+            },
+            "hPJGclfC": {
+                "label": "\"thomas hansen\"",
+                "type": "literal",
+                "data": "thomas hansen",
+                "slots": {}
+            },
+            "PIPsI1vX": {
+                "label": "\"thomas\"",
+                "type": "literal",
+                "data": "thomas",
+                "slots": {}
+            },
+            "TyRhKT9m": {
+                "label": "\"thomas hansen\"",
+                "type": "literal",
+                "data": "thomas hansen",
+                "slots": {}
+            },
+            "kmu8lZtr": {
+                "args": [
+                    "array"
+                ],
+                "func": "_.without",
+                "slots": {
+                    "array": []
+                }
+            },
+            "HjBMtEbV": {
+                "label": "\"aoeu\"",
+                "type": "literal",
+                "data": "aoeu",
+                "slots": {}
+            },
+            "m7aWC8fP": {
+                "label": "\"aoeu\"",
+                "type": "literal",
+                "data": "aoeu",
+                "slots": {}
+            },
+            "BLPmAQWG": {
+                "label": "\"+\"",
+                "type": "literal",
+                "data": "+",
+                "slots": {}
+            },
+            "F13Xx5dv": {
+                "label": "\"100\"",
+                "type": "literal",
+                "data": "100",
+                "slots": {}
+            },
+            "A6JlAHzn": {
+                "label": "\"+\"",
+                "type": "literal",
+                "data": "+",
+                "slots": {}
+            },
+            "aqPD9Dos": {
+                "label": "100",
+                "type": "literal",
+                "data": 100,
+                "slots": {}
+            },
+            "XWwsQWfJ": {
+                "label": "\"+\"",
+                "type": "literal",
+                "data": "+",
+                "slots": {}
+            },
+            "dlt5a2yz": {
+                "label": "\"thomas hansen is cool\"",
+                "type": "literal",
+                "data": "thomas hansen is cool",
+                "slots": {}
+            },
+            "jX8FsJgC": {
+                "args": [
+                    "string",
+                    "from",
+                    "length"
+                ],
+                "func": "stringjs.substr",
+                "slots": {
+                    "string": [
+                        "iZuDoedM"
+                    ],
+                    "from": [
+                        "FTLLwsO6"
+                    ],
+                    "length": [
+                        "ouHBwtA6"
+                    ]
+                }
+            },
+            "iZuDoedM": {
+                "args": [
+                    "string",
+                    "len",
+                    "ch"
+                ],
+                "func": "stringjs.pad",
+                "slots": {
+                    "string": [
+                        "dlt5a2yz"
+                    ],
+                    "len": [
+                        "aqPD9Dos"
+                    ],
+                    "ch": [
+                        "XWwsQWfJ"
+                    ]
+                }
+            },
+            "ouHBwtA6": {
+                "label": "10",
+                "type": "literal",
+                "data": 10,
+                "slots": {}
+            },
+            "FTLLwsO6": {
+                "label": "38",
+                "type": "literal",
+                "data": 38,
                 "slots": {}
             }
         },

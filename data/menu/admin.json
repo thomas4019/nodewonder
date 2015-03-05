@@ -10,6 +10,11 @@
             "url": "/admin/data",
             "title": "Data",
             "alt": ""
+        },
+        {
+            "url": "/admin/list2/log_entry",
+            "title": "Log",
+            "alt": ""
         }
     ]
 }

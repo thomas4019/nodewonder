@@ -1,6 +1,6 @@
 <input type="checkbox" ng-model="widgets[id]['selected']" ng-change="check()" >
 <span  class="" ng-if="!(widgets[id]['field'])">
-{{ widgets[id]['widget'] }}
+{{ widgets[id]['widget'] }}{{ widgets[id]['type'] }}{{ widgets[id]['func'] }}
 </span>
 <span  class="" ng-if="(widgets[id]['label'])">
 {{ widgets[id]['label'] }}
@@ -10,7 +10,7 @@
 ng-options="w for w in field_widgets[widgets[id]['model_type']]"></select>
 </span>
 <!--<a href="" ng-click="deleteWidgetRecur(id)"><i class="fa fa-trash-o fa-lg"></i></a>!-->
-<a href="" ng-if="widgets[id]['has_form']" ng-click="configureWidget(id)"><i class="fa fa-cog fa-lg configure"></i></a>
+<a href="" ng-if="widgets[id]['settings']" ng-click="configureWidget(id)"><i class="fa fa-cog fa-lg configure"></i></a>
 <!--<a class="addSlot" ng-click="addSlot(id, slot_name)"><i class="fa fa-flash fa-lg"></i></a>!-->
 
 <div ng-repeat="(slot_name, slot) in widgets[id].slots" id="{{ id }}-{{ slot_name }}" ng-include="'/modules/admin/slot.html'"></div>

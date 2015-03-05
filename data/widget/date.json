@@ -6,7 +6,7 @@
     "htmlTemplate": {
         "_is_func": true,
         "args": [],
-        "htmlmixed": "{{#if settings.inline}}\n<div class=\"controls form-inline\">{{/if}} {{{label}}}\n    <input id=\"{{id}}-textbox\" class=\"form-control input-small\" type=\"text\" name=\"{{this.id}}\" value=\"{{value}}\" />{{#if settings.inline}}</div>{{/if}}"
+        "htmlmixed": "{{#if settings.inline}}\n<div class=\"controls form-inline\">{{/if}} {{{label}}}\n    <input id=\"{{id}}-textbox\" class=\"form-control input-small\" type=\"text\" name=\"{{this.id}}\" value=\"{{value}}\" />{{#if settings.inline}}\n</div>{{/if}}"
     },
     "deps": {
         "jquery": [],
@@ -49,6 +49,15 @@
         "javascript": "$(\"#\"+id+\" input\").datepicker();"
     },
     "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
     "settings": {
         "fields": {
             "data": {

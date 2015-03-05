@@ -1,0 +1,26 @@
+{
+    "URL": "b",
+    "parent": "admin",
+    "controller": "",
+    "code": {
+        "widgets": {
+            "a3Sexqf8": {
+                "widget": "eval",
+                "settings": false,
+                "slots": {
+                    "code": []
+                }
+            }
+        },
+        "slotAssignments": {
+            "body": [
+                "a3Sexqf8"
+            ]
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

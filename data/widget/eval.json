@@ -11,7 +11,7 @@
         "args": [
             "label"
         ],
-        "javascript": "console.log('MRAL');\nvar r = this.slotAssignments.code[0].eval();\nconsole.log(r);\nreturn r;\n//return 'begin<br>' + this.slotAssignments.code[0].type + ' ' + this.slotAssignments.code[0].name;"
+        "javascript": "console.log('MRAL');\nvar code = cms.functions.evalCode(this.slotAssignments.code[0]);\nconsole.log(code);\ntry {\n  var result = eval(code);\n  var error_log = {\n    'Subject': \"Evaluating\",\n    'Message': code,\n    'Data': {},\n    'Date': new Date().getTime(),\n    'User': 'unknown'\n  };\n  cms.functions.saveRecord('log_entry', cms.functions.makeid(12), error_log, function() {\n  });\n} catch (e) {\n  var error_log = {\n    'Subject': \"Error evaluating code\",\n    'Message': code,\n    'Data': {'error': e},\n    'Date': new Date().getTime(),\n    'User': 'unknown'\n  };\n  cms.functions.saveRecord('log_entry', cms.functions.makeid(12), error_log, function() {\n  });\n  return '!error during computation!';\n}\nreturn result;\n/*var o = _.clone(this.slotAssignments.code[0]);\ndelete o.parent;\nif (o.type = 'literal') {\n  var r = o.data;\n}\nconsole.log(r);\nreturn r;*/\n//return 'begin<br>' + this.slotAssignments.code[0].type + ' ' + this.slotAssignments.code[0].name;"
     },
     "deps": {},
     "head": [],
