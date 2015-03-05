@@ -1,19 +1,27 @@
 {
     "name": "log",
     "args": [
-        "type",
+        "subject",
         "message",
         "data"
     ],
     "code": {
         "_is_func": true,
         "args": [
-            "type",
+            "subject",
             "message",
             "data"
         ],
-        "javascript": "console.log(type);"
+        "javascript": "var error_log = {\n  'Subject': subject,\n  'Message': message,\n  'Data': data,\n  'Date': new Date().getTime(),\n  'User': 'unknown'\n};\ncms.functions.saveRecord('log_entry', cms.functions.makeid(12), error_log, function() {\n});"
     },
-    "calls": [],
-    "callers": []
+    "calls": [
+        "saveRecord",
+        "makeid"
+    ],
+    "callers": [
+        "viewPage",
+        "viewPage",
+        "viewPage",
+        "viewPage"
+    ]
 }
