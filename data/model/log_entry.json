@@ -94,7 +94,7 @@
         }
     },
     "index": "",
-    "storage": "disk+memory",
+    "storage": "memory",
     "adminFields": [
         "Subject",
         "Message",

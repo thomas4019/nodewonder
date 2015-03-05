@@ -1,9 +1,0 @@
-{
-    "Subject": "Error evaluating code",
-    "Message": "stringjs.substring(stringjs.pad(\"thomas hansen is cool\",100,\"+\"); ); ",
-    "Data": {
-        "error": {}
-    },
-    "Date": 1425513968201,
-    "User": "unknown"
-}
