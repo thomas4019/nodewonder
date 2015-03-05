@@ -1,5 +1,9 @@
 {
-    "controller": "widgets.start.widget = args.widget_type; widgets.start.settings = JSON.parse(args.input); widgets[args.widget_id] = widgets.start; delete widgets.start; slotAssignments['body'] = [args.widget_id]; callback(); ",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "widgets.start.widget = args.widget_type; widgets.start.settings = JSON.parse(args.input); widgets[args.widget_id] = widgets.start; delete widgets.start; slotAssignments['body'] = [args.widget_id]; callback(); "
+    },
     "code": {
         "widgets": {
             "start": {

@@ -1,7 +1,11 @@
 {
     "URL": "base",
     "parent": "",
-    "controller": "widgets['Ox5dCAVT'].settings.links = load('menu','admin').link; callback(); ",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "widgets['Ox5dCAVT'].settings.links = load('menu','admin').link; callback(); "
+    },
     "code": {
         "widgets": {
             "P9YzJ0sx": {

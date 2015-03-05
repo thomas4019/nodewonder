@@ -1,7 +1,11 @@
 {
     "URL": "testhello",
     "parent": "",
-    "controller": "",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": ""
+    },
     "code": {
         "widgets": {
             "AOdQ4sW3": {

@@ -1,7 +1,11 @@
 {
     "URL": "test-table",
     "parent": "",
-    "controller": "",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": ""
+    },
     "code": {
         "widgets": {
             "KHrCJjFY": {

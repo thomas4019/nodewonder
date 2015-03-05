@@ -1,7 +1,11 @@
 {
     "URL": "admin/data/job/run",
     "parent": "",
-    "controller": "",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": ""
+    },
     "code": {
         "widgets": {
             "mm23dcpJ": {

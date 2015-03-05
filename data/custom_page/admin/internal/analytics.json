@@ -1,7 +1,11 @@
 {
     "URL": "admin/internal/analytics",
     "parent": "admin",
-    "controller": "",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": ""
+    },
     "code": {
         "widgets": {
             "cSCu9s8R": {

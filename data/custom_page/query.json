@@ -1,7 +1,11 @@
 {
     "URL": "query",
     "parent": "admin",
-    "controller": "widgets.xxixWNHl.settings = {}; widgets.xxixWNHl.settings.data = query(load('query', args.q)); callback();",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "widgets.xxixWNHl.settings = {}; widgets.xxixWNHl.settings.data = query(load('query', args.q)); callback();"
+    },
     "code": {
         "widgets": {
             "xxixWNHl": {

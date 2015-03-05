@@ -36,7 +36,7 @@
             "old",
             "user"
         ],
-        "javascript": "var data = typeof data == 'string' ? JSON.parse(data) : data;\nif (data && data.htmlmixed) {\n  data.htmlmixed = beautify_js.html(data.htmlmixed);\n}\nreturn data;"
+        "javascript": "var data = typeof data == 'string' ? JSON.parse(data) : data;\nif (data && data.htmlmixed) {\n  data.htmlmixed = beautify_js.html(data.htmlmixed);\n}\nif (data && data.javascript) {\n  data.javascript = beautify_js.js(data.javascript);\n}\nreturn data;"
     },
     "wrapper": "div",
     "wrapperClass": "",
@@ -62,6 +62,15 @@
         "javascript": "return {css: this.settings.height ? (this.id + ' .CodeMirror {height: ' + this.settings.height + 'px;} ') : '' +\n  '.CodeMirror {  border: 1px solid #eee;  height: auto;} ' +\n        '.CodeMirror-scroll {  overflow-y: hidden;  overflow-x: auto; }'};"
     },
     "weight": "",
+    "content": {
+        "fields": {},
+        "display": {
+            "widgets": {},
+            "slotAssignments": {
+                "body": []
+            }
+        }
+    },
     "settings": {
         "fields": {
             "lang": {

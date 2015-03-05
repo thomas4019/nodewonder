@@ -1,7 +1,11 @@
 {
     "URL": "admin/settings/%",
     "parent": "admin",
-    "controller": "",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": ""
+    },
     "code": {
         "widgets": {
             "ajGGMkV3": {

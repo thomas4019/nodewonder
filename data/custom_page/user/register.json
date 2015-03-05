@@ -1,7 +1,11 @@
 {
     "URL": "user/register",
     "parent": "",
-    "controller": "",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": ""
+    },
     "code": {
         "widgets": {
             "x2UZwiTB": {

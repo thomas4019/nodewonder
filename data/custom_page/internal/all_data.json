@@ -1,7 +1,11 @@
 {
     "URL": "internal/all_data",
     "parent": "",
-    "controller": "",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": ""
+    },
     "code": {
         "widgets": {
             "UsftHfOS": {

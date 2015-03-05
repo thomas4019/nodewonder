@@ -1,7 +1,11 @@
 {
     "URL": "",
     "parent": "admin",
-    "controller": "if (args.record != 'create') { widgets.wyobn3bP.settings.data = load(args.model, args.record); } callback();",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "if (args.record != 'create') {\n    widgets.wyobn3bP.settings.data = load(args.model, args.record);\n}\ncallback();"
+    },
     "code": {
         "widgets": {
             "wyobn3bP": {

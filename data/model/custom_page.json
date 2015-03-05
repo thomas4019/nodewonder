@@ -1,9 +1,6 @@
 {
     "name": "Page",
     "description": "for advanced pages",
-    "index": "URL",
-    "views": {},
-    "storage": "disk+memory",
     "schema": {
         "fields": {
             "URL": {
@@ -15,7 +12,7 @@
                 "quantity": ""
             },
             "controller": {
-                "type": "Text",
+                "type": "Code",
                 "quantity": ""
             },
             "code": {
@@ -62,15 +59,15 @@
                     "widget": "model_record_reference"
                 },
                 "controller": {
-                    "slots": {},
+                    "widget": "codemirror",
                     "settings": {
                         "label": "controller",
-                        "field_type": "Text"
+                        "field_type": "Code"
                     },
+                    "slots": {},
+                    "model_type": "Code",
                     "field": "controller",
-                    "model_type": "Text",
-                    "model": "custom_page",
-                    "widget": "textbox"
+                    "model": "Model"
                 },
                 "code": {
                     "slots": {},
@@ -147,5 +144,7 @@
             }
         }
     },
-    "key": "custom_page"
+    "index": "URL",
+    "storage": "disk+memory",
+    "adminFields": []
 }

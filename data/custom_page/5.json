@@ -1,7 +1,11 @@
 {
     "URL": "5",
     "parent": "",
-    "controller": "widgets.bvTyarV2.settings.schema = load('model','widget').schema; log('mark3341'); log(widgets.bvTyarV2.settings.schema); widgets.bvTyarV2.settings.data = load('widget','field_multi'); callback();",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "widgets.bvTyarV2.settings.schema = load('model','widget').schema; log('mark3341'); log(widgets.bvTyarV2.settings.schema); widgets.bvTyarV2.settings.data = load('widget','field_multi'); callback();"
+    },
     "code": {
         "widgets": {
             "bvTyarV2": {

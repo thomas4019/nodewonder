@@ -2,7 +2,11 @@
     "URL": "",
     "parent": "admin",
     "contentType": "",
-    "controller": "widgets['bSTlkYv9'].settings.model = args['arg2']; callback(); ",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "widgets['bSTlkYv9'].settings.model = args['arg2']; callback(); "
+    },
     "code": {
         "widgets": {
             "bSTlkYv9": {

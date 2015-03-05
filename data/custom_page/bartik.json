@@ -2,7 +2,11 @@
     "URL": "",
     "parent": "",
     "contentType": "",
-    "controller": "widgets.ykQkNrK2.settings.fields = load('setting','site').fields; callback();",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "widgets.ykQkNrK2.settings.fields = load('setting','site').fields; callback();"
+    },
     "code": {
         "widgets": {
             "hiIn4zSc": {

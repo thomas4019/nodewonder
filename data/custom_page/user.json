@@ -2,7 +2,11 @@
     "URL": "test4",
     "parent": "",
     "contentType": "",
-    "controller": "widgets['vlb3rn7L'].settings.record = args.id; callback();",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "widgets['vlb3rn7L'].settings.record = args.id; callback();"
+    },
     "code": {
         "widgets": {
             "vlb3rn7L": {

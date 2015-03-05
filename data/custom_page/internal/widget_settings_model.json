@@ -1,6 +1,10 @@
 {
     "contentType": "text/javascript",
-    "controller": "widgets.start.settings.widget_type = args.widget_type; callback();",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "widgets.start.settings.widget_type = args.widget_type; callback();"
+    },
     "code": {
         "widgets": {
             "start": {

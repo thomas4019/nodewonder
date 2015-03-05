@@ -1,7 +1,11 @@
 {
     "URL": "user/logout",
     "parent": "",
-    "controller": "",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": ""
+    },
     "code": {
         "widgets": {
             "X6To5YJ3": {

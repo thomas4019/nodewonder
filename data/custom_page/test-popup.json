@@ -2,7 +2,11 @@
     "URL": "",
     "parent": "",
     "contentType": "",
-    "controller": "",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": ""
+    },
     "code": {
         "widgets": {
             "gD3Hmuwm": {

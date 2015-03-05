@@ -1,7 +1,11 @@
 {
     "URL": "internal/process_model2",
     "parent": "",
-    "controller": "widgets.F1eAF4MH.settings.data = JSON.parse(args.data); widgets.F1eAF4MH.settings.model = args.model; widgets.F1eAF4MH.settings.record = args.record; widgets.F1eAF4MH.settings.field = args.field; callback();",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "widgets.F1eAF4MH.settings.data = JSON.parse(args.data); widgets.F1eAF4MH.settings.model = args.model; widgets.F1eAF4MH.settings.record = args.record; widgets.F1eAF4MH.settings.field = args.field; callback();"
+    },
     "code": {
         "widgets": {
             "F1eAF4MH": {

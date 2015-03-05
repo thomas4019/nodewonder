@@ -1,7 +1,11 @@
 {
     "URL": "admin/list2/%",
     "parent": "admin",
-    "controller": "var m = load('model', args['arg2']); widgets['00t6fCBy'].settings.data = args['arg2']; widgets.HaFlgC99.settings.data = linkify(query({from: args['arg2'], select: m.adminFields}), args['arg2']); callback();",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "var m = load('model', args['arg2']);\nwidgets['00t6fCBy'].settings.data = args['arg2'];\nwidgets.HaFlgC99.settings.data = linkify(query({\n    from: args['arg2'],\n    select: m.adminFields\n}), args['arg2']);\ncallback();"
+    },
     "code": {
         "widgets": {
             "HaFlgC99": {

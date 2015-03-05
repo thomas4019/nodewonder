@@ -11,5 +11,9 @@
                 "start"
             ]
         }
+    },
+    "controller": {
+        "_is_func": true,
+        "args": []
     }
 }

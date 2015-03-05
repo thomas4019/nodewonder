@@ -1,7 +1,11 @@
 {
     "URL": "admin",
     "parent": "",
-    "controller": "widgets['menu'].settings.links = load('menu','admin').link; callback(); ",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "widgets['menu'].settings.links = load('menu','admin').link; callback(); "
+    },
     "code": {
         "widgets": {
             "YxOICjag": {

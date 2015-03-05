@@ -1,7 +1,11 @@
 {
     "URL": "admin/internal/middleware",
     "parent": "",
-    "controller": "",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": ""
+    },
     "code": {
         "widgets": {
             "52xpJloT": {

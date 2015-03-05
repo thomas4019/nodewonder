@@ -1,7 +1,11 @@
 {
     "URL": "",
     "parent": "admin",
-    "controller": "widgets.wyobn3bP.settings.schema = load('model', args.model).schema; if (args.record != 'create') { widgets.wyobn3bP.settings.data = load(args.model, args.record); } callback();",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "widgets.wyobn3bP.settings.schema = load('model', args.model).schema;\nif (args.record != 'create') {\n    widgets.wyobn3bP.settings.data = load(args.model, args.record);\n}\ncallback();"
+    },
     "code": {
         "widgets": {
             "wyobn3bP": {

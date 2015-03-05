@@ -4,5 +4,9 @@
         "slotAssignments": {
             "body": []
         }
+    },
+    "controller": {
+        "_is_func": true,
+        "args": []
     }
 }

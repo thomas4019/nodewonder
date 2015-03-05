@@ -1,7 +1,11 @@
 {
     "URL": "internal/widget_settings",
     "parent": "",
-    "controller": "var w = load('widget', args.widget); widgets.start.settings.schema = w.settings; widgets.start.settings.data = JSON.parse(args.values); callback();",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": "var w = load('widget', args.widget); widgets.start.settings.schema = w.settings; widgets.start.settings.data = JSON.parse(args.values); callback();"
+    },
     "code": {
         "widgets": {
             "start": {

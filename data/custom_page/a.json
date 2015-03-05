@@ -1,7 +1,11 @@
 {
     "URL": "a",
     "parent": "admin",
-    "controller": "",
+    "controller": {
+        "_is_func": true,
+        "args": [],
+        "javascript": ""
+    },
     "code": {
         "widgets": {
             "guOj0u3O": {
