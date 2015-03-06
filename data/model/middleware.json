@@ -1,9 +1,6 @@
 {
     "name": "middleware",
     "description": "",
-    "index": "",
-    "views": {},
-    "storage": "disk+memory",
     "schema": {
         "fields": {
             "name": {
@@ -87,5 +84,7 @@
             }
         }
     },
-    "key": "middleware"
+    "index": "name",
+    "storage": "disk+memory",
+    "adminFields": []
 }

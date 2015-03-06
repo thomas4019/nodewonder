@@ -1,0 +1,15 @@
+{
+    "URL": "internal/widget_slots",
+    "parent": "",
+    "code": {
+        "widgets": {},
+        "slotAssignments": {
+            "body": []
+        }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
+    }
+}

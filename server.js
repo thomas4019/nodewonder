@@ -141,7 +141,7 @@ cms.functions.evalFunctions = function(id, object, key) {
       if (!object.args) {
         console.log(id + ' missing args');
       }
-      var func = new Function(object.args.join(','), 'if(-1 == "'+id+'".indexOf("Middleware")) { console.log("'+id +'.' +key+'");console.log(arguments); }'+ object.javascript);//.bind(widget);
+      var func = new Function(object.args.join(','), 'console.log("'+id +'.' +key+'"); if(-1 == "'+id+'".indexOf("Middleware")) { console.log(arguments); }'+ object.javascript);//.bind(widget);
       return func;
     } else {
       var object2 = _.clone(object);

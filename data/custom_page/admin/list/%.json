@@ -1,11 +1,10 @@
 {
     "URL": "",
     "parent": "admin",
-    "contentType": "",
     "controller": {
         "_is_func": true,
         "args": [],
-        "javascript": "widgets['bSTlkYv9'].settings.model = args['arg2']; callback(); "
+        "javascript": "widgets['bSTlkYv9'].settings.model = args['arg2'];\ncallback();"
     },
     "code": {
         "widgets": {
@@ -24,5 +23,10 @@
                 "bSTlkYv9"
             ]
         }
+    },
+    "Title": "",
+    "contentType": "",
+    "permission": {
+        "role": []
     }
 }

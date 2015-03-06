@@ -1,0 +1,14 @@
+{
+    "name": "errorMiddleware",
+    "code": {
+        "_is_func": true,
+        "args": [
+            "req",
+            "res",
+            "next"
+        ],
+        "javascript": "res.writeHead(404, {\n    'Content-Type': 'text/html'\n});\nconsole.log('log.code2');\ncms.functions.log('Invalid Page', req.url, {});\nvar html = 'Page 2 Not Found 2';\nres.end(html);"
+    },
+    "priority": 100,
+    "base": ""
+}
